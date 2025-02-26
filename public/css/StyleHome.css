@@ -7,7 +7,7 @@
 nav {
     display: flex;
     width: 100vw;
-    height: 7vh;
+    height: 9vh;
     background-color: #a9c0fa;
     font-family: "Arial", sans-serif;
 }
@@ -59,7 +59,7 @@ nav {
     justify-content: center;
     align-items: center;
     width: 9vw;
-    height: 4vh;
+    height: 5vh;
     background-color: #24284B;
     color: white;
     border: none;
@@ -72,6 +72,7 @@ nav {
     display: flex;
     width: 100vw;
     height: 95vh;
+    overflow-y: hidden;
 }
 
 .box1{
