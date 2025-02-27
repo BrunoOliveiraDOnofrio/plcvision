@@ -2,6 +2,8 @@
     padding: 0%;
     margin: 0%;
     overflow-x: hidden;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, sans-serif;
+
 }
 
 nav {
@@ -9,7 +11,6 @@ nav {
     width: 100vw;
     height: 9vh;
     background-color: #a9c0fa;
-    font-family: "Arial", sans-serif;
 }
 
 .logo_nav {
@@ -68,19 +69,56 @@ nav {
     cursor: pointer;
 }
 
-.container{
+.container {
     display: flex;
     width: 100vw;
-    height: 95vh;
+    height: 150vh;
     overflow-y: hidden;
 }
 
-.box1{
+.box1 {
     display: flex;
     width: 100vw;
-    height: 96vh;
-    background-color: #89AAFF;
+    height: 100vh;
+    background-image: url(../assets/imgs/Design\ sem\ nome.png);
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
 }
+
+.texto_inicio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* border: 1px solid red; */
+
+}
+
+.texto_inicio h1 {
+    font-size: 128px;
+    font-weight: 800;
+}
+
+.seta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 13vh;
+}
+.seta img{
+    width: 20%;
+}
+
+.texto_baixo {
+    display: flex;
+    font-size: 20px;
+    width: 30vw;
+    border: 1px solid red;
+}
+
 
 @media screen and (max-width: 1024px) {
 
