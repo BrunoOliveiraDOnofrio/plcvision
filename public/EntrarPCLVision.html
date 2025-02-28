@@ -42,3 +42,74 @@
 
 </body>
 </html>
+
+<script>
+
+function entrar(){
+
+    var usuario = ipt_usuario.value
+    var senha = ipt_senha.value
+
+    var mensagem = ''
+
+        if (email == "" || senha == "") {
+            mensagem += `Insira valores válidos`
+    }
+        validarSenha.innerHTML = mensagem
+        validarUsuario.innerHTML = mensagem
+        
+
+        console.log("FORM LOGIN: ", email);
+        console.log("FORM SENHA: ", senha);
+
+
+        
+        fetch("/usuarios/autenticar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    emailServer: email,
+                    senhaServer: senha
+                })
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO entrar()!")
+
+                if (resposta.ok) {
+                    console.log(resposta);
+
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+                        sessionStorage.EMAIL_USUARIO = json.email;
+                        sessionStorage.NOME_USUARIO = json.nome;
+                        sessionStorage.ID_USUARIO = json.id;
+                        
+
+                        setTimeout(function () {
+                            window.location = "HomePCLVision.html";
+                        }, 1000); 
+
+                    });
+
+                } else {
+
+                    console.log("Houve um erro ao tentar realizar o login!");
+                    div_validarSenha.innerHTML = `Houve um erro ao tentar realizar o login!`
+                    
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                        
+                    });
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            })
+
+        return false;
+
+}
+
+</script>
