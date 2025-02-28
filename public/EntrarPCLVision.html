@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/StyleEntrar.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container-global">
+
+        <div class="PCLVision">
+    
+            <h1>PCLVision</h1>
+            <h3>Faça seu login para começar!</h3>
+    
+        </div>
+    
+        <div class="card-login">
+            <div class="titulo-login">Login</div>
+                <div class="textfield">
+                    <label for="usuario">Usuário</label>
+                    <input type="text" id="ipt_usuario" placeholder="Digite seu e-mail">
+                    <div id="validarUsuario" style="color: rgb(179, 2, 2)"></div> <!-- Caso usuário erre, retornar mensagem de e-mail não cadastrado-->
+                </div>
+    
+                <div class="textfield">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="ipt_senha" name="usuario" placeholder="Senha">
+                    <div id="div_validarSenha" style="color: rgb(179, 2, 2)"></div> <!-- Caso usuário erre, retornar mensagem de senha incorreta -->
+                </div>
+    
+                <button onclick="entrar()" class="btn-login">Entrar</button>
+    
+                <div class="recomendacao">
+                    <span style="color: black;">Novo por aqui? <button class="button-contato"><a href=""><span style="color: black;"><b>Entre em Contato!</b></span></a></button></span>
+                </div>
+    
+        </div>
+    </div>
+
+</body>
+</html>
