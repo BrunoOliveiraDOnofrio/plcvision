@@ -5,7 +5,8 @@
 
 # Atualizar a máquina
 echo "Atualizando Sistema..."
-sudo apt update -qq -y && sudo apt upgrade -qq -y
+sudo apt update -qq -y
+sudo apt upgrade -qq -y
 
 # Instalar Node.js 
 echo "Instalando NodeJS..."
