@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# primeiro cria uma pasta em um lugar da instancia
+# dps faz um scp pra largar o .zip do projeto lá
+# ai ent instala o pacote unzip (sudo apt-get unzip)
+# ai entra no projeto até a pasta Scripts e da permissao 777 pro script shell
+# reza muito pra não quebrar rs rs
+
 # os q's são de quiet (silencio) para mostrar menos texto
 # e os y's são para não ficar fazendo perguntas no meio dos comandos
 
@@ -24,9 +30,11 @@ pip install --quiet --no-input psutil==7.0.0 mysql-connector-python==9.2.0
 echo "Instalando MYSQL Server..."
 sudo apt -qq -y install mysql-server
 sudo systemctl start mysql.service
+sudo systemctl enable mysql
 
 # configurando MYSQL
 echo "Configurando MYSQL..."
+cd ..
 sudo mysql < src/database/modelagem.sql
 
 CREATE USER 'plc_root'@'%' IDENTIFIED BY 'Urubu100';
@@ -49,5 +57,3 @@ npm i && npm start
 # iniciar script python 
 echo "Inicializando script de captura..."
 python3 ./Scripts/captura_dados.py
-
-# TODO a partir daq vou ter q testar na mão, por enquanto paro por aq
