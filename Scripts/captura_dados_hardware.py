@@ -4,7 +4,7 @@ import time
 import os
 
 banco = None
-id_plc = 1 # Colocar id_plc 
+id_plc = 5 # Colocar id_plc 
 limites = { # dados sem pesquisa
     'temperatura_cpu': 90,
     'uso_cpu': 90,
@@ -21,10 +21,10 @@ def configuracao_db():
     # configurar var de ambientes e criar conexao com o banco de dados
 
     conexao_db = db.connect(
-        host='host',
-        port='porta',
-        user='user',
-        password='senha'
+        host='10.18.32.61',
+        port=3306,
+        user='InsertUser',
+        password='Urubu100'
     )
 
     return conexao_db
@@ -40,7 +40,7 @@ def armazenar_dados(dados):
 
     for dado in dados:
         colunas += f"{dado['nome_coluna']},"
-        valores += f"'{dado['dado']}',"
+        valores += f"{dado['dado']},"
     
     executor = banco.cursor() 
 

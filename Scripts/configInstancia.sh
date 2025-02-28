@@ -2,7 +2,7 @@
 
 # att a maquina 
 echo "Atualizar Sistema"
-sudo apt -qq update && sudo apt -qq upgrade -y
+sudo apt update && sudo apt upgrade
 
 # instalar node 
 echo "Instalando NodeJS"

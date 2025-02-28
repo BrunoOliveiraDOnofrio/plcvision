@@ -4,9 +4,9 @@ import time
 def conectar_db():
 
     conexao_db = db.connect(
-        host='localhost',
+        host='10.18.32.61',
         user='select_user',
-        port='3306',
+        port=3306,
         password='Urubu100#',
         database='PlcVision'
     )
