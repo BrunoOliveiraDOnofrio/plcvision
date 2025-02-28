@@ -23,7 +23,7 @@ def configuracao_db():
     conexao_db = db.connect(
         host='10.18.32.61',
         port=3306,
-        user='InsertUser',
+        user='insert_user',
         password='Urubu100',
         database='PlcVision'
     )

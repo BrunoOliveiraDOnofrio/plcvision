@@ -53,7 +53,7 @@ def selecao_do_fk(coluna):
             # Execução da query
             cursor.execute(f"""
                 SELECT avg({coluna})
-                FROM dadosCorriqueiros;
+                FROM Dados;
             """)
             
             # Exibição dos resultados
@@ -61,7 +61,7 @@ def selecao_do_fk(coluna):
                 print("-"*76)
                 print("|                                                                          |")
                 print("|                                                                          |")
-                print(f'|         Dados de {coluna} da máquina {maquinas[fkplc]}:                   |')
+                print(f'|         Dados de {coluna} da máquina {maquinas[fkplc]}:                     |')
                 print(f'|                                    {linha[0]:.2f}                                 |')
                 print("|                                                                          |")
                 print("|                                                                          |")
@@ -75,14 +75,20 @@ def selecao_do_fk(coluna):
             # Execução da query
             cursor.execute(f"""
                 SELECT avg({coluna})
-                FROM dadosCorriqueiros
-                WHERE fkPlc = {fkplc}
+                FROM Dados
+                WHERE fkPlc = {fkplc};
             """)
             
             # Exibição dos resultados
-            print(f'\nDados de {coluna} da máquina {maquinas[fkplc]}:')
             for linha in cursor.fetchall():
-                print(f'{linha[0]:.2f}')
+                print("-"*76)
+                print("|                                                                          |")
+                print("|                                                                          |")
+                print(f'|         Dados de {coluna} da máquina {maquinas[fkplc]}:                      |')
+                print(f'|                                    {linha[0]:.2f}                                 |')
+                print("|                                                                          |")
+                print("|                                                                          |")
+                print("-"*76)
                 
         finally:
             cursor.close()
@@ -147,7 +153,7 @@ def tratar_ram():
         try:
             cursor.execute(f"""
                 SELECT avg(usoMemoriaRam), avg(memoriaLivre)
-                FROM dadosCorriqueiros;
+                FROM Dados;
                 """)
             
                 
@@ -160,11 +166,24 @@ def tratar_ram():
                 porcentagemLivre =  100 - ramPercent 
 
                 if tipo_de_dados == 1:
-                    print(f'Sua quantidade de RAM livre (em GiB): {ramLivre:.0f}')
-                    print(f'Seu total de RAM em GiB: {ramTotal:.0f}') 
+                    print("-"*76)
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print(f'|          Sua quantidade de RAM livre (em GiB): {ramLivre:.0f}                          |')
+                    print(f'|          Seu total de RAM em GiB: {ramTotal:.0f}                                      |')
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print("-"*76)
+
                 elif tipo_de_dados == 2:
-                    print(f'Porcentagem de uso da memória RAM: {ramPercent}%')
-                    print(f'Porcentagem da memória RAM livre: {porcentagemLivre}%')
+                    print("-"*76)
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print(f'|         Porcentagem de uso da memória RAM: {ramPercent}%                        |')
+                    print(f'|         Porcentagem da memória RAM livre: {porcentagemLivre}%                         |')
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print("-"*76)
 
         finally:
             cursor.close()
@@ -173,7 +192,7 @@ def tratar_ram():
         try:
             cursor.execute(f"""
                 SELECT avg(usoMemoriaRam), avg(memoriaLivre)
-                FROM dadosCorriqueiros
+                FROM Dados
                 WHERE fkPlc = {fkplc};
                 """)
             
@@ -187,11 +206,23 @@ def tratar_ram():
                 porcentagemLivre =  100 - ramPercent 
 
                 if tipo_de_dados == 1:
-                    print(f'Sua quantidade de RAM livre (em GiB): {ramLivre:.0f}')
-                    print(f'Seu total de RAM em GiB: {ramTotal:.0f}') 
+                    print("-"*76)
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print(f'|        Sua quantidade de RAM livre (em GiB): {ramLivre:.0f}                           |')
+                    print(f'|        Seu total de RAM em GiB: {ramTotal:.0f}                                        |')
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print("-"*76) 
                 elif tipo_de_dados == 2:
-                    print(f'Porcentagem de uso da memória RAM: {ramPercent}%')
-                    print(f'Porcentagem da memória RAM livre: {porcentagemLivre}%')
+                    print("-"*76)
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print(f'|        Porcentagem de uso da memória RAM: {ramPercent}%                          |')
+                    print(f'|        Porcentagem da memória RAM livre: {porcentagemLivre}%                           |')
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print("-"*76)
 
         finally:
             cursor.close()
@@ -255,7 +286,7 @@ def tratar_cpu():
         try:
             cursor.execute(f"""
                 SELECT avg(ociosidadeCpu), avg(atividadeCpu)
-                FROM dadosCorriqueiros;
+                FROM Dados;
                 """)
             
                 
@@ -281,7 +312,7 @@ def tratar_cpu():
         try:
             cursor.execute(f"""
                 SELECT avg(ociosidadeCpu), avg(atividadeCpu)
-                FROM dadosCorriqueiros
+                FROM Dados;
                 WHERE fkPlc = {fkplc};
                 """)
             
