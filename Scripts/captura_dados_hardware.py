@@ -68,7 +68,7 @@ def coletar_dados(is_temperatura_cpu, is_uso_cpu, is_ociosidade_cpu, is_tempo_at
             dados.append({'nome_coluna': 'usoCpu', 'dado': uso})
 
         if is_ociosidade_cpu:
-            ociosidade = int(psutil.cpu_times().idle / (60 ** 2))
+            ociosidade = int(psutil.cpu_times().idle / (60 * 60 * 24))
             # percentual_ocioso = int((ociosidade / atividade) * 100)
             dados.append({'nome_coluna': 'ociosidadeCpu', 'dado': ociosidade})
 
