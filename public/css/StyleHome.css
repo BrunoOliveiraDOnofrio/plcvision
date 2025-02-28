@@ -1,6 +1,12 @@
 * {
     padding: 0%;
     margin: 0%;
+    font-family: "Gt walshein", sans-serif;
+}
+
+@font-face {
+    font-family: Gt walsheim;
+    src: url(/public/fontes/GT-Walsheim-Black-Oblique-Trial-BF651b7fc5608e6.otf);
 }
 
 nav {
