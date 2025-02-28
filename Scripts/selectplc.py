@@ -4,9 +4,9 @@ import time
 def conectar_db():
 
     conexao_db = db.connect(
-        host='10.18.32.61',
+        host='localhost',
         user='select_user',
-        port=3306,
+        port='3306',
         password='Urubu100#',
         database='PlcVision'
     )
@@ -25,7 +25,8 @@ def selecao_do_fk(coluna):
         2: "Vitória",
         3: "Kaio",
         4: "Pedro",
-        5: "Ranier"
+        5: "Ranier",
+        6: "Todas as Máquinas"
     }
 
     # Menu de seleção
@@ -46,24 +47,48 @@ def selecao_do_fk(coluna):
             print('Entrada inválida! Digite um número.')
 
     cursor = banco.cursor()
-    try:
-        # Execução da query
-        cursor.execute(f"""
-            SELECT avg({coluna})
-            FROM dadosCorriqueiros
-            WHERE fkPlc = {fkplc}
-        """)
-        
-        # Exibição dos resultados
-        print(f'\nDados de {coluna} da máquina {maquinas[fkplc]}:')
-        for linha in cursor.fetchall():
-            print(f'{linha[0]:.2f}')
-            
-    finally:
-        cursor.close()
 
-    time.sleep(3)
+    if escolha == 6:
+        try:
+            # Execução da query
+            cursor.execute(f"""
+                SELECT avg({coluna})
+                FROM dadosCorriqueiros;
+            """)
+            
+            # Exibição dos resultados
+            for linha in cursor.fetchall():
+                print("-"*76)
+                print("|                                                                          |")
+                print("|                                                                          |")
+                print(f'|         Dados de {coluna} da máquina {maquinas[fkplc]}:                   |')
+                print(f'|                                    {linha[0]:.2f}                                 |')
+                print("|                                                                          |")
+                print("|                                                                          |")
+                print("-"*76)
+                
+        finally:
+            cursor.close()
+
+    else: 
+        try:
+            # Execução da query
+            cursor.execute(f"""
+                SELECT avg({coluna})
+                FROM dadosCorriqueiros
+                WHERE fkPlc = {fkplc}
+            """)
+            
+            # Exibição dos resultados
+            print(f'\nDados de {coluna} da máquina {maquinas[fkplc]}:')
+            for linha in cursor.fetchall():
+                print(f'{linha[0]:.2f}')
+                
+        finally:
+            cursor.close()
+
     print('Aguarde 3 segundos para prosseguir.')
+    time.sleep(3)
     main()
     
 
@@ -75,7 +100,8 @@ def tratar_ram():
         2: "Vitória",
         3: "Kaio",
         4: "Pedro",
-        5: "Ranier"
+        5: "Ranier",
+        6: "Todas as Máquinas"
     }
 
     # Menu de seleção
@@ -96,8 +122,8 @@ def tratar_ram():
             print('Entrada inválida! Digite um número.')
 
     dados = {
-        1: "byte",
-        2: "porcentagem"
+        1: "GiB",
+        2: "Porcentagem"
     }
 
     print('Selecione a maneira que deseja visualizar os dados:')
@@ -116,35 +142,62 @@ def tratar_ram():
 
     # Conexão com o banco
     cursor = banco.cursor()
-    
-    try:
-        cursor.execute(f"""
-            SELECT avg(usoMemoriaRam), avg(memoriaLivre)
-            FROM dadosCorriqueiros
-            WHERE fkPlc = {fkplc};
-            """)
-        
+
+    if escolha == 6:
+        try:
+            cursor.execute(f"""
+                SELECT avg(usoMemoriaRam), avg(memoriaLivre)
+                FROM dadosCorriqueiros;
+                """)
             
-        print(f'\n Dados das usoMemoriaRam, memoriaLivre da máquina {maquinas[fkplc]}')
-        for linha in cursor.fetchall():
-            ramPercent = linha[0] 
-            ramLivre = linha[1]  
+                
+            print(f'\n Dados das usoMemoriaRam, memoriaLivre da máquina {maquinas[fkplc]}')
+            for linha in cursor.fetchall():
+                ramPercent = linha[0] 
+                ramLivre = linha[1]  
 
-            ramTotal = (ramLivre * 100) / ramPercent
-            porcentagemLivre =  100 - ramPercent 
+                ramTotal = (ramLivre * 100) / ramPercent
+                porcentagemLivre =  100 - ramPercent 
 
-            if tipo_de_dados == 1:
-                print(f'Sua quantidade de RAM livre (em bytes): {ramLivre * (1024 ** 3)}')
-                print(f'Seu total de RAM em bytes: {ramTotal * (1024 ** 3)}') 
-            elif tipo_de_dados == 2:
-                print(f'Porcentagem de uso da memória RAM: {ramPercent}%')
-                print(f'Porcentagem da memória RAM livre: {porcentagemLivre}%')
+                if tipo_de_dados == 1:
+                    print(f'Sua quantidade de RAM livre (em GiB): {ramLivre:.0f}')
+                    print(f'Seu total de RAM em GiB: {ramTotal:.0f}') 
+                elif tipo_de_dados == 2:
+                    print(f'Porcentagem de uso da memória RAM: {ramPercent}%')
+                    print(f'Porcentagem da memória RAM livre: {porcentagemLivre}%')
 
-    finally:
-        cursor.close()
+        finally:
+            cursor.close()
+        
+    else:
+        try:
+            cursor.execute(f"""
+                SELECT avg(usoMemoriaRam), avg(memoriaLivre)
+                FROM dadosCorriqueiros
+                WHERE fkPlc = {fkplc};
+                """)
+            
+                
+            print(f'\n Dados das usoMemoriaRam, memoriaLivre da máquina {maquinas[fkplc]}')
+            for linha in cursor.fetchall():
+                ramPercent = linha[0] 
+                ramLivre = linha[1]  
 
-    time.sleep(3)
+                ramTotal = (ramLivre * 100) / ramPercent
+                porcentagemLivre =  100 - ramPercent 
+
+                if tipo_de_dados == 1:
+                    print(f'Sua quantidade de RAM livre (em GiB): {ramLivre:.0f}')
+                    print(f'Seu total de RAM em GiB: {ramTotal:.0f}') 
+                elif tipo_de_dados == 2:
+                    print(f'Porcentagem de uso da memória RAM: {ramPercent}%')
+                    print(f'Porcentagem da memória RAM livre: {porcentagemLivre}%')
+
+        finally:
+            cursor.close()
+
     print('Aguarde 3 segundos para prosseguir.')
+    time.sleep(3)
     main()
 
 def tratar_cpu():
@@ -155,7 +208,8 @@ def tratar_cpu():
         2: "Vitória",
         3: "Kaio",
         4: "Pedro",
-        5: "Ranier"
+        5: "Ranier",
+        6: "Todas as Máquinas"
     }
 
     # Menu de seleção
@@ -176,8 +230,8 @@ def tratar_cpu():
             print('Entrada inválida! Digite um número.')
 
     dados = {
-        1: "minutos",
-        2: "porcentagem"
+        1: "Minutos",
+        2: "Porcentagem"
     }
 
     print('Selecione a maneira que deseja visualizar os dados:')
@@ -196,32 +250,59 @@ def tratar_cpu():
 
     # Conexão com o banco
     cursor = banco.cursor()
-    
-    try:
-        cursor.execute(f"""
-            SELECT avg(ociosidadeCpu), avg(atividadeCpu)
-            FROM dadosCorriqueiros
-            WHERE fkPlc = {fkplc};
-            """)
-        
+
+    if escolha == 6:
+        try:
+            cursor.execute(f"""
+                SELECT avg(ociosidadeCpu), avg(atividadeCpu)
+                FROM dadosCorriqueiros;
+                """)
             
-        print(f'\n Dados das ociosidadeCpu, atividadeCpu da máquina {maquinas[fkplc]}')
-        for linha in cursor.fetchall():
-            ociosidadeMinute = linha[0] 
-            atividadeMinute = linha[1]  
+                
+            print(f'\n Dados das ociosidadeCpu, atividadeCpu da máquina {maquinas[fkplc]}')
+            for linha in cursor.fetchall():
+                ociosidadeMinute = linha[0] 
+                atividadeMinute = linha[1]  
 
-            porcentagem_ociosa = (ociosidadeMinute / atividadeMinute) * 100
-            porcentagemL_atividade =  100 - porcentagem_ociosa 
+                porcentagem_ociosa = (ociosidadeMinute / atividadeMinute) * 100
+                porcentagemL_atividade =  100 - porcentagem_ociosa 
 
-            if tipo_de_dados == 1:
-                print(f'Tempo de Ociosidade em (em minutos): {ociosidadeMinute}')
-                print(f'Tempo de atividade em minutos: {atividadeMinute}') 
-            elif tipo_de_dados == 2:
-                print(f'Porcentagem da ociosidade da CPU: {porcentagem_ociosa:.2f}%')
-                print(f'Porcentagem do tempo de atividade da CPU: {porcentagemL_atividade:.2f}%')
+                if tipo_de_dados == 1:
+                    print(f'Tempo de Ociosidade em (em minutos): {ociosidadeMinute:.0f}')
+                    print(f'Tempo de atividade em minutos: {atividadeMinute:.0f}') 
+                elif tipo_de_dados == 2:
+                    print(f'Porcentagem da ociosidade da CPU: {porcentagem_ociosa:.2f}%')
+                    print(f'Porcentagem do tempo de atividade da CPU: {porcentagemL_atividade:.2f}%')
 
-    finally:
-        cursor.close()
+        finally:
+            cursor.close()
+    
+    else:
+        try:
+            cursor.execute(f"""
+                SELECT avg(ociosidadeCpu), avg(atividadeCpu)
+                FROM dadosCorriqueiros
+                WHERE fkPlc = {fkplc};
+                """)
+            
+                
+            print(f'\n Dados das ociosidadeCpu, atividadeCpu da máquina {maquinas[fkplc]}')
+            for linha in cursor.fetchall():
+                ociosidadeMinute = linha[0] 
+                atividadeMinute = linha[1]  
+
+                porcentagem_ociosa = (ociosidadeMinute / atividadeMinute) * 100
+                porcentagemL_atividade =  100 - porcentagem_ociosa 
+
+                if tipo_de_dados == 1:
+                    print(f'Tempo de Ociosidade em (em minutos): {ociosidadeMinute:.0f}')
+                    print(f'Tempo de atividade em minutos: {atividadeMinute:.0f}') 
+                elif tipo_de_dados == 2:
+                    print(f'Porcentagem da ociosidade da CPU: {porcentagem_ociosa:.2f}%')
+                    print(f'Porcentagem do tempo de atividade da CPU: {porcentagemL_atividade:.2f}%')
+
+        finally:
+            cursor.close()
 
     time.sleep(3)
     print('Aguarde 3 segundos para prosseguir.')

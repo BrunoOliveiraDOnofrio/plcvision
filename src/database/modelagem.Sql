@@ -38,7 +38,7 @@ CREATE TABLE PLC (
 CREATE TABLE Dados ( 
     idDados INT PRIMARY KEY AUTO_INCREMENT, 
     fkPLC INT, 
-    dataHora DATETIME NOT NULL, 
+    dataHora DATETIME NOT NULL DEFAULT NOW(), 
     temperaturaCpu FLOAT, 
     usoCPU FLOAT, 
     atividadeCPU FLOAT, 
@@ -57,7 +57,7 @@ CREATE TABLE Alertas (
     fkDados INT, 
     nivel TINYINT NOT NULL, 
     FOREIGN KEY (fkDados) REFERENCES Dados(idDados) ON DELETE CASCADE ,
-    CONSTRAINT chkNivelAlerta CHECK(nivel IN (0, 1)) --0 atencao, 1 critico
+    CONSTRAINT chkNivelAlerta CHECK(nivel IN (0, 1)) -- 0 atencao, 1 critico
 ); 
 
 CREATE TABLE Usuarios ( 
@@ -71,7 +71,7 @@ CREATE TABLE Usuarios (
     setor VARCHAR(45), 
     cargo VARCHAR(45), 
     FOREIGN KEY (fkEmpresa) REFERENCES Empresas(idEmpresas) ON DELETE CASCADE,
-    CONSTRAINT chkNivelUsuario CHECK(isAlimentacao IN (0, 1, 2)) -- 0 real time, 1 insights, 2 todas dash's + CRUD de usuarios
+    CONSTRAINT chkNivelUsuario CHECK(nivel IN (0, 1, 2)) -- 0 real time, 1 insights, 2 todas dash's + CRUD de usuarios
 );
 
 INSERT INTO Empresas (CNPJ, nome, CEP, numero) VALUES
