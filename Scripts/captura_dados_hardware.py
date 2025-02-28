@@ -24,7 +24,8 @@ def configuracao_db():
         host='10.18.32.61',
         port=3306,
         user='InsertUser',
-        password='Urubu100'
+        password='Urubu100',
+        database='PlcVision'
     )
 
     return conexao_db
@@ -45,7 +46,7 @@ def armazenar_dados(dados):
     executor = banco.cursor() 
 
     print(f'Inserindo dados: {valores[:-1]}.')
-    query = f'INSERT INTO PlcVision.dadosCorriqueiros(fkPlc,{colunas[:-1]}) VALUES ({id_plc}, {valores[:-1]});'
+    query = f'INSERT INTO dados(fkPLC,{colunas[:-1]}) VALUES ({id_plc}, {valores[:-1]});'
 
     executor.execute(query)
     banco.commit()
@@ -65,16 +66,16 @@ def coletar_dados(is_temperatura_cpu, is_uso_cpu, is_ociosidade_cpu, is_tempo_at
 
         if is_uso_cpu:
             uso = psutil.cpu_percent(interval=None, percpu=False)
-            dados.append({'nome_coluna': 'usoCpu', 'dado': uso})
+            dados.append({'nome_coluna': 'usoCPU', 'dado': uso})
 
         if is_ociosidade_cpu:
             ociosidade = int(psutil.cpu_times().idle / (60 * 60 * 24))
             # percentual_ocioso = int((ociosidade / atividade) * 100)
-            dados.append({'nome_coluna': 'ociosidadeCpu', 'dado': ociosidade})
+            dados.append({'nome_coluna': 'ociosidadeCPU', 'dado': ociosidade})
 
         if is_tempo_atividade_cpu:
             atividade = int(psutil.boot_time() / (60 * 60 * 24))
-            dados.append({'nome_coluna': 'atividadeCpu', 'dado': atividade})
+            dados.append({'nome_coluna': 'atividadeCPU', 'dado': atividade})
 
         ram = psutil.virtual_memory()
 
