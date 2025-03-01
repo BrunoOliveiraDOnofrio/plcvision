@@ -59,10 +59,10 @@
 
             </div>
 
-            <div class="carrossel">
-
-
-
+            <div class="carousel" id="carossel">
+                <div class="card siemens">SIEMENS</div>
+                <div class="card rockwell">Rockwell Automation</div>
+                <div class="card schneider">Schneider Electric</div>
             </div>
 
         </div>
@@ -97,7 +97,7 @@
 
         <div class="box5">
 
-            
+
 
         </div>
 
@@ -107,3 +107,15 @@
 </body>
 
 </html>
+
+<script>
+    const carousel = document.getElementById('carossel');
+
+    function girarCarrosseu() {
+        const cards = document.querySelectorAll('.card');
+        carousel.appendChild(cards[0].cloneNode(true));
+        carousel.removeChild(cards[0]);
+    }
+
+    setInterval(girarCarrosseu, 5000);
+</script>
