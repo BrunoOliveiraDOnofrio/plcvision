@@ -81,10 +81,11 @@ def selecao_do_fk(coluna):
             
             # Exibição dos resultados
             for linha in cursor.fetchall():
+                print(f'            Dados de {coluna} da máquina {maquinas[fkplc]}:\n')
                 print("-"*76)
                 print("|                                                                          |")
                 print("|                                                                          |")
-                print(f'|         Dados de {coluna} da máquina {maquinas[fkplc]}:                      |')
+                print(f'|                                                                          |')
                 print(f'|                                    {linha[0]:.2f}                                 |')
                 print("|                                                                          |")
                 print("|                                                                          |")
@@ -169,7 +170,7 @@ def tratar_ram():
                     print("-"*76)
                     print("|                                                                          |")
                     print("|                                                                          |")
-                    print(f'|          Sua quantidade de RAM livre (em GiB): {ramLivre:.0f}                          |')
+                    print(f'|          Sua quantidade de RAM livre (em GiB): {ramLivre:.0f}                         |')
                     print(f'|          Seu total de RAM em GiB: {ramTotal:.0f}                                      |')
                     print("|                                                                          |")
                     print("|                                                                          |")
@@ -302,14 +303,20 @@ def tratar_cpu():
                     print("-"*76)
                     print("|                                                                          |")
                     print("|                                                                          |")
-                    print(f'Tempo de Ociosidade em (em minutos): {ociosidadeMinute:.0f}')
-                    print(f'Tempo de atividade em minutos: {atividadeMinute:.0f}')
+                    print(f'|       Tempo de Ociosidade em (em minutos): {ociosidadeMinute:.0f}                            |')
+                    print(f'|       Tempo de atividade em minutos: {atividadeMinute:.0f}                                  |')
                     print("|                                                                          |")
                     print("|                                                                          |")
                     print("-"*76) 
                 elif tipo_de_dados == 2:
-                    print(f'Porcentagem da ociosidade da CPU: {porcentagem_ociosa:.2f}%')
-                    print(f'Porcentagem do tempo de atividade da CPU: {porcentagemL_atividade:.2f}%')
+                    print("-"*76)
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print(f'|      Porcentagem da ociosidade da CPU: {porcentagem_ociosa:.2f}%                            |')
+                    print(f'|      Porcentagem do tempo de atividade da CPU: {porcentagemL_atividade:.2f}%                    |')
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print("-"*76)
 
         finally:
             cursor.close()
@@ -332,11 +339,23 @@ def tratar_cpu():
                 porcentagemL_atividade =  100 - porcentagem_ociosa 
 
                 if tipo_de_dados == 1:
-                    print(f'Tempo de Ociosidade em (em minutos): {ociosidadeMinute:.0f}')
-                    print(f'Tempo de atividade em minutos: {atividadeMinute:.0f}') 
+                    print("-"*76)
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print(f'|         Tempo de Ociosidade em (em minutos): {ociosidadeMinute:.0f}                          |')
+                    print(f'|         Tempo de atividade em minutos: {atividadeMinute:.0f}                                |')
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print("-"*76) 
                 elif tipo_de_dados == 2:
-                    print(f'Porcentagem da ociosidade da CPU: {porcentagem_ociosa:.2f}%')
-                    print(f'Porcentagem do tempo de atividade da CPU: {porcentagemL_atividade:.2f}%')
+                    print("-"*76)
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print(f'|     Porcentagem da ociosidade da CPU: {porcentagem_ociosa:.2f}%                             |')
+                    print(f'|     Porcentagem do tempo de atividade da CPU: {porcentagemL_atividade:.2f}%                     |')
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print("-"*76)
 
         finally:
             cursor.close()
@@ -409,7 +428,7 @@ def visualizar_dados_bateria():
 
     metricas = {
         1: ('isAlimentacao', 'Se está conectado na fonte de alimentação'),
-        2: ('qtdBateria', 'Porcentagem de bateria'),
+        2: ('dtBateria', 'Porcentagem de bateria'),
         3: ('tempoBateriaRestante', 'Tempo restante de bateria')
     }
 
