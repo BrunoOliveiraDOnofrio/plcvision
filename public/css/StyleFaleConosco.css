@@ -1,0 +1,126 @@
+nav {
+    display: flex;
+    width: 100%;
+    height: 9vh;
+    border: #000000;
+}
+
+.logo_nav {
+    display: flex;
+    width: 15%;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.mid_nav {
+    display: flex;
+    width: 70vw;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.mid_nav ul {
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+}
+
+.mid_nav ul li {
+    display: flex;
+    list-style: none;
+}
+
+.mid_nav ul li a {
+    display: flex;
+    text-decoration: none;
+    color: black;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.btn_nav {
+    display: flex;
+    width: 15%;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_nav button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 9vw;
+    height: 5vh;
+    background-color: #24284B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+body {
+
+    /* background: linear-gradient(#89AAFF,#a9c0fa ,#EFEFEF); */
+    background: linear-gradient(#EFEFEF,#dae5ff,#b4c9ff);
+    background-size: cover;
+    overflow: hidden;
+    height: 100vh;
+    margin: 0;
+   
+}
+
+.container-global {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 95vh;
+    gap: 10%;
+}
+
+.cards {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+.PCLVision {
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 35px;
+    color: #161c3d;
+   
+}
+
+.PCLVision span{
+    font-size: 75px;
+}
+.card {
+    display: flex;
+    width: 20%;
+    height: 60%;
+    border: 1.5px solid;
+    border-color: #000000;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 20px;
+    background: #161c3d;
+    border-radius: 20px;
+}
+
+.cards a{
+    font-size: 35px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    align-items: flex-start;
+
+}
