@@ -28,16 +28,18 @@
             </ul>
         </div>
         <div class="btn_nav">
-            <button onclick="entrar()">Entrar</button>
+            <button onclick="irLogin()">Entrar</button>
         </div>
     </nav>
     <div class="container">
         <div class="box1">
 
             <div class="texto_inicio">
-                <h1 style="color: #24284B;">Monitoramento</h1>
-                <h1 style="color: #0D1030;">Tempo Real</h1>
-                <h1 style="color: #24284B">Alertas</h1>
+                <h1>
+                    <span style="color: #24284B;">MONITORAMENTO</span><br>
+                    <span style="color: #0D1030;">TEMPO REAL</span><br>
+                    <span style="color: #24284B;">ALERTAS</span>
+                </h1>
             </div>
             <div class="seta">
                 <img src="./assets/imgs/seta Home.png" alt="">
@@ -57,22 +59,96 @@
 
             </div>
 
-            <div class="carrossel">
-
-
-                
+            <div class="carousel" id="carossel">
+                <div class="card">SIEMENS</div>
+                <div class="card">Rockwell Automation</div>
+                <div class="card">Schneider Electric</div>
             </div>
 
         </div>
         <div class="box3">
 
         </div>
+        <div class="box4">
+
+            <div class="box_esc">
+                <div class="box_gif">
+
+                </div>
+            </div>
+
+            <div class="box_dir">
+
+                <div class="subtitulo">
+                    <h3>Velocidade da luz</h3>
+                </div>
+                <div class="img_raio">
+
+                </div>
+                <div class="desc">
+
+                </div>
+                <div class="img_setinha">
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="box5">
+
+            <div class="logo_b5">
+                <h1>PCLVision</h1>
+            </div>
+
+            <div class="quadros">
+                <div class="quadro">
+                    <div class="subt_quadro">
+                        <h3>Visão</h3>
+                    </div>
+                </div>
+                <div class="quadro">
+                    <div class="subt_quadro">
+                        <h3>Valores</h3>
+                    </div>
+
+                </div>
+                <div class="quadro">
+                    <div class="subt_quadro">
+                        <h3>
+                            Missão
+                        </h3>
+                    </div>
+
+                </div>
+            </div>
 
 
+        </div>
 
 
     </div>
 
+    <footer>
+
+    </footer>
 </body>
 
 </html>
+
+<script>
+
+    const carousel = document.getElementById('carossel');
+
+    function girarCarrosseu() {
+        const cards = document.querySelectorAll('.card');
+        carousel.appendChild(cards[0].cloneNode(true));
+        carousel.removeChild(cards[0]);
+    }
+
+    setInterval(girarCarrosseu, 5000);
+
+    function irLogin() {
+        window.location = "./EntrarPCLVision.html"
+    }
+</script>

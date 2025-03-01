@@ -1,43 +1,46 @@
+DROP DATABASE IF EXISTS PlcVision;
 CREATE DATABASE PlcVision;
 USE PlcVision;
  
-CREATE TABLE Empresas ( 
+CREATE TABLE empresas ( 
     idEmpresas INT PRIMARY KEY AUTO_INCREMENT, 
     CNPJ CHAR(14) UNIQUE NOT NULL, 
     nome VARCHAR(45) NOT NULL, 
-    CEP VARCHAR(8), 
-    numero VARCHAR(100) 
+    CEP VARCHAR(8) NOT NULL, 
+    numero VARCHAR(100) NOT NULL 
 ); 
 
-CREATE TABLE Contato ( 
-    idContato VARCHAR(45) PRIMARY KEY, 
+CREATE TABLE contato ( 
+    idContato INT PRIMARY KEY AUTO_INCREMENT, 
     fkEmpresa INT, 
-    mensagem VARCHAR(255), 
-    CNPJ CHAR(14), 
-    email VARCHAR(100), 
-    FOREIGN KEY (fkEmpresa) REFERENCES Empresas(idEmpresas) ON DELETE CASCADE 
+    mensagem VARCHAR(255) NOT NULL, 
+    email VARCHAR(100) UNIQUE NOT NULL, 
+    data DATETIME NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresas)
 ); 
 
-CREATE TABLE Industrias ( 
+CREATE TABLE industrias ( 
     idIndustrias INT PRIMARY KEY AUTO_INCREMENT, 
-    nome VARCHAR(45) NOT NULL, setor VARCHAR(45), 
+    nome VARCHAR(45) NOT NULL, 
+    setor VARCHAR(45) NOT NULL, 
     CNPJ CHAR(14) UNIQUE NOT NULL, 
-    CEP CHAR(8), numero VARCHAR(100) 
+    CEP CHAR(8) NOT NULL, 
+    numero VARCHAR(100) NOT NULL 
 ); 
 
 CREATE TABLE PLC ( 
     idPLC INT PRIMARY KEY AUTO_INCREMENT, 
-    fkIndustria INT, 
-    fkEmpresa INT, 
-    localizacao VARCHAR(100), 
-    modelo VARCHAR(45), 
-    FOREIGN KEY (fkIndustria) REFERENCES Industrias(idIndustrias) ON DELETE CASCADE, 
-    FOREIGN KEY (fkEmpresa) REFERENCES Empresas(idEmpresas) ON DELETE CASCADE 
+    fkIndustria INT NOT NULL, 
+    fkEmpresa INT NOT NULL, 
+    localizacao VARCHAR(100) NOT NULL, 
+    modelo VARCHAR(45) NOT NULL, 
+    FOREIGN KEY (fkIndustria) REFERENCES industrias(idIndustrias), 
+    FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresas) 
 ); 
 
-CREATE TABLE Dados ( 
+CREATE TABLE dados ( 
     idDados INT PRIMARY KEY AUTO_INCREMENT, 
-    fkPLC INT, 
+    fkPLC INT NOT NULL, 
     dataHora DATETIME NOT NULL DEFAULT NOW(), 
     temperaturaCpu FLOAT, 
     usoCPU FLOAT, 
@@ -48,42 +51,42 @@ CREATE TABLE Dados (
     isAlimentacao TINYINT, 
     dtBateria FLOAT, 
     tempoBateriaRestante FLOAT, 
-    FOREIGN KEY (fkPLC) REFERENCES PLC(idPLC) ON DELETE CASCADE,
+    FOREIGN KEY (fkPLC) REFERENCES PLC(idPLC),
     CONSTRAINT chkIsAlimentacao CHECK(isAlimentacao IN (0, 1)) -- 0 - False, 1 - TRUE
 ); 
 
-CREATE TABLE Alertas ( 
+CREATE TABLE alertas ( 
     idAlertas INT PRIMARY KEY AUTO_INCREMENT, 
-    fkDados INT, 
+    fkDados INT NOT NULL, 
     nivel TINYINT NOT NULL, 
-    FOREIGN KEY (fkDados) REFERENCES Dados(idDados) ON DELETE CASCADE ,
+    FOREIGN KEY (fkDados) REFERENCES dados(idDados) ,
     CONSTRAINT chkNivelAlerta CHECK(nivel IN (0, 1)) -- 0 atencao, 1 critico
 ); 
 
-CREATE TABLE Usuarios ( 
+CREATE TABLE usuarios ( 
     idUsuarios INT PRIMARY KEY AUTO_INCREMENT, 
-    fkEmpresa INT, 
+    fkEmpresa INT NOT NULL, 
     nome VARCHAR(45) NOT NULL, 
     email VARCHAR(45) UNIQUE NOT NULL, 
     senha VARCHAR(50) NOT NULL, 
-    telefone CHAR(13), 
+    telCelular CHAR(13) NOT NULL, 
     nivel TINYINT NOT NULL, 
-    setor VARCHAR(45), 
-    cargo VARCHAR(45), 
-    FOREIGN KEY (fkEmpresa) REFERENCES Empresas(idEmpresas) ON DELETE CASCADE,
+    setor VARCHAR(45) NOT NULL, 
+    cargo VARCHAR(45) NOT NULL, 
+    FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresas),
     CONSTRAINT chkNivelUsuario CHECK(nivel IN (0, 1, 2)) -- 0 real time, 1 insights, 2 todas dash's + CRUD de usuarios
 );
 
-INSERT INTO Empresas (CNPJ, nome, CEP, numero) VALUES
+INSERT INTO empresas (CNPJ, nome, CEP, numero) VALUES
 ('12345678000101', 'Siemens', '01001000', '100'),
 ('98765432000102', 'Rockwell Automation', '02002000', '200'),
 ('45678912000103', 'Schneider Electric', '03003000', '300');
 
-INSERT INTO Contato (idContato, fkEmpresa, mensagem, CNPJ, email) VALUES
-('CT001', 1, 'Precisamos de mais informações sobre seus produtos.', '12345678000101', 'cliente@industria.com'),
-('CT002', 2, 'Gostaríamos de uma cotação para PLCs.', '98765432000102', 'compras@fabrica.com');
+INSERT INTO contato (fkEmpresa, mensagem, email) VALUES
+(1, 'Precisamos de mais informações sobre seus produtos.', 'cliente@industria.com'),
+(2, 'Gostaríamos de uma cotação para PLCs.', 'compras@fabrica.com');
 
-INSERT INTO Industrias (nome, setor, CNPJ, CEP, numero) VALUES
+INSERT INTO industrias (nome, setor, CNPJ, CEP, numero) VALUES
 ('Fábrica Automotiva', 'Automobilístico', '11111111000101', '04004000', '400'),
 ('Usina Metalúrgica', 'Metalurgia', '22222222000102', '05005000', '500');
 
@@ -91,14 +94,14 @@ INSERT INTO PLC (fkIndustria, fkEmpresa, localizacao, modelo) VALUES
 (1, 1, 'Linha de montagem A', 'SIMATIC S7-1500'),
 (2, 2, 'Área de fundição', 'Allen-Bradley ControlLogix');
 
-INSERT INTO Dados (fkPLC, dataHora, temperaturaCpu, usoCPU, atividadeCPU, ociosidadeCPU, usoMemoriaRam, memoriaLivre, isAlimentacao, dtBateria, tempoBateriaRestante) VALUES
+INSERT INTO dados (fkPLC, dataHora, temperaturaCpu, usoCPU, atividadeCPU, ociosidadeCPU, usoMemoriaRam, memoriaLivre, isAlimentacao, dtBateria, tempoBateriaRestante) VALUES
 (1, NOW(), 45.5, 65.3, 80.1, 19.9, 70.5, 2.0, 1, 95.0, 120),
 (2, NOW(), 50.2, 75.8, 85.0, 15.0, 80.0, 1.5, 0, 50.0, 60);
 
-INSERT INTO Alertas (fkDados, nivel) VALUES
+INSERT INTO alertas (fkDados, nivel) VALUES
 (1, 0), 
 (2, 1); 
 
-INSERT INTO Usuarios (fkEmpresa, nome, email, senha, telefone, nivel, setor, cargo) VALUES
+INSERT INTO usuarios (fkEmpresa, nome, email, senha, telCelular, nivel, setor, cargo) VALUES
 (1, 'Carlos Silva', 'carlos@siemens.com', 'senha123', '11987654321', 2, 'Engenharia', 'Gerente de Projetos'),
 (2, 'Ana Souza', 'ana@rockwell.com', 'seguranca456', '11912345678', 1, 'TI', 'Analista de Dados');
