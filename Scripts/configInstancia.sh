@@ -34,7 +34,6 @@ sudo systemctl enable mysql
 
 # configurando MYSQL
 echo "Configurando MYSQL..."
-cd ..
 sudo mysql < src/database/modelagem.sql
 
 CREATE USER 'plc_root'@'%' IDENTIFIED BY 'Urubu100';
@@ -56,4 +55,4 @@ npm i && npm start
 
 # iniciar script python 
 echo "Inicializando script de captura..."
-python3 ./Scripts/captura_dados.py
+python3 Scripts/captura_dados_hardware.py
