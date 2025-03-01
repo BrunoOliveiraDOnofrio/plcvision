@@ -299,8 +299,14 @@ def tratar_cpu():
                 porcentagemL_atividade =  100 - porcentagem_ociosa 
 
                 if tipo_de_dados == 1:
+                    print("-"*76)
+                    print("|                                                                          |")
+                    print("|                                                                          |")
                     print(f'Tempo de Ociosidade em (em minutos): {ociosidadeMinute:.0f}')
-                    print(f'Tempo de atividade em minutos: {atividadeMinute:.0f}') 
+                    print(f'Tempo de atividade em minutos: {atividadeMinute:.0f}')
+                    print("|                                                                          |")
+                    print("|                                                                          |")
+                    print("-"*76) 
                 elif tipo_de_dados == 2:
                     print(f'Porcentagem da ociosidade da CPU: {porcentagem_ociosa:.2f}%')
                     print(f'Porcentagem do tempo de atividade da CPU: {porcentagemL_atividade:.2f}%')
