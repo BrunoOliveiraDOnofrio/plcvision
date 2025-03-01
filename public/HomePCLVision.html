@@ -28,7 +28,7 @@
             </ul>
         </div>
         <div class="btn_nav">
-            <button onclick="entrar()">Entrar</button>
+            <button onclick="irLogin()">Entrar</button>
         </div>
     </nav>
     <div class="container">
@@ -97,6 +97,31 @@
 
         <div class="box5">
 
+            <div class="logo_b5">
+                <h1>PCLVision</h1>
+            </div>
+
+            <div class="quadros">
+                <div class="quadro">
+                    <div class="subt_quadro">
+                        <h3>Visão</h3>
+                    </div>
+                </div>
+                <div class="quadro">
+                    <div class="subt_quadro">
+                        <h3>Valores</h3>
+                    </div>
+
+                </div>
+                <div class="quadro">
+                    <div class="subt_quadro">
+                        <h3>
+                            Missão
+                        </h3>
+                    </div>
+
+                </div>
+            </div>
 
 
         </div>
@@ -104,11 +129,15 @@
 
     </div>
 
+    <footer>
+
+    </footer>
 </body>
 
 </html>
 
 <script>
+
     const carousel = document.getElementById('carossel');
 
     function girarCarrosseu() {
@@ -118,4 +147,8 @@
     }
 
     setInterval(girarCarrosseu, 5000);
+
+    function irLogin() {
+        window.location = "./EntrarPCLVision.html"
+    }
 </script>
