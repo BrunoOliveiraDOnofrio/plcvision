@@ -184,7 +184,7 @@ nav {
 
 .card:nth-child(2) {
     background: #ebebeb;
-    color: white;
+    color: #24284B; 
     transform: translateX(650px) scale(1);
     z-index: 1;
 }
@@ -272,8 +272,10 @@ nav {
 
 .box_dir {
     display: flex;
+    flex-direction: column;
     width: 45%;
     height: 100%;
+    align-items: center;
 }
 
 .subtitulo {
@@ -291,6 +293,15 @@ nav {
 
 .img_raio {
     display: flex;
+}
+
+.texto_b4{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 40%;
+    font-size: 20px;
 }
 
 .box5 {
@@ -326,6 +337,7 @@ nav {
     border-radius: 7px;
     background-color: #c2c2c2;
     flex-direction: column;
+    align-items: center;
 }
 
 .subt_quadro {
@@ -343,14 +355,20 @@ nav {
 }
 
 .quadro:hover {
-    width: 30%;
+    width: 29%;
     transition: 0.5s;
 }
 
 .descricao{
     display: flex;
-    width: 100%;
-    height: 85%;
+    width: 80%;
+    height: 70%;
+    justify-content: center;
+    align-items: center;
+}
+
+.descricao span{
+    font-size: 20px;
 }
 
 footer {
