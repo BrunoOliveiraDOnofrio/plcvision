@@ -155,7 +155,7 @@ nav {
     font-size: 38px;
 }
 
-.carousel {
+.carossel {
     position: relative;
     width: 100%;
     height: 70%;
@@ -168,13 +168,13 @@ nav {
     height: 100%;
     border-radius: 7px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 1s ease;
+    transition: 1.5s;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
     font-size: 24px;
     color: #333;
+    flex-direction: column;
 }
 
 .card:nth-child(1) {
@@ -183,7 +183,7 @@ nav {
 }
 
 .card:nth-child(2) {
-    background: #6b6b85;
+    background: #ebebeb;
     color: white;
     transform: translateX(650px) scale(1);
     z-index: 1;
@@ -192,6 +192,53 @@ nav {
 .card:nth-child(3) {
     background: white;
     transform: translateX(320px) scale(0.9);
+}
+
+.logo_siemens {
+    display: flex;
+    width: 85%;
+    height: 20%;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
+}
+
+.logo_siemens img {
+    width: 80%;
+}
+
+.logo_scheletric {
+    display: flex;
+    width: 90%;
+    height: 25%;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo_scheletric img {
+    width: 65%;
+    height: 60%;
+}
+
+.logo_Rockw {
+    display: flex;
+    width: 90%;
+    height: 25%;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo_Rockw img {
+    width: 90%;
+    height: 60%;
+}
+
+.comentarios_parceiras {
+    display: flex;
+    width: 80%;
+    height: 75%;
+    justify-content: center;
+    align-items: center;
 }
 
 .box3 {
@@ -263,7 +310,7 @@ nav {
     font-size: 30px;
 }
 
-.quadros{
+.quadros {
     display: flex;
     width: 100%;
     height: 80%;
@@ -271,16 +318,17 @@ nav {
     justify-content: center;
 }
 
-.quadro{
+.quadro {
     display: flex;
     width: 28%;
     height: 90%;
     transition: 0.5s;
     border-radius: 7px;
     background-color: #c2c2c2;
+    flex-direction: column;
 }
 
-.subt_quadro{
+.subt_quadro {
     display: flex;
     width: 100%;
     height: 15%;
@@ -288,17 +336,29 @@ nav {
     align-items: center;
 }
 
-.subt_quadro h3{
+.subt_quadro h3 {
     font-size: 40px;
     color: #24284B;
     font-weight: 500;
 }
 
-.quadro:hover{
+.quadro:hover {
     width: 30%;
     transition: 0.5s;
 }
 
+.descricao{
+    display: flex;
+    width: 100%;
+    height: 85%;
+}
+
+footer {
+    display: flex;
+    width: 100%;
+    height: 10vh;
+    background-color: #24284B;
+}
 
 @media screen and (max-width: 1024px) {
 
