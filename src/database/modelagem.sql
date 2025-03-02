@@ -57,7 +57,7 @@ CREATE TABLE dados (
 
 CREATE TABLE alertas ( 
     idAlertas INT PRIMARY KEY AUTO_INCREMENT, 
-    fkDados INT NOT NULL, 
+    fkDados INT UNIQUE NOT NULL, 
     nivel TINYINT NOT NULL, 
     FOREIGN KEY (fkDados) REFERENCES dados(idDados) ,
     CONSTRAINT chkNivelAlerta CHECK(nivel IN (0, 1)) -- 0 atencao, 1 critico
