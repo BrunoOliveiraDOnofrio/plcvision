@@ -184,7 +184,7 @@ nav {
 
 .card:nth-child(2) {
     background: #ebebeb;
-    color: #24284B; 
+    color: #24284B;
     transform: translateX(650px) scale(1);
     z-index: 1;
 }
@@ -295,7 +295,7 @@ nav {
     display: flex;
 }
 
-.texto_b4{
+.texto_b4 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -359,7 +359,7 @@ nav {
     transition: 0.5s;
 }
 
-.descricao{
+.descricao {
     display: flex;
     width: 80%;
     height: 70%;
@@ -367,7 +367,7 @@ nav {
     align-items: center;
 }
 
-.descricao span{
+.descricao span {
     font-size: 20px;
 }
 
@@ -378,7 +378,44 @@ footer {
     background-color: #24284B;
 }
 
-@media screen and (max-width: 1024px) {
+@media only screen and (max-width: 1280px) {
+
+    .texto_inicio h1 span {
+        font-size: 4rem;
+    }
+
+    .box1{
+        background-size: 100%;
+    }
+
+    .card:nth-child(1) {
+        background: white;
+        transform: translateX(690px) scale(0.9);
+    }
+
+    .card:nth-child(2) {
+        background: #ebebeb;
+        color: #24284B;
+        transform: translateX(450px) scale(1);
+        z-index: 1;
+    }
+
+    .card:nth-child(3) {
+        background: white;
+        transform: translateX(220px) scale(0.9);
+    }
+
+    .descricao span{
+        font-size: 16px;
+    }
+
+}
+
+@media only screen and (max-width: 1200px) {
+
+    nav {
+        height: 10vh;
+    }
 
     .logo_nav {
         width: 20%;
@@ -388,6 +425,10 @@ footer {
         width: 60%;
     }
 
+    .mid_nav ul li a {
+        font-size: 20px;
+    }
+
     .btn_nav {
         width: 20%;
     }
@@ -395,11 +436,68 @@ footer {
     .btn_nav button {
         display: flex;
         width: 15vw;
-        height: 4vh;
+        height: 6vh;
     }
+
+    .box1 {
+        background-size: 100%;
+    }
+
+    .texto_inicio h1 span {
+        font-size: 4rem;
+    }
+
+    .seta {
+        height: 10vh;
+    }
+
+    .seta img {
+        width: 12%;
+    }
+
+    .texto_baixo {
+        font-size: 15px;
+    }
+
+    .card:nth-child(1) {
+        background: white;
+        transform: translateX(590px) scale(0.9);
+    }
+
+    .card:nth-child(2) {
+        background: #ebebeb;
+        color: #24284B;
+        transform: translateX(350px) scale(1);
+        z-index: 1;
+    }
+
+    .card:nth-child(3) {
+        background: white;
+        transform: translateX(120px) scale(0.9);
+    }
+
+    .comentarios_parceiras span {
+        font-size: 17px;
+    }
+
+    .subtitulo h3{
+        font-size: 38px;
+    }
+
+    .descricao span{
+        font-size: 13px;
+        font-weight: 500;
+    }
+
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 992px) {
+
+
+}
+
+
+@media screen and (max-width: 768px) {
 
     .logo_nav {
         width: 50%;
@@ -416,6 +514,9 @@ footer {
     .btn_nav button {
         display: flex;
         width: 20vw;
-        height: 4vh;
+        height: 5vh;
     }
 }
+
+
+@media screen and (max-width: 600px) {}
