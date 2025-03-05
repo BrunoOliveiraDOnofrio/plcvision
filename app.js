@@ -1,7 +1,7 @@
 // var ambiente_processo = 'producao';
 var ambiente_processo = 'desenvolvimento';
 
-var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
+var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.example';
 // Acima, temos o uso do operador ternário para definir o caminho do arquivo .env
 // A sintaxe do operador ternário é: condição ? valor_se_verdadeiro : valor_se_falso
 
@@ -18,11 +18,11 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuario");
 
-const empresaRouter = require("./src/routes/empresa");
-const industriaRouter = require("./src/routes/industria");
-const alertaRouter = require("./src/routes/alerta");
-const plcRouter = require("./src/routes/plc");
-const contatoRouter = require("./src/routes/contato");
+// const empresaRouter = require("./src/routes/empresa");
+// const industriaRouter = require("./src/routes/industria");
+// const alertaRouter = require("./src/routes/alerta");
+// const plcRouter = require("./src/routes/plc");
+// const contatoRouter = require("./src/routes/contato");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,11 +32,11 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/usuario", usuarioRouter);
-app.use("/empresa", empresaRouter);
-app.use("/industria", industriaRouter);
-app.use("/alerta", alertaRouter);
-app.use("/plc", plcRouter);
-app.use("/contato", contatoRouter);
+// app.use("/empresa", empresaRouter);
+// app.use("/industria", industriaRouter);
+// app.use("/alerta", alertaRouter);
+// app.use("/plc", plcRouter);
+// app.use("/contato", contatoRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

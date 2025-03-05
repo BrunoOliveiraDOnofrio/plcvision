@@ -8,6 +8,28 @@
 </head>
 <body>
 
+    <nav>
+        <div class="logo_nav">
+            PCLVision
+        </div>
+        <div class="mid_nav">
+            <ul>
+                <li>
+                    <a href="./HomePCLVision.html">Home</a>
+                </li>
+                <li>
+                    <a href="./HomePCLVision.html#servicos">Serviços</a>
+                </li>
+                <li>
+                    <a href="./HomePCLVision.html#QuemSomos">Quem Somos</a>
+                </li>
+            </ul>
+        </div>
+        <div class="btn_nav">
+            <button onclick="irHome()">Voltar</button>
+        </div>
+    </nav>
+
     <div class="container-global">
 
         <div class="PCLVision">
@@ -34,16 +56,22 @@
                 <button onclick="entrar()" class="btn-login">Entrar</button>
     
                 <div class="recomendacao">
-                    <span style="color: black;">Novo por aqui? <button class="button-contato"><a href=""><span style="color: black;"><b>Entre em Contato!</b></span></a></button></span>
+                    <span style="color: black;">Novo por aqui? <button class="button-contato"><a href="./faleConoscoPCLVision.html"><span style="color: black;"><b>Entre em Contato!</b></span></a></button></span>
                 </div>
     
         </div>
     </div>
+    
+
 
 </body>
 </html>
 
 <script>
+
+function irHome() {
+        window.location = "./HomePCLVision.html"
+    }
 
 function entrar(){
 

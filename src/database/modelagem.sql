@@ -90,7 +90,7 @@ INSERT INTO industrias (nome, setor, CNPJ, CEP, numero) VALUES
 ('Fábrica Automotiva', 'Automobilístico', '11111111000101', '04004000', '400'),
 ('Usina Metalúrgica', 'Metalurgia', '22222222000102', '05005000', '500');
 
-INSERT INTO PLC (fkIndustria, fkEmpresa, localizacao, modelo) VALUES
+INSERT INTO PLC (fkIndustria, fkEmpresa, localizacao, modelo) VALUES    
 (1, 1, 'Linha de montagem A', 'SIMATIC S7-1500'),
 (2, 2, 'Área de fundição', 'Allen-Bradley ControlLogix');
 

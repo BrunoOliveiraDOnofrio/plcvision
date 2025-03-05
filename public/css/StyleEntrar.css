@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color:  #fdfcfc; 
+    background: linear-gradient(#EFEFEF,#dae5ff,#b4c9ff);
     background-size: cover;
     overflow: hidden;
     height: 100vh; 
@@ -12,12 +12,76 @@ body {
     font-family: "Gt walshein", sans-serif;
 }
 
+nav {
+    display: flex;
+    width: 100%;
+    height: 9vh;
+    /* background-color: #a9c0fa; */
+    box-shadow: 0px 2px 2px #b4c9ff;
+}
+
+.logo_nav {
+    display: flex;
+    width: 15%;
+    justify-content: center;
+    align-items: center;
+    /* border: solid black 1px; */
+}
+
+.mid_nav {
+    display: flex;
+    width: 70vw;
+    justify-content: center;
+    align-items: center;
+    /* border: solid red 1px; */
+}
+
+.mid_nav ul {
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+}
+
+.mid_nav ul li {
+    display: flex;
+    list-style: none;
+}
+
+.mid_nav ul li a {
+    display: flex;
+    text-decoration: none;
+    color: black;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.btn_nav {
+    display: flex;
+    width: 15%;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_nav button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 9vw;
+    height: 5vh;
+    background-color: #24284B;
+    color: white;
+    border: none;
+    border-radius: 0.3125rem; /* 5 px */
+    font-size: 0.9375rem; /*  15px */
+    cursor: pointer;
+}
+
 .container-global {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%; 
+    width: 100vw; 
 }
 
 .PCLVision {
@@ -33,20 +97,20 @@ body {
 
 .card-login {
     display: flex;
-    width: 23%;
-    border: 1.5px solid;
+    width: 23vw;
+    border: 0.09375rem solid; /* 1.5px */
     border-color: #B0B0B0;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 15px 20px;
+    padding: 0.9375rem 1.25rem; /* 15px 20px */
     background: #cacaca;
-    border-radius: 10px;
+    border-radius: 0.625rem; /* 10px */
 }
 
  .titulo-login {
-    font-size: 25px;
-    margin-bottom: 10px;
+    font-size: 1.5625rem; /* 25px */
+    margin-bottom: 0.625rem; /* 10px */
     justify-content: center;
     font-weight: 500;
 }
@@ -57,17 +121,17 @@ body {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    margin: 10px 0px;
+    margin: 0.625rem 0rem; /* 10px 0px*/
 }
 
 .textfield input {
     width: 100%;
-    border-radius: 10px;
-    border: 1.5px solid;
-    padding: 5px;
+    border-radius: 0.625rem; /* 10px */
+    border: 0.09375rem solid; /* 1.5px */
+    padding: 0.3125rem; /* 5 px */
     background: #cacaca;
     border-color: #B0B0B0;
-    font-size: 10pt;
+    font-size: 0.833rem; /* 10 pt*/
     outline: none;
     box-sizing: border-box;
     align-items: flex-start;
@@ -80,23 +144,77 @@ body {
 
 
 .btn-login {
-    background-color: #1646ca;
+    /* background-color: #1646ca; */
+    background-color: #24284B;
     color: aliceblue;
     cursor: pointer;
     border: none;
-    margin-top: 20px;
+    margin-top: 1.25rem;       /* 20 px */
     width: 100%;
-    padding: 14px 0px;
-    border-radius: 12px;
+    padding: 0.875rem 0rem;      /* 14px 0px*/
+    border-radius: 0.3125rem;     /* 5 px */
     font-weight: 700;
-    font-size: 15px;
+    font-size: 0.9375rem; /* 15 px */
 }
 
 .recomendacao {
-    margin-top: 10px; 
+    margin-top: 0.625rem; /* 10px */
 }
 
 .button-contato {
     background: transparent;
     border: none;
+}
+
+
+@media only screen and (max-width: 1200px) {
+
+    nav {
+        height: 10vh;
+    }
+
+    .logo_nav {
+        width: 20%;
+    }
+
+    .mid_nav {
+        width: 60%;
+    }
+
+    .mid_nav ul li a {
+        font-size: 20px;
+    }
+
+    .btn_nav {
+        width: 20%;
+    }
+
+    .btn_nav button {
+        display: flex;
+        width: 15vw;
+        height: 6vh;
+    }
+
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .logo_nav {
+        width: 50%;
+    }
+
+    .mid_nav {
+        display: none;
+    }
+
+    .btn_nav {
+        width: 50%;
+    }
+
+    .btn_nav button {
+        display: flex;
+        width: 20vw;
+        height: 5vh;
+    }
 }
