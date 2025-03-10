@@ -75,7 +75,7 @@ nav {
 .container {
     display: flex;
     width: 100%;
-    height: 515vh;
+    height: 535vh;
     flex-direction: column;
     overflow-y: hidden;
 }
@@ -244,8 +244,61 @@ nav {
 .box3 {
     display: flex;
     width: 100%;
-    height: 105vh;
+    height: 125vh;
     background-color: #EFEFEF;
+    flex-direction: column;
+    gap: 2%;
+}
+
+.h1-alerta{
+display: flex;
+width: 100%;
+height: 25%;
+justify-content: center;
+/* border: 1px solid red; */
+text-align: center;
+align-items: center;
+}
+
+.h1-alerta h1{
+    font-size: 3.5rem;
+}
+
+.h1-alerta h1 span{
+    color: #5362ee;
+}
+
+.img_alerta_imagens{
+    display: flex;
+    width: 100%;
+    height: 35%;
+    /* border: 1px solid red; */
+    justify-content: center;
+}
+.img_alerta_imagens img{
+    width: 40%;
+    height: 85%;
+}
+.box_icone_alerta{
+    display: flex;
+    width: 100%;
+    height: 20%;
+    /* border: 1px solid red; */
+    align-items: end;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconeAlerta{
+    display: flex;
+    width: 50%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.iconeAlerta img{
+    width: 21%;
+    height: 80%;
 }
 
 .box4 {
