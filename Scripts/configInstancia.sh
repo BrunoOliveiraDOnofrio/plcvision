@@ -46,14 +46,21 @@ GRANT ALL PRIVILEGES ON PlcVision.* TO 'plc_root'@'%';
 FLUSH PRIVILEGES;
 
 CREATE USER 'insert_user'@'%' IDENTIFIED BY 'Urubu100';
-GRANT INSERT ON PlcVision.dados TO 'insert_user'@'%';
-GRANT INSERT ON PlcVision.alertas TO 'insert_user'@'%';
+GRANT INSERT ON PlcVision.* TO 'insert_user'@'%';
 FLUSH PRIVILEGES;
 
-CREATE USER 'select_user'@'%' IDENTIFIED BY 'Urubu100#';
+CREATE USER 'select_user'@'%' IDENTIFIED BY 'Urubu100';
 GRANT SELECT ON PlcVision.* TO 'select_user'@'%';
+FLUSH PRIVILEGES;
+
+CREATE USER 'update_user'@'%' IDENTIFIED BY 'Urubu100';
+GRANT UPDATE ON PlcVision.* TO 'update_user'@'%';
+FLUSH PRIVILEGES;
+
+CREATE USER 'delete_user'@'%' IDENTIFIED BY 'Urubu100';
+GRANT DELETE ON PlcVision.* TO 'delete_user'@'%';
 FLUSH PRIVILEGES;
 
 # configurar e rodar projeto node
 echo -e "\033[41;1;37m Configurando e inicializando web-data-viz... \033[0m"
-npm i && npm start
+npm i && npm audit fix && npm start
