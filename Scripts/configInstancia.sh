@@ -14,7 +14,7 @@
 # e os y's são para não ficar fazendo perguntas no meio dos comandos
 
 # Atualizar a máquina
-echo "Atualizando Sistema..."
+echo -e "\033[41;1;37m Atualizando Sistema... \033[0m"
 sudo apt update -qq -y
 sudo apt upgrade -qq -y
 
@@ -31,7 +31,7 @@ echo -e "\033[41;1;37m Instalando bibliotecas Python... \033[0m"
 pip install --quiet --no-input psutil==7.0.0 mysql-connector-python==9.2.0
 
 # instalando mysql
-echo -e "\033[41;1;37m Instalando MYSQL Server..."
+echo -e "\033[41;1;37m Instalando MYSQL Server... \033[0m"
 sudo apt -qq -y install mysql-server
 sudo systemctl start mysql.service
 sudo systemctl enable mysql
