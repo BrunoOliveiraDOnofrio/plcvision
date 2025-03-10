@@ -75,7 +75,7 @@ nav {
 .container {
     display: flex;
     width: 100%;
-    height: 535vh;
+    height: 515vh;
     flex-direction: column;
     overflow-y: hidden;
 }
@@ -97,6 +97,7 @@ nav {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    line-height: 7vh;
     /* border: 1px solid red; */
 
 }
@@ -244,61 +245,70 @@ nav {
 .box3 {
     display: flex;
     width: 100%;
-    height: 125vh;
+    height: 105vh;
     background-color: #EFEFEF;
     flex-direction: column;
     gap: 2%;
 }
 
-.h1-alerta{
+.h1_alerta{
 display: flex;
 width: 100%;
-height: 25%;
+height: 40%;
 justify-content: center;
 /* border: 1px solid red; */
 text-align: center;
 align-items: center;
 }
 
-.h1-alerta h1{
+.h1_alerta h1{
     font-size: 3.5rem;
 }
 
-.h1-alerta h1 span{
+.h1_alerta h1 span{
     color: #5362ee;
 }
 
-.img_alerta_imagens{
-    display: flex;
-    width: 100%;
-    height: 35%;
-    /* border: 1px solid red; */
-    justify-content: center;
-}
-.img_alerta_imagens img{
-    width: 40%;
-    height: 85%;
-}
 .box_icone_alerta{
     display: flex;
     width: 100%;
-    height: 20%;
+    height: 25%;
     /* border: 1px solid red; */
     align-items: end;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
-.iconeAlerta{
+.icone_alerta{
     display: flex;
     width: 50%;
     height: 100%;
     justify-content: center;
     align-items: center;
 }
-.iconeAlerta img{
-    width: 21%;
-    height: 80%;
+
+.icone_alerta img{
+    width: 25%;
+    height: 88%;
+}
+
+.setinha{
+    display: flex;
+    width: 100%;
+    height: 6vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.setinha img{
+    width: 4%;
+    transform: rotate(180deg);
+}
+
+.lorem{
+    font: 500;
+    font-size: 25px;
 }
 
 .box4 {
@@ -354,7 +364,7 @@ align-items: center;
     align-items: center;
     width: 80%;
     height: 40%;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 .box5 {
@@ -407,21 +417,17 @@ align-items: center;
     font-weight: 500;
 }
 
-.quadro:hover {
-    width: 29%;
-    transition: 0.5s;
-}
-
 .descricao {
     display: flex;
     width: 80%;
     height: 70%;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .descricao span {
-    font-size: 20px;
+    font-size: 25px;
 }
 
 footer {
