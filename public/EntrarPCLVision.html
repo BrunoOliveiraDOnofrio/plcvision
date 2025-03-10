@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/StyleEntrar.css">
     <title>Document</title>
 </head>
+
 <body>
 
     <nav>
@@ -33,111 +35,118 @@
     <div class="container-global">
 
         <div class="PCLVision">
-    
             <h1>PCLVision</h1>
             <h3>Faça seu login para começar!</h3>
-    
         </div>
-    
-        <div class="card-login">
-            <div class="titulo-login">Login</div>
+
+
+        <div class="box_login">
+
+            <div class="card-login">
+                <div class="titulo-login">Login</div>
                 <div class="textfield">
                     <label for="usuario">Usuário</label>
                     <input type="text" id="ipt_usuario" placeholder="Digite seu e-mail">
-                    <div id="validarUsuario" style="color: rgb(179, 2, 2)"></div> <!-- Caso usuário erre, retornar mensagem de e-mail não cadastrado-->
+                    <div id="validarUsuario" style="color: rgb(179, 2, 2)"></div>
+                    <!-- Caso usuário erre, retornar mensagem de e-mail não cadastrado-->
                 </div>
-    
+
                 <div class="textfield">
                     <label for="senha">Senha</label>
                     <input type="password" id="ipt_senha" name="usuario" placeholder="Senha">
-                    <div id="div_validarSenha" style="color: rgb(179, 2, 2)"></div> <!-- Caso usuário erre, retornar mensagem de senha incorreta -->
+                    <div id="div_validarSenha" style="color: rgb(179, 2, 2)"></div>
+                    <!-- Caso usuário erre, retornar mensagem de senha incorreta -->
                 </div>
-    
+
                 <button onclick="entrar()" class="btn-login">Entrar</button>
-    
+
                 <div class="recomendacao">
-                    <span style="color: black;">Novo por aqui? <button class="button-contato"><a href="./faleConoscoPCLVision.html"><span style="color: black;"><b>Entre em Contato!</b></span></a></button></span>
+                    <span style="color: black;">Novo por aqui? <button class="button-contato"><a
+                                href="./faleConoscoPCLVision.html"><span style="color: black;"><b>Entre em
+                                        Contato!</b></span></a></button></span>
                 </div>
-    
+
+            </div>
         </div>
     </div>
-    
+
 
 
 </body>
+
 </html>
 
 <script>
 
-function irHome() {
+    function irHome() {
         window.location = "./HomePCLVision.html"
     }
 
-function entrar(){
+    function entrar() {
 
-    var usuario = ipt_usuario.value
-    var senha = ipt_senha.value
+        var usuario = ipt_usuario.value
+        var senha = ipt_senha.value
 
-    var mensagem = ''
+        var mensagem = ''
 
         if (email == "" || senha == "") {
             mensagem += `Insira valores válidos`
-    }
+        }
         validarSenha.innerHTML = mensagem
         validarUsuario.innerHTML = mensagem
-        
+
 
         console.log("FORM LOGIN: ", email);
         console.log("FORM SENHA: ", senha);
 
 
-        
+
         fetch("/usuarios/autenticar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    emailServer: email,
-                    senhaServer: senha
-                })
-            }).then(function (resposta) {
-                console.log("ESTOU NO THEN DO entrar()!")
-
-                if (resposta.ok) {
-                    console.log(resposta);
-
-                    resposta.json().then(json => {
-                        console.log(json);
-                        console.log(JSON.stringify(json));
-                        sessionStorage.EMAIL_USUARIO = json.email;
-                        sessionStorage.NOME_USUARIO = json.nome;
-                        sessionStorage.ID_USUARIO = json.id;
-                        
-
-                        setTimeout(function () {
-                            window.location = "HomePCLVision.html";
-                        }, 1000); 
-
-                    });
-
-                } else {
-
-                    console.log("Houve um erro ao tentar realizar o login!");
-                    div_validarSenha.innerHTML = `Houve um erro ao tentar realizar o login!`
-                    
-                    resposta.text().then(texto => {
-                        console.error(texto);
-                        
-                    });
-                }
-
-            }).catch(function (erro) {
-                console.log(erro);
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: email,
+                senhaServer: senha
             })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+
+
+                    setTimeout(function () {
+                        window.location = "HomePCLVision.html";
+                    }, 1000);
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+                div_validarSenha.innerHTML = `Houve um erro ao tentar realizar o login!`
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
 
         return false;
 
-}
+    }
 
 </script>

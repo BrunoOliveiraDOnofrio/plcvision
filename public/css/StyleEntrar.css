@@ -3,12 +3,10 @@
     src: url(/public/fontes/GT-Walsheim-Black-Oblique-Trial-BF651b7fc5608e6.otf);
 }
 
-body {
-    background: linear-gradient(#EFEFEF,#dae5ff,#b4c9ff);
-    background-size: cover;
+* {
+    padding: 0%;
+    margin: 0%;
     overflow: hidden;
-    height: 100vh; 
-    margin: 0; 
     font-family: "Gt walshein", sans-serif;
 }
 
@@ -16,8 +14,7 @@ nav {
     display: flex;
     width: 100%;
     height: 9vh;
-    /* background-color: #a9c0fa; */
-    box-shadow: 0px 2px 2px #b4c9ff;
+    background-color: #a9c0fa;
 }
 
 .logo_nav {
@@ -71,67 +68,94 @@ nav {
     background-color: #24284B;
     color: white;
     border: none;
-    border-radius: 0.3125rem; /* 5 px */
-    font-size: 0.9375rem; /*  15px */
+    border-radius: 0.3125rem;
+    /* 5 px */
+    font-size: 0.9375rem;
+    /*  15px */
     cursor: pointer;
 }
 
 .container-global {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100vw; 
+    width: 100vw;
+    height: 90vh;
+    background: linear-gradient(#89AAFF, #a9c0fa, #EFEFEF);
+    ;
 }
 
 .PCLVision {
-
     display: flex;
+    width: 100%;
+    height: 17vh;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    text-align: center; 
-
+    text-align: center;
+    /* border: 1px solid red; */
 }
 
+.box_login {
+    display: flex;
+    width: 100%;
+    height: 80%;
+    justify-content: center;
+}
 
 .card-login {
     display: flex;
-    width: 23vw;
-    border: 0.09375rem solid; /* 1.5px */
+    width: 23%;
+    height: 70%;
+    border: 0.09375rem solid;
+    /* 1.5px */
     border-color: #B0B0B0;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    padding: 0.9375rem 1.25rem; /* 15px 20px */
+    padding: 0.9375rem 1.25rem;
+    /* 15px 20px */
     background: #cacaca;
-    border-radius: 0.625rem; /* 10px */
+    border-radius: 0.625rem;
+    /* 10px */
 }
 
- .titulo-login {
-    font-size: 1.5625rem; /* 25px */
-    margin-bottom: 0.625rem; /* 10px */
+.titulo-login {
+    display: flex;
+    height: 5vh;
+    font-size: 1.9rem;
+    /* 25px */
+    margin-bottom: 0.625rem;
+    /* 10px */
     justify-content: center;
+
     font-weight: 500;
 }
 
-.textfield{
+.textfield {
     display: flex;
     width: 100%;
+    height: 25%;
     flex-direction: column;
-    align-items: flex-start;
     justify-content: center;
-    margin: 0.625rem 0rem; /* 10px 0px*/
+    margin: 0.625rem 0rem;
+    /* 10px 0px*/
+}
+
+.textfield label{
+    font-size: 1.2rem;
 }
 
 .textfield input {
     width: 100%;
-    border-radius: 0.625rem; /* 10px */
-    border: 0.09375rem solid; /* 1.5px */
-    padding: 0.3125rem; /* 5 px */
+    height: 40%;
+    border-radius: 0.625rem;
+    /* 10px */
+    border: 0.09375rem solid;
+    /* 1.5px */
+    padding: 0.3125rem;
+    /* 5 px */
     background: #cacaca;
     border-color: #B0B0B0;
-    font-size: 0.833rem; /* 10 pt*/
+    font-size: 0.833rem;
+    /* 10 pt*/
     outline: none;
     box-sizing: border-box;
     align-items: flex-start;
@@ -149,16 +173,21 @@ nav {
     color: aliceblue;
     cursor: pointer;
     border: none;
-    margin-top: 1.25rem;       /* 20 px */
+    margin-top: 1.25rem;
+    /* 20 px */
     width: 100%;
-    padding: 0.875rem 0rem;      /* 14px 0px*/
-    border-radius: 0.3125rem;     /* 5 px */
+    padding: 0.875rem 0rem;
+    /* 14px 0px*/
+    border-radius: 0.3125rem;
+    /* 5 px */
     font-weight: 700;
-    font-size: 0.9375rem; /* 15 px */
+    font-size: 0.9375rem;
+    /* 15 px */
 }
 
 .recomendacao {
-    margin-top: 0.625rem; /* 10px */
+    margin-top: 0.625rem;
+    /* 10px */
 }
 
 .button-contato {
