@@ -62,7 +62,7 @@
 
             </div>
 
-            <div class="carossel" id="carossel">
+            <div class="carrossel" id="carrossel">
                 <div class="card">
                     <div class="logo_siemens">
                         <img src="./assets/imgs/logotipo Siemens.png" alt="">
@@ -207,15 +207,15 @@
 
 <script>
 
-    const carousel = document.getElementById('carossel');
+    const carrossel = document.getElementById('carrossel');
 
-    function girarCarrosseu() {
+    function girarCarrossel() {
         const cards = document.querySelectorAll('.card');
-        carousel.appendChild(cards[0].cloneNode(true));
-        carousel.removeChild(cards[0]);
+        carrossel.appendChild(cards[0].cloneNode(true));
+        carrossel.removeChild(cards[0]);
     }
 
-    setInterval(girarCarrosseu, 3000);
+    setInterval(girarCarrossel, 3000);
 
     function irLogin() {
         window.location = "./EntrarPCLVision.html"
