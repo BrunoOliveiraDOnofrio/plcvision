@@ -2,8 +2,8 @@ DROP DATABASE IF EXISTS PlcVision;
 CREATE DATABASE PlcVision;
 USE PlcVision;
  
-CREATE TABLE empresas ( 
-    idEmpresas INT PRIMARY KEY AUTO_INCREMENT, 
+CREATE TABLE empresa ( 
+    idEmpresa INT PRIMARY KEY AUTO_INCREMENT, 
     CNPJ CHAR(14) UNIQUE NOT NULL, 
     nome VARCHAR(45) NOT NULL, 
     CEP VARCHAR(8) NOT NULL, 
@@ -16,11 +16,11 @@ CREATE TABLE contato (
     mensagem VARCHAR(255) NOT NULL, 
     email VARCHAR(100) UNIQUE NOT NULL, 
     data DATETIME NOT NULL DEFAULT NOW(),
-    FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresas)
+    FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresa)
 ); 
 
-CREATE TABLE industrias ( 
-    idIndustrias INT PRIMARY KEY AUTO_INCREMENT, 
+CREATE TABLE industria ( 
+    idIndustria INT PRIMARY KEY AUTO_INCREMENT, 
     nome VARCHAR(45) NOT NULL, 
     setor VARCHAR(45) NOT NULL, 
     CNPJ CHAR(14) UNIQUE NOT NULL, 
@@ -28,17 +28,25 @@ CREATE TABLE industrias (
     numero VARCHAR(100) NOT NULL 
 ); 
 
+CREATE TABLE parceira(
+    idParceria INT PRIMARY KEY AUTO_INCREMENT,
+    fkIndustria INT NOT NULL,
+    fkEmpresa INT NOT NULL,
+    dataParceria DATETIME NOT NULL DEFAULT now(),
+    FOREIGN KEY (fkIndustria) REFERENCES industria(idIndustria), 
+    FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
+);
+
 CREATE TABLE PLC ( 
     idPLC INT PRIMARY KEY AUTO_INCREMENT, 
-    fkIndustria INT NOT NULL, 
-    fkEmpresa INT NOT NULL, 
     localizacao VARCHAR(100) NOT NULL, 
     modelo VARCHAR(45) NOT NULL, 
-    FOREIGN KEY (fkIndustria) REFERENCES industrias(idIndustrias), 
-    FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresas) 
+    ano YEAR NOT NULL,
+    fkParceria INT NOT NULL,
+    FOREIGN KEY (fkParceria) REFERENCES parceira(idParceria)
 ); 
 
-CREATE TABLE dados ( 
+CREATE TABLE dado ( 
     idDados INT PRIMARY KEY AUTO_INCREMENT, 
     fkPLC INT NOT NULL, 
     dataHora DATETIME NOT NULL DEFAULT NOW(), 
@@ -55,16 +63,16 @@ CREATE TABLE dados (
     CONSTRAINT chkIsAlimentacao CHECK(isAlimentacao IN (0, 1)) -- 0 - False, 1 - TRUE
 ); 
 
-CREATE TABLE alertas ( 
-    idAlertas INT PRIMARY KEY AUTO_INCREMENT, 
+CREATE TABLE alerta ( 
+    idAlerta INT PRIMARY KEY AUTO_INCREMENT, 
     fkDados INT UNIQUE NOT NULL, 
     nivel TINYINT NOT NULL, 
     FOREIGN KEY (fkDados) REFERENCES dados(idDados) ,
     CONSTRAINT chkNivelAlerta CHECK(nivel IN (0, 1)) -- 0 atencao, 1 critico
 ); 
 
-CREATE TABLE usuarios ( 
-    idUsuarios INT PRIMARY KEY AUTO_INCREMENT, 
+CREATE TABLE usuario ( 
+    idUsuario INT PRIMARY KEY AUTO_INCREMENT, 
     fkEmpresa INT NOT NULL, 
     nome VARCHAR(45) NOT NULL, 
     email VARCHAR(45) UNIQUE NOT NULL, 
@@ -90,9 +98,14 @@ INSERT INTO industrias (nome, setor, CNPJ, CEP, numero) VALUES
 ('Fábrica Automotiva', 'Automobilístico', '11111111000101', '04004000', '400'),
 ('Usina Metalúrgica', 'Metalurgia', '22222222000102', '05005000', '500');
 
-INSERT INTO PLC (fkIndustria, fkEmpresa, localizacao, modelo) VALUES    
-(1, 1, 'Linha de montagem A', 'SIMATIC S7-1500'),
-(2, 2, 'Área de fundição', 'Allen-Bradley ControlLogix');
+INSERT INTO parceria(fkEmpresa, fkIndustria) VALUES 
+(1, 1),
+(1, 2),
+(2, 3);
+
+INSERT INTO PLC (fkParceira, localizacao, modelo, ano) VALUES    
+(1, 'Linha de montagem A', 'SIMATIC S7-1500', '2020'),
+(2, 'Área de fundição', 'Allen-Bradley ControlLogix', '2017');
 
 INSERT INTO dados (fkPLC, dataHora, temperaturaCpu, usoCPU, atividadeCPU, ociosidadeCPU, usoMemoriaRam, memoriaLivre, isAlimentacao, dtBateria, tempoBateriaRestante) VALUES
 (1, NOW(), 45.5, 65.3, 80.1, 19.9, 70.5, 2.0, 1, 95.0, 120),
