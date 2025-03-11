@@ -57,7 +57,7 @@ CREATE TABLE dado (
     usoMemoriaRam FLOAT, 
     memoriaLivre FLOAT, 
     isAlimentacao TINYINT, 
-    dtBateria FLOAT, 
+    qtdBateria FLOAT, 
     tempoBateriaRestante FLOAT, 
     FOREIGN KEY (fkPLC) REFERENCES PLC(idPLC),
     CONSTRAINT chkIsAlimentacao CHECK(isAlimentacao IN (0, 1)) -- 0 - False, 1 - TRUE
@@ -98,7 +98,7 @@ INSERT INTO industria (nome, setor, CNPJ, CEP, numero) VALUES
 ('Fábrica Automotiva', 'Automobilístico', '11111111000101', '04004000', '400'),
 ('Usina Metalúrgica', 'Metalurgia', '22222222000102', '05005000', '500');
 
-INSERT INTO parceria(fkEmpresa, fkIndustria) VALUES 
+INSERT INTO parceria (fkEmpresa, fkIndustria) VALUES 
 (1, 1),
 (1, 2),
 (3, 2);

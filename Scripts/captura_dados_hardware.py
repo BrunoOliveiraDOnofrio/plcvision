@@ -4,7 +4,7 @@ import time
 import os
 
 banco = None
-id_plc = 5 # Colocar id_plc 
+id_plc = 1 # Colocar id_plc 
 limites = { # dados sem pesquisa
     'temperatura_cpu': 90,
     'uso_cpu': 90,
@@ -21,10 +21,10 @@ def configuracao_db():
     # configurar var de ambientes e criar conexao com o banco de dados
 
     conexao_db = db.connect(
-        host='10.18.32.61',
+        host='127.0.0.1',
         port=3306,
         user='insert_user',
-        password='Urubu100',
+        password='Urubu100#',
         database='PlcVision'
     )
 
@@ -46,7 +46,7 @@ def armazenar_dados(dados):
     executor = banco.cursor() 
 
     print(f'Inserindo dados: {valores[:-1]}.')
-    query = f'INSERT INTO dados(fkPLC,{colunas[:-1]}) VALUES ({id_plc}, {valores[:-1]});'
+    query = f'INSERT INTO dado(fkPLC,{colunas[:-1]}) VALUES ({id_plc}, {valores[:-1]});'
 
     executor.execute(query)
     banco.commit()
@@ -61,7 +61,7 @@ def coletar_dados(is_temperatura_cpu, is_uso_cpu, is_ociosidade_cpu, is_tempo_at
 
         if is_temperatura_cpu and os.name != 'nt':
             temperaturas = psutil.sensors_temperatures().get("coretemp", [])
-            temperatura = temperaturas[0].current if temperaturas else None
+            temperatura = temperaturas[0].current if temperaturas else 'NULL'
             dados.append({'nome_coluna': 'temperaturaCpu', 'dado': temperatura})
 
         if is_uso_cpu:
@@ -101,6 +101,7 @@ def coletar_dados(is_temperatura_cpu, is_uso_cpu, is_ociosidade_cpu, is_tempo_at
             alimentacao = bateria.power_plugged
             dados.append({'nome_coluna': 'isAlimentacao', 'dado': 1 if alimentacao else 0})
 
+        print(dados)
         armazenar_dados(dados)
         time.sleep(5)
 
