@@ -104,22 +104,20 @@ nav {
 
 .card-login {
     display: flex;
-    width: 23%;
+    width: 30%;
     height: 70%;
-    border: 0.09375rem solid;
     /* 1.5px */
-    border-color: #B0B0B0;
     flex-direction: column;
     padding: 0.9375rem 1.25rem;
     /* 15px 20px */
-    background: #cacaca;
+    background: #ffffff;
     border-radius: 0.625rem;
     /* 10px */
 }
 
 .titulo-login {
     display: flex;
-    height: 5vh;
+    height: 4vh;
     font-size: 1.9rem;
     /* 25px */
     margin-bottom: 0.625rem;
@@ -152,9 +150,9 @@ nav {
     /* 1.5px */
     padding: 0.3125rem;
     /* 5 px */
-    background: #cacaca;
+    background: #dddddd;
     border-color: #B0B0B0;
-    font-size: 0.833rem;
+    font-size: 0.933rem;
     /* 10 pt*/
     outline: none;
     box-sizing: border-box;
