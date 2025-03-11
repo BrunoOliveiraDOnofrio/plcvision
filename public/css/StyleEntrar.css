@@ -206,7 +206,7 @@ nav {
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 600px) {
 
     .logo_nav {
         width: 50%;
@@ -225,4 +225,13 @@ nav {
         width: 20vw;
         height: 5vh;
     }
+
+    .box_login {
+        width: 100vw;
+    }
+
+    .card-login {
+        width: 60vw;
+    }
+    
 }
