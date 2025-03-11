@@ -33,25 +33,6 @@ nav {
     /* border: solid red 1px; */
 }
 
-.mid_nav ul {
-    display: flex;
-    flex-direction: row;
-    gap: 35px;
-}
-
-.mid_nav ul li {
-    display: flex;
-    list-style: none;
-}
-
-.mid_nav ul li a {
-    display: flex;
-    text-decoration: none;
-    color: black;
-    font-size: 22px;
-    font-weight: 400;
-}
-
 .btn_nav {
     display: flex;
     width: 15%;
