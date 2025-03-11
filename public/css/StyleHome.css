@@ -130,6 +130,7 @@ nav {
     display: flex;
     font-size: 20px;
     width: 30%;
+    text-align: center;
     /* border: 1px solid red; */
 }
 
@@ -550,13 +551,15 @@ footer {
 
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 600px) {
 
+    .container{
+        height: 415vh;
+    }
 
-}
-
-
-@media screen and (max-width: 768px) {
+    nav {
+        height: 10vh;
+    }
 
     .logo_nav {
         width: 50%;
@@ -572,10 +575,142 @@ footer {
 
     .btn_nav button {
         display: flex;
-        width: 20vw;
-        height: 5vh;
+        width: 18vw;
+        height: 4vh;
     }
+
+    .box1 {
+        background-size: cover;
+        height: 60vh;
+    }
+
+    .texto_inicio h1{
+        line-height: 3.5vh;
+    }
+
+    .texto_inicio h1 span {
+        font-size: 2.8rem;
+    }
+
+    .seta {
+        height: 6vh;
+    }
+
+    .seta img {
+        width: 9%;
+    }
+
+    .texto_baixo {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .box2{
+        height: 80vh;
+    }
+
+    .card{
+        width: 50%;
+        height: 85%;
+    }
+
+    .card:nth-child(1) {
+        background: white;
+        transform: translateX(250px) scale(0.9);
+    }
+
+    .card:nth-child(2) {
+        background: #ebebeb;
+        color: #24284B;
+        transform: translateX(150px) scale(1);
+        z-index: 1;
+    }
+
+    .card:nth-child(3) {
+        background: white;
+        transform: translateX(35px) scale(0.9);
+    }
+
+    .comentarios_parceiras span {
+        font-size: 15px;
+    }
+
+    .subtitulo h3{
+        font-size: 38px;
+    }
+
+    .descricao span{
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .box3{
+        height: 50vh;
+    }
+
+    .h1_alerta{
+        height: 30%;
+    }
+
+    .h1_alerta h1{
+        font-size: 2rem;
+    }
+
+    .icone_alerta{
+        height: 90%;
+    }
+
+    .icone_alerta img{
+        width: 30%;
+    }
+
+    .setinha img{
+        width: 5%;
+    }
+
+    .lorem{
+        height: 10%;
+    }
+
+    .lorem span{
+        font-size: 1.2rem;
+    }
+
+    .box4{
+        flex-direction: column-reverse;
+        justify-content: center;
+    }
+
+    .box_dir{
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .box_esc{
+        width: 100%;
+        justify-content: center;
+    }
+
+    .box5{
+        height: 150vh;
+    }
+
+    .quadros{
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .quadro{
+        width: 55%;
+        height: 60%;
+    }
+
+    .descricao span{
+        font-size: 0.9rem;
+    }
+
 }
-
-
-@media screen and (max-width: 600px) {}
