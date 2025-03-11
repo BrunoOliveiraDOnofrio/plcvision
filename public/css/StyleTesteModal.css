@@ -1,0 +1,71 @@
+.btn-Modal {
+    padding: 10px 15px;
+    background: #24284B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+dialog {
+    width: 60%;
+    height: 80%;
+    border: none;
+    border-radius: 25px;
+    text-align: center;
+    font-family: Arial, sans-serif; /* Mudar para GT */
+    position: relative;
+}
+
+.desfoque {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.fechar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: black;
+}
+
+.fechar:hover {
+    color: #C7C7C7;
+}
+
+.container-global {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 30%;
+}
+
+.esquerda-cadastro {
+    text-align: start;
+
+}
+
+.direita-cadastro {
+    text-align: start;
+    
+}
+
+.textfield {
+    width: 100%;
+    height: 25%;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0.625rem 0rem;
+
+
+}
