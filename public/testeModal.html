@@ -18,59 +18,66 @@
         <button class="fechar" id="fecharModal">&times;</button>
 
         <div class="cadastroFuncionario">
-            <h2>Cadastrar <BR>Funcionário</h2>
+            Cadastrar<br>Funcionários
 
         </div>
 
+       
 
-        <div class="container-global">
+            <div class="container-global">
+                
+                <div class="esquerda-cadastro">
+                    <div class="textfield">
+                        <label for="usuario">Usuário:</label><br>
+                        <input type="text" id="ipt_nomeFuncionario" placeholder="Insira o nome do funcionário">
+                    </div>
+                    
+                    <div class="textfield">
+                        <label for="e-mail">E-mail:</label><br>
+                        <input type="text" id="ipt_emailFuncionario" placeholder="Insira o e-mail do funcionário">
+                    </div>
+                    
+                    <div class="textfield">
+                        <label for="Senha">Senha:</label><br>
+                        <input type="password" id="ipt_senhaFuncionario" placeholder="Insira a senha">
+                    </div>
+
+                    <div class="textfield">
+                        <label for="Confirmar">Confirmar:</label><br>
+                        <input type="password" id="ipt_confirmarSenhaFuncionario" placeholder="Confirme sua senha">
+                    </div>
+                </div>
+
+                <div class="direita-cadastro">
+                    <div class="textfield">
+                        <label for="Celular">Celular:</label><br>
+                        <input type="text" id="ipt_celularFuncionario" placeholder="Número de telefone">
+                    </div>
+                    
+                    <div class="textfield">
+                        <label for="Nivel">Nivel:</label><br>
+                        <input type="text" id="ipt_nivelFuncionario" placeholder="Insira o nivel">
+                    </div>
+                    
+                    <div class="textfield">
+                        <label for="Setor">Setor:</label><br>
+                        <input type="text" id="ipt_setorFuncionario" placeholder="Insira seu setor">
+                    </div>
+                    
+                    <div class="textfield">
+                        <label for="Cargo">Cargo:</label><br>
+                        <input type="text" id="ipt_cargoFuncionario" placeholder="Insira seu cargo">
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="botao-cadastrar">
+
+                <button onclick="cadastrar()">Cadastrar</button>
+
+            </div>
             
-            <div class="esquerda-cadastro">
-                <div class="textfield">
-                    <label for="usuario">Usuário:</label><br>
-                    <input type="text" id="ipt_nomeFuncionario" placeholder="Insira o nome do funcionário">
-                </div>
-
-                <div class="textfield">
-                    <label for="e-mail">E-mail:</label><br>
-                    <input type="text" id="ipt_emailFuncionario" placeholder="Insira o e-mail do funcionário">
-                </div>
-
-                <div class="textfield">
-                    <label for="usuario">Senha:</label><br>
-                    <input type="text" id="ipt_senhaFuncionario" placeholder="Insira a senha">
-                </div>
-
-                <div class="textfield">
-                    <label for="usuario">Confirmar:</label><br>
-                    <input type="text" id="ipt_confirmarSenhaFuncionario" placeholder="Confirme sua senha">
-                </div>
-            </div>
-
-            <div class="direita-cadastro">
-                <div class="textfield">
-                    <label for="usuario">Celular:</label><br>
-                    <input type="text" id="ipt_celularFuncionario" placeholder="Número de telefone">
-                </div>
-
-                <div class="textfield">
-                    <label for="e-mail">Nivel:</label><br>
-                    <input type="text" id="ipt_nivelFuncionario" placeholder="Insira o nivel">
-                </div>
-
-                <div class="textfield">
-                    <label for="usuario">Setor:</label><br>
-                    <input type="text" id="ipt_setorFuncionario" placeholder="Insira seu setor">
-                </div>
-
-                <div class="textfield">
-                    <label for="usuario">Cargo:</label><br>
-                    <input type="text" id="ipt_cargoFuncionario" placeholder="Insira seu cargo">
-                </div>
-            </div>
-
-        </div>
-        
     </dialog>
 
     <script>

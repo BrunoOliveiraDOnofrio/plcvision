@@ -1,5 +1,16 @@
+
+
+* {
+    font-family: "Gt walshein", sans-serif;
+}
+
+@font-face {
+    font-family: Gt walsheim;
+    src: url(/public/fontes/GT-Walsheim-Black-Oblique-Trial-BF651b7fc5608e6.otf);
+}
+
 .btn-Modal {
-    padding: 10px 15px;
+    padding: 0.625rem 0.9375rem;
     background: #24284B;
     color: white;
     border: none;
@@ -9,13 +20,14 @@
 }
 
 dialog {
-    width: 60%;
+    width: 45%;
     height: 80%;
     border: none;
-    border-radius: 25px;
+    border-radius: 0.9375rem;
     text-align: center;
-    font-family: Arial, sans-serif; /* Mudar para GT */
+    font-family: "Gt walshein", sans-serif; 
     position: relative;
+    overflow: hidden;
 }
 
 .desfoque {
@@ -26,16 +38,16 @@ dialog {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(0.3125rem);
 }
 
 .fechar {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0.625rem;
+    right: 0.625rem;
     background: transparent;
     border: none;
-    font-size: 30px;
+    font-size: 1.875rem;
     cursor: pointer;
     color: black;
 }
@@ -44,10 +56,21 @@ dialog {
     color: #C7C7C7;
 }
 
+.cadastroFuncionario {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.875rem;
+    font-weight: 600;
+    padding:  1.25rem;
+    /* 20px */
+}
+
 .container-global {
     display: flex;
     justify-content: space-evenly;
-    gap: 30%;
+    gap: 10%;
 }
 
 .esquerda-cadastro {
@@ -67,5 +90,45 @@ dialog {
     justify-content: center;
     margin: 0.625rem 0rem;
 
+}
 
+.textfield input {
+    width: 18vw;
+    height: 7vh;
+    border-radius: 0.625rem;
+    /* 10px */
+    border: solid;
+    padding: 0.3125rem;
+    /* 5 px */
+    background: #C7C7C7;
+    border-color: #C7C7C7;
+    font-size: 0.933rem;
+    outline: none;
+    /* 10 pt*/
+    box-sizing: border-box;
+    align-items: flex-start;
+}
+
+
+.botao-cadastrar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 8%;
+}
+
+.botao-cadastrar button {
+        background-color: #24284B;
+        color: white;
+        cursor: pointer;
+        border: none;
+        width: 80%;
+        padding: 0.875rem 0rem;
+        /* 14px 0px*/
+        border-radius: 0.3125rem;
+        /* 5 px */
+        font-weight: 600;
+        font-size: 1.1rem;
+        /* 15 px */
+    
 }
