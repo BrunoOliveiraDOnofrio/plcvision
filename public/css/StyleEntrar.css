@@ -273,3 +273,39 @@ nav {
     }
 
 }
+
+@media screen and (max-width: 375px) {
+
+    .logo_nav {
+        width: 50%;
+    }
+
+    .mid_nav {
+        display: none;
+    }
+
+    .btn_nav {
+        width: 50%;
+    }
+
+    .btn_nav button {
+        display: flex;
+        width: 20vw;
+        height: 5vh;
+    }
+
+    .box_login {
+        width: 100vw;
+    }
+
+    .card-login {
+        width: 60vw;
+        height: 60vh;
+    }
+
+    .titulo-login {
+        font-size: 1.5rem;
+    }
+
+
+}
