@@ -1,3 +1,8 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
 body{
     background-color: #C0C0C0;
 }
@@ -7,9 +12,6 @@ body{
     background-color: rgb(98, 98, 224);
     width: 15%;
     height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
     flex-direction: column;
     justify-content: space-around;
     
@@ -27,7 +29,19 @@ body{
     text-align: center;
 }
 
+.tags_nav{
+    display: flex;
+    width: 100%;
+    height: 60%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5%;
+}
 
+.tag{
+    width: 100%;
+    height: 10%;
+}
 
 .sideBar button{
     width: 120px;
