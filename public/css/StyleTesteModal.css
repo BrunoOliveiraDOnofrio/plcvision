@@ -23,7 +23,7 @@ dialog {
     width: 45%;
     height: 80%;
     border: none;
-    border-radius: 0.9375rem;
+    border-radius: 0.5rem;
     text-align: center;
     font-family: "Gt walshein", sans-serif; 
     position: relative;
@@ -95,7 +95,7 @@ dialog {
 .textfield input {
     width: 18vw;
     height: 7vh;
-    border-radius: 0.625rem;
+    border-radius: 0.4rem;
     /* 10px */
     border: solid;
     padding: 0.3125rem;
@@ -111,9 +111,9 @@ dialog {
 
 
 .botao-cadastrar {
+    justify-content: center;
     width: 100%;
     display: flex;
-    justify-content: center;
     margin-top: 8%;
 }
 
