@@ -49,17 +49,16 @@ def coletar_dados():
 
         cursor = banco.cursor()
 
-
         for info in informacoes_componentes:
         
             try:
-                valor = eval(info[1])
+                valor = eval(info[1]) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
             except:  
                 valor = None
             finally:
                 if valor is None:
                     valor = -1
-                query = f"INSERT INTO captura (fkPLC, fkComponente, valor) VALUES ({id_plc}, {info[0]}, {valor})"
+                query = f"INSERT INTO captura (fkPLC, fkComponente, valor) VALUES ({id_plc}, {info[0]}, {valor})"# Atribuindo o Insert na querry
 
                 cursor.execute(query)
                 banco.commit()
@@ -157,14 +156,14 @@ if __name__ == '__main__':
     # quando o arquivo iniciar, configura o banco e inicia a aplicação
     banco = configuracao_db()
 
-    cursor = banco.cursor()
+    cursor = banco.cursor() # Criando um cursor para executar o SELECT 
 
     cursor.execute(f"""SELECT co.idComponente, co.funcaoPython,co.medicao, co.limiteAtencao, co.limiteCritico from captura as ca 
                    join PLC as p on fkPLC = idPLC 
                    join componente as co on fkComponente = idComponente 
                    where idPLC = {id_plc} 
-                   group by idComponente ;""")
+                   group by idComponente ;""") # executando o SELECT
     
-    informacoes_componentes = cursor.fetchall()
+    informacoes_componentes = cursor.fetchall() # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
 
     main()
