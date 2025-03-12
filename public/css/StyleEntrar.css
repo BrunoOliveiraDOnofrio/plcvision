@@ -241,6 +241,18 @@ nav {
         height: 6vh;
     }
 
+    
+    .card-login {
+        width: 40vw;
+        height: 100vh;
+    }
+
+    .titulo-login {
+        font-size: 1.2rem;
+    }
+
+
+
 }
 
 
@@ -271,6 +283,30 @@ nav {
     .card-login {
         width: 60vw;
     }
+
+    .textfield input {
+        font-size: 0.8rem;
+    }
+
+    .textfield label {
+        font-size: 0.8rem;
+    }
+
+    .recomendacao {
+        font-size: 1rem;
+    }
+
+    .titulo-login {
+        font-size: 1.2rem;
+    }
+
+    .btn-login {
+        width: 60vw;
+        font-size: 0.8rem;
+    }
+
+    
+
 
 }
 
@@ -304,8 +340,19 @@ nav {
     }
 
     .titulo-login {
-        font-size: 1.5rem;
+        font-size: 1rem;
     }
 
+    .textfield input {
+        font-size: 0.8rem;
+    }
+
+    .textfield label {
+        font-size: 0.8rem;
+    }
+
+    .recomendacao {
+        font-size: 1rem;
+    }
 
 }
