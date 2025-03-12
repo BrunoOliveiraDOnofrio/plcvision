@@ -1,31 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/loginEmpresaCLP.css">
     <title>Document</title>
 </head>
+
 <body>
-    <div class="sideBar">
-        <div class="user">
-            <h3>Bem vindo</h3>
+    <div class="body-container">
+        <div class="sideBar">
+            <div class="user">
+                <h3>Bem vindo</h3>
+            </div>
+            <div class="tags_nav">
+                <div class="tagM">
+                    <a href="">Monitoramento</a>
+                </div>
+                <div class="tag">
+                    <a href="">Funcionários</a>
+                </div>
+                <div class="tag">
+                    <a href="">Insights</a>
+                </div>
+            </div>
+
+            <div class="sair">
+                <button onclick="">Sair</button>
+            </div>
         </div>
-        <div class="tags_nav">
-            <div class="tag">
-                <a href="">Monitoramento</a>
+
+        <div class="main-content">
+            <div class="container">
+                <div class="header">
+                    <h2>Todas as máquinas</h2>
+                    <div class="nav">
+                        <button class="add">Adicionar</button>
+                        <button class="filtro">
+                             Filtro
+                        </button>
+                        <input type="text" class="pesquisa" placeholder="Pesquisar">
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome da máquina</th>
+                            <th>TEMP</th>
+                            <th>CPU</th>
+                            <th>RAM</th>
+                            <th>STATUS</th>
+                            <th>TEMPO LIGADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="">Máquina 1</a></td>
+                            <td class="alerta">85 ºC</td>
+                            <td class="alerta">89%</td>
+                            <td>54%</td>
+                            <td class="status">LIGADO</td>
+                            <td>23:12:15:30</td>
+                        </tr>
+                        <tr>
+                            <td><a href="">Máquina 2</a></td>
+                            <td class="ok">70 ºC</td>
+                            <td>60%</td>
+                            <td>21%</td>
+                            <td class="status">LIGADO</td>
+                            <td>28:15:35:33</td>
+                        </tr>
+                        <tr>
+                            <td><a href="">Máquina 3</a></td>
+                            <td class="ok">60 ºC</td>
+                            <td>49%</td>
+                            <td>67%</td>
+                            <td class="status">LIGADO</td>
+                            <td>01:03:00:30</td>
+                        </tr>
+                        <tr>
+                            <td><a href="">Máquina 4</a></td>
+                            <td class="ok">66 ºC</td>
+                            <td>53%</td>
+                            <td>22%</td>
+                            <td class="status">LIGADO</td>
+                            <td>00:12:35:44</td>
+                        </tr>
+                        <tr>
+                            <td><a href="">Máquina 5</a></td>
+                            <td class="ok">74 ºC</td>
+                            <td>64%</td>
+                            <td>39%</td>
+                            <td class="status">LIGADO</td>
+                            <td>123:22:33:21</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="tag">
-                <a href="">Funcionários</a>
-            </div>
-            <div class="tag">
-                <a href="">Insights</a>
-            </div>
-        </div>
-        
-        <div class="sair">
-            <button onclick="">Sair</button>
         </div>
     </div>
 </body>
+
 </html>

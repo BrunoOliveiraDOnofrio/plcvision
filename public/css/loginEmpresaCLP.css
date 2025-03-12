@@ -1,6 +1,7 @@
 *{
     padding: 0;
     margin: 0;
+    font-family: "Gt walshein", sans-serif;
 }
 
 body{
@@ -9,7 +10,7 @@ body{
 
 .sideBar{
     display: flex;
-    background-color: rgb(98, 98, 224);
+    background-color: #A9C0FA;
     width: 15%;
     height: 100vh;
     flex-direction: column;
@@ -17,16 +18,18 @@ body{
     
 }
 
-.sideBar a{
+.sideBar a {
     text-decoration: none; 
-    font-size: 25px;
-    border-bottom: 2px solid white;
-    width: 100%;
+    font-size: 22px;
+    font-weight: bold;
+    color: #24284B;
+    width: 80%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    border-bottom: 2px solid white;
 }
 
 .tags_nav{
@@ -34,30 +37,155 @@ body{
     width: 100%;
     height: 60%;
     flex-direction: column;
-    justify-content: center;
-    gap: 5%;
+    justify-content: space-around;
+    
 }
 
-.tag{
+.tag {
     width: 100%;
-    height: 10%;
+    height: 30%; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
 }
 
-.sideBar button{
-    width: 120px;
-    padding: 10px;
-    border-radius: 5px;
+.tagM {
+
+    width: 100%;
+    height: 20%; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    border-left: 8px solid #24284B;
 }
 
 .user{
     display: flex;
     justify-content: center;
-    background-color: beige;
+    font-size: 25px;
+    font-weight: bold;
+    color: #24284B;
     
 }
 
 
-.sair{
+.sair {
     display: flex;
     justify-content: center; 
+    align-items: center; 
+    height: 15%;
+}
+
+.sair button {
+    background-color: #24284B;
+    color: white;
+    width: 150px;
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+.body-container {
+    display: flex;
+    height: 100vh;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    width: 100%; 
+}
+
+
+.container {
+    width: 75%;
+    height: 50%; 
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #0056D2;
+ }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+button {
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add {
+    background: #24284B;
+    color: white;
+}
+
+.filtro {
+    background: white;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pesquisa {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+table {
+    width: 100%;
+    
+}
+
+thead {
+    background: #F8F8F8;
+   
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+td a{
+    text-decoration: none;
+    font-weight: bold;
+    color: #000;
+    font-size: 25px;
+}
+
+
+.alerta {
+    color: #FF5733;
+    font-weight: bold;
+}
+
+.ok {
+    color: #0056D2;
+}
+
+.status {
+    color: #0056D2;
+    font-weight: bold;
 }
