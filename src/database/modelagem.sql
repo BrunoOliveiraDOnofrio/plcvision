@@ -116,5 +116,11 @@ INSERT INTO alerta (fkDado, nivel) VALUES
 (2, 1); 
 
 INSERT INTO usuario (fkEmpresa, nome, email, senha, telCelular, nivel, setor, cargo) VALUES
-(1, 'Carlos Silva', 'carlos@siemens.com', 'senha123', '11987654321', 2, 'Engenharia', 'Gerente de Projetos'),
-(2, 'Ana Souza', 'ana@rockwell.com', 'seguranca456', '11912345678', 1, 'TI', 'Analista de Dados');
+(1, 'Carlos Silva', 'carlos.silva@email.com', 'Senha@123', '+5511987654321', 1, 'Automação', 'Técnico de CLP'),
+(2, 'Maria Oliveira', 'maria.oliveira@email.com', 'Maria@456', '+5511912345678', 2, 'Engenharia', 'Engenheira de Controle e Automação'),
+(3, 'João Souza', 'joao.souza@email.com', 'Joao@789', '+5511976543210', 0, 'Manutenção', 'Eletricista Industrial'),
+(4, 'Fernanda Lima', 'fernanda.lima@email.com', 'Fernanda@321', '+5511965432109', 1, 'Produção', 'Operadora de Máquinas'),
+(5, 'Roberto Mendes', 'roberto.mendes@email.com', 'Roberto@654', '+5511954321098', 2, 'TI Industrial', 'Coordenador de Sistemas de Automação'),
+(6, 'Ana Costa', 'ana.costa@email.com', 'Ana@987', '+5511943210987', 0, 'Qualidade', 'Técnica de Controle de Processos'),
+(7, 'Gustavo Ramos', 'gustavo.ramos@email.com', 'Gustavo@741', '+5511932109876', 1, 'Supervisão', 'Supervisor de Instrumentação');
+

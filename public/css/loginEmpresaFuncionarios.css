@@ -1,0 +1,175 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Gt walshein", sans-serif;
+}
+
+body{
+    background-color: #E2E2E2;
+}
+
+.sideBar{
+    display: flex;
+    background-color: #A9C0FA;
+    width: 20%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
+
+.sideBar a {
+    text-decoration: none; 
+    font-size: 22px;
+    font-weight: bold;
+    color: #24284B;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-bottom: 2px solid #24284B;
+}
+
+.tags_nav{
+    display: flex;
+    width: 100%;
+    height: 60%;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
+
+.tag {
+    width: 100%;
+    height: 30%; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.tagF {
+
+    width: 100%;
+    height: 20%; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    border-left: 8px solid #24284B;
+}
+
+.user{
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: #24284B;
+    
+}
+
+
+.sair {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 15%;
+}
+
+.sair button {
+    background-color: #24284B;
+    color: white;
+    width: 150px;
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+.body-container {
+    display: flex;
+    height: 100vh;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    width: 100%; 
+}
+
+
+.container {
+    width: 85%;
+    height: 70%; 
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #24284B;
+ }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+button {
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add {
+    background: #24284B;
+    color: white;
+}
+
+.filtro {
+    background: white;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pesquisa {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+table {
+    width: 100%;
+    
+}
+
+thead {
+    background: #F8F8F8;
+   
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    
+}
+
+.nivel{
+    display: flex;
+    justify-content: center;
+}
