@@ -5,23 +5,6 @@ import os
 
 banco = None
 id_plc = 1 # Colocar id_plc 
-limites = { # dados sem pesquisa
-    'temperatura_cpu': 90,
-    'uso_cpu': 90,
-    'ociosidade_cpu': 10, # temos que ver se vamos usar % ou minutos
-    'atividade_ram': 80, # temos que ver se vamos usar % ou minutos
-    'uso_ram': 80,
-    'memoria_livre': 2,
-    'quantidade_bateria':10,
-    'tempo_bateria': 300,
-    'alimentacao': False
-}
-
-# REFAZER SCRIPT COM BASE NA NOVA MODELAGEM:
-# - DICAS:
-#   * FAÇA UM SELECT COM OS COMPONENTES EM QUE ESTE PLC SERÁ MONITORADO NO BANCO DA TABELA CAPTURA
-#   * INSERIR NA TABELA CAPTURA AS INFORMAÇÕES CAPTURADAS INEGRANDO COLUNA funcaoPython (PESQUISAR FUNÇÃO EVAL NO PYTHON)
-#   * INSERIR NA TABELA DE ALERTA OS DADOS QUE INFERIREM OS ALERTAS
 
 def configuracao_db():
     # configurar var de ambientes e criar conexao com o banco de dados
@@ -58,57 +41,31 @@ def armazenar_dados(dados):
     banco.commit()
     executor.close()
 
-def coletar_dados(is_temperatura_cpu, is_uso_cpu, is_ociosidade_cpu, is_tempo_atividade_cpu, is_uso_ram, is_ram_livre, is_qtd_bateria, is_tempo_bateria, is_alimentacao):
+def coletar_dados():
     # recebe quais valores irão ser monitorados e faz um loop infinito (controlado) onde ele verifica se pode monitorar, coleta a informação, guarda em um array e no final manda armazenar os dados novamente
     while True:
         limpar_tela()
         print('Coletando Dados...')
-        dados = []
 
-        if is_temperatura_cpu and os.name != 'nt':
-            temperaturas = psutil.sensors_temperatures().get("coretemp", [])
-            temperatura = temperaturas[0].current if temperaturas else 'NULL'
-            dados.append({'nome_coluna': 'temperaturaCpu', 'dado': temperatura})
+        cursor = banco.cursor()
 
-        if is_uso_cpu:
-            uso = psutil.cpu_percent(interval=None, percpu=False)
-            dados.append({'nome_coluna': 'usoCPU', 'dado': uso})
 
-        if is_ociosidade_cpu:
-            ociosidade = int(psutil.cpu_times().idle / (60 * 60 * 24))
-            # percentual_ocioso = int((ociosidade / atividade) * 100)
-            dados.append({'nome_coluna': 'ociosidadeCPU', 'dado': ociosidade})
+        for info in informacoes_componentes:
+        
+            try:
+                valor = eval(info[1])
+            except:  
+                valor = None
+            finally:
+                if valor is None:
+                    valor = -1
+                query = f"INSERT INTO captura (fkPLC, fkComponente, valor) VALUES ({id_plc}, {info[0]}, {valor})"
 
-        if is_tempo_atividade_cpu:
-            atividade = int(psutil.boot_time() / (60 * 60 * 24))
-            dados.append({'nome_coluna': 'atividadeCPU', 'dado': atividade})
+                cursor.execute(query)
+                banco.commit()
+        cursor.close()
+        
 
-        ram = psutil.virtual_memory()
-
-        if is_uso_ram:
-            uso = ram.percent
-            dados.append({'nome_coluna': 'usoMemoriaRam', 'dado': uso})
-
-        if is_ram_livre:
-            livre = int(ram.free / (1024 ** 3))
-            dados.append({'nome_coluna': 'memoriaLivre', 'dado': livre})
-
-        bateria = psutil.sensors_battery()
-
-        if is_qtd_bateria and bateria:
-            qtd = int(bateria.percent)
-            dados.append({'nome_coluna': 'qtdBateria', 'dado': qtd})
-
-        if is_tempo_bateria and bateria:
-            tempo = int(bateria.secsleft / 60)
-            dados.append({'nome_coluna': 'tempoBateriaRestante', 'dado': tempo})
-
-        if is_alimentacao and bateria:
-            alimentacao = bateria.power_plugged
-            dados.append({'nome_coluna': 'isAlimentacao', 'dado': 1 if alimentacao else 0})
-
-        print(dados)
-        armazenar_dados(dados)
         time.sleep(5)
 
 def coletar_infos_user():
@@ -131,7 +88,7 @@ def coletar_infos_user():
             except ValueError:
                 pass
 
-    coletar_dados(*selecao)
+    coletar_dados()
 
 def sair():
     limpar_tela()
@@ -188,7 +145,7 @@ def main():
     # realiza uma acao baseado em uma opcao
     if opcao_selecionada == 1:
         # padrao monitora tudo
-        coletar_dados(*[True] * 9) 
+        coletar_dados() 
     elif opcao_selecionada == 2:
         # coletar com perguntas oq o usuario deseja monitorar
         coletar_infos_user()
@@ -199,4 +156,15 @@ def main():
 if __name__ == '__main__':
     # quando o arquivo iniciar, configura o banco e inicia a aplicação
     banco = configuracao_db()
+
+    cursor = banco.cursor()
+
+    cursor.execute(f"""SELECT co.idComponente, co.funcaoPython,co.medicao, co.limiteAtencao, co.limiteCritico from captura as ca 
+                   join PLC as p on fkPLC = idPLC 
+                   join componente as co on fkComponente = idComponente 
+                   where idPLC = {id_plc} 
+                   group by idComponente ;""")
+    
+    informacoes_componentes = cursor.fetchall()
+
     main()
