@@ -282,6 +282,7 @@ nav {
 
     .card-login {
         width: 60vw;
+        height: 60vh;
     }
 
     .textfield input {
