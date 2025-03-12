@@ -5,13 +5,13 @@
 }
 
 body{
-    background-color: #C0C0C0;
+    background-color: #E2E2E2;
 }
 
 .sideBar{
     display: flex;
     background-color: #A9C0FA;
-    width: 15%;
+    width: 20%;
     height: 100vh;
     flex-direction: column;
     justify-content: space-around;
@@ -29,7 +29,7 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid #24284B;
 }
 
 .tags_nav{
@@ -104,12 +104,12 @@ body{
 
 
 .container {
-    width: 75%;
-    height: 50%; 
+    width: 85%;
+    height: 70%; 
     background: white;
     padding: 20px;
     border-radius: 10px;
-    border: 2px solid #0056D2;
+    border: 2px solid #24284B;
  }
 
 .header {
