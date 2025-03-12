@@ -17,6 +17,12 @@ limites = { # dados sem pesquisa
     'alimentacao': False
 }
 
+# REFAZER SCRIPT COM BASE NA NOVA MODELAGEM:
+# - DICAS:
+#   * FAÇA UM SELECT COM OS COMPONENTES EM QUE ESTE PLC SERÁ MONITORADO NO BANCO DA TABELA CAPTURA
+#   * INSERIR NA TABELA CAPTURA AS INFORMAÇÕES CAPTURADAS INEGRANDO COLUNA funcaoPython (PESQUISAR FUNÇÃO EVAL NO PYTHON)
+#   * INSERIR NA TABELA DE ALERTA OS DADOS QUE INFERIREM OS ALERTAS
+
 def configuracao_db():
     # configurar var de ambientes e criar conexao com o banco de dados
 
