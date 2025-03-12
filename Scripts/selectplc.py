@@ -1,6 +1,12 @@
 import mysql.connector as db
 import time
 
+# REFATORAR SCRIPT COM BASE NA NOVA MODELAGEM:
+# - DICAS:
+#   * Mudar tabelas e campos dos SELECT's
+#   * Ficar atento com o valor vindo do banco de dados, todas as informações são FLOAT!!
+
+
 def conectar_db():
 
     conexao_db = db.connect(
