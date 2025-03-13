@@ -80,7 +80,7 @@ body{
     background-color: #24284B;
     color: white;
     width: 150px;
-    padding: 15px;
+    padding: 20px;
     border-radius: 5px;
     border: none;
     cursor: pointer;
@@ -104,12 +104,12 @@ body{
 
 
 .container {
-    width: 85%;
-    height: 70%; 
+    width: 89%;
+    height: 83%; 
     background: white;
     padding: 20px;
     border-radius: 10px;
-    border: 2px solid #24284B;
+    border: 1px solid #24284B;
  }
 
 .header {
@@ -117,6 +117,7 @@ body{
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    height: 15%;
 }
 
 .nav {
@@ -134,6 +135,7 @@ button {
 }
 
 .add {
+    height: 4vh;
     background: #24284B;
     color: white;
 }
@@ -144,6 +146,12 @@ button {
     display: flex;
     align-items: center;
     gap: 5px;
+    height: 4vh;
+}
+
+
+input{
+    height: 3vh;
 }
 
 .pesquisa {
