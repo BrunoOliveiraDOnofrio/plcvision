@@ -3,10 +3,24 @@ import psutil # https://psutil.readthedocs.io/en/latest/
 import time
 import os
 
-banco = None
+select_user = None
+insert_user = None
 id_plc = 1 # Colocar id_plc 
 
-def configuracao_db():
+def conexao_select():
+    # configurar var de ambientes e criar conexao com o banco de dados
+
+    conexao_db = db.connect(
+        host='127.0.0.1',
+        port=3306,
+        user='select_user',
+        password='Urubu100#',
+        database='PlcVision'
+    )
+
+    return conexao_db
+
+def conexao_insert():
     # configurar var de ambientes e criar conexao com o banco de dados
 
     conexao_db = db.connect(
@@ -23,31 +37,13 @@ def limpar_tela():
     # limpar o console
     print('\033[H\033[J')
 
-def armazenar_dados(dados):
-    # organiza os dados em uma query para serem inseridos no banco de dados
-    colunas = ''
-    valores = ''
-
-    for dado in dados:
-        colunas += f"{dado['nome_coluna']},"
-        valores += f"{dado['dado']},"
-    
-    executor = banco.cursor() 
-
-    print(f'Inserindo dados: {valores[:-1]}.')
-    query = f'INSERT INTO dado(fkPLC,{colunas[:-1]}) VALUES ({id_plc}, {valores[:-1]});'
-
-    executor.execute(query)
-    banco.commit()
-    executor.close()
-
 def coletar_dados():
     # recebe quais valores irão ser monitorados e faz um loop infinito (controlado) onde ele verifica se pode monitorar, coleta a informação, guarda em um array e no final manda armazenar os dados novamente
     while True:
         limpar_tela()
         print('Coletando Dados...')
 
-        cursor = banco.cursor()
+        cursor_insert = insert_user.cursor()
 
         for info in informacoes_componentes:
         
@@ -60,12 +56,12 @@ def coletar_dados():
                     valor = -1
                 query = f"INSERT INTO captura (fkPLC, fkComponente, valor) VALUES ({id_plc}, {info[0]}, {valor})"# Atribuindo o Insert na querry
 
-                cursor.execute(query)
-                banco.commit()
-        cursor.close()
+                cursor_insert.execute(query)
+                insert_user.commit()
+        cursor_insert.close()
         
 
-        time.sleep(5)
+        time.sleep(500)
 
 def coletar_infos_user():
     limpar_tela()
@@ -154,16 +150,17 @@ def main():
 
 if __name__ == '__main__':
     # quando o arquivo iniciar, configura o banco e inicia a aplicação
-    banco = configuracao_db()
+    select_user = conexao_select()
+    insert_user = conexao_insert()
 
-    cursor = banco.cursor() # Criando um cursor para executar o SELECT 
+    cursor_select = select_user.cursor() # Criando um cursor para executar o SELECT 
 
-    cursor.execute(f"""SELECT co.idComponente, co.funcaoPython,co.medicao, co.limiteAtencao, co.limiteCritico from captura as ca 
+    cursor_select.execute(f"""SELECT co.idComponente, co.funcaoPython,co.medicao, co.limiteAtencao, co.limiteCritico from captura as ca 
                    join PLC as p on fkPLC = idPLC 
                    join componente as co on fkComponente = idComponente 
                    where idPLC = {id_plc} 
                    group by idComponente ;""") # executando o SELECT
     
-    informacoes_componentes = cursor.fetchall() # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
+    informacoes_componentes = cursor_select.fetchall() # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
 
     main()

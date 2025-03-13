@@ -1,14 +1,9 @@
 #!/bin/bash
 
-# Comados ao abrir instancia:
-# ssh -i token.pem ubuntu@dns/ip - conectar cm a instancia (local)
-# mkdir producao/  -  criar pasta para guardar o zip q vamos enviar (nuvem)
-# scp -i token.pem arquivo.zip ubuntu@dns/ip:producao/ - enviar o zip pra pasta (local)
-# cd producao/ - entrar na pasta q criamos (nuvem)
-# sudo apt-get install unzip - instalar lib para deszipar arquivo (nuvem)
-# unzip arquivo.zip - deszipar o arquivo (nuvem)
-# chmod 777 Scripts/configScriptPython.sh - dar permissão ao script p rodar (nuvem)
-# ./Scripts/configScriptPython.sh - rodar o script e rezar muito pra funfar (nuvem)
+# cria uma pasta projeto na instacia da nuvem
+# manda esse arquivo por scp na pasta 
+# da permissao de chmod +x configScriptPython.sh
+# executa ele ./configScriptPython.sh
 
 # os q's são de quiet (silencio) para mostrar menos texto (por mais q monstre uma porrada ainda assim)
 # e os y's são para não ficar fazendo perguntas no meio dos comandos
@@ -17,6 +12,10 @@
 echo -e "\033[41;1;37m Atualizando Sistema... \033[0m"
 sudo apt update -qq -y
 sudo apt upgrade -qq -y
+
+# clonar repositório 
+echo -e "\033[41;1;37m Clonando Repositório... \033[0m"
+git clone --quiet https://github.com/RanierDalton/plcvision.git
 
 # instalando mysql
 echo -e "\033[41;1;37m Instalando MYSQL Server... \033[0m"
@@ -31,7 +30,7 @@ sudo apt upgrade -qq -y
 
 # configurando MYSQL
 echo -e "\033[41;1;37m Criando e estruturando BD PlcVision... \033[0m"
-sudo mysql < src/database/modelagem.sql
+sudo mysql < plcvision/src/database/modelagemNova.sql
 
 # Liberar a porta 3306 para qualquer IP
 echo -e "\033[41;1;37m Liberar 3306 do Servidor de Banco... \033[0m"
@@ -76,11 +75,11 @@ sudo apt install -qq -y python3-virtualenv
 
 # Criar virtualenv
 echo -e "\033[41;1;37m Criando Virtualenv... \033[0m"
-python3 -m virtualenv Scripts/env
+python3 -m virtualenv plcvision/Scripts/env
 
 # Iniciando ambiente virtual
 echo -e "\033[41;1;37m Iniciar Ambiente Virtual... \033[0m"
-source Scripts/env/bin/activate
+source plcvision/Scripts/env/bin/activate
 
 # Instalar bibliotecas Python necessárias
 echo -e "\033[41;1;37m Instalando bibliotecas Python... \033[0m"
@@ -88,5 +87,5 @@ pip3 install --quiet --no-input psutil==7.0.0 mysql-connector-python==9.2.0
 
 # rodar o script python
 echo -e "\033[41;1;37m Rondando Script Python... \033[0m"
-chmod 777 ./Scripts/captura_dados_hardware.py
-python3 ./Scripts/captura_dados_hardware.py
+chmod 777 ./plcvision/Scripts/captura_dados_hardware.py
+python3 ./plcvision/Scripts/captura_dados_hardware.py
