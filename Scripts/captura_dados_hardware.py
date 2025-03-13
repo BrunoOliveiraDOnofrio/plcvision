@@ -2,6 +2,7 @@ import mysql.connector as db # https://dev.mysql.com/doc/connector-python/en/con
 import psutil # https://psutil.readthedocs.io/en/latest/
 import time
 import os
+from datetime import datetime, timedelta, timezone
 
 select_user = None
 insert_user = None
@@ -43,6 +44,8 @@ def coletar_dados():
         limpar_tela()
         print('Coletando Dados...')
 
+        fuso_brasil = timezone(timedelta(hours=-3))
+
         cursor_insert = insert_user.cursor()
 
         for info in informacoes_componentes:
@@ -54,7 +57,10 @@ def coletar_dados():
             finally:
                 if valor is None:
                     valor = -1
-                query = f"INSERT INTO captura (fkPLC, fkComponente, valor) VALUES ({id_plc}, {info[0]}, {valor})"# Atribuindo o Insert na querry
+
+                data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
+
+                query = f"INSERT INTO captura (fkPLC, fkComponente, valor, dataHora) VALUES ({id_plc}, {info[0]}, {valor}, '{data_hora_brasil}')"# Atribuindo o Insert na querry
 
                 cursor_insert.execute(query)
                 insert_user.commit()
