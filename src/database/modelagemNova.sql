@@ -116,8 +116,16 @@ INSERT INTO PLC (fkParceria, localizacao, modelo, ano) VALUES
 (2, 'Linha de produção B', 'Schneider M340', 2021);
 
 INSERT INTO usuario (fkEmpresa, nome, email, senha, telCelular, nivel, setor, cargo) VALUES
-(1, 'Carlos Silva', 'carlos@siemens.com', 'senha123', '11987654321', 2, 'Engenharia', 'Gerente de Projetos'),
-(2, 'Ana Souza', 'ana@rockwell.com', 'seguranca456', '11912345678', 1, 'TI', 'Analista de Dados');
+(1, 'Carlos Silva', 'carlos.silva@siemens.com', 'Senha@123', '+5511987654321', 1, 'Automação', 'Técnico de CLP'),
+(1, 'Maria Oliveira', 'maria.oliveira@siemens.com', 'Maria@456', '+5511912345678', 2, 'Engenharia', 'Engenheira de Controle e Automação'),
+(1, 'João Souza', 'joao.souza@siemens.com', 'Joao@789', '+5511976543210', 0, 'Manutenção', 'Eletricista Industrial'),
+(1, 'Fernanda Lima', 'fernanda.lima@siemens.com', 'Fernanda@321', '+5511965432109', 1, 'Produção', 'Operadora de Máquinas'),
+(1, 'Roberto Mendes', 'roberto.mendes@siemens.com', 'Roberto@654', '+5511954321098', 2, 'TI Industrial', 'Coordenador de Sistemas de Automação'),
+(1, 'Ana Costa', 'ana.costa@siemens.com', 'Ana@987', '+5511943210987', 0, 'Qualidade', 'Técnica de Controle de Processos'),
+(1, 'Gustavo Ramos', 'gustavo.ramos@siemens.com', 'Gustavo@741', '+5511932109876', 1, 'Supervisão', 'Supervisor de Instrumentação');
+(1, 'Rafael Martins', 'rafael.martins@siemens.com', 'Rafael@852', '+5511921098765', 0, 'Instrumentação', 'Técnico em Instrumentação'),
+(1, 'Beatriz Rocha', 'beatriz.rocha@siemens.com', 'Beatriz@369', '+5511910987654', 1, 'Controle de Qualidade', 'Analista de Qualidade Industrial'),
+(1, 'Eduardo Nunes', 'eduardo.nunes@siemens.com', 'Eduardo@159', '+5511909876543', 2, 'Engenharia de Processos', 'Engenheiro de Processos Industriais');
 
 INSERT INTO captura (fkPLC, fkComponente, valor) VALUES
 (1, 1, 45.5),
