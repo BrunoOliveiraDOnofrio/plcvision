@@ -96,4 +96,111 @@
             desfoque.style.display = "none"
             dialog.close();
         });
+
+
+        function validarCadastro() {
+            
+    var nome = ipt_nomeFuncionario.value;
+    var email = ipt_emailFuncionario.value;
+    var senha = ipt_senhaFuncionario.value;
+    var confirmarSenha = ipt_confirmarSenhaFuncionario.value;
+    var telefone = ipt_celularFuncionario.value;
+    var nivel = ipt_nivelFuncionario.value;
+    var setor = ipt_setorFuncionario.value;
+    var cargo = ipt_cargoFuncionario.value;
+    
+    // Nome completo
+    nome = nome.split(" ");
+    if (nome == undefined || nome == '' || nome.length < 2) {
+        alert("Nome completo inválido!");
+        return false;
+    }
+    
+    // Validação de e-mail
+    var tamEmail = email.length;
+    var isEnd = email.endsWith('.com') || email.endsWith('.br') || email.endsWith('.gov');
+    var indices = [email.indexOf('.com'), email.indexOf('.br'), email.indexOf('.gov')].filter(i => i >= 0);
+    var indiceEnd = indices.length > 0 ? Math.min(...indices) : -1;
+    var indiceArroba = email.indexOf('@');
+    var isArroba = indiceArroba !== -1 && indiceArroba < indiceEnd;
+
+    if (email == undefined || email == '') {
+        alert("Valor do email indefinido!");
+        return false;
+    }
+
+    if (tamEmail < 8) {
+        alert("Tamanho do email é inválido!");
+        return false;
+    }
+
+    if (!isEnd || !isArroba) {
+        alert("Email inválido!");
+        return false;
+    }
+    
+    // Senha
+    var tamSenha = senha.length;
+    var isEspecial = senha.includes("!") || senha.includes("@") || senha.includes("#") || senha.includes("$") || senha.includes("%") || senha.includes("^") || senha.includes("&") || senha.includes("*");
+    var isMinuscula = false;
+    var isMaiuscula = false;
+    var isNum = false;        
+
+    for(var i = 0; i < tamSenha; i++){
+        if(senha[i] == senha[i].toUpperCase()){
+            isMaiuscula = true;
+        }
+
+        if(senha[i] == senha[i].toLowerCase()){
+            isMinuscula = true;
+        }
+
+        if(Number(parseFloat(senha[i])) == senha[i]){
+            isNum = true;
+        }
+    }
+
+    if (tamSenha < 8 || !isMinuscula || !isMaiuscula || !isEspecial || !isNum || senha == '') {
+        alert("Senha inválida!");
+        return false;
+    }
+    
+    if (senha !== confirmarSenha) {
+        alert("As senhas não coincidem!");
+        return false;
+    }
+    
+    // Telefone (13 dígitos)
+    if (telefone == undefined || telefone == '' || telefone.length != 13) {
+        alert("Número de telefone inválido!");
+        return false;
+    }
+    
+    // Nível de acesso (0, 1 ou 2)
+    if ((nivel == undefined || nivel == '') || (nivel != 0 && nivel != 1 && nivel != 2)) {
+        alert("Nível de acesso inválido!");
+        return false;
+    } 
+    
+    // Setor e Cargo
+    if (setor == undefined || setor == ''){ 
+        alert("Setor não definido!");
+        return false;
+    }
+    
+    if (cargo == undefined || cargo == '') {
+        alert("Cargo não pode estar vazio!");
+        return false;
+    }
+    
+    alert("Cadastro realizado com sucesso!");
+    return true;
+}
+
+function cadastrar() {
+    if (validarCadastro()) {
+        console.log("Dados validados. Enviando para o servidor...");
+    }
+}
+
     </script>
