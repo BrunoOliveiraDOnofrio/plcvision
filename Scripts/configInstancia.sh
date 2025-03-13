@@ -61,7 +61,7 @@ sudo netfilter-persistent reload
 
 # configurando MYSQL
 echo -e "\033[41;1;37m Criando e estruturando BD PlcVision... \033[0m"
-sudo mysql < src/database/modelagem.sql
+sudo mysql < src/database/modelagemNova.sql
 
 # Criar usuários MYSQL
 echo -e "\033[41;1;37m Criando Usuários do Banco... \033[0m"

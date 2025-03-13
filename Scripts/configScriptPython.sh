@@ -31,7 +31,7 @@ sudo apt upgrade -qq -y
 
 # configurando MYSQL
 echo -e "\033[41;1;37m Criando e estruturando BD PlcVision... \033[0m"
-sudo mysql < src/database/modelagem.sql
+sudo mysql < src/database/modelagemNova.sql
 
 # Liberar a porta 3306 para qualquer IP
 echo -e "\033[41;1;37m Liberar 3306 do Servidor de Banco... \033[0m"
