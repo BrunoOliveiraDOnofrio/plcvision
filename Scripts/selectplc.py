@@ -53,13 +53,26 @@ def selecao_do_fk(coluna):
             print('Entrada inválida! Digite um número.')
 
     cursor = banco.cursor()
-
+    
     if escolha == 6:
         try:
+            coluna_id = coluna[0]
+            coluna_nome = coluna[1]
+
             # Execução da query
             cursor.execute(f"""
-                SELECT avg({coluna})
-                FROM Dados;
+                SELECT 
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = {coluna_id}) AS atividade_da_cpu,
+                    
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = {coluna_id}) AS ociosidade_da_cpu;
             """)
             
             # Exibição dos resultados
@@ -67,7 +80,7 @@ def selecao_do_fk(coluna):
                 print("-"*76)
                 print("|                                                                          |")
                 print("|                                                                          |")
-                print(f'|         Dados de {coluna} da máquina {maquinas[fkplc]}:                     |')
+                print(f'|         Dados de {coluna_nome} da máquina {maquinas[fkplc]}:                     |')
                 print(f'|                                    {linha[0]:.2f}                                 |')
                 print("|                                                                          |")
                 print("|                                                                          |")
@@ -80,14 +93,23 @@ def selecao_do_fk(coluna):
         try:
             # Execução da query
             cursor.execute(f"""
-                SELECT avg({coluna})
-                FROM Dados
-                WHERE fkPlc = {fkplc};
+                	SELECT 
+                        (SELECT AVG(c.valor) 
+                        FROM captura AS c
+                        JOIN PLC ON fkPLC = idPLC
+                        JOIN componente ON fkComponente = idComponente
+                        WHERE fkComponente = {coluna_id} AND fkPLC = {fkplc}) AS atividade_da_cpu,
+                        
+                        (SELECT AVG(c.valor) 
+                        FROM captura AS c
+                        JOIN PLC ON fkPLC = idPLC
+                        JOIN componente ON fkComponente = idComponente
+                        WHERE fkComponente = {coluna_id} AND fkPLC = {fkplc}) AS ociosidade_da_cpu;
             """)
             
             # Exibição dos resultados
             for linha in cursor.fetchall():
-                print(f'            Dados de {coluna} da máquina {maquinas[fkplc]}:\n')
+                print(f'            Dados de {coluna_id} da máquina {maquinas[fkplc]}:\n')
                 print("-"*76)
                 print("|                                                                          |")
                 print("|                                                                          |")
@@ -159,15 +181,26 @@ def tratar_ram():
     if escolha == 6:
         try:
             cursor.execute(f"""
-                SELECT avg(usoMemoriaRam), avg(memoriaLivre)
-                FROM Dados;
+                SELECT 
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = 5) AS media_uso_ram,
+                    
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = 6) AS media_ram_livre;
                 """)
             
                 
             print(f'\n Dados das usoMemoriaRam, memoriaLivre da máquina {maquinas[fkplc]}')
             for linha in cursor.fetchall():
+                
                 ramPercent = linha[0] 
-                ramLivre = linha[1]  
+                ramLivre = linha[1]
 
                 ramTotal = (ramLivre * 100) / ramPercent
                 porcentagemLivre =  100 - ramPercent 
@@ -198,9 +231,18 @@ def tratar_ram():
     else:
         try:
             cursor.execute(f"""
-                SELECT avg(usoMemoriaRam), avg(memoriaLivre)
-                FROM Dados
-                WHERE fkPlc = {fkplc};
+                SELECT 
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = 5 AND fkPLC = {fkplc}) AS media_uso_ram,
+                    
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = 6 AND fkPLC = {fkplc}) AS media_ram_livre;
                 """)
             
                 
@@ -292,8 +334,18 @@ def tratar_cpu():
     if escolha == 6:
         try:
             cursor.execute(f"""
-                SELECT avg(ociosidadeCpu), avg(atividadeCpu)
-                FROM Dados;
+                SELECT 
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = 3) AS atividade_da_cpu,
+                    
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = 4) AS ociosidade_da_cpu;
                 """)
             
                 
@@ -330,9 +382,18 @@ def tratar_cpu():
     else:
         try:
             cursor.execute(f"""
-                SELECT avg(ociosidadeCpu), avg(atividadeCpu)
-                FROM Dados;
-                WHERE fkPlc = {fkplc};
+                SELECT 
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = 3 AND fkPLC = {fkplc}) AS atividade_da_cpu,
+                    
+                    (SELECT AVG(c.valor) 
+                    FROM captura AS c
+                    JOIN PLC ON fkPLC = idPLC
+                    JOIN componente ON fkComponente = idComponente
+                    WHERE fkComponente = 4 AND fkPLC = {fkplc}) AS ociosidade_da_cpu;
                 """)
             
                 
@@ -374,10 +435,10 @@ def visualizar_dados_cpu():
     limpar_tela()
     # Mapeamento de colunas
     metricas = {
-        1: ('temperaturaCpu', 'Temperatura da CPU'),
-        2: ('usoCpu', 'Uso da CPU'),
-        3: ('ociosidadeCpu', 'Ociosidade da CPU'),
-        4: ('atividadeCpu', 'Tempo de Atividade da CPU')
+        1: (1, 'Temperatura', 'Temperatura da CPU'),
+        2: (2, 'Uso', 'Uso da CPU'),
+        3: ('Ociosidade', 'Ociosidade da CPU'),
+        4: ('Atividade', 'Tempo de Atividade da CPU')
     }
 
     # Menu de seleção
@@ -391,7 +452,7 @@ def visualizar_dados_cpu():
         try:
             escolha = int(input('   Escolha uma opção para prosseguir: '))
             if escolha in metricas:
-                coluna = metricas[escolha][0]
+                coluna = metricas[escolha]
                 break
             print('Opção inválida! Escolha entre 1 e 4.')
         except ValueError:
@@ -407,8 +468,8 @@ def visualizar_dados_ram():
     limpar_tela()
 
     metricas = {
-        1: ('usoMemoriaRam', 'Uso da memória Ram'),
-        2: ('memoriaLivre', 'Memória livre')
+        1: ('Uso', 'Uso da memória Ram'),
+        2: ('Memória Livre', 'Memória livre')
     }
 
     print("Selecione o tipo de dados que deseja visualizar")
@@ -433,9 +494,9 @@ def visualizar_dados_bateria():
     limpar_tela()
 
     metricas = {
-        1: ('isAlimentacao', 'Se está conectado na fonte de alimentação'),
-        2: ('dtBateria', 'Porcentagem de bateria'),
-        3: ('tempoBateriaRestante', 'Tempo restante de bateria')
+        1: (8, 'Status', 'Se está conectado na fonte de alimentação'),
+        2: (7, 'Quantidade', 'Porcentagem de bateria'),
+        3: (10, 'Tempo Restante', 'Tempo restante de bateria')
     }
 
     print("Selecione o tipo de dados que deseja visualizar")
@@ -447,7 +508,7 @@ def visualizar_dados_bateria():
         try:
             escolha = int(input('   Escolha uma opção para prosseguir: '))
             if escolha in metricas:
-                coluna = metricas[escolha][0]
+                coluna = metricas[escolha]
                 break
             print('Opção inválida! Escolha entre 1 e 2')
         except ValueError:

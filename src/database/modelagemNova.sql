@@ -138,3 +138,4 @@ INSERT INTO captura (fkPLC, fkComponente, valor) VALUES
 (2, 3, 80.0),
 (2, 4, 50.0),
 (2, 5, 0);
+
