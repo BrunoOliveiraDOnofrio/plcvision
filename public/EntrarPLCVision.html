@@ -35,7 +35,7 @@
                 <div class="titulo-login">Login</div>
                 <div class="textfield">
                     <label for="usuario">E-mail</label>
-                    <input type="text" id="ipt_usuario" placeholder="Digite seu e-mail">
+                    <input type="text" id="ipt_email" placeholder="Digite seu e-mail">
                     <div id="validarUsuario" style="color: rgb(179, 2, 2)"></div>
                     <!-- Caso usuário erre, retornar mensagem de e-mail não cadastrado-->
                 </div>
@@ -73,7 +73,7 @@
 
     function entrar() {
 
-        var usuario = ipt_usuario.value
+        var email = ipt_email.value
         var senha = ipt_senha.value
 
         var mensagem = ''
@@ -81,8 +81,8 @@
         if (email == "" || senha == "") {
             mensagem += `Insira valores válidos`
         }
-        validarSenha.innerHTML = mensagem
-        validarUsuario.innerHTML = mensagem
+        // validarSenha.innerHTML = mensagem
+        // validaremail.innerHTML = mensagem
 
 
         console.log("FORM LOGIN: ", email);
@@ -90,7 +90,7 @@
 
 
 
-        fetch("/usuarios/autenticar", {
+        fetch("/usuario/autenticar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -103,6 +103,8 @@
             console.log("ESTOU NO THEN DO entrar()!")
 
             if (resposta.ok) {
+
+                console.log("RESPOSTA OK")
                 console.log(resposta);
 
                 resposta.json().then(json => {
@@ -114,7 +116,7 @@
 
 
                     setTimeout(function () {
-                        window.location = "HomePCLVision.html";
+                        window.location = "loginEmpresapgPLC.html";
                     }, 1000);
 
                 });

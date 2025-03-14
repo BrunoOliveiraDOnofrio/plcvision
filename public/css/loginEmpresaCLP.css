@@ -57,7 +57,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center; 
-    border-left: 8px solid #24284B;
+    border-left: 6px solid #24284B;
 }
 
 .user{

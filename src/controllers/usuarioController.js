@@ -5,6 +5,7 @@ function autenticar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
 
+    console.log("Estou no autenticar controller");
     
     if(!validarCredenciais(res, email, senha)){
         return;
@@ -20,10 +21,10 @@ function autenticar(req, res) {
                 console.log(resultadoAutenticar);
 
                 res.json({
-                    id: resultadoAutenticar[0].idUsuarios,
+                    id: resultadoAutenticar[0].idUsuario,
                     nome: resultadoAutenticar[0].nome,
                     nivel: resultadoAutenticar[0].nivel,
-                    fkEmpresa: resultadoAutenticar[0].fkEmpresa
+                    fkEmpresa: resultadoAutenticar[0].fkEmpresa 
                 });
                         
             } else if (resultadoAutenticar.length == 0) {
@@ -133,6 +134,9 @@ function validarCredenciais(res, email, senha){
 
     var indiceArroba = email.indexOf('@');
     var isArroba = indiceArroba !== -1 && indiceArroba < indiceEnd;
+
+    var CARACTERES_ESPECIAIS = /[^A-Za-z0-9]/;
+// const CARACTERES_CEP = /^[0-9]{8}$/;
 
     if (email == undefined || email == '') {
         res.status(400).send("Valor do email indefinido!");
