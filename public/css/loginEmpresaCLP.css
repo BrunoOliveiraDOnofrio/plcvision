@@ -260,6 +260,7 @@ dialog {
 }
 
 .cadastroFuncionario {
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -267,12 +268,14 @@ dialog {
     font-size: 1.875rem;
     font-weight: 600;
     padding:  1.25rem;
+    height: 15%;
     /* 20px */
 }
 
 .container-global {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    height: 50%;
     gap: 10%;
 }
 
@@ -297,7 +300,7 @@ dialog {
 
 .textfield input {
     width: 18vw;
-    height: 7vh;
+    height: 5vh;
     border-radius: 0.4rem;
     /* 10px */
     border: solid;
