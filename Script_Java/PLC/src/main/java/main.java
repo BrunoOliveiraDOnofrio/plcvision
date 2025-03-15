@@ -19,10 +19,10 @@ public class main {
         }
 
 
-        System.out.println("Como voce gostaria de organizar seus plcs? \n 1. ram \n 2. Marca \n 3. Modelo \n 4. Tudo \n 5. Sair" );
+        System.out.println("Como voce gostaria de organizar seus plcs? \n 1. ram \n 2. Marca \n 3. Modelo \n 4. Usoram \n 5. Temperatura \n 6. Uso Cpu \n 7. Ano  \n 8. Tudo \n 9. Sair" );
         int opcao = leitor.nextInt();
 
-        if (opcao > 0 && opcao < 5){
+        if (opcao > 0 && opcao < 9){
             System.out.println("Array PLC original");
             for (int i = 0; i < plc.length; i++) {
                 plc[i].exibir();
@@ -52,12 +52,43 @@ public class main {
             else if (opcao == 4) {
 
                 System.out.println("\nArray PLC totalmente organizado");
+                ramusoSort(plc);
+                for (int i = 0; i < plc.length; i++) {
+                    plc[i].exibir();
+                }
+            }
+            else if (opcao == 5) {
+
+                System.out.println("\nArray PLC totalmente organizado");
+                tempSort(plc);
+                for (int i = 0; i < plc.length; i++) {
+                    plc[i].exibir();
+                }
+            }
+            else if (opcao == 6) {
+
+                System.out.println("\nArray PLC totalmente organizado");
+                cpuSort(plc);
+                for (int i = 0; i < plc.length; i++) {
+                    plc[i].exibir();
+                }
+            }
+            else if (opcao == 7) {
+
+                System.out.println("\nArray PLC totalmente organizado");
+                anoSort(plc);
+                for (int i = 0; i < plc.length; i++) {
+                    plc[i].exibir();
+                }
+            }
+            else if (opcao == 8) {
+
+                System.out.println("\nArray PLC totalmente organizado");
                 sortTotal(plc);
                 for (int i = 0; i < plc.length; i++) {
                     plc[i].exibir();
                 }
             }
-
         }
         else  {
             exit(1);
