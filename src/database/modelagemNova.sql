@@ -125,7 +125,9 @@ INSERT INTO usuario (fkEmpresa, nome, email, senha, telCelular, nivel, setor, ca
 (1, 'Gustavo Ramos', 'gustavo.ramos@siemens.com', 'Gustavo@741', '11932109876', 1, 'Supervisão', 'Supervisor de Instrumentação'),
 (1, 'Rafael Martins', 'rafael.martins@siemens.com', 'Rafael@852', '11921098765', 0, 'Instrumentação', 'Técnico em Instrumentação'),
 (1, 'Beatriz Rocha', 'beatriz.rocha@siemens.com', 'Beatriz@369', '11910987654', 1, 'Controle de Qualidade', 'Analista de Qualidade Industrial'),
-(1, 'Eduardo Nunes', 'eduardo.nunes@siemens.com', 'Eduardo@159', '11909876543', 2, 'Engenharia de Processos', 'Engenheiro de Processos Industriais');
+(1, 'Eduardo Nunes', 'eduardo.nunes@siemens.com', 'Eduardo@159', '11909876543', 2, 'Engenharia de Processos', 'Engenheiro de Processos Industriais'),
+(1, 'Beatriz Moreira', 'beatriz.moreira@siemens.com', 'Beatriz@159', '11909966503', 2, 'Supervisão', 'COO');
+
 
 INSERT INTO captura (fkPLC, fkComponente, valor) VALUES
 (1, 1, 45.5),
