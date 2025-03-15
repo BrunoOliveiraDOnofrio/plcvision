@@ -1,6 +1,11 @@
+import java.util.Scanner;
+
+import static java.lang.System.exit;
+
 public class main {
 
     public static void main(String[] args) {
+        Scanner leitor = new Scanner(System.in);
 
         PLC[] plc = new PLC[6];
         plc[0] = new PLC("Simmens", "XPS 13", 8);
@@ -11,34 +16,47 @@ public class main {
         plc[5] = new PLC("Rockwell", "ZenBook", 8);
 
 
-        System.out.println("Array PLC original");
-        for (int i = 0; i < plc.length; i++) {
-            plc[i].exibir();
+        System.out.println("Como voce gostaria de organizar seus plcs? \n 1. ram \n 2. Marca \n 3. Modelo \n 4. Tudo \n 5. Sair" );
+        int opcao = leitor.nextInt();
+
+        if (opcao > 0 && opcao < 5){
+            System.out.println("Array PLC original");
+            for (int i = 0; i < plc.length; i++) {
+                plc[i].exibir();
+            }
+
+            if(opcao == 1){
+                System.out.println("\nArray PLC organizado por quantidade de ram");
+                ramgbSort(plc);
+                for (int i = 0; i < plc.length; i++) {
+                    plc[i].exibir();
+                }
+            }
+           else if(opcao == 2) {
+                System.out.println("\nArray PLC organizado por marca");
+                marcaSort(plc);
+                for (int i = 0; i < plc.length; i++) {
+                    plc[i].exibir();
+                }
+            }
+            else if(opcao == 3){
+                System.out.println("\nArray PLC organizado por modelo");
+                modeloSort(plc);
+                for (int i = 0; i < plc.length; i++) {
+                    plc[i].exibir();
+                }
+            }
+            else if (opcao == 4) {
+
+                System.out.println("\nArray PLC totalmente organizado");
+                sortTotal(plc);
+                for (int i = 0; i < plc.length; i++) {
+                    plc[i].exibir();
+                }
+            }
         }
-
-
-        System.out.println("\nArray PLC organizado por quantidade de ram");
-        ramgbSort(plc);
-        for (int i = 0; i < plc.length; i++) {
-            plc[i].exibir();
-        }
-
-        System.out.println("\nArray PLC organizado por marca");
-        marcaSort(plc);
-        for (int i = 0; i < plc.length; i++) {
-            plc[i].exibir();
-        }
-
-        System.out.println("\nArray PLC organizado por modelo");
-        modeloSort(plc);
-        for (int i = 0; i < plc.length; i++) {
-            plc[i].exibir();
-        }
-
-        System.out.println("\nArray PLC totalmente organizado");
-        sortTotal(plc);
-        for (int i = 0; i < plc.length; i++) {
-            plc[i].exibir();
+        else  {
+            exit(1);
         }
     }
 
