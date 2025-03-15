@@ -99,6 +99,24 @@ public class main {
     }
 
 
+    public static void tempSort(PLC[] plc) {
+
+        for (int i = 0; i < plc.length; i++) {
+            int menor = i;
+            for (int j = i + 1; j < plc.length; j++) {
+                if (plc[j].temp < plc[menor].temp) {
+                    menor = j;
+                }
+            }
+            PLC temp = plc[i];
+            plc[i] = plc[menor];
+            plc[menor] = temp;
+        }
+
+    }
+
+    }
+
 
     public static void marcaSort(PLC[] plc) {
 
