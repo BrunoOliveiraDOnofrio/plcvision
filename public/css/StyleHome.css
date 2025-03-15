@@ -11,6 +11,7 @@
 
 nav {
     display: flex;
+    justify-content: space-evenly;
     width: 100%;
     height: 9vh;
     background-color: #a9c0fa;
@@ -18,15 +19,26 @@ nav {
 
 .logo_nav {
     display: flex;
-    width: 15%;
+    width: 10%;
+    height: 9vh;
     justify-content: center;
     align-items: center;
     /* border: solid black 1px; */
+    cursor: pointer;
+}
+
+.img_logo {
+    width: 90%;
+    height: 6vh;
+    background-image: url(../assets/imgs/LogoPlcVision.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 .mid_nav {
     display: flex;
-    width: 70vw;
+    width: 60vw;
     justify-content: center;
     align-items: center;
     /* border: solid red 1px; */
@@ -51,6 +63,10 @@ nav {
     font-weight: 400;
 }
 
+.mid_nav ul li a:hover {
+    color: #ebebeb;
+}
+
 .btn_nav {
     display: flex;
     width: 15%;
@@ -72,6 +88,10 @@ nav {
     cursor: pointer;
 }
 
+.btn_nav button:hover {
+    background-color: #5362ee;
+}
+
 .container {
     display: flex;
     width: 100%;
@@ -86,6 +106,7 @@ nav {
     height: 105vh;
     background-image: url(../assets/imgs/Design\ sem\ nome.png);
     background-size: cover;
+    background-repeat: no-repeat;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -140,7 +161,7 @@ nav {
     height: 105vh;
     flex-direction: column;
     justify-content: space-evenly;
-    background: linear-gradient(#89AAFF, #a9c0fa, #EFEFEF);
+    background: linear-gradient(#89AAFF, #a9c0fa);
 }
 
 
@@ -245,71 +266,104 @@ nav {
 
 .box3 {
     display: flex;
+    align-items: center;
     width: 100%;
     height: 105vh;
-    background-color: #EFEFEF;
+    background: linear-gradient(#a9c0fa, #EFEFEF);
     flex-direction: column;
     gap: 2%;
 }
 
-.h1_alerta{
-display: flex;
-width: 100%;
-height: 40%;
-justify-content: center;
-/* border: 1px solid red; */
-text-align: center;
-align-items: center;
-}
-
-.h1_alerta h1{
-    font-size: 3.5rem;
-}
-
-.h1_alerta h1 span{
-    color: #5362ee;
-}
-
-.box_icone_alerta{
+.container_Plc {
     display: flex;
-    width: 100%;
-    height: 25%;
-    /* border: 1px solid red; */
-    align-items: end;
-    justify-content: center;
-    align-items: center;
+    width: 90%;
+    height: 90%;
     flex-direction: column;
+    /* border: 1px solid red; */
 }
 
-.icone_alerta{
-    display: flex;
-    width: 50%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-}
-
-.icone_alerta img{
-    width: 25%;
-    height: 88%;
-}
-
-.setinha{
-    display: flex;
+.titulo_Box3 {
     width: 100%;
-    height: 6vh;
-    justify-content: center;
-    align-items: center;
+    height: 10%; 
+    /* border: 1px solid black; */
 }
 
-.setinha img{
-    width: 4%;
-    transform: rotate(180deg);
+.titulo_Box3 h1 {
+    font-size: 2.8rem;
+    margin: 0;
 }
 
-.lorem{
-    font: 500;
-    font-size: 25px;
+.texto_Plc {
+    width: 100%;
+    height: 52%;
+    /* border: 1px solid crimson; */
+}
+
+.sobre_o_servico {
+    width: 100%;
+    height: 33%;
+    /* border: 1px solid green; */
+}
+
+.sobre_o_servico p {
+    font-size: 1.3rem;
+    text-align: justify;
+    line-height: 1.8rem;
+}
+
+.niveis_acesso  {
+    width: 100%;
+    height: 33%;
+    /* border: 1px solid black; */
+}
+
+.niveis_acesso p {
+    text-align: justify;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+}
+
+.niveis_acesso2 {
+    width: 100%;
+    height: 33%;
+    /* border: 1px solid red; */
+}
+
+.niveis_acesso2 p {
+    text-align: justify;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+}
+
+.img_servico {
+    position: relative;
+    width: 100%;
+    height: 48%;
+    /* border: 1px solid gray;  */
+}
+
+.img_dashboard {
+    /* border: 1px solid blue; */
+    width: 40%;
+    height: 80%;
+    position: absolute;
+    background-image: url(../assets/imgs/dashHome.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    left: 18%;
+    bottom: 0%;
+}
+
+.img_funcionario {
+    /* border: 1px solid rgb(0, 255, 128); */
+    width: 40%;
+    height: 80%;
+    position: absolute;
+    background-image: url(../assets/imgs/funcTrabalhando.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    right: 18%;
+    top: 0%;
 }
 
 .box4 {
@@ -440,13 +494,28 @@ footer {
 
 @media only screen and (max-width: 1280px) {
 
+    .logo_nav{
+        width: 30%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .img_logo {
+        height: 5vh;
+        width: 100%;
+    }
+
     .texto_inicio h1 span {
         font-size: 4rem;
     }
 
     .box1{
-        background-size: 100%;
+        background-size: contain;
+        background-color: #89AAFF;
     }
+
 
     .card:nth-child(1) {
         background: white;
@@ -469,6 +538,49 @@ footer {
         font-size: 16px;
     }
 
+
+    .titulo_Box3 h1 {
+        font-size: 2rem;
+    }
+
+    .texto_Plc,
+    .sobre_o_servico,
+    .niveis_acesso,
+    .niveis_acesso2 {
+        height: auto;
+        width: 100%;
+    }
+
+    .texto_Plc p,
+    .sobre_o_servico p,
+    .niveis_acesso p,
+    .niveis_acesso2 p {
+        font-size: 1rem
+    }
+
+
+    .img_servico {
+        height: 60%;
+        /* border: 1px solid black; */
+    }
+
+    .img_funcionario{
+        width: 50%;
+        height: 60%;
+        background-position: right;
+        left: 25%;
+        top: 10%;
+        /* border: 1px solid red; */
+    }
+    .img_dashboard {
+        width: 50%;
+        height: 60%;
+        bottom: 0;
+        /* border: 1px solid gray; */
+    }
+
+
+
 }
 
 @media only screen and (max-width: 1200px) {
@@ -478,7 +590,7 @@ footer {
     }
 
     .logo_nav {
-        width: 20%;
+        width: 10%;
     }
 
     .mid_nav {
@@ -500,7 +612,7 @@ footer {
     }
 
     .box1 {
-        background-size: 100%;
+        background-size: cover;
     }
 
     .texto_inicio h1 span {
@@ -517,6 +629,10 @@ footer {
 
     .texto_baixo {
         font-size: 15px;
+    }
+
+    .box2 {
+        height: 100%;
     }
 
     .card:nth-child(1) {
@@ -549,6 +665,37 @@ footer {
         font-weight: 500;
     }
 
+    .titulo_Box3 h1 {
+        font-size: 2rem;
+    }
+
+    .texto_Plc,
+    .sobre_o_servico,
+    .niveis_acesso,
+    .niveis_acesso2 {
+        height: auto;
+    }
+
+    .img_servico {
+        height: 100%;
+        /* border: 1px solid black; */
+    }
+
+    .img_funcionario{
+        width: 70%;
+        height: 80%;
+        background-position: center;
+        left: 17%;
+        /* border: 1px solid red; */
+    }
+    .img_dashboard {
+        width: 70%;
+        height: 80%;
+        top: 20%;
+        /* border: 1px solid gray; */
+    }
+
+
 }
 
 @media screen and (max-width: 600px) {
@@ -562,7 +709,7 @@ footer {
     }
 
     .logo_nav {
-        width: 50%;
+        width: 30%;
     }
 
     .mid_nav {
@@ -645,35 +792,36 @@ footer {
     }
 
     .box3{
-        height: 50vh;
+        height: auto;
+        padding: 10px;
     }
 
-    .h1_alerta{
-        height: 30%;
+    .titulo_Box3 h1 {
+        font-size: 1.5rem;
     }
 
-    .h1_alerta h1{
-        font-size: 2rem;
+    .texto_Plc {
+        height: auto;
+        margin-bottom: 10px;
     }
 
-    .icone_alerta{
-        height: 90%;
+    .sobre_o_servico p,
+    .niveis_acesso p,
+    .niveis_acesso2 p {
+        font-size: 1rem;
+        line-height: 1.5rem;
     }
 
-    .icone_alerta img{
-        width: 30%;
+    .img_servico {
+        height: 40%;
     }
 
-    .setinha img{
-        width: 5%;
-    }
-
-    .lorem{
-        height: 10%;
-    }
-
-    .lorem span{
-        font-size: 1.2rem;
+    .img_dashboard,
+    .img_funcionario {
+        width: 70%;
+        height: 50%;
+        left: 15%;
+        right: 15%;
     }
 
     .box4{
