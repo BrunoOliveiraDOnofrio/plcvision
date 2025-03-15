@@ -1,3 +1,5 @@
+import com.github.javafaker.Faker;
+
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -6,14 +8,15 @@ public class main {
 
     public static void main(String[] args) {
         Scanner leitor = new Scanner(System.in);
+        Faker faker = new Faker();
 
         PLC[] plc = new PLC[6];
-        plc[0] = new PLC("Simmens", "XPS 13", 8);
-        plc[1] = new PLC("Mitsubishi", "Spectre x360", 16);
-        plc[2] = new PLC("Simmens", "XPS 13", 8);
-        plc[3] = new PLC("Rockwell", "ThinkPad X1", 32);
-        plc[4] = new PLC("Simmens", "ZenBook", 16);
-        plc[5] = new PLC("Rockwell", "ZenBook", 8);
+        for (int i = 0; i < 6; i++){
+            Integer randon_numeros =  faker.number().numberBetween(0, 99);
+            String randon_palavra = faker.lorem().word();
+            plc[i] = new PLC(randon_palavra, randon_palavra, randon_numeros, randon_numeros, randon_numeros, randon_numeros, randon_numeros);
+
+        }
 
 
         System.out.println("Como voce gostaria de organizar seus plcs? \n 1. ram \n 2. Marca \n 3. Modelo \n 4. Tudo \n 5. Sair" );
@@ -54,6 +57,7 @@ public class main {
                     plc[i].exibir();
                 }
             }
+
         }
         else  {
             exit(1);
@@ -77,6 +81,25 @@ public class main {
 
     }
 
+
+    public static void cpuSort(PLC[] plc) {
+
+        for (int i = 0; i < plc.length; i++) {
+            int menor = i;
+            for (int j = i + 1; j < plc.length; j++) {
+                if (plc[j].cpuUso < plc[menor].cpuUso) {
+                    menor = j;
+                }
+            }
+            PLC temp = plc[i];
+            plc[i] = plc[menor];
+            plc[menor] = temp;
+        }
+
+    }
+
+
+
     public static void marcaSort(PLC[] plc) {
 
         for (int i = 0; i < plc.length; i++) {
@@ -90,8 +113,6 @@ public class main {
             plc[i] = plc[menor];
             plc[menor] = temp;
         }
-
-
     }
 
 
