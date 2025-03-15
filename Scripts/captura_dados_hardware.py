@@ -4,9 +4,7 @@ import time
 import os
 from datetime import datetime, timedelta, timezone
 
-select_user = None
-insert_user = None
-id_plc = 1 # Colocar id_plc
+id_plc = 19 # Colocar id_plc
 
 def conexao_select():
     # configurar var de ambientes e criar conexao com o banco de dados
@@ -14,7 +12,7 @@ def conexao_select():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='select_user',
+        user='insert_user',
         password='Urubu100#',
         database='PlcVision'
     )
@@ -46,6 +44,7 @@ def coletar_dados(informacoes_componentes):
 
         fuso_brasil = timezone(timedelta(hours=-3))
 
+        insert_user = conexao_insert()
         cursor_insert = insert_user.cursor()
 
         for info in informacoes_componentes:
@@ -68,22 +67,24 @@ def coletar_dados(informacoes_componentes):
 
         time.sleep(500)
 
-def coletar_infos_user(cursor_select):
+def coletar_infos_user():
     limpar_tela()
     print('Responda as perguntas com 0 (Não) e 1 (Sim) de acordo com o que deseja coletar')
 
-    cursor_select.execute(f"""SELECT co.idComponente, co.medicao, co.metrica, co.hardware from componente as ca 
-                   where idPLC = {id_plc} 
-                   group by idComponente ;""")
+    select_user = conexao_select()
+    cursor_select = select_user.cursor()
+    cursor_select.execute(f"""SELECT co.idComponente, co.medicao, co.metrica, co.hardware from componente as co;""")
 
     metricas_componentes = cursor_select.fetchall()
+    cursor_select.close()
 
     for metrica in metricas_componentes:
         while True:
             try:
                 aparecer_metrica = f'em {metrica[2]}' if metrica[2] != '' else ''
                 escolha = int(input(f'Gostaria de coletar informação sobre {metrica[1]} do(a) {metrica[3]} {aparecer_metrica}?: '))
-                if escolha is 1:
+                if escolha in [0,1]:
+                    insert_user = conexao_insert()
                     cursor_insert = insert_user.cursor()
 
                     fuso_brasil = timezone(timedelta(hours=-3))
@@ -158,17 +159,20 @@ def main(informacoes_componentes):
         sair()
 
 def coletar_informacoes_componentes():
+    select_user = conexao_select()
     cursor_select = select_user.cursor() # Criando um cursor para executar o SELECT 
 
-    cursor_select.execute(f"""SELECT co.idComponente, co.funcaoPython,co.medicao, co.limiteAtencao, co.limiteCritico from captura as ca 
+    query_verificar_componentes = f"""SELECT co.idComponente, co.funcaoPython,co.medicao, co.limiteAtencao, co.limiteCritico from captura as ca 
                    join PLC as p on fkPLC = idPLC 
                    join componente as co on fkComponente = idComponente 
                    where idPLC = {id_plc} 
-                   group by idComponente ;""") # executando o SELECT
-    
-    informacoes_componentes_monitorar = cursor_select.fetchall() # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
+                   group by idComponente;"""
 
-    if informacoes_componentes_monitorar is None: # verificar se ele está vazio
+    cursor_select.execute(query_verificar_componentes) # executando o SELECT
+    informacoes_componentes_monitorar = cursor_select.fetchall() # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
+    cursor_select.close()
+
+    if len(informacoes_componentes_monitorar) == 0: # verificar se ele está vazio
         print('''Este PLC ainda não foi configurado, por favor, escolha um destes itens abaixo para prosseguir com a configuração:\n
         [1] ▶ Configurar monitoramento padrão (CPU, RAM, Bateria)\n
         [2] ▶ Configurar monitoramento personalizado\n
@@ -181,7 +185,7 @@ def coletar_informacoes_componentes():
             try:
                 opcao_selecionada = int(input('   Escolha uma opção para prosseguir: '))
 
-                if opcao_selecionada not in [1,2,3]:
+                if opcao_selecionada in [1,2,3]:
                     break
 
             except ValueError:
@@ -191,34 +195,44 @@ def coletar_informacoes_componentes():
 
         if opcao_selecionada == 1:
             # settar monitoracao padrao de 5 elementos
+            insert_user = conexao_insert()
             cursor_insert = insert_user.cursor()
 
             fuso_brasil = timezone(timedelta(hours=-3))
             data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
 
-            query = f'''INSERT INTO captura (fkPLC, fkComponente, valor) VALUES
-                            ({id_plc}, 1, 0),
-                            ({id_plc}, 2, 0),
-                            ({id_plc}, 3, 0),
-                            ({id_plc}, 4, 0),
-                            ({id_plc}, 5, 0);
+            query = f'''INSERT INTO captura (fkPLC, fkComponente, valor, dataHora) VALUES
+                            ({id_plc}, 1, 0, "{data_hora_brasil}"),
+                            ({id_plc}, 2, 0, "{data_hora_brasil}"),
+                            ({id_plc}, 3, 0, "{data_hora_brasil}"),
+                            ({id_plc}, 4, 0, "{data_hora_brasil}"),
+                            ({id_plc}, 5, 0, "{data_hora_brasil}");
                         '''# Atribuindo o Insert na query
 
             cursor_insert.execute(query)
             insert_user.commit()
             cursor_insert.close()
 
+            print("Sincronizando com Banco de Dados...")
+            time.sleep(2)
+            
+            confirmacao = []
+            while(len(confirmacao) == 0):
+                select_user = conexao_select()
+                cursor_select = select_user.cursor()
+                cursor_select.execute(query_verificar_componentes) 
+                confirmacao = cursor_select.fetchall() 
+                cursor_select.close()
+            
             coletar_informacoes_componentes()
 
         elif opcao_selecionada == 2:
             # coletar com perguntas oq o usuario deseja monitorar
-            coletar_infos_user(cursor_select)
+            coletar_infos_user()
             coletar_informacoes_componentes()
         elif opcao_selecionada == 3:
             # sai da app
             sair()
-
-    cursor_select.close()
     main(informacoes_componentes_monitorar) # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
     
 if __name__ == '__main__':
