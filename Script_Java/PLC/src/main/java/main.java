@@ -24,6 +24,11 @@ public class main {
             plc[i].exibir();
         }
 
+        System.out.println("\nArray PLC organizado por marca");
+        marcaSort(plc);
+        for(int i=0; i < plc.length; i++) {
+            plc[i].exibir();
+        }
     }
 
     public static void ramgbSort(PLC[] plc){
@@ -41,6 +46,21 @@ public class main {
         }
 
     }
+
+    public static void marcaSort(PLC[] plc){
+
+        for(int i=0; i < plc.length; i++){
+            int menor = i;
+            for(int j=i+1; j < plc.length; j++){
+                if(plc[j].marca.compareTo(plc[menor].marca) < 0){
+                    menor = j;
+                }
+            }
+            PLC temp = plc[i];
+            plc[i] = plc[menor];
+            plc[menor] = temp;
+        }
+
 
     }
 }
