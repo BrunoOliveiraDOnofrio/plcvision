@@ -1,8 +1,8 @@
 var mysql = require("mysql2");
 
 // settar variáveis de conexão com o mysql
-
-const selectConfig = {
+console.log("Usuário do Banco: " + process.env.DB_SELECT_USER)
+var selectConfig = {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     user: process.env.DB_SELECT_USER,
@@ -10,7 +10,7 @@ const selectConfig = {
     port: process.env.DB_PORT
 };
 
-const insertConfig ={
+var insertConfig ={
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     user: process.env.DB_INSERT_USER,
@@ -18,7 +18,7 @@ const insertConfig ={
     port: process.env.DB_PORT
 };
 
-const updateConfig = {
+var updateConfig = {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     user: process.env.DB_UPDATE_USER,
@@ -26,7 +26,7 @@ const updateConfig = {
     port: process.env.DB_PORT
 };
 
-const deleteConfig = {
+var deleteConfig = {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     user: process.env.DB_DELETE_USER,
@@ -55,6 +55,7 @@ function selecionar(instrucao){
             return ("ERRO NO MySQL SERVER: ", erro.sqlMessage);
         });
     });
+
 }
 
 function inserir(instrucao){
@@ -62,7 +63,7 @@ function inserir(instrucao){
         console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM .env OU dev.env OU app.js\n");
         return Promise.reject("AMBIENTE NÃO CONFIGURADO EM .env");
     }
-
+    console.log(selectConfig)
     return new Promise(function (resolve, reject) {
         var conexao = mysql.createConnection(insertConfig);
         conexao.connect();

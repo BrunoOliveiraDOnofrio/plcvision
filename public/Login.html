@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/StyleLogin.css">
     <title>Login</title>
+    <script src="./js/validacaosessao.js"></script>
 </head>
 
 <body>
@@ -113,10 +114,18 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
-
+                    sessionStorage.NIVEL_USUARIO = json.nivel
 
                     setTimeout(function () {
-                        window.location = "loginEmpresapgPLC.html";
+
+                        if(json.nivel == 0){
+                            window.location = "../nv0/Monitoramento.html";
+                        }else if(json.nivel == 1){
+                            window.location = "../nv1/Insigths.html";
+                        }else{
+                            window.location = "../nv2/Monitoramento.html";
+                        }
+
                     }, 1000);
 
                 });
