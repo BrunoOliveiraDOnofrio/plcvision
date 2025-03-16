@@ -4,7 +4,7 @@ import time
 import os
 from datetime import datetime, timedelta, timezone
 
-id_plc = 19 # Colocar id_plc
+id_plc = 1 # Colocar id_plc
 
 def conexao_select():
     # configurar var de ambientes e criar conexao com o banco de dados
