@@ -65,7 +65,7 @@ def coletar_dados(informacoes_componentes):
                 insert_user.commit()
         cursor_insert.close()
 
-        time.sleep(500)
+        time.sleep(300)
 
 def coletar_infos_user():
     limpar_tela()
