@@ -53,11 +53,12 @@ def selecao_do_fk(coluna):
             print('Entrada inválida! Digite um número.')
 
     cursor = banco.cursor()
+
+    coluna_id = coluna[0]
+    coluna_nome = coluna[1]
     
     if escolha == 6:
         try:
-            coluna_id = coluna[0]
-            coluna_nome = coluna[1]
 
             # Execução da query
             cursor.execute(f"""
@@ -460,7 +461,6 @@ def visualizar_dados_cpu():
 
     if escolha == 3 or escolha == 4:
         return tratar_cpu()
-
 
     selecao_do_fk(coluna)
 

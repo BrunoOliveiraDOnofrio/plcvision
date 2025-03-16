@@ -30,8 +30,8 @@ nav {
 
 .img_logo {
     width: 100%;
-    height: 10vh;
-    background-image: url(../assets/imgs/logoPlc\ _sem_fundo.png);
+    height: 25vh;
+    background-image: url(../assets/imgs/PLCVision_sem_fundo.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -486,9 +486,9 @@ nav {
 }
 
 .img_logo_quem_somos {
-    width: 80%;
-    height: 70%;
-    background-image: url(../assets/imgs/logoPlc\ _sem_fundo.png);
+    width: 100%;
+    height: 55vh;
+    background-image: url(../assets/imgs/PLCVision_sem_fundo.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -576,9 +576,9 @@ footer {
 }
 
 .img_logo_footer {
-    width: 60%;
-    height: 60%;
-    background-image: url(../assets/imgs/LogoPlcVision.png);
+    width: 90%;
+    height: 90%;
+    background-image: url(../assets/imgs/PLCVision.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
