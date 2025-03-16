@@ -4,6 +4,7 @@
 # manda esse arquivo por scp na pasta 
 # da permissao de chmod +x configScriptPython.sh
 # executa ele ./configScriptPython.sh
+# se nn executar e vc enviou um arquivo cujo a origem era de um pc windows, execute estes comandos e rode novamente: sudo apt update | sudo apt install dos2unix | dos2unix configScriptPython.sh
 
 # os q's são de quiet (silencio) para mostrar menos texto (por mais q monstre uma porrada ainda assim)
 # e os y's são para não ficar fazendo perguntas no meio dos comandos
