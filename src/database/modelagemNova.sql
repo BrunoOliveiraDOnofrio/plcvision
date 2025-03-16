@@ -104,10 +104,9 @@ INSERT INTO componente (hardware, medicao, metrica, limiteAtencao, limiteCritico
 ('CPU', 'Atividade', 'dias', 70.0, 90.0, 'int(psutil.boot_time() / (60 * 60 * 24))'),
 ('CPU', 'Ociosidade', 'dias', 20.0, 10.0, 'int(psutil.cpu_times().idle / (60 * 60 * 24))'),
 ('RAM', 'Uso', '%', 75.0, 90.0, 'psutil.virtual_memory().percent'),
-('RAM', 'Memória Livre', 'GB', 2.0, 0.5, 'int(ram.free / (1024 ** 3))'),
+('RAM', 'Memória Livre', 'GB', 2.0, 0.5, 'int(psutil.virtual_memory().available / (1024 ** 3))'),
 ('Bateria', 'Quantidade', '%', 20.0, 5.0, 'psutil.sensors_battery().percent'),
 ('Alimentação', 'Status', '', 0, 0, 'psutil.sensors_battery().power_plugged'),
-('Bateria', 'Quantidade', '%', 20.0, 5.0, 'psutil.sensors_battery().percent'),
 ('Bateria', 'Tempo Restante', 'minutos', 30.0, 10.0, 'int(psutil.sensors_battery().secsleft / 60)');
 
 INSERT INTO PLC (fkParceria, localizacao, modelo, ano) VALUES
@@ -140,4 +139,3 @@ INSERT INTO captura (fkPLC, fkComponente, valor) VALUES
 (2, 3, 80.0),
 (2, 4, 50.0),
 (2, 5, 0);
-

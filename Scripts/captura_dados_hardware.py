@@ -12,7 +12,7 @@ def conexao_select():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='insert_user',
+        user='select_user',
         password='Urubu100#',
         database='PlcVision'
     )
