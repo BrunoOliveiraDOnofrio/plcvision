@@ -19,7 +19,7 @@ public class PLC {
 
     public void exibir(){
         System.out.println("Marca: " + marca + " Modelo: " + modelo + " Ramgb: " + ramgb +
-        " Ram uso: " + ramUso + " UsoCpu: " + cpuUso +  " Temperatura: " + temp + " Ano: " + ano
+        " RamUso: " + ramUso + " UsoCpu: " + cpuUso +  " Temperatura: " + temp + " Ano: " + ano
         );
     }
 
