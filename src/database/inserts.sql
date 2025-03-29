@@ -35,15 +35,7 @@ INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
 ('Linha de Montagem', 1, 5),
 ('Produção de Chocolates', 2, 10);
 
--- Inserindo PLCs
-INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens S7-1500', 2021, 1, 1, 'Windows CE', '2GB', '00:1A:2B:3C:4D:5E', 'plc-s7-1500-01'),
-('Schneider M340', 2022, 2, 2, 'Linux', '4GB', '00:1B:2C:3D:4E:5F', 'plc-m340-01');
 
--- Inserindo componentes
-INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura, funcao_python) VALUES
-('Temperatura do CPU', 'Float', '°C', 'temp_cpu', 'calcular_temp'),
-('Consumo de Energia', 'Float', 'kW', 'energia_consumo', 'calcular_energia');
 
 -- Inserindo configurações de PLC
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, intervalo_captura) VALUES
@@ -55,6 +47,8 @@ INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, i
 (12, 1, 8000000, 9000000, 20),
 (6, 1, 12, 15, 20),
 (8, 1, 9000, 8000, 20);
+
+
 
 
 select * from componente;
@@ -75,4 +69,5 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('DISCO', 'Uso do Disco Windows', '%', 'disco_percent', 'psutil.disk_usage("C:\\").percent'),
 ('DISCO', 'Uso do Disco Linux', '%', 'disco_percent', 'psutil.disk_usage("/").percent'),
 ('Bateria', 'Tempo Restante', 'minutos', 'bateria_restante', 'int(psutil.sensors_battery().secsleft / 60)');
-
+select * from componente;
+delete from config_plc where id > 10;

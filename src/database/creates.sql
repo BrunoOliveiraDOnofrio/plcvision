@@ -2,17 +2,32 @@
 CREATE DATABASE PlcVision;
 USE PlcVision;
 
+select * from componente;
+select * from captura_1;
 CREATE TABLE captura_1 (
     idCaptura INT AUTO_INCREMENT PRIMARY KEY,
     cpu_percent FLOAT,
     cpu_freq FLOAT,
     ram_percent FLOAT,
-    ram_uso INT,
+    ram_uso BIGINT,
     disco_percent FLOAT,
-    disco_uso INT,
+    disco_uso BIGINT,
     cpu_ociosidade_dias INT,
-    ram_livre INT
+    ram_livre BIGINT,
+    dataHora DATETIME
 );
+
+
+
+select * from componente;
+SELECT co.id, co.funcao_python,co.tipo_dado, conf.limite_atencao, conf.limite_critico, co.hardware, co.coluna_captura from componente as co 
+                   join config_plc as conf on conf.componente_id = co.id 
+                   join plc as p on p.id = conf.plc_id 
+                   where conf.plc_id = 1;
+
+
+select * from componente;
+
 
 CREATE TABLE captura_n (
     idCaptura INT AUTO_INCREMENT PRIMARY KEY,
@@ -42,6 +57,8 @@ CREATE TABLE alerta_n (
     acaoTomada VARCHAR(45),
     FOREIGN KEY (captura_id) REFERENCES captura_n(idCaptura)
 );
+
+select * from componente;
 
 CREATE TABLE endereco (
     id INT PRIMARY KEY AUTO_INCREMENT,

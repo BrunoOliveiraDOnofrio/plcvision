@@ -37,6 +37,7 @@ def limpar_tela():
     print('\033[H\033[J')
 
 def coletar_dados(informacoes_componentes):
+    contador = 0
     # recebe quais valores irão ser monitorados e faz um loop infinito (controlado) onde ele verifica se pode monitorar, coleta a informação, guarda em um array e no final manda armazenar os dados novamente
     while True:
         limpar_tela()
@@ -46,26 +47,49 @@ def coletar_dados(informacoes_componentes):
 
         insert_user = conexao_insert()
         cursor_insert = insert_user.cursor()
-
+        str_query = f"INSERT INTO captura_{id_plc} ("
+        colunas_inserir = []
+        valores_inserir = []
         for info in informacoes_componentes:
             print(info)
+            
             try:
                 valor = eval(info[1]) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
-            except:  
+                valores_inserir.append(valor)
+                colunas_inserir.append(info[6])
+            except Exception as e:
+                print(e)  
                 valor = None
+                print("Vish", info[6])
             finally:
                 if valor is None:
                     valor = -1
                 print(valor)
-                data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
+                
+        for index, valor in enumerate(colunas_inserir):
+            if index == len(colunas_inserir) -1:
+                str_query += colunas_inserir[index] + " ,dataHora)"
+            else:
+                str_query += colunas_inserir[index] + ","
+        str_query += " VALUES ("
+        data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')                
 
-                query = f"INSERT INTO captura (fkPLC, fkComponente, valor, dataHora) VALUES ({id_plc}, {info[0]}, {valor}, '{data_hora_brasil}')"# Atribuindo o Insert na querry
+        for index, valor in enumerate(valores_inserir):
+            if index == len(valores_inserir) -1:
+                str_query += f"{valores_inserir[index]}, '{data_hora_brasil}')"
+            else:
+                str_query += f"{valores_inserir[index]},"
+        print(str_query)    
 
-                cursor_insert.execute(query)
-                insert_user.commit()
+        
+        cursor_insert.execute(str_query)
+        insert_user.commit()
+
         cursor_insert.close()
-
-        time.sleep(300)
+        contador = contador +1
+        if contador == 2000:
+            break
+        time.sleep(2)
 
 def coletar_infos_user():
     limpar_tela()
@@ -162,16 +186,16 @@ def coletar_informacoes_componentes():
     select_user = conexao_select()
     cursor_select = select_user.cursor() # Criando um cursor para executar o SELECT 
 
-    query_verificar_componentes = f"""SELECT co.id, co.funcao_python,co.tipo_dado, conf.limiteAtencao, conf.limiteCritico, co.hardware from captura as ca 
-                   join PLC as p on fkPLC = idPLC 
-                   join componente as co on fkComponente = idComponente 
-                   where idPLC = {id_plc} 
-                   group by idComponente;"""
+    query_verificar_componentes = f"""SELECT co.id, co.funcao_python,co.tipo_dado, conf.limite_atencao, conf.limite_critico, co.hardware, co.coluna_captura from componente as co 
+                   join config_plc as conf on conf.componente_id = co.id 
+                   join plc as p on p.id = conf.plc_id 
+                   where conf.plc_id = {id_plc}
+                   """
 
     cursor_select.execute(query_verificar_componentes) # executando o SELECT
     informacoes_componentes_monitorar = cursor_select.fetchall() # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
     cursor_select.close()
-
+    print(informacoes_componentes_monitorar)
     if len(informacoes_componentes_monitorar) == 0: # verificar se ele está vazio
         print('''Este PLC ainda não foi configurado, por favor, escolha um destes itens abaixo para prosseguir com a configuração:\n
         [1] ▶ Configurar monitoramento padrão (CPU, RAM, Bateria)\n
@@ -237,9 +261,12 @@ def coletar_informacoes_componentes():
     
 if __name__ == '__main__':
     # quando o arquivo iniciar, configura o banco e inicia a aplicação
+    
     print(psutil.disk_usage("C:\\").percent)
+
+    
     select_user = conexao_select()
     insert_user = conexao_insert()
-
+   
   
     coletar_informacoes_componentes()
