@@ -10,6 +10,32 @@ CREATE TABLE empresa (
     numero VARCHAR(100) NOT NULL
 );
 
+
+select * from componente;
+select * from captura;
+truncate table captura;
+delete from captura where idCaptura >0;
+
+INSERT INTO captura (fkPLC, fkComponente, valor) VALUES
+(1, 6, 45.5),
+(1, 2, 65.3),
+(1, 3, 70.5),
+(1, 4, 95),
+(1, 5, 1);
+
+CREATE TABLE captura_1(
+	id INT PRIMARY KEY AUTO_INCREMENT
+    ,cpu_uso FLOAT 
+    ,cpu_atividade INTEGER
+    ,cpu_ociosidade INTEGER
+    ,ram_uso FLOAT 
+    ,ram_livre INTEGER
+    
+
+);
+
+
+
 CREATE TABLE cliente (
     idCliente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45) NOT NULL,
@@ -98,13 +124,13 @@ INSERT INTO parceria (fkIndustria, fkEmpresa) VALUES
 (1, 1),
 (2, 1);
 
-INSERT INTO componente (hardware, medicao, metrica, limiteAtencao, limiteCritico, funcaoPython) VALUES
+INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  funcao_python) VALUES
 ('CPU', 'Temperatura', '°C', 80.0, 100.0, 'psutil.sensors_temperatures().get("coretemp", [])[0].current'),
 ('CPU', 'Uso', '%', 80.0, 95.0, 'psutil.cpu_percent(interval=None, percpu=False)'),
 ('CPU', 'Atividade', 'dias', 70.0, 90.0, 'int(psutil.boot_time() / (60 * 60 * 24))'),
 ('CPU', 'Ociosidade', 'dias', 20.0, 10.0, 'int(psutil.cpu_times().idle / (60 * 60 * 24))'),
 ('RAM', 'Uso', '%', 75.0, 90.0, 'psutil.virtual_memory().percent'),
-('RAM', 'Memória Livre', 'GB', 2.0, 0.5, 'int(psutil.virtual_memory().available / (1024 ** 3))'),
+('RAM', 'Memória Livre', 'Bytes', 2.0, 0.5, 'int(psutil.virtual_memory().available)'),
 ('Bateria', 'Quantidade', '%', 20.0, 5.0, 'psutil.sensors_battery().percent'),
 ('Alimentação', 'Status', '', 0, 0, 'psutil.sensors_battery().power_plugged'),
 ('Bateria', 'Tempo Restante', 'minutos', 30.0, 10.0, 'int(psutil.sensors_battery().secsleft / 60)');
@@ -139,3 +165,5 @@ INSERT INTO captura (fkPLC, fkComponente, valor) VALUES
 (2, 3, 80.0),
 (2, 4, 50.0),
 (2, 5, 0);
+
+SELECT * FROM caputra;

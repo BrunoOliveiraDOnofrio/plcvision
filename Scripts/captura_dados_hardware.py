@@ -12,8 +12,8 @@ def conexao_select():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='select_user',
-        password='Urubu100#',
+        user='root',
+        password='linkinpark',
         database='PlcVision'
     )
 
@@ -25,8 +25,8 @@ def conexao_insert():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='insert_user',
-        password='Urubu100#',
+        user='root',
+        password='linkinpark',
         database='PlcVision'
     )
 
@@ -48,7 +48,7 @@ def coletar_dados(informacoes_componentes):
         cursor_insert = insert_user.cursor()
 
         for info in informacoes_componentes:
-        
+            print(info)
             try:
                 valor = eval(info[1]) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
             except:  
@@ -56,7 +56,7 @@ def coletar_dados(informacoes_componentes):
             finally:
                 if valor is None:
                     valor = -1
-
+                print(valor)
                 data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
 
                 query = f"INSERT INTO captura (fkPLC, fkComponente, valor, dataHora) VALUES ({id_plc}, {info[0]}, {valor}, '{data_hora_brasil}')"# Atribuindo o Insert na querry
@@ -70,7 +70,7 @@ def coletar_dados(informacoes_componentes):
 def coletar_infos_user():
     limpar_tela()
     print('Responda as perguntas com 0 (Não) e 1 (Sim) de acordo com o que deseja coletar')
-
+ 
     select_user = conexao_select()
     cursor_select = select_user.cursor()
     cursor_select.execute(f"""SELECT co.idComponente, co.medicao, co.metrica, co.hardware from componente as co;""")
@@ -162,7 +162,7 @@ def coletar_informacoes_componentes():
     select_user = conexao_select()
     cursor_select = select_user.cursor() # Criando um cursor para executar o SELECT 
 
-    query_verificar_componentes = f"""SELECT co.idComponente, co.funcaoPython,co.medicao, co.limiteAtencao, co.limiteCritico from captura as ca 
+    query_verificar_componentes = f"""SELECT co.id, co.funcao_python,co.tipo_dado, conf.limiteAtencao, conf.limiteCritico, co.hardware from captura as ca 
                    join PLC as p on fkPLC = idPLC 
                    join componente as co on fkComponente = idComponente 
                    where idPLC = {id_plc} 
@@ -237,7 +237,9 @@ def coletar_informacoes_componentes():
     
 if __name__ == '__main__':
     # quando o arquivo iniciar, configura o banco e inicia a aplicação
+    print(psutil.disk_usage("C:\\").percent)
     select_user = conexao_select()
     insert_user = conexao_insert()
+
   
     coletar_informacoes_componentes()
