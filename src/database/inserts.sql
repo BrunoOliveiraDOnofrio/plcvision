@@ -35,31 +35,18 @@ INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
 ('Linha de Montagem', 1, 5),
 ('Produção de Chocolates', 2, 10);
 
-
-
--- Inserindo configurações de PLC
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, intervalo_captura) VALUES
-(4, 1, 70.0, 90.0, 60),
-(10, 1, 4000.0, 5000.0, 30),
-(7,1, 70, 80, 20),
-(11, 1, 4000000, 5000000, 20),
-(14, 1, 70, 80, 30),
-(12, 1, 8000000, 9000000, 20),
-(6, 1, 12, 15, 20),
-(8, 1, 9000, 8000, 20);
-
-
-
-
-select * from componente;
-
+-- Inserir N PLCs de acordo com o seu id. Ex: Se o seu PLC é id = 4, ADD 4 PLCs
+INSERT INTO PLC (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
+('Siemens s7-1500', 2021, 1,1, 'Windowns CE', '2GB', '00:1A:2B:3C:4D:5E', 'plc-s7-1500-01'),
+('Schneider M340', 2022, 2,2, 'Linux', '4GB', '00:1B:2C:3D:4E:5F', 'plc-M340-01'),
+('Siemens XRL8', 2015, 1,1, 'Linux', '2GB', '00:3F:3F:3F:5E:1A', 'plc-XRL8-01');
 
 INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  funcao_python) VALUES
 ('CPU', 'Temperatura', '°C', 'cpu_temperatura','psutil.sensors_temperatures().get("coretemp", [])[0].current'),
 ('CPU', 'Uso', '%', 'cpu_percent', 'psutil.cpu_percent(interval=None, percpu=False)'),
 ('CPU', 'Atividade', 'dias', 'cpu_atividade_dias', 'int(psutil.boot_time() / (60 * 60 * 24))'),
 ('CPU', 'Ociosidade', 'dias', 'cpu_ociosidade_dias' , 'int(psutil.cpu_times().idle / (60 * 60 * 24))'),
-('RAM', 'Uso', '%', 'ram_uso' , 'psutil.virtual_memory().percent'),
+('RAM', 'Uso', '%', 'ram_percent' , 'psutil.virtual_memory().percent'),
 ('RAM', 'Memória Livre', 'Bytes', 'ram_livre' ,'int(psutil.virtual_memory().available)'),
 ('Bateria', 'Quantidade', '%', 'bateria_porcentagem', 'psutil.sensors_battery().percent'),
 ('CPU', 'Frequência', 'Mhz', 'cpu_freq', 'psutil.cpu_freq().current' ),
@@ -69,5 +56,16 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('DISCO', 'Uso do Disco Windows', '%', 'disco_percent', 'psutil.disk_usage("C:\\").percent'),
 ('DISCO', 'Uso do Disco Linux', '%', 'disco_percent', 'psutil.disk_usage("/").percent'),
 ('Bateria', 'Tempo Restante', 'minutos', 'bateria_restante', 'int(psutil.sensors_battery().secsleft / 60)');
-select * from componente;
-delete from config_plc where id > 10;
+
+
+-- Inserindo configurações de PLC
+-- Alterar a coluna "plc_id" de acordo com o ID do seu PLC.
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, intervalo_captura) VALUES
+(2, 3, 70.0, 90.0, 60),
+(8, 3, 4000.0, 5000.0, 30),
+(5,3, 70, 80, 20),
+(9, 3, 4000000, 5000000, 20),
+(12, 3, 70, 80, 30),
+(10, 3, 8000000, 9000000, 20),
+(4, 3, 12, 15, 20),
+(6, 3, 9000, 8000, 20);
