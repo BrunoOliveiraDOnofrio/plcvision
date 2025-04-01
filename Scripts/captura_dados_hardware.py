@@ -12,9 +12,9 @@ def conexao_select():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='root',
-        password='linkinpark',
-        database='PlcVision'
+        user='xxx',
+        password='xxxxxx',
+        database='plcvision'
     )
 
     return conexao_db
@@ -25,9 +25,9 @@ def conexao_insert():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='root',
-        password='linkinpark',
-        database='PlcVision'
+        user='xxx',
+        password='xxxxxx',
+        database='plcvision'
     )
 
     return conexao_db
@@ -37,10 +37,82 @@ def limpar_tela():
     print('\033[H\033[J')
 
 def coletar_dados(informacoes_componentes):
+
+ 
+    try:
+        so = os.uname().sysname
+        print(f"Sistema Operacional: {so}")
+        so_str = str(so)
+    except Exception:
+        so_str = os.environ['OS']
+
+    if("Windows" in so_str):
+        hostname = os.popen('hostname').read().strip()
+
+        capacidade_ram = round(psutil.virtual_memory().total / (1024 ** 2),2)
+
+        comando = 'powershell.exe systeminfo | findstr "Data da instalação original"'
+        saida = os.popen(comando).read().strip()
+        dt = saida.split("/")[3].strip().split(",")[0].strip()
+
+
+        comando = 'powershell.exe ipconfig /all | findstr "Endereço Físico"'
+        saida = os.popen(comando).read().strip()
+        endereco_mac = saida.split(":")[12].strip().split(" ")[0].strip()
+    else:
+        hostname = os.popen('hostname').read().strip()
+
+        capacidade_ram = round(psutil.virtual_memory().total / (1024 ** 2),2)
+
+        dt = ''
+
+        saida = os.popen('hostnamectl').read().strip()
+        for line in saida.splitlines():
+            if "Firmware Date" in line:
+              firmware_date = line.split(":", 1)[1].strip()
+              date_parts = firmware_date.split(" ")
+              dt = date_parts[1]
+              dt = dt.split("-")[0]
+        print(dt)
+        comando = "ip link show | grep 'link/ether' | awk '{print $2}'"
+        saida = os.popen(comando).read().strip()
+        endereco_mac = saida.split("\n")[0]
+
+
+# Pegando todos enderecos mac
+    select_mac = conexao_select()
+    cursor_mac = select_mac.cursor()
+    cursor_mac.execute(f"""SELECT endereco_mac FROM plc;""")
+
+    fetchall_mac = cursor_mac.fetchall()
+
+    cursor_mac.close()
+# Pegando todos enderecos mac
+
+    # print(fetchall_mac)
+    nao_tem = True
+    for mac in fetchall_mac:
+        print(mac[0])
+        if(endereco_mac in mac[0]):
+            nao_tem = False
+
+    if (nao_tem):
+        insert_plc = conexao_insert()
+        cursor_plc = insert_plc.cursor()
+        str_query_plc = f'INSERT INTO plc (modelo, ano, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES (001, "{dt}", "{so_str}", "{capacidade_ram}", "{endereco_mac}", "{hostname}")'
+        cursor_plc.execute(str_query_plc)
+        insert_plc.commit()
+        cursor_plc.close()
+    else:
+        print("PLC já cadastrado")
+
+
+
+
     contador = 0
     # recebe quais valores irão ser monitorados e faz um loop infinito (controlado) onde ele verifica se pode monitorar, coleta a informação, guarda em um array e no final manda armazenar os dados novamente
     while True:
-        limpar_tela()
+        #limpar_tela()
         print('Coletando Dados...')
 
         fuso_brasil = timezone(timedelta(hours=-3))
@@ -52,36 +124,36 @@ def coletar_dados(informacoes_componentes):
         valores_inserir = []
         for info in informacoes_componentes:
             print(info)
-            
+
             try:
                 valor = eval(info[1]) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
                 valores_inserir.append(valor)
                 colunas_inserir.append(info[6])
             except Exception as e:
-                print(e)  
+                print(e)
                 valor = None
                 print("Vish", info[6])
             finally:
                 if valor is None:
                     valor = -1
                 print(valor)
-                
+
         for index, valor in enumerate(colunas_inserir):
             if index == len(colunas_inserir) -1:
                 str_query += colunas_inserir[index] + " ,dataHora)"
             else:
                 str_query += colunas_inserir[index] + ","
         str_query += " VALUES ("
-        data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')                
+        data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
 
         for index, valor in enumerate(valores_inserir):
             if index == len(valores_inserir) -1:
                 str_query += f"{valores_inserir[index]}, '{data_hora_brasil}')"
             else:
                 str_query += f"{valores_inserir[index]},"
-        print(str_query)    
+        print(str_query)
 
-        
+
         cursor_insert.execute(str_query)
         insert_user.commit()
 
@@ -89,7 +161,7 @@ def coletar_dados(informacoes_componentes):
         contador = contador +1
         if contador == 2000:
             break
-        time.sleep(2)
+        time.sleep(5)
 
 def coletar_infos_user():
     limpar_tela()
@@ -155,7 +227,7 @@ def main(informacoes_componentes):
        [1] ▶ Iniciar Monitoramento\n
        [2] ▶ Sair"""
     ]
-
+    
     for palavra in palavras:
         print(palavra)
 
@@ -261,9 +333,6 @@ def coletar_informacoes_componentes():
     
 if __name__ == '__main__':
     # quando o arquivo iniciar, configura o banco e inicia a aplicação
-    
-    print(psutil.disk_usage("C:\\").percent)
-
     
     select_user = conexao_select()
     insert_user = conexao_insert()
