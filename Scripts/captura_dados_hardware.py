@@ -13,7 +13,7 @@ def conexao_select():
         host='127.0.0.1',
         port=3306,
         user='xxx',
-        password='xxxxxx',
+        password='xxxxx',
         database='plcvision'
     )
 
@@ -26,7 +26,7 @@ def conexao_insert():
         host='127.0.0.1',
         port=3306,
         user='xxx',
-        password='xxxxxx',
+        password='xxxxx',
         database='plcvision'
     )
 

@@ -1,169 +1,224 @@
 DROP DATABASE IF EXISTS PlcVision;
 CREATE DATABASE PlcVision;
 USE PlcVision;
-
-CREATE TABLE empresa (
-    idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
-    CNPJ CHAR(14) UNIQUE NOT NULL,
-    nome VARCHAR(45) NOT NULL,
-    CEP VARCHAR(8) NOT NULL,
-    numero VARCHAR(100) NOT NULL
+CREATE TABLE captura_3 (
+    idCaptura INT AUTO_INCREMENT PRIMARY KEY,
+    cpu_percent FLOAT,
+    cpu_freq FLOAT,
+    ram_percent FLOAT,
+    ram_uso BIGINT,
+    disco_percent FLOAT,
+    disco_uso BIGINT,
+    cpu_ociosidade_dias INT,
+    ram_livre BIGINT,
+    dataHora DATETIME
 );
 
-
-select * from componente;
-select * from captura;
-truncate table captura;
-delete from captura where idCaptura >0;
-
-INSERT INTO captura (fkPLC, fkComponente, valor) VALUES
-(1, 6, 45.5),
-(1, 2, 65.3),
-(1, 3, 70.5),
-(1, 4, 95),
-(1, 5, 1);
-
-CREATE TABLE captura_1(
-	id INT PRIMARY KEY AUTO_INCREMENT
-    ,cpu_uso FLOAT 
-    ,cpu_atividade INTEGER
-    ,cpu_ociosidade INTEGER
-    ,ram_uso FLOAT 
-    ,ram_livre INTEGER
-    
-
+-- SELECT co.id, co.funcao_python,co.tipo_dado, conf.limite_atencao, conf.limite_critico, co.hardware, co.coluna_captura from componente as co 
+--                   join config_plc as conf on conf.componente_id = co.id 
+--                   join plc as p on p.id = conf.plc_id 
+--                   where conf.plc_id = 3;
+                   
+CREATE TABLE captura_n (
+    idCaptura INT AUTO_INCREMENT PRIMARY KEY,
+    cpu_percent FLOAT,
+    ram_byte FLOAT,
+    cpu_freq FLOAT,
+    ram_percent FLOAT,
+    ram_uso INT,
+    disco_percent FLOAT,
+    disco_uso INT,
+    cpu_temperatura FLOAT,
+    cpu_atividade_dias INT,
+    cpu_ociosidade_dias INT,
+    ram_livre INT,
+    bateria_porcentagem FLOAT,
+    bateria_restante INT
 );
 
-
-
-CREATE TABLE cliente (
-    idCliente INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45) NOT NULL,
-    setor VARCHAR(45) NOT NULL,
-    CNPJ CHAR(14) UNIQUE NOT NULL,
-    CEP CHAR(8) NOT NULL,
-    numero VARCHAR(10) NOT NULL
+CREATE TABLE alerta_n (
+    idAlerta INT AUTO_INCREMENT PRIMARY KEY,
+    criticidade TINYINT,
+    captura_id INT,
+    descricao VARCHAR(45),
+    link_chamado VARCHAR(45),
+    dataHora DATETIME,
+    status VARCHAR(45),
+    acaoTomada VARCHAR(45),
+    FOREIGN KEY (captura_id) REFERENCES captura_n(idCaptura)
 );
 
-CREATE TABLE industria (
-    idIndustria INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45) NOT NULL,
-    setor VARCHAR(45) NOT NULL,
-    CNPJ CHAR(14) UNIQUE NOT NULL,
-    CEP VARCHAR(8) NOT NULL,
-    numero VARCHAR(100) NOT NULL
+CREATE TABLE endereco (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    logradouro VARCHAR(45),
+    numLogradouro INT,
+    cidade VARCHAR(45),
+    estado VARCHAR(45),
+    bairro VARCHAR(45),
+    complemento VARCHAR(45)
 );
 
-CREATE TABLE parceria (
-    idParceria INT PRIMARY KEY AUTO_INCREMENT,
-    fkIndustria INT NOT NULL,
-    fkEmpresa INT NOT NULL,
-    dataParceria DATETIME NOT NULL DEFAULT NOW(),
-    FOREIGN KEY (fkIndustria) REFERENCES industria(idIndustria),
-    FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
-);
-
-CREATE TABLE PLC (
-    idPLC INT PRIMARY KEY AUTO_INCREMENT,
-    localizacao VARCHAR(100) NOT NULL,
-    modelo VARCHAR(45) NOT NULL,
-    ano YEAR NOT NULL,
-    fkParceria INT NOT NULL,
-    FOREIGN KEY (fkParceria) REFERENCES parceria(idParceria)
-);
-
-CREATE TABLE componente (
-    idComponente INT PRIMARY KEY AUTO_INCREMENT,
-    hardware VARCHAR(45) NOT NULL,
-    medicao VARCHAR(45) NOT NULL,
-    metrica VARCHAR(10) NOT NULL,
-    limiteAtencao FLOAT NOT NULL,
-    limiteCritico FLOAT NOT NULL,
-    funcaoPython VARCHAR(60) NOT NULL
-);
-
-CREATE TABLE captura (
-    idCaptura INT PRIMARY KEY AUTO_INCREMENT,
-    dataHora DATETIME NOT NULL DEFAULT NOW(),
-    fkPLC INT NOT NULL,
-    fkComponente INT NOT NULL,
-    valor FLOAT NOT NULL,
-    FOREIGN KEY (fkPLC) REFERENCES PLC(idPLC),
-    FOREIGN KEY (fkComponente) REFERENCES componente(idComponente)
-);
-
-CREATE TABLE alerta (
-    idAlerta INT PRIMARY KEY AUTO_INCREMENT,
-    criticidade TINYINT NOT NULL,
-    captura_idCaptura INT UNIQUE NOT NULL,
-    FOREIGN KEY (captura_idCaptura) REFERENCES captura(idCaptura)
+CREATE TABLE empresa_fabricante (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    cnpj CHAR(14),
+    razao_social VARCHAR(45),
+    endereco_id INT,
+    qtdParcerias INT,
+    FOREIGN KEY (endereco_id) REFERENCES endereco(id)
 );
 
 CREATE TABLE usuario (
     idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-    fkEmpresa INT NOT NULL,
-    nome VARCHAR(45) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    senha VARCHAR(50) NOT NULL,
-    telCelular CHAR(13) NOT NULL,
-    nivel TINYINT NOT NULL,
-    setor VARCHAR(45) NOT NULL,
-    cargo VARCHAR(45) NOT NULL,
-    FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
+    empresa_id INT,
+    nome VARCHAR(45),
+    email VARCHAR(100),
+    telCelular CHAR(13),
+    senha VARCHAR(50),
+    nivel TINYINT,
+    setor VARCHAR(45),
+    cargo VARCHAR(45),
+    FOREIGN KEY (empresa_id) REFERENCES empresa_fabricante(id)
 );
 
-INSERT INTO empresa (CNPJ, nome, CEP, numero) VALUES
-('12345678000101', 'Siemens', '01001000', '100'),
-('98765432000102', 'Rockwell Automation', '02002000', '200');
+CREATE TABLE empresa_consumidor (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    razao_social VARCHAR(45),
+    segmento VARCHAR(45),
+    cnpj CHAR(14),
+    endereco_id INT,
+    qtdFabrica INT,
+    FOREIGN KEY (endereco_id) REFERENCES endereco(id)
+);
 
-INSERT INTO industria (nome, setor, CNPJ, CEP, numero) VALUES
-('Fábrica Automotiva', 'Automobilístico', '11111111000101', '04004000', '400'),
-('Usina Metalúrgica', 'Metalurgia', '22222222000102', '05005000', '500');
+CREATE TABLE parceria (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    empresa_consumidor_id INT,
+    empresa_fabricante_id INT,
+    dataParceria DATETIME,
+    qtdPlc INT,
+    FOREIGN KEY (empresa_consumidor_id) REFERENCES empresa_consumidor(id),
+    FOREIGN KEY (empresa_fabricante_id) REFERENCES empresa_fabricante(id)
+);
 
-INSERT INTO parceria (fkIndustria, fkEmpresa) VALUES
-(1, 1),
-(2, 1);
+CREATE TABLE fabrica_consumidor (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45),
+    empresa_consumidor_id INT,
+    endereco_id INT,
+    qtdSetor INT,
+    FOREIGN KEY (endereco_id) REFERENCES endereco(id)
+);
+
+CREATE TABLE setor_fabrica (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45),
+    fabrica_consumidor_id INT,
+    qtdPlc INT,
+    FOREIGN KEY (fabrica_consumidor_id) REFERENCES fabrica_consumidor(id)
+);
+
+CREATE TABLE plc (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    modelo VARCHAR(45),
+    ano YEAR,
+    parceria_id INT,
+    setor_fabrica_id INT,
+    sistema_operacional VARCHAR(45),
+    capacidade_ram VARCHAR(45),
+    endereco_mac VARCHAR(45),
+    hostname VARCHAR(45),
+    FOREIGN KEY (parceria_id) REFERENCES parceria(id),
+    FOREIGN KEY (setor_fabrica_id) REFERENCES setor_fabrica(id)
+);
+
+CREATE TABLE componente (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    hardware VARCHAR(45),
+    tipo_dado VARCHAR(45),
+    unidade_dado VARCHAR(45),
+    coluna_captura VARCHAR(85),
+    funcao_python TEXT
+);
+
+CREATE TABLE config_plc (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    componente_id INT,
+    plc_id INT,
+    limite_atencao FLOAT,
+    limite_critico FLOAT,
+    intervalo_captura INT,
+    FOREIGN KEY (componente_id) REFERENCES componente(id),
+    FOREIGN KEY (plc_id) REFERENCES plc(id)
+);
+
+-- Inserindo endereços
+INSERT INTO endereco (logradouro, numLogradouro, cidade, estado, bairro, complemento) VALUES
+('Avenida Paulista', 1000, 'São Paulo', 'SP', 'Bela Vista', 'Andar 5'),
+('Rua XV de Novembro', 500, 'Curitiba', 'PR', 'Centro', 'Sala 12'),
+('Avenida Brasil', 1200, 'Rio de Janeiro', 'RJ', 'Copacabana', 'Bloco A'),
+('Rua dos Andradas', 300, 'Porto Alegre', 'RS', 'Centro Histórico', 'Loja 1');
+
+-- Inserindo empresas fabricantes
+INSERT INTO empresa_fabricante (cnpj, razao_social, endereco_id, qtdParcerias) VALUES
+('12345678000199', 'Siemens do Brasil', 1, 2),
+('98765432000188', 'Schneider Electric', 2, 3);
+
+-- Inserindo usuários
+INSERT INTO usuario (empresa_id, nome, email, telCelular, senha, nivel, setor, cargo) VALUES
+(1, 'Carlos Silva', 'carlos.silva@siemens.com', '5511998765432', 'senha123', 2, 'Engenharia', 'Engenheiro de Automação'),
+(2, 'Mariana Souza', 'mariana.souza@schneider.com', '5541998765432', 'senha456', 1, 'TI', 'Analista de Sistemas');
+
+-- Inserindo empresas consumidoras
+INSERT INTO empresa_consumidor (razao_social, segmento, cnpj, endereco_id, qtdFabrica) VALUES
+('Volkswagen do Brasil', 'Automobilístico', '11223344000155', 3, 2),
+('Nestlé Brasil', 'Alimentos', '22334455000166', 4, 1);
+
+-- Inserindo parcerias
+INSERT INTO parceria (empresa_consumidor_id, empresa_fabricante_id, dataParceria, qtdPlc) VALUES
+(1, 1, '2022-06-15 08:00:00', 10),
+(2, 2, '2023-02-20 10:30:00', 15);
+
+-- Inserindo fábricas
+INSERT INTO fabrica_consumidor (nome, empresa_consumidor_id, endereco_id, qtdSetor) VALUES
+('Fábrica São Bernardo', 1, 3, 3),
+('Fábrica de Chocolates', 2, 4, 2);
+
+-- Inserindo setores
+INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
+('Linha de Montagem', 1, 5),
+('Produção de Chocolates', 2, 10);
+
+-- Inserir N PLCs de acordo com o seu id. Ex: Se o seu PLC é id = 4, ADD 4 PLCs
+INSERT INTO PLC (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
+('Siemens s7-1500', 2021, 1,1, 'Windowns CE', '2GB', '00:1A:2B:3C:4D:5E', 'plc-s7-1500-01'),
+('Schneider M340', 2022, 2,2, 'Linux', '4GB', '00:1B:2C:3D:4E:5F', 'plc-M340-01'),
+('Siemens XRL8', 2015, 1,1, 'Linux', '2GB', '00:3F:3F:3F:5E:1A', 'plc-XRL8-01');
 
 INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  funcao_python) VALUES
-('CPU', 'Temperatura', '°C', 80.0, 100.0, 'psutil.sensors_temperatures().get("coretemp", [])[0].current'),
-('CPU', 'Uso', '%', 80.0, 95.0, 'psutil.cpu_percent(interval=None, percpu=False)'),
-('CPU', 'Atividade', 'dias', 70.0, 90.0, 'int(psutil.boot_time() / (60 * 60 * 24))'),
-('CPU', 'Ociosidade', 'dias', 20.0, 10.0, 'int(psutil.cpu_times().idle / (60 * 60 * 24))'),
-('RAM', 'Uso', '%', 75.0, 90.0, 'psutil.virtual_memory().percent'),
-('RAM', 'Memória Livre', 'Bytes', 2.0, 0.5, 'int(psutil.virtual_memory().available)'),
-('Bateria', 'Quantidade', '%', 20.0, 5.0, 'psutil.sensors_battery().percent'),
-('Alimentação', 'Status', '', 0, 0, 'psutil.sensors_battery().power_plugged'),
-('Bateria', 'Tempo Restante', 'minutos', 30.0, 10.0, 'int(psutil.sensors_battery().secsleft / 60)');
-
-INSERT INTO PLC (fkParceria, localizacao, modelo, ano) VALUES
-(1, 'Linha de montagem A', 'SIMATIC S7-1500', 2020),
-(2, 'Área de fundição', 'Allen-Bradley ControlLogix', 2017),
-(2, 'Linha de produção B', 'Schneider M340', 2021);
-
-INSERT INTO usuario (fkEmpresa, nome, email, senha, telCelular, nivel, setor, cargo) VALUES
-(1, 'Carlos Silva', 'carlos.silva@siemens.com', 'Senha@123', '11987654321', 1, 'Automação', 'Técnico de CLP'),
-(1, 'Maria Oliveira', 'maria.oliveira@siemens.com', 'Maria@456', '11912345678', 2, 'Engenharia', 'Engenheira de Controle e Automação'),
-(1, 'João Souza', 'joao.souza@siemens.com', 'Joao@789', '11976543210', 0, 'Manutenção', 'Eletricista Industrial'),
-(1, 'Fernanda Lima', 'fernanda.lima@siemens.com', 'Fernanda@321', '11965432109', 1, 'Produção', 'Operadora de Máquinas'),
-(1, 'Roberto Mendes', 'roberto.mendes@siemens.com', 'Roberto@654', '11954321098', 2, 'TI Industrial', 'Coordenador de Sistemas de Automação'),
-(1, 'Ana Costa', 'ana.costa@siemens.com', 'Ana@987', '11943210987', 0, 'Qualidade', 'Técnica de Controle de Processos'),
-(1, 'Gustavo Ramos', 'gustavo.ramos@siemens.com', 'Gustavo@741', '11932109876', 1, 'Supervisão', 'Supervisor de Instrumentação'),
-(1, 'Rafael Martins', 'rafael.martins@siemens.com', 'Rafael@852', '11921098765', 0, 'Instrumentação', 'Técnico em Instrumentação'),
-(1, 'Beatriz Rocha', 'beatriz.rocha@siemens.com', 'Beatriz@369', '11910987654', 1, 'Controle de Qualidade', 'Analista de Qualidade Industrial'),
-(1, 'Eduardo Nunes', 'eduardo.nunes@siemens.com', 'Eduardo@159', '11909876543', 2, 'Engenharia de Processos', 'Engenheiro de Processos Industriais'),
-(1, 'Beatriz Moreira', 'beatriz.moreira@siemens.com', 'Urubu100#', '11909966503', 2, 'Supervisão', 'COO');
+('CPU', 'Temperatura', '°C', 'cpu_temperatura','psutil.sensors_temperatures().get("coretemp", [])[0].current'),
+('CPU', 'Uso', '%', 'cpu_percent', 'psutil.cpu_percent(interval=None, percpu=False)'),
+('CPU', 'Atividade', 'dias', 'cpu_atividade_dias', 'int(psutil.boot_time() / (60 * 60 * 24))'),
+('CPU', 'Ociosidade', 'dias', 'cpu_ociosidade_dias' , 'int(psutil.cpu_times().idle / (60 * 60 * 24))'),
+('RAM', 'Uso', '%', 'ram_percent' , 'psutil.virtual_memory().percent'),
+('RAM', 'Memória Livre', 'Bytes', 'ram_livre' ,'int(psutil.virtual_memory().available)'),
+('Bateria', 'Quantidade', '%', 'bateria_porcentagem', 'psutil.sensors_battery().percent'),
+('CPU', 'Frequência', 'Mhz', 'cpu_freq', 'psutil.cpu_freq().current' ),
+('RAM','Uso em Bytes', 'Bytes', 'ram_uso' ,'psutil.virtual_memory().used'),
+('DISCO', 'Uso do Disco Bytes Windows', 'Bytes', 'disco_uso', 'psutil.disk_usage("C:\\").used'),
+('DISCO', 'Uso do Disco Bytes Linux', 'Bytes', 'disco_uso', 'psutil.disk_usage("/").used'),
+('DISCO', 'Uso do Disco Windows', '%', 'disco_percent', 'psutil.disk_usage("C:\\").percent'),
+('DISCO', 'Uso do Disco Linux', '%', 'disco_percent', 'psutil.disk_usage("/").percent'),
+('Bateria', 'Tempo Restante', 'minutos', 'bateria_restante', 'int(psutil.sensors_battery().secsleft / 60)');
 
 
-INSERT INTO captura (fkPLC, fkComponente, valor) VALUES
-(1, 1, 45.5),
-(1, 2, 65.3),
-(1, 3, 70.5),
-(1, 4, 95),
-(1, 5, 1),
-(2, 1, 50.2),
-(2, 2, 75.8),
-(2, 3, 80.0),
-(2, 4, 50.0),
-(2, 5, 0);
-
-SELECT * FROM caputra;
+-- Inserindo configurações de PLC
+-- Alterar a coluna "plc_id" de acordo com o ID do seu PLC.
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, intervalo_captura) VALUES
+(2, 3, 70.0, 90.0, 60),
+(8, 3, 4000.0, 5000.0, 30),
+(5,3, 70, 80, 20),
+(9, 3, 4000000, 5000000, 20),
+(12, 3, 70, 80, 30),
+(10, 3, 8000000, 9000000, 20),
+(4, 3, 12, 15, 20),
+(6, 3, 9000, 8000, 20);

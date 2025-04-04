@@ -1,0 +1,33 @@
+Script
+Insere valores
+Pega informações das máquinas e Cadastra
+
+Cenário Existente - Banco PLC
+Rodar Script de captura
+Gerar arquivo csv para jogar no bucket em um determinado periodo de tempo
+Temporariamente insere na tabela de captura histórico com o intuito de gerar CSV 
+2 variaveis globais para ativar e desativar as capturar, para gerar um CSV e mandar para o bucket
+e verificar se as configurações mudaram 
+
+geração de alerta
+rodar em paralelo, pegar os dados das configurações para ver se passou do limite, armazenar no Banco
+abrindo o chamado por uma rota do Web_Data_Viz mandando o chamado para o slack pelas rotas e o slack manda pro jira.
+pegar o link do chamado e mostrar na dash
+
+Código
+precisa mandar os dados coletados no Web_Data_Viz para ser visualizado em tempo real, precisamos de uma rota no Web com variavel global
+
+
+(insere na tabela de captura histórico) - precisa ser removivel facilmente
+
+Cenário Triste - Não tem PLC no Banco
+
+O usuario faz o login (email senha) pedir UUID da empresa parceira se ele acertou listamos para ele as fábricas
+mostra as fábricas, mostra os setores e seleciona e cadastramos o registro do novo PLC e perguntamos se ele irá usar a configuração padrão
+se ele for padrão segue a captura, se não avisamos que ele irá configurar na Web
+
+TODOS SELECT SERÃO FEITOS VIA ROTA Web_Data_Viz
+Novos campos, mudar o Script
+
+(gerar CSV)
+

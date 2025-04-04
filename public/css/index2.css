@@ -1,0 +1,263 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Gt walshein", sans-serif;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: Gt walsheim;
+    src: url(/public/fontes/GT-Walsheim-Black-Oblique-Trial-BF651b7fc5608e6.otf);
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    overflow-y: hidden;
+    background: rgb(137,170,255);
+    background: linear-gradient(180deg, rgba(137,170,255,1) 0%, rgba(137,170,255,1) 35%, rgba(239,239,239,1) 100%);
+    gap: 10vw;
+}
+
+.container .home {
+    padding: 5vw;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 15vw;
+    background-color: #5982eb;
+    border-radius: 12px;
+}
+
+.logo_nav {
+    display: flex;
+    justify-content: center;
+}
+
+.logo_nav img{
+    width: 40vw;
+}
+
+.btn_nav {
+    display: flex;
+    justify-content: center;
+    padding: 4vw;
+}
+
+.btn_nav button{
+    background-color: #24284B;
+    color: white;
+    border: none;
+    width: 25vw;
+    border-radius: 12px;
+}
+
+.box1 {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.texto_inicio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    line-height: 3vh;
+    /* border: 1px solid red; */
+
+}
+
+.texto_inicio h1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.texto_inicio h1 span {
+    font-size: 8.5vw;
+    font-weight: 800;
+}
+
+.seta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 13vh;
+}
+
+.seta img {
+    width: 15%;
+}
+
+.texto_baixo {
+    display: flex;
+    font-size: 3vw;
+    text-align: center;
+    /* border: 1px solid red; */
+}
+
+.box2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 7vw;
+}
+
+.box2 h1{
+    font-size: 6vw;
+}
+
+.box2 span{
+    color: #1242F2;
+}
+
+.contexto {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 5vw;
+}
+
+.contexto p {
+    text-align: justify;
+}
+
+.contexto div{
+    display: flex;
+    flex-direction: column;
+    gap: 5vw;
+}
+
+.contexto div div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contexto div div img {
+    width: 30vw;
+}
+
+.box3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.box3 img{
+    width: 70vw;
+}
+
+.boxes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+    cursor: default;
+    width: 80%;
+    gap: 10vw;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    background-color: #0D1030;
+    padding: 5vw;
+    gap: 3vw;
+}
+
+.box p {
+    padding: 5px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.box h5 {
+    font-size: 6vw;
+}
+
+.box img {
+    width: 30vw;
+}
+
+.box i {
+    font-size: 30vw;
+}
+
+.box4 {
+    background-color: #1242F2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.ferramentas {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 80%;
+    gap: 4vw;
+    padding-top: 10vw;
+    padding-bottom: 10vw;
+}
+
+.ferramentas .txt {
+    display: flex;
+    flex-direction: column;
+    gap: 4vw;
+    align-items: center;
+}
+
+.ferramentas h1 {
+    font-size: 6vw;
+    color: white;
+}
+
+.ferramentas p {
+    text-align: justify;
+    color: white;
+}
+
+.ferramentas span{
+    color: #00E708;
+}
+
+.ferramentas .icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.ferramentas .jira {
+    width: 35vw;
+}
+
+.ferramentas .slack {
+    width: 25vw;
+}
+
+.box5 h1 {
+    font-size: 6vw;
+}
