@@ -28,3 +28,9 @@ const menuCollapse = () => {
     menu.classList.toggle('collapse-menu-show')
     console.log("afs ta ingles")
 }
+
+const menuCollapseDesk = () => {
+    const menu = document.querySelector('#div_menu_desk')
+    menu.classList.toggle('collapse-menu-show')
+    console.log("afs ta ingles")
+}
