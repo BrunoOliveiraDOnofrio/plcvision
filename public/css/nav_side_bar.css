@@ -1,9 +1,13 @@
+body{
+    background-color: #F9F9F9;
+}
+
 .header-nav{
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    
     .menu-foto{
         display: flex;
         justify-content: center;
@@ -31,21 +35,56 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
 }
 
-.sidebar{
+.collapse-menu-show{
+    display: flex !important;
+}
+
+.collapse-menu{
+    display: none;
+    top: 90%;
+    right: 5%;
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    & nav ul {
+        list-style: none;
+
+        & a{
+            text-decoration: none;
+            color: #000;
+        }
+    }
+}
+
+.sidebar-fechada{
+    width: 0;
+    display: none;
+    /* animation: ocultarSide 0.2s linear; */
+}
+
+.sidebar-aberta{
     width: 80px;
+    display: flex;
+    /* animation: mostrarSide 0.2s linear; */
+}
+
+.sidebar{
+    
     background-color: #24284B;
     position: fixed;
     left: 0;
     top: 0;
     height: 100vh;
-    display: flex;
+    
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    animation: mostrarSide 0.2s linear;
+    
     & i{
         color: #fff;
         font-size: 12vw;
@@ -86,5 +125,73 @@
     }
 }
 
+.header-nav-desk{
+    display: none;
+}
+
+.main{
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:5%;
+    
+}
+
+.content{
+    
+    width: 95%;
+}
+
+
+@media only screen and (min-width: 760px) {
+
+    .main{
+        
+        margin-top: 8%;
+        right: 0;
+        position: absolute;
+        width: calc(100% - 80px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .content{
+        width: 98%;
+        
+    }
+
+    .sidebar{
+        width: 80px;
+        display: flex;
+        & i{
+            color: #fff;
+            font-size: 3.5vw;
+        }
+    }
+    .header-nav{
+        display: none;
+    }
+    .header-nav-desk{
+        display: flex;
+        width: calc(100% - 90px);
+        position: absolute;
+        right: 0;
+        top: 10px;
+
+        & .fotoEmpresa{
+            width: 50px;
+            height: 50px;
+            background-image: url('../assets/imgs/empresas/motorola.png');
+            background-size: contain;
+            border-radius: 100%;
+        }
+    }
+    #hamb_menu{
+        display: none;
+    }
+}
 
 
