@@ -1,9 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
 * {
     padding: 0;
     margin: 0;
-    font-family: "Gt walshein", sans-serif;
     scroll-behavior: smooth;
     box-sizing: border-box;
+}
+
+p {
+    font-family: "Gt walshein", sans-serif;
+}
+
+h5 {
+    font-family: "Gt walshein", sans-serif;
+}
+
+.mid_nav {
+    display: none;
 }
 
 @font-face {
@@ -22,7 +35,7 @@
 }
 
 .container .home {
-    padding: 5vw;
+    padding: 1rem;
 }
 
 nav {
@@ -81,6 +94,7 @@ nav {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: "Gt walshein", sans-serif;
 
 }
 
@@ -104,6 +118,7 @@ nav {
     display: flex;
     font-size: 3vw;
     text-align: center;
+    font-family: "Gt walshein", sans-serif;
     /* border: 1px solid red; */
 }
 
@@ -117,6 +132,7 @@ nav {
 
 .box2 h1{
     font-size: 6vw;
+    font-family: "Inria Sans", sans-serif;
 }
 
 .box2 span{
@@ -140,7 +156,7 @@ nav {
     gap: 5vw;
 }
 
-.contexto div div {
+.segmento div:nth-child(2) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -206,7 +222,6 @@ nav {
 }
 
 .box4 {
-    background-color: #1242F2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -232,16 +247,17 @@ nav {
 
 .ferramentas h1 {
     font-size: 6vw;
-    color: white;
+    color: rgb(0, 0, 0);
+    font-family: "Inria Sans", sans-serif;
 }
 
 .ferramentas p {
     text-align: justify;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .ferramentas span{
-    color: #00E708;
+    color: #1242F2;
 }
 
 .ferramentas .icon {
@@ -258,6 +274,444 @@ nav {
     width: 25vw;
 }
 
-.box5 h1 {
+.container2 {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    overflow-y: hidden;
+    background: rgb(137,170,255);
+    background: linear-gradient(0deg, rgba(137,170,255,1) 0%, rgba(137,170,255,1) 35%, rgba(239,239,239,1) 100%);
+    padding-bottom: 10vw;
+}
+
+.box5 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 7vw;
+    padding-bottom: 7vw;
+}
+
+.box5 div {
+    width: 80%;
+    text-align: justify;
+}
+
+.box5 div h1 {
     font-size: 6vw;
+    font-family: "Inria Sans", sans-serif;
+}
+
+.box5 div {
+    display: flex;
+    flex-direction: column;
+    gap: 4vw;
+    align-items: center;
+    & span{
+        color: #1242F2;
+    }
+}
+
+.box6 div h1{
+    font-size: 6vw;
+    text-align: center;
+    font-family: "Inria Sans", sans-serif;
+}
+
+.swiper{
+    height: 100vw;
+    align-items: center;
+    display: flex;
+    
+}
+
+.swiper-slide{
+    padding: 10vw;
+    margin: 0;
+}
+
+.swiper-slide div{
+    border: solid white 2px;
+    border-radius: 12px;
+    align-items: center;
+    text-align: center;
+    padding: 10vw 0 0;
+    background-color: white;
+}
+
+.swiper-slide div img{
+    width: 70vw;
+}
+
+.swiper-slide div p{
+    font-size: 3vw;
+    padding: 5vw;
+    font-weight: 100;
+}
+
+.swiper-pagination-bullet-prev::after{
+    color: white;
+    font-weight: 900;
+}
+
+.swiper-pagination-bullet-next::after{
+    color: white;
+    font-weight: 900;
+}
+
+.swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-vertical>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: var(--swiper-pagination-bullet-vertical-gap, 6px) 0;
+    display: block;
+    background-color: rgb(46, 94, 139);
+    padding: 8px;
+}
+
+.box7 {
+    width: 80%;
+    margin: auto;
+    font-family: "Inria Sans", sans-serif;
+}
+
+.box7 .contato h1{
+    font-size: 10vw;
+    color: white;
+}
+
+.box7 .contato {
+    display: flex;
+    flex-direction: column;
+    gap: 10vw;
+    background-color: #0d1030e7;
+    padding: 5vw;
+    border-radius: 12px;
+}
+
+form {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10vw;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+form div input,textarea {
+    border-radius: 8px;
+    border: none;
+    padding: 2vw;
+}
+
+form button {
+    background-color: #1242F2;
+    border: none;
+    border-radius: 8px;
+    padding: 2vw;
+    color: white;
+}
+
+.footer{
+    background-color: #0D1030;
+    & h3 {
+        color: white;
+        font-size: 3vw;
+        padding: 0 0 5vw 0;
+        text-align: center;
+    }
+}
+
+.box8{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    align-items: center;
+    padding-bottom: 6vw;
+}
+
+.box8 div img {
+    width: 25vw;
+}
+
+.locomocao{
+    display: flex;
+    flex-direction: column;
+    gap: 5vw;
+}
+
+.box8 div ul {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    font-size: 3vw;
+    list-style: none;
+    gap: 2vw;
+}
+
+.redes {
+    font-size: 10vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: white;
+    padding-bottom: 10vw;
+}
+
+@media (min-width: 768px) {
+
+    .mid_nav {
+        display: flex;
+        & ul {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 5vw;
+            font-family: "Gt walshein", sans-serif;
+            font-size: 1.2rem;
+            & li {
+                
+                & a {
+                    color: black;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    .container {
+        gap: 1rem;
+    }
+
+    .home {
+        padding: 2rem !important;
+    }
+    
+    .logo_nav img {
+        width: 10rem;
+    }
+
+    .btn_nav button {
+        width: 10vw;
+    }
+
+    .btn_nav {
+        padding: 1rem;
+    }
+
+    nav {
+        height: auto;
+    }
+
+    .texto_inicio {
+        line-height: 4rem;
+    }
+
+    .texto_inicio h1 span {
+        font-size: 5.5rem;
+        font-weight: 800;
+    }
+
+    .seta img {
+        width: 10%;
+    }
+
+    .texto_baixo {
+        font-size: 1rem;
+    }
+
+    .box2 {
+        text-align: left;
+    }
+
+    .box2 h1 {
+        font-size: 2.7rem;
+    }
+
+    p {
+        font-size: 1.5rem;
+    }
+
+    .segmento {
+        display: flex !important;
+        flex-direction: row !important;
+    }
+
+    .segmento div img {
+        width: 15rem !important;
+    }
+
+    .box3 {
+        padding-top: 8rem;
+        gap: 3rem;
+    }
+
+    .box3 img {
+        width: 25rem !important;
+    }
+
+    .boxes {
+        flex-direction: row;
+        gap: 2rem;
+        width: 90%;
+    }
+
+    .box {
+        height: 35rem;
+        padding: 1rem;
+        & h5 {
+            font-size: 2rem;
+        }
+        & p {
+            font-size: 1rem;
+            padding: 1rem;
+            text-align: justify;
+        }
+    }
+
+    .box img {
+        width: 10rem !important;
+    }
+
+    .box i {
+        font-size: 10rem;
+    }
+
+    .ferramentas {
+        flex-direction: row;
+        padding-bottom: 5vw;
+        & h1 {
+            font-size: 2.7rem;
+            text-align: left !important;
+        }
+        & .txt {
+            align-items: flex-start;
+        }
+        & .icon {
+            flex-direction: column;
+            & .jira {
+                width: 10rem;
+            }
+            & .slack {
+                width: 10rem;
+            }
+        }
+    }
+
+    .box5 div {
+        align-items: flex-start;
+    }
+
+    .box5 div h1 {
+        font-size: 2.7rem;
+        font-family: "Inria Sans", sans-serif;
+    }
+
+    .box6{
+        display: flex;
+        flex-direction: column;
+        gap: 10vw;
+    }
+
+    .box6 div h1 {
+        font-size: 4rem;
+        font-family: "Inria Sans", sans-serif !important;
+    }
+
+    .swiper-slide div img {
+        width: 25rem;
+    }
+
+    .swiper-slide div p {
+        font-size: 1rem;
+        padding: 5vw;
+        font-weight: 100;
+    }
+
+    .swiper{
+        height: 50vw;
+        width: 60vw;
+        position: relative;
+        bottom: 5vw;
+    }
+
+    .swiper-slide div {
+        padding: 2vw 0 0;
+        justify-content: center;
+    }
+
+    .box7 .contato {
+        gap: 2vw;
+        padding: 3vw 8vw 5vw 8vw;
+        width: 60vw;
+        margin: auto;
+    }
+
+    .box7 .contato h1 {
+        font-size: 4rem;
+        color: white;
+        text-align: center;
+
+    }
+
+    form {
+        gap: 2vw;
+        & button {
+            align-self: center;
+            padding: 0 10vw 0 10vw;
+            height: 4vw;
+        }
+        & input,textarea {
+            height: 2.5vw;
+        }
+        & textarea {
+            height: 8vw;
+        }
+    }
+
+    label {
+        font-size: 1.5rem;
+    }
+
+    .box8 {
+        flex-direction: row;
+        width: 90%;
+        justify-content: space-between;
+        & .locomocao {
+            padding-top: 1.25vw;
+            gap: 2vw;
+        }
+    }
+
+    .box8 div img {
+        width: 10vw;
+        padding-top: 2.5vw;
+    }
+
+    .box8 div ul {
+        font-size: 1rem;
+        gap: 4vw;
+        font-family: "Gt walshein", sans-serif;
+    }
+
+    .redes {
+        padding-bottom: 0;
+        justify-content: flex-end;
+        & i {
+            font-size: 3rem;
+        }
+    }
+
+    .footer{
+        & h3 {
+            font-size: 1rem;
+            padding: 0 0 0 0;
+            position: relative;
+            bottom: 40px;
+            font-family: "Gt walshein", sans-serif;
+        }
+    }
 }
