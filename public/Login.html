@@ -1,153 +1,69 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/StyleLogin.css">
-    <title>Login</title>
-    <link rel="shortcut icon" type="imagex/png" href="./assets/imgs/logo-aba.png">
-    <script src="./js/validacaosessao.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"/>
 </head>
 
 <body>
+    
+    <main class="main-login">
 
-    <nav>
-        <div class="logo_nav">
-            PCLVision
-        </div>
-        <div class="mid_nav">
-        </div>
-        <div class="btn_nav">
-            <button onclick="irHome()">Voltar</button>
-        </div>
-    </nav>
+        <div class="container-login">
+            <div class="left-container">
+                <div class="left-box">
 
-    <div class="container-global">
-
-        <div class="PCLVision">
-            <h1>PCLVision</h1>
-            <h3>Faça seu login para começar!</h3>
-        </div>
-
-
-        <div class="box_login">
-
-            <div class="card-login">
-                <div class="titulo-login">Login</div>
-                <div class="textfield">
-                    <label for="usuario">E-mail</label>
-                    <input type="text" id="ipt_email" placeholder="Digite seu e-mail">
-                    <div id="validarUsuario" style="color: rgb(179, 2, 2)"></div>
-                    <!-- Caso usuário erre, retornar mensagem de e-mail não cadastrado-->
+                    <div class="header-login">
+                        <span class="span-login">Login</span>
+                    </div>
+                <div class="upper-box">
+                    <div class="div-input">
+                        <div class="box-email">
+                            <span class="span-label_login">Usuário:</span>
+                            <input type="text" placeholder="cliente@email.com">
+                        </div>
+                        <div class="box-senha">
+                            <span class="span-label_login">Senha:</span>
+                            <input type="password" placeholder="#Senha123">
+                        </div>
+                    </div>
                 </div>
-
-                <div class="textfield">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="ipt_senha" name="usuario" placeholder="Senha">
-                    <div id="div_validarSenha" style="color: rgb(179, 2, 2)"></div>
-                    <!-- Caso usuário erre, retornar mensagem de senha incorreta -->
+                <div class="bottom-box">
+                    <div class="bottom">
+                                <!-- <div class="div-texto">
+                                    <input type="checkbox" id="check-conectado">
+                                    <label for="check-conectado">Mantenha-me conectado</label>
+                                </div> -->
+                                <div class="box-btn">
+                                    <a href="index.html" class="btn-voltar"><i class='bx bx-left-arrow-alt' style="color: #f6f3f3"></i></a>
+                                    <button onclick="login()" class="btn-entrar">Entrar</button>
+                                </div>
+                                <div class="box-spanContato">
+                                    <span class="span-contatoLogin">
+                                        Novo por aqui? <span class="palavraContato">Entre em CONTATO!</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <button onclick="entrar()" class="btn-login">Entrar</button>
-
-                <div class="recomendacao">
-                    <span style="color: black;">Novo por aqui? <button class="button-contato"><a
-                                href="./faleConoscoPCLVision.html"><span style="color: black;"><b>Entre em
-                                        Contato!</b></span></a></button></span>
+                <div class="right-container">
+                    <div class="container-imagem">
+                        <div class="box-logo">
+                            <img src="assets/images/logoOpticar.png" alt="logo da empresa">
+                        </div>
+                        <div class="box-nomeEmpresa">Opticar</div>
+                    </div>
                 </div>
-
             </div>
         </div>
-    </div>
 
 
+    </main>
 
 </body>
 
 </html>
-
-<script>
-
-    function irHome() {
-        window.location = "./index.html"
-    }
-
-    function entrar() {
-
-        var email = ipt_email.value
-        var senha = ipt_senha.value
-
-        var mensagem = ''
-
-        if (email == "" || senha == "") {
-            mensagem += `Insira valores válidos`
-        }
-        // validarSenha.innerHTML = mensagem
-        // validaremail.innerHTML = mensagem
-
-
-        console.log("FORM LOGIN: ", email);
-        console.log("FORM SENHA: ", senha);
-
-
-
-        fetch("/usuario/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: email,
-                senhaServer: senha
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
-            if (resposta.ok) {
-
-                console.log("RESPOSTA OK")
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.NIVEL_USUARIO = json.nivel
-
-                    setTimeout(function () {
-
-                        if(json.nivel == 0){
-                            window.location = "../nv0/Monitoramento.html";
-                        }else if(json.nivel == 1){
-                            window.location = "../nv1/Insigths.html";
-                        }else{
-                            window.location = "../nv2/Monitoramento.html";
-                        }
-
-                    }, 1000);
-
-                });
-
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-                div_validarSenha.innerHTML = `Houve um erro ao tentar realizar o login!`
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-
-        return false;
-
-    }
-
-</script>

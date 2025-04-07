@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/StyleLogin.css">
+    <title>Login</title>
+    <link rel="shortcut icon" type="imagex/png" href="./assets/imgs/logo-aba.png">
+    <script src="./js/validacaosessao.js"></script>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo_nav">
+            PCLVision
+        </div>
+        <div class="mid_nav">
+        </div>
+        <div class="btn_nav">
+            <button onclick="irHome()">Voltar</button>
+        </div>
+    </nav>
+
+    <div class="container-global">
+
+        <div class="PCLVision">
+            <h1>PCLVision</h1>
+            <h3>Faça seu login para começar!</h3>
+        </div>
+
+
+        <div class="box_login">
+
+            <div class="card-login">
+                <div class="titulo-login">Login</div>
+                <div class="textfield">
+                    <label for="usuario">E-mail</label>
+                    <input type="text" id="ipt_email" placeholder="Digite seu e-mail">
+                    <div id="validarUsuario" style="color: rgb(179, 2, 2)"></div>
+                    <!-- Caso usuário erre, retornar mensagem de e-mail não cadastrado-->
+                </div>
+
+                <div class="textfield">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="ipt_senha" name="usuario" placeholder="Senha">
+                    <div id="div_validarSenha" style="color: rgb(179, 2, 2)"></div>
+                    <!-- Caso usuário erre, retornar mensagem de senha incorreta -->
+                </div>
+
+                <button onclick="entrar()" class="btn-login">Entrar</button>
+
+                <div class="recomendacao">
+                    <span style="color: black;">Novo por aqui? <button class="button-contato"><a
+                                href="./faleConoscoPCLVision.html"><span style="color: black;"><b>Entre em
+                                        Contato!</b></span></a></button></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
+
+<script>
+
+    function irHome() {
+        window.location = "./index.html"
+    }
+
+    function entrar() {
+
+        var email = ipt_email.value
+        var senha = ipt_senha.value
+
+        var mensagem = ''
+
+        if (email == "" || senha == "") {
+            mensagem += `Insira valores válidos`
+        }
+        // validarSenha.innerHTML = mensagem
+        // validaremail.innerHTML = mensagem
+
+
+        console.log("FORM LOGIN: ", email);
+        console.log("FORM SENHA: ", senha);
+
+
+
+        fetch("/usuario/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: email,
+                senhaServer: senha
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+
+                console.log("RESPOSTA OK")
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.NIVEL_USUARIO = json.nivel
+
+                    setTimeout(function () {
+
+                        if(json.nivel == 0){
+                            window.location = "../nv0/Monitoramento.html";
+                        }else if(json.nivel == 1){
+                            window.location = "../nv1/Insigths.html";
+                        }else{
+                            window.location = "../nv2/Monitoramento.html";
+                        }
+
+                    }, 1000);
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+                div_validarSenha.innerHTML = `Houve um erro ao tentar realizar o login!`
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+
+    }
+
+</script>
