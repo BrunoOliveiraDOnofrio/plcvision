@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/fonts.css">
+    <link rel="stylesheet" href="./css/nav_side_bar.css">
+    <link rel="stylesheet" href="./css/StyleCadastroUsuario.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Cadastro</title>
+</head>
+
+<body>
+
+    <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side bar  -->
+
+    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-bar-chart-square'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="../alertas/alertas.html">
+                        <i class='bx bxs-bell-ring'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="../plcs/plcs.html">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Cadastro do Usuário -->
+
+    <div class="main">
+        <div class="content">
+            <div class="title">
+                <h1>Cadastrar Usuário:</h1>
+            </div>
+            <div class="box-register">
+                <div class="box-field">
+                    <div class="left-field">
+                        <div class="field">
+                            <span>Nome:</span>
+                            <input type="text">
+                        </div>
+                        <div class="field">
+                            <span>E-mail:</span>
+                            <input type="text">
+                        </div>
+                        <div class="field">
+                            <span>Celular:</span>
+                            <input type="text">
+                        </div>
+                        <div class="field">
+                            <span>Nível:</span>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="right-field">
+                        <div class="field">
+                            <span>Setor:</span>
+                            <input type="text">
+                        </div>
+                        <div class="field">
+                            <span>Cargo:</span>
+                            <input type="text">
+                        </div>
+                        <div class="field">
+                            <span>Senha:</span>
+                            <input type="text">
+                        </div>
+                        <div class="field">
+                            <span>Confirmar Senha:</span>
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button class="exit-button" onclick="">Cancelar</button>
+                    <button class="register-button" onclick="">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
