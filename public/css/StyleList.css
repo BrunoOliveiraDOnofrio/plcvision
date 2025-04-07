@@ -1,0 +1,81 @@
+.botaoAdicionar {
+    background-color: rgb(36,40,74);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+
+.botaoAdicionar:hover {
+    background-color: #2c3160;
+}
+
+.divTitulos{
+    background-color: rgb(249, 249, 249);
+    flex-direction: row;
+    display: flex;
+    justify-content: space-evenly;
+}
+.divTituloUnico{
+    font-size: 12px ;
+}
+
+.divListar {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.linha {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+.linhaUnico{
+    display: flex;
+    flex-direction: row;
+    font-size: 10px;
+}
+
+.botaoRemover button,
+.botaoVisualizar button {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(249, 249, 249);
+}
+
+.botaoRemover button {
+    background-image: url('../assets/imgs/excluir.png');
+}
+
+.botaoVisualizar button {
+    background-image: url('../assets/imgs/visualizar.png');
+}
+
+
+@media only screen and (min-width: 760px) {
+    .divTituloUnico{
+        font-size: 20px ;
+    }
+
+   
+    .linhaUnico{
+            display: flex;
+            flex-direction: row;
+            font-size: 17px;
+    }
+    
+}
