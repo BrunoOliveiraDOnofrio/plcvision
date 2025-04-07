@@ -12,8 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/dashboards/monitoramento_tempo_real.css">
     <!-- Link dos icones - boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 <body>
@@ -134,11 +136,84 @@
 
      <div class="main">
         <div class="content">
-            
+            <div class="title-div">
+                <h1>Monitoramento de Recursos</h1>
+                <small>Acompanhe métricas em tempo real</small>
+            </div>
+
+            <div class="kpis-div">
+                <div class="kpi-box">
+                    <div class="value">
+                        <span>85%</span> 
+                    </div>
+                    <div class="desc">
+                       <span>Uso CPU</span>
+                    </div>
+                </div>
+                <div class="kpi-box">
+                    <div class="value">
+                        <span>85%</span> 
+                    </div>
+                    <div class="desc">
+                       <span>Uso CPU</span>
+                    </div>
+                </div><div class="kpi-box">
+                    <div class="value">
+                        <span>85%</span> 
+                    </div>
+                    <div class="desc">
+                       <span>Uso CPU</span>
+                    </div>
+                </div><div class="kpi-box">
+                    <div class="value">
+                        <span>85%</span> 
+                    </div>
+                    <div class="desc">
+                       <span>Uso CPU</span>
+                    </div>
+                </div>
+                <div class="kpi-box">
+                    <div class="value">
+                        <span>85%</span> 
+                    </div>
+                    <div class="desc">
+                       <span>Uso CPU</span>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class="all-charts-div">
+                <div class="charts-div">
+                    <div class="header-chart">
+                        <span>Uso CPU</span>
+                    </div>
+                    <div class="content-chart">
+                        <canvas class="meuGrafico"></canvas>
+                    </div>
+                </div>
+                <div class="charts-div">
+                    <div class="header-chart">
+                        <span>Uso RAM</span>
+                    </div>
+                    <div class="content-chart">
+                        <canvas class="meuGrafico"></canvas>
+                    </div>
+                </div>
+                <div class="charts-div">
+                    <div class="header-chart">
+                        <span>Uso CPU Frequência</span>
+                    </div>
+                    <div class="content-chart">
+                        <canvas class="meuGrafico"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
 
 <script src="../../js/nav_sidebar.js"></script>
+<script src="../../js/dashboard/grafico.js"></script>
 
 </html>
