@@ -9,6 +9,7 @@
 
     & small{
         font-size: 16px;
+        color: #333;
     }
 }
 
@@ -81,3 +82,4 @@
         width: 28%;
     }
 }
+
