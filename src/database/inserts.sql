@@ -16,9 +16,10 @@ INSERT INTO usuario (empresa_id, nome, email, telCelular, senha, nivel, setor, c
 (2, 'Mariana Souza', 'mariana.souza@schneider.com', '5541998765432', 'senha456', 1, 'TI', 'Analista de Sistemas');
 
 -- Inserindo empresas consumidoras
-INSERT INTO empresa_consumidor (razao_social, segmento, cnpj, endereco_id, qtdFabrica) VALUES
-('Volkswagen do Brasil', 'Automobilístico', '11223344000155', 3, 2),
-('Nestlé Brasil', 'Alimentos', '22334455000166', 4, 1);
+INSERT INTO empresa_consumidor (razao_social, segmento, cnpj, endereco_id, qtdFabrica, token) VALUES
+('Volkswagen do Brasil', 'Automobilístico', '11223344000155', 3, 2, 'token_vw'),
+('Nestlé Brasil', 'Alimentos', '22334455000166', 4, 1, 'token_nestle');
+
 
 -- Inserindo parcerias
 INSERT INTO parceria (empresa_consumidor_id, empresa_fabricante_id, dataParceria, qtdPlc) VALUES
@@ -60,12 +61,12 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 
 -- Inserindo configurações de PLC
 -- Alterar a coluna "plc_id" de acordo com o ID do seu PLC.
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, intervalo_captura) VALUES
-(2, 3, 70.0, 90.0, 60),
-(8, 3, 4000.0, 5000.0, 30),
-(5,3, 70, 80, 20),
-(9, 3, 4000000, 5000000, 20),
-(12, 3, 70, 80, 30),
-(10, 3, 8000000, 9000000, 20),
-(4, 3, 12, 15, 20),
-(6, 3, 9000, 8000, 20);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico,  fabrica_consumidor_id) VALUES
+(2, 3, 70.0, 90.0,  1),
+(8, 3, 4000.0, 5000.0,  1),
+(5, 3, 70, 80,  1),
+(9, 3, 4000000, 5000000,  1),
+(12, 3, 70, 80,  1),
+(10, 3, 8000000, 9000000,  1),
+(4, 3, 12, 15,  1),
+(6, 3, 9000, 8000,  1);

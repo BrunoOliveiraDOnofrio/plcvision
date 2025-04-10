@@ -3,8 +3,10 @@ import psutil # https://psutil.readthedocs.io/en/latest/
 import time
 import os
 from datetime import datetime, timedelta, timezone
+import csv
+import aws
 
-id_plc = 1 # Colocar id_plc
+id_plc = 3 # Colocar id_plc
 
 criacao_csv = True
 insercao_mysql = True
@@ -15,8 +17,8 @@ def conexao_select():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='xxx',
-        password='xxxxx',
+        user='root',
+        password='linkinpark',
         database='plcvision'
     )
 
@@ -28,8 +30,8 @@ def conexao_insert():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='xxx',
-        password='xxxxx',
+        user='root',
+        password='linkinpark',
         database='plcvision'
     )
 
@@ -39,7 +41,7 @@ def limpar_tela():
     # limpar o console
     print('\033[H\033[J')
 
-def coletar_dados(informacoes_componentes):
+def coletar_dados():
 
  
     try:
@@ -56,7 +58,8 @@ def coletar_dados(informacoes_componentes):
 
         comando = 'powershell.exe systeminfo | findstr "Data da instalação original"'
         saida = os.popen(comando).read().strip()
-        dt = saida.split("/")[3].strip().split(",")[0].strip()
+        dt = "2023"
+        # dt = saida.split("/")[3].strip().split(",")[0].strip()
 
 
         comando = 'powershell.exe ipconfig /all | findstr "Endereço Físico"'
@@ -92,13 +95,13 @@ def coletar_dados(informacoes_componentes):
     cursor_mac.close()
 # Pegando todos enderecos mac
 
-    # print(fetchall_mac)
+    print(fetchall_mac)
     nao_tem = True
     for mac in fetchall_mac:
         print(mac[0])
         if(endereco_mac in mac[0]):
             nao_tem = False
-
+    
     if (nao_tem):
         insert_plc = conexao_insert()
         cursor_plc = insert_plc.cursor()
@@ -112,59 +115,72 @@ def coletar_dados(informacoes_componentes):
 
 
 
-    contador = 0
+    
     # recebe quais valores irão ser monitorados e faz um loop infinito (controlado) onde ele verifica se pode monitorar, coleta a informação, guarda em um array e no final manda armazenar os dados novamente
     while True:
-        #limpar_tela()
-        print('Coletando Dados...')
+        conteudo_csv = []
+        contador = 0
+        while contador <= 10:
+            #limpar_tela()
+            print('Coletando Dados...')
+            informacoes_componentes = coletar_informacoes_componentes()
+            fuso_brasil = timezone(timedelta(hours=-3))
+            
+            # insert_user = conexao_insert()
+            # cursor_insert = insert_user.cursor()
+            str_query = f"INSERT INTO captura_{id_plc} ("
+            colunas_inserir = []
+            valores_inserir = []
+            for info in informacoes_componentes:
+                print(info)
 
-        fuso_brasil = timezone(timedelta(hours=-3))
-
-        insert_user = conexao_insert()
-        cursor_insert = insert_user.cursor()
-        str_query = f"INSERT INTO captura_{id_plc} ("
-        colunas_inserir = []
-        valores_inserir = []
-        for info in informacoes_componentes:
-            print(info)
-
-            try:
-                valor = eval(info[1]) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
-                valores_inserir.append(valor)
-                colunas_inserir.append(info[6])
-            except Exception as e:
-                print(e)
-                valor = None
-                print("Vish", info[6])
-            finally:
-                if valor is None:
-                    valor = -1
-                print(valor)
-
-        for index, valor in enumerate(colunas_inserir):
-            if index == len(colunas_inserir) -1:
-                str_query += colunas_inserir[index] + " ,dataHora)"
-            else:
-                str_query += colunas_inserir[index] + ","
-        str_query += " VALUES ("
-        data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
-
-        for index, valor in enumerate(valores_inserir):
-            if index == len(valores_inserir) -1:
-                str_query += f"{valores_inserir[index]}, '{data_hora_brasil}')"
-            else:
-                str_query += f"{valores_inserir[index]},"
-        print(str_query)
+                try:
+                    valor = eval(info[1]) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
+                    valores_inserir.append(valor)
+                    colunas_inserir.append(info[6])
+                except Exception as e:
+                    print(e)
+                    valor = None
+                    print("Vish", info[6])
+                finally:
+                    if valor is None:
+                        valor = -1
+                    print(valor)
+            print("==========================================")
+            if len(conteudo_csv) == 0:
+                colunas_inserir.append('dataHora')
+                colunas_inserir.append('maquinaId')
+                conteudo_csv.append(colunas_inserir)
+            fuso_brasil = timezone(timedelta(hours=-3))
+            data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
+            valores_inserir.append(data_hora_brasil)
+            valores_inserir.append(id_plc)
+            
+            conteudo_csv.append(valores_inserir)
+            print(conteudo_csv)
+            print("+=========================================")
+            
+            
 
 
-        cursor_insert.execute(str_query)
-        insert_user.commit()
+            # cursor_insert.execute(str_query)
+            # insert_user.commit()
 
-        cursor_insert.close()
-        contador = contador +1
-        if contador == 2000:
-            break
-        time.sleep(5)
+            # cursor_insert.close()
+            data_hora_brasil = data_hora_brasil.replace(" ", "_")
+            data_hora_brasil = data_hora_brasil.replace(":", "-")
+            contador = contador +1
+            nome_csv = f"{data_hora_brasil}_{id_plc}"
+            if contador == 10:
+                with     open(f"Scripts/csvs/{nome_csv}.csv", 'w', newline='') as arquivo_csv:
+                    escritor = csv.writer(arquivo_csv)
+                    for linha in conteudo_csv:
+                        escritor.writerow(linha)
+                print("Gerando CSV...")
+                time.sleep(5)
+                print("Enviando Bucket...")
+                aws.enviar_arquivo(nome_csv)
+            time.sleep(1)
 
 def coletar_infos_user():
     limpar_tela()
@@ -271,6 +287,8 @@ def coletar_informacoes_componentes():
     informacoes_componentes_monitorar = cursor_select.fetchall() # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
     cursor_select.close()
     print(informacoes_componentes_monitorar)
+    
+    
     if len(informacoes_componentes_monitorar) == 0: # verificar se ele está vazio
         print('''Este PLC ainda não foi configurado, por favor, escolha um destes itens abaixo para prosseguir com a configuração:\n
         [1] ▶ Configurar monitoramento padrão (CPU, RAM, Bateria)\n
@@ -294,45 +312,47 @@ def coletar_informacoes_componentes():
 
         if opcao_selecionada == 1:
             # settar monitoracao padrao de 5 elementos
-            insert_user = conexao_insert()
-            cursor_insert = insert_user.cursor()
+            # insert_user = conexao_insert()
+            # cursor_insert = insert_user.cursor()
 
-            fuso_brasil = timezone(timedelta(hours=-3))
-            data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
+            # fuso_brasil = timezone(timedelta(hours=-3))
+            # data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
 
-            query = f'''INSERT INTO captura (fkPLC, fkComponente, valor, dataHora) VALUES
-                            ({id_plc}, 1, 0, "{data_hora_brasil}"),
-                            ({id_plc}, 2, 0, "{data_hora_brasil}"),
-                            ({id_plc}, 3, 0, "{data_hora_brasil}"),
-                            ({id_plc}, 4, 0, "{data_hora_brasil}"),
-                            ({id_plc}, 5, 0, "{data_hora_brasil}");
-                        '''# Atribuindo o Insert na query
+            # query = f'''INSERT INTO captura (fkPLC, fkComponente, valor, dataHora) VALUES
+            #                 ({id_plc}, 1, 0, "{data_hora_brasil}"),
+            #                 ({id_plc}, 2, 0, "{data_hora_brasil}"),
+            #                 ({id_plc}, 3, 0, "{data_hora_brasil}"),
+            #                 ({id_plc}, 4, 0, "{data_hora_brasil}"),
+            #                 ({id_plc}, 5, 0, "{data_hora_brasil}");
+            #             '''# Atribuindo o Insert na query
 
-            cursor_insert.execute(query)
-            insert_user.commit()
-            cursor_insert.close()
+            # cursor_insert.execute(query)
+            # insert_user.commit()
+            # cursor_insert.close()
 
-            print("Sincronizando com Banco de Dados...")
-            time.sleep(2)
+            # print("Sincronizando com Banco de Dados...")
+            # time.sleep(2)
             
-            confirmacao = []
-            while(len(confirmacao) == 0):
-                select_user = conexao_select()
-                cursor_select = select_user.cursor()
-                cursor_select.execute(query_verificar_componentes) 
-                confirmacao = cursor_select.fetchall() 
-                cursor_select.close()
-            
-            coletar_informacoes_componentes()
+            # confirmacao = []
+            # while(len(confirmacao) == 0):
+            #     select_user = conexao_select()
+            #     cursor_select = select_user.cursor()
+            #     cursor_select.execute(query_verificar_componentes) 
+            #     confirmacao = cursor_select.fetchall() 
+            #     cursor_select.close()
+            print("vai ter que programar a padrão")
+            # coletar_informacoes_componentes()
 
         elif opcao_selecionada == 2:
-            # coletar com perguntas oq o usuario deseja monitorar
-            coletar_infos_user()
-            coletar_informacoes_componentes()
+            # # coletar com perguntas oq o usuario deseja monitorar
+            # coletar_infos_user()
+            # coletar_informacoes_componentes()
+            print("vai ter que programar")
         elif opcao_selecionada == 3:
             # sai da app
             sair()
-    main(informacoes_componentes_monitorar) # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
+    return informacoes_componentes_monitorar
+    # main(informacoes_componentes_monitorar) # Atribuindo a variavel informacoes_componentes e Utilizando o fetchall para coletar os dados do select
     
 if __name__ == '__main__':
     # quando o arquivo iniciar, configura o banco e inicia a aplicação
@@ -340,5 +360,5 @@ if __name__ == '__main__':
     select_user = conexao_select()
     insert_user = conexao_insert()
    
-  
+    coletar_dados()
     coletar_informacoes_componentes()
