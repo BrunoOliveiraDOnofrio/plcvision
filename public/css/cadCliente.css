@@ -23,7 +23,7 @@
         flex-direction: column;
         background-color: #E4E4E4;
         height: 100vh;
-        width: 100%;
+        width: 100vw;
         justify-content: center;
         align-items: center;
     }
@@ -39,8 +39,8 @@
     .full-box{
         display: flex;
         flex-direction: column;
-        width: 100%;
-        height: 100%;
+        width: 90vw;
+        height: 90vh;
         justify-content: space-between;
         align-content: center;
     }
@@ -48,7 +48,7 @@
     .tittle{
         text-align: center;
         align-content: center;
-        height: 10%;
+        height: 10vh;
         font-family: 'Inter';
         font-weight: bold;
         font-size: 7vw;
@@ -60,45 +60,56 @@
         display: flex;
         flex-direction: column;
         align-self: center;
-        width: 95%;
-        height: 80%;
-        justify-self: center;
-        align-content: center;
+        width: 80vw;
+        height: fit-content;
     }
 
     .box-btns{
-        height: 10%;
+        height: 10vh;
         align-content: center;
         justify-items: center;
     }
 
     .btns-wrapper{
         display: flex;
-        width: 90%;
-        height: 60%;
+        width: 90vw;
+        height: 6vh;
         align-content: space-around;
         justify-content: space-around;
     }
 
-    .row-1, .row-2, .row-3, .row-4{
+    .row-1, .row-2, .row-3, .row-4, .campo{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 80vw;
+        gap: 5px;
+
+        & span{
+            display: flex;
+            align-self: flex-start;
+            font-family: 'Abel';
+            width: 40vw;
+        }
+
+        & input{
+            border: solid black 1px;
+            border-radius: 5px;
+            width: 80vw;
+        }
+    
     }
 
-    span{
-        font-family: 'Abel';
-    }
 
-    input{
-        border: solid black 1px;
-        border-radius: 5px;
-    }
-
+    
     .btn{
         background-color: #24284B;
         color: white;
-        height: 100%;
-        width: 40%;
+        height: 6vh;
+        width: 30vw;
         font-family: 'Inter';
-        font-size: 80%;
+        font-size: 5vw;
         border-radius: 5px;
     }
     
@@ -127,8 +138,8 @@
     .full-box{
         display: flex;
         flex-direction: column;
-        width: 100%;
-        height: 100%;
+        width: 90vw;
+        height: 90vh;
         justify-content: space-between;
         align-content: center;
     }
