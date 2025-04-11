@@ -52,12 +52,13 @@
     margin: 10px;
 
     & button{
-        border-radius: 30px;
+        border-radius: 10px;
         margin: 5px;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
         background-color: #24284B;
         color: #FFFFFF;
         padding: 10px;
+        cursor: pointer;
     }
 }
 
@@ -73,7 +74,6 @@
 
     .box-register{
         width: 90%;
-        margin-bottom: 5%;
     }
 
     .box-field{
@@ -88,6 +88,16 @@
 
     .right-field{
         width: 50%;
+    }
+
+    .buttons {
+        display: flex;
+        width: 30%;
+        justify-content: space-between;
+
+        & button {
+            padding: 7px
+        }
     }
 
 }
