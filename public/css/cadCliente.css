@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@font-face {
+    font-family: "Gt walshein", sans-serif;
+    src: url(../fontes/GT-Walsheim-Regular-Trial-BF651b7fc71a47d.otf);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+@media (max-width:702px){
+
+    .main-cad{
+        display: flex;
+        flex-direction: column;
+        background-color: #E4E4E4;
+        height: 100vh;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .container{
+        /* border: solid blue; */
+        width: 90vw;
+        height: 90vh;
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    .full-box{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        justify-content: space-between;
+        align-content: center;
+    }
+
+    .tittle{
+        text-align: center;
+        align-content: center;
+        height: 10%;
+        font-family: 'Inter';
+        font-weight: bold;
+        font-size: 7vw;
+        color: #24284B;
+
+    }
+
+    .box-form {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        width: 95%;
+        height: 80%;
+        justify-self: center;
+        align-content: center;
+    }
+
+    .box-btns{
+        height: 10%;
+        align-content: center;
+        justify-items: center;
+    }
+
+    .btns-wrapper{
+        display: flex;
+        width: 90%;
+        height: 60%;
+        align-content: space-around;
+        justify-content: space-around;
+    }
+
+    .row-1, .row-2, .row-3, .row-4{
+    }
+
+    span{
+        font-family: 'Abel';
+    }
+
+    input{
+        border: solid black 1px;
+        border-radius: 5px;
+    }
+
+    .btn{
+        background-color: #24284B;
+        color: white;
+        height: 100%;
+        width: 40%;
+        font-family: 'Inter';
+        font-size: 80%;
+        border-radius: 5px;
+    }
+    
+}
+
+@media (min-width:702px){
+
+    .main-cad{
+        display: flex;
+        flex-direction: column;
+        background-color: #E4E4E4;
+        height: 100vh;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .container{
+        /* border: solid blue; */
+        width: 90vw;
+        height: 90vh;
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    .full-box{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        justify-content: space-between;
+        align-content: center;
+    }
+
+    
+
+}
+
