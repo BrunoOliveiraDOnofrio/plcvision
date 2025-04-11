@@ -196,11 +196,11 @@
         align-content: space-evenly; 
         align-self: center;  
         justify-self: center;
-        box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: -5px 5px 10px rgba(168, 168, 168, 0.5);
     }
 
     .left-container {
-        background-color: #011F27;
+        background-color: white;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -219,7 +219,7 @@
     }
 
     .right-container {
-        background-color: white;
+        background-color: #24284B;
         display: flex;
         flex-direction: column;
         width: 50vw;
@@ -238,9 +238,10 @@
     }
 
     .span-login {
-        font-family: 'Montserrat-b';
+        font-family: 'Inria Sans';
         font-size: 3.5vw;
-        color: white;
+        font-weight: bold;
+        color: black;
         width: fit-content;
         height: fit-content;
         align-self: center;
@@ -267,10 +268,10 @@
     }
 
     .span-label_login {
-        font-family: 'Rajdhani';
-        font-size: 2.5vw;
+        font-family: 'Inter';
+        font-size: 1.5vw;
         font-weight: normal;
-        color: white;
+        color: black;
     }
 
     .div-input {
@@ -284,11 +285,11 @@
     }
     
     .div-input input {
-        border: none;
-        border-bottom: solid white;
-        background-color: #011F27;
-        font-family: 'Montserrat';
-        font-size: 1.5vw;
+        margin-top: 1rem;
+        border: solid black 1px;
+        background-color: none;
+        font-family: 'Inter';
+        font-size: 0.8vw;
         font-weight: lighter;
         color: white;
     }
@@ -317,23 +318,45 @@
         color: white;
         align-self: center;
     }
+
+    .box-btn {
+        width: 18vw;
+        height: 10vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .btn-voltar {
+        height: 6vh;
+        width: 3vw;
+        font-size: 3vw;
+        color: #2C3E50;
+        background-color: #24284B;
+        color: white;
+        align-self: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+    }
     
     .btn-entrar {
         height: 6vh;
-        width: 8vw;
-        font-family: 'Montserrat-b';
-        font-size: 2vw;
+        width: 7vw;
+        font-family: 'Inter';
+        font-size: 1.5vw;
         color: #2C3E50;
-        border-radius: 30vw;
+        background-color: #24284B;
+        color: white;
         align-self: center;
         border: none;
         cursor: pointer;
     }
 
     .span-contatoLogin {
-        font-family: 'Montserrat-b';
+        font-family: 'Inter';
         font-size: 1vw;
-        color: white;
+        color: black;
         width: fit-content;
         height: fit-content;
         justify-self: center;
@@ -343,6 +366,7 @@
 
     .palavraContato {
         color: #007BFF;
+        cursor: pointer;
     }
     
     .container-imagem{
@@ -356,8 +380,8 @@
     .box-logo {
         /* background-color: deeppink; */
         display: flex;
-        height: 45vh;
-        width: 35vw;
+        height: 55vh;
+        width: 40vw;
         justify-self: center;
         align-items: center;
         justify-content: center;
@@ -367,7 +391,7 @@
     }
 
     .box-logo img {
-        height: 300px;
+        height: 350px;
         width: 350px;
     }
 
