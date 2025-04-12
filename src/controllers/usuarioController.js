@@ -1,6 +1,56 @@
 var usuarioModel = require("../models/usuarioModel");
 
 
+
+function get(req, res){
+    usuarioModel.get().then(response => {
+        res.json(response)
+    }).catch(e => {
+        console.log(e)
+        res.json(e)
+    })
+}
+
+function update(req, res){
+    const nome = req.body.nome
+    const email = req.body.email
+    const nivel = req.body.nivel
+    const cargo = req.body.cargo
+    const setor = req.body.setor
+    const telCelular = req.body.telCelular
+    const senha = req.body.senha
+    
+    const id = req.params.id
+
+    const response = []
+    if(senha){
+        // chama a outra, adiciona numa variavel que armazena a resposta
+    }
+
+    // validacoes
+
+    // chamada
+
+    const dados = {
+        nivel: nivel, 
+        cargo: cargo,
+        nome: nome, 
+        telCelular: telCelular,
+        setor: setor,
+        email: email
+    }
+
+    
+
+    usuarioModel.update(dados, id).then(resposta => {
+        res.json(resposta)
+    }).catch(e => {
+        res.json(e)
+    })
+}
+
+
+
 function autenticar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
@@ -52,12 +102,12 @@ function cadastrar(req, res) {
     var cargo = req.body.cargoServer;
     var senha = req.body.senhaServer;
     var fkEmpresa = req.body.idEmpresaVincularServer;
-
+    
     // Faça as validações dos valores
     if (!validarCredenciais(res, email, senha)) {
         return;
     }
-
+    
     if(!validarCadastro(res, nome, telCelular, nivel, setor, cargo, fkEmpresa)){
         return;
     }
@@ -185,5 +235,7 @@ function validarCredenciais(res, email, senha){
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    get,
+    update
 }

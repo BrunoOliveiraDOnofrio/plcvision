@@ -1,5 +1,27 @@
 var database = require("../database/config")
 
+function get(){
+    const sql = `SELECT * FROM usuario`;
+
+    return database.executar(sql)
+}
+
+function update(dados, id){
+    const sql = `UPDATE usuario SET nome = '${dados.nome}',
+    setor = '${dados.setor}',
+    email = '${dados.email}',
+    cargo = '${dados.cargo}',
+    nivel = '${dados.nivel}',
+    telCelular = '${dados.telCelular}'
+    WHERE id = ${id}`
+    return database.executar(sql)
+}
+
+
+
+
+
+
 function autenticar(email, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
     var instrucaoSql = `
@@ -24,5 +46,7 @@ function cadastrar(nome, email, telCelular, senha, nivel, setor, cargo, fkEmpres
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    get,
+    update
 };

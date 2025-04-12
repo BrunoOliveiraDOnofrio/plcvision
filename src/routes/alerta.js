@@ -8,3 +8,4 @@ const alertaController = require("../controllers/alertaController");
 //});
 
 module.exports = router;
+
