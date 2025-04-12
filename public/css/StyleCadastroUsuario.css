@@ -47,6 +47,21 @@
     }
 }
 
+.field {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.field span{
+    font-size: 20px;
+}
+
+#span-setor{
+    font-size: larger;
+}
+
 .buttons{
     display: flex;
     margin: 10px;
