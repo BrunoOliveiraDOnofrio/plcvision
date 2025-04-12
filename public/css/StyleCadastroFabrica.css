@@ -2,6 +2,9 @@ select {
     border-radius: 10px;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     padding: 3px;
+    border-color: #bebebe;
+    border-top: #bebebe;
+    border-left: #bebebe;
 }
 
 @media only screen and (min-width: 760px) {
