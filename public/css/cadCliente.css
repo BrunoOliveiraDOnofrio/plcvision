@@ -18,12 +18,11 @@
 
 @media (max-width:702px){
 
-    .main-cad{
+    .main{
         display: flex;
         flex-direction: column;
         background-color: #E4E4E4;
         height: 100vh;
-        width: 100vw;
         justify-content: center;
         align-items: center;
     }
@@ -52,7 +51,6 @@
         font-weight: bold;
         font-size: 7vw;
         color: #24284B;
-
     }
 
     .box-form {
@@ -97,6 +95,12 @@
             border-radius: 5px;
             width: 80vw;
         }
+
+        & select {
+            border: solid black 1px;
+            border-radius: 5px;
+            width: 80vw;
+        }
     
     }
 
@@ -117,13 +121,7 @@
 @media only screen and (min-width:702px){
 
     .main-cad{
-         display: flex;
-        flex-direction: column;
         background-color: #E4E4E4;
-        height: 100vh;
-        width: 100vw;
-        justify-content: center;
-        align-items: center; 
     }
     
     .container{
@@ -146,7 +144,114 @@
         align-content: center;
     }
 
+    .tittle{
+        text-align: center;
+        align-content: center;
+        height: 10vh;
+        font-family: 'Inter';
+        font-weight: bold;
+        font-size: 4vw;
+        margin-top: 15px;
+        color: #24284B;
+    }
+
+    .box-form {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        width: 80vw;
+        height: fit-content;
+        margin: 30px 30px 0 30px;
+    }
+
+    .row-1, .row-2, .row-3, .row-4 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 80vw;
+        margin-bottom: 20px;
     
+        & campo {
+            display: flex;
+            flex-direction: column;
+        }
 
+        & span{
+            display: flex;
+            align-self: flex-start;
+            font-family: 'Abel';
+            width: 10vw;
+        }
+
+        & input{
+            border: solid black 1px;
+            border-radius: 5px;
+            width: 25vw;
+            height: 4vh;    
+            font-family: "Inter";
+            font-size: 1vw;
+        }
+
+        & select {
+            border: solid black 1px;
+            border-radius: 5px;
+            width: 10vw;
+            height: 4vh; 
+            font-family: "Inter";
+            font-size: 1vw;
+        }
+        
+    }
+
+    .row-3 .campo input {
+        border: solid black 1px;
+        border-radius: 5px;
+        width: 30vw;
+        height: 4vh;    
+        font-family: "Inter";
+        font-size: 1vw;
+    }
+
+    .row-4 .campo input {
+        border: solid black 1px;
+        border-radius: 5px;
+        width: 80vw;
+        height: 4vh;    
+        font-family: "Inter";
+        font-size: 1vw;
+    }
+
+    .row-2 .campo-logr {
+        border: solid black 1px;
+        border-radius: 5px;
+        width: 52.5vw;
+        height: 4vh;    
+        font-family: "Inter";
+        font-size: 1vw;
+    }
+
+    .box-btns{
+        height: 10vh;
+        align-content: center;
+        justify-items: center;
+    }
+
+    .btns-wrapper{
+        display: flex;
+        width: 25vw;
+        height: 6vh;
+        align-content: space-evenly;
+        justify-content: space-evenly;
+    }
+
+    .btn{
+        background-color: #24284B;
+        color: white;
+        height: 6vh;
+        width: 8vw;
+        font-family: 'Inter';
+        font-size: 1.5vw;
+        border-radius: 5px;
+    }
+    
 }
-
