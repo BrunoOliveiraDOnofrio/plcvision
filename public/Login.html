@@ -34,7 +34,7 @@
                 <div class="bottom-box">
                     <div class="bottom">
                                 <div class="box-btn">
-                                    <a href="index.html" class="btn-voltar"><i class='bx bx-left-arrow-alt' style="color: #f6f3f3"></i></a>
+                                    <a href="index.html" class="btn-voltar" onclick="irHome()"><i class='bx bx-left-arrow-alt' style="color: #f6f3f3"></i></a>
                                     <button onclick="entrar()" class="btn-entrar">Entrar</button>
                                 </div>
                                 <div class="box-spanContato">
@@ -62,3 +62,88 @@
 </body>
 
 </html>
+
+<script>
+
+    function irHome() {
+        window.location = "./index.html"
+    }
+
+    // function entrar() {
+
+    // var email = ipt_email.value
+    // var senha = ipt_senha.value
+
+    // var mensagem = ''
+
+    // if (email == "" || senha == "") {
+    //     mensagem += `Insira valores válidos`
+    // }
+    // // validarSenha.innerHTML = mensagem
+    // // validaremail.innerHTML = mensagem
+
+
+    // console.log("FORM LOGIN: ", email);
+    // console.log("FORM SENHA: ", senha);
+
+
+
+    // fetch("/usuario/autenticar", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //         emailServer: email,
+    //         senhaServer: senha
+    //     })
+    // }).then(function (resposta) {
+    //     console.log("ESTOU NO THEN DO entrar()!")
+
+    //     if (resposta.ok) {
+
+    //         console.log("RESPOSTA OK")
+    //         console.log(resposta);
+
+    //         resposta.json().then(json => {
+    //             console.log(json);
+    //             console.log(JSON.stringify(json));
+    //             sessionStorage.EMAIL_USUARIO = json.email;
+    //             sessionStorage.NOME_USUARIO = json.nome;
+    //             sessionStorage.ID_USUARIO = json.id;
+    //             sessionStorage.NIVEL_USUARIO = json.nivel
+
+    //             setTimeout(function () {
+
+    //                 if(json.nivel == 0){
+    //                     window.location = "../nv0/Monitoramento.html";
+    //                 }else if(json.nivel == 1){
+    //                     window.location = "../nv1/Insigths.html";
+    //                 }else{
+    //                     window.location = "../nv2/Monitoramento.html";
+    //                 }
+
+    //             }, 1000);
+
+    //         });
+
+    //     } else {
+
+    //         console.log("Houve um erro ao tentar realizar o login!");
+    //         div_validarSenha.innerHTML = `Houve um erro ao tentar realizar o login!`
+
+    //         resposta.text().then(texto => {
+    //             console.error(texto);
+
+    //         });
+    //     }
+
+    // }).catch(function (erro) {
+    //     console.log(erro);
+    // })
+
+    // return false;
+
+    // }
+
+</script>

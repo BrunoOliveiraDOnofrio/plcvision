@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@font-face {
+    font-family: "Gt walshein", sans-serif;
+    src: url(../fontes/GT-Walsheim-Regular-Trial-BF651b7fc71a47d.otf);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+@media (max-width:702px){
+
+    .main{
+        display: flex;
+        flex-direction: column;
+        background-color: #E4E4E4;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .container{
+        /* border: solid blue; */
+        background-color: white;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .full-box{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center;
+    }
+
+    .tittle{
+        text-align: center;
+        align-content: center;
+        height: 10vh;
+        font-family: 'Inter';
+        font-weight: bold;
+        font-size: 7vw;
+        color: #24284B;
+    }
+
+    .box-form {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        width: 80vw;
+        height: fit-content;
+    }
+
+    .box-btns{
+        height: 10vh;
+        align-content: center;
+        justify-items: center;
+    }
+
+    .btns-wrapper{
+        display: flex;
+        width: 90vw;
+        height: 6vh;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .row-1, .row-2 .campo{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 80vw;
+
+        & span {
+            display: flex;
+            align-self: flex-start;
+            font-family: 'Abel';
+            font-size: 6vw;
+            width: 50vw;
+        }
+
+        & input{
+            border: solid black 1px;
+            border-radius: 5px;
+            width: 80vw;
+            height: 4vh;
+            font-family: "Inter";
+            font-size: 4vw;
+            margin-bottom: 1vh;
+        }
+
+        & select {
+            border: solid black 1px;
+            border-radius: 5px;
+            width: 80vw;
+            height: 4vh;
+            font-family: "Inter";
+            font-size: 4vw;
+            margin-bottom: 1vh;
+        }
+    
+    }
+    
+    .btn{
+        background-color: #24284B;
+        color: white;
+        height: 6vh;
+        width: 30vw;
+        font-family: 'Inter';
+        font-size: 5vw;
+        border-radius: 5px;
+    }
+    
+}
+
+@media only screen and (min-width:702px){
+
+    .main{
+        background-color: #E4E4E4;
+        height: 85%;
+    }
+    
+    .container{
+        background-color: white;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .full-box{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center;
+    }
+
+    .tittle{
+        text-align: center;
+        align-content: center;
+        height: 10vh;
+        font-family: 'Inter';
+        font-weight: bold;
+        font-size: 4vw;
+        margin-top: 15px;
+        color: #24284B;
+    }
+
+    .box-form {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        width: 60vw;
+        height: fit-content;
+        margin: 30px 30px 0 30px;
+    }
+
+    .row-1, .row-2 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 60vw;
+        margin-bottom: 20px;
+    
+        & campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        & span{
+            display: flex;
+            align-self: flex-start;
+            font-family: 'Abel';
+            width: 20vw;
+        }
+
+        & input{
+            border: solid black 1px;
+            border-radius: 5px;
+            width: 28vw;
+            height: 4vh;    
+            font-family: "Inter";
+            font-size: 1vw;
+        }
+
+        & select {
+            border: solid black 1px;
+            border-radius: 5px;
+            width: 28vw;
+            height: 4vh; 
+            font-family: "Inter";
+            font-size: 1vw;
+        }
+        
+    }
+
+    .box-btns{
+        height: 10vh;
+        align-content: center;
+        justify-items: center;
+    }
+
+    .btns-wrapper{
+        display: flex;
+        width: 24vw;
+        height: 6vh;
+        align-content: space-evenly;
+        justify-content: space-evenly;
+    }
+
+    .btn{
+        background-color: #24284B;
+        color: white;
+        height: 5vh;
+        width: 6vw;
+        font-family: 'Inter';
+        font-size: 1vw;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+}
