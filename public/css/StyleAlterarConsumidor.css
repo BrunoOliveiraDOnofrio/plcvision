@@ -1,0 +1,16 @@
+@media only screen and (min-width: 760px) {
+   
+    .business-field {
+        display: flex;
+    }
+
+    .business-input {
+        width: 80%;
+    }
+
+    .last-field {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
