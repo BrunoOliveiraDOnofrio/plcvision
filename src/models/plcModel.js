@@ -4,8 +4,13 @@ const database = require("../database/config")
     // query = "alguma query sql cm as fks";
     // return database.executar(query);
 //}
+function get(){
+    const sql = `SELECT * FROM plc`;
+
+    return database.executar(sql)
+}
 
 
 module.exports = {
-    // funcao
+    get
 };
