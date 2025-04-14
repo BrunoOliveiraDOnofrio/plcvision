@@ -109,6 +109,11 @@
             font-size: 4vw;
             margin-bottom: 1vh;
         }
+
+        & select option {
+            font-family: "Inter";
+            font-size: 4vw;
+        }
     
     }
     
@@ -199,6 +204,11 @@
             border-radius: 5px;
             width: 28vw;
             height: 4vh; 
+            font-family: "Inter";
+            font-size: 1vw;
+        }
+
+        & select option {
             font-family: "Inter";
             font-size: 1vw;
         }
