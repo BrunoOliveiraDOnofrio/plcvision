@@ -10,6 +10,9 @@ function get(){
     return database.executar(sql)
 }
 
+function listarUm(){
+    const sql = `SELECT * FROM plc WHERE id = ${sessionStorage.plcID}`
+}
 
 module.exports = {
     get
