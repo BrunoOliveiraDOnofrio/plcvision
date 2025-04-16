@@ -5,6 +5,8 @@ import os
 from datetime import datetime, timedelta, timezone
 import csv
 import aws
+import sendToWdv
+
 
 id_plc = 3 # Colocar id_plc
 
@@ -120,8 +122,10 @@ def coletar_dados():
     while True:
         conteudo_csv = []
         contador = 0
+        
         while contador <= 10:
             #limpar_tela()
+            
             print('Coletando Dados...')
             informacoes_componentes = coletar_informacoes_componentes()
             fuso_brasil = timezone(timedelta(hours=-3))
@@ -130,6 +134,7 @@ def coletar_dados():
             # cursor_insert = insert_user.cursor()
             str_query = f"INSERT INTO captura_{id_plc} ("
             colunas_inserir = []
+            colunas_wdv = []
             valores_inserir = []
             for info in informacoes_componentes:
                 print(info)
@@ -138,6 +143,7 @@ def coletar_dados():
                     valor = eval(info[1]) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
                     valores_inserir.append(valor)
                     colunas_inserir.append(info[6])
+                    colunas_wdv.append(info[6])
                 except Exception as e:
                     print(e)
                     valor = None
@@ -147,6 +153,7 @@ def coletar_dados():
                         valor = -1
                     print(valor)
             print("==========================================")
+
             if len(conteudo_csv) == 0:
                 colunas_inserir.append('dataHora')
                 colunas_inserir.append('maquinaId')
@@ -155,7 +162,8 @@ def coletar_dados():
             data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
             valores_inserir.append(data_hora_brasil)
             valores_inserir.append(id_plc)
-            
+            colunas_wdv.append('dataHora')
+            colunas_wdv.append('maquinaId')
             conteudo_csv.append(valores_inserir)
             print(conteudo_csv)
             print("+=========================================")
@@ -171,15 +179,17 @@ def coletar_dados():
             data_hora_brasil = data_hora_brasil.replace(":", "-")
             contador = contador +1
             nome_csv = f"{data_hora_brasil}_{id_plc}"
+
+            sendToWdv.enviar(colunas_inserir,valores_inserir, id_plc)
             if contador == 10:
-                with     open(f"Scripts/csvs/{nome_csv}.csv", 'w', newline='') as arquivo_csv:
-                    escritor = csv.writer(arquivo_csv)
-                    for linha in conteudo_csv:
-                        escritor.writerow(linha)
+                # with     open(f"Scripts/csvs/{nome_csv}.csv", 'w', newline='') as arquivo_csv:
+                #     escritor = csv.writer(arquivo_csv)
+                #     for linha in conteudo_csv:
+                #         escritor.writerow(linha)
                 print("Gerando CSV...")
                 time.sleep(5)
                 print("Enviando Bucket...")
-                aws.enviar_arquivo(nome_csv)
+                # aws.enviar_arquivo(nome_csv)
             time.sleep(1)
 
 def coletar_infos_user():
