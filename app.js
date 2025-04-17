@@ -19,7 +19,7 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuario");
 const fabricanteRouter = require('./src/routes/fabricante')
 const plcRouter = require('./src/routes/plc')
-
+const fabricaRouter = require('./src/routes/fabrica')
 // const empresaRouter = require("./src/routes/empresa");
 // const industriaRouter = require("./src/routes/industria");
 // const alertaRouter = require("./src/routes/alerta");
@@ -36,6 +36,7 @@ app.use("/", indexRouter);
 app.use("/usuario", usuarioRouter);
 app.use("/fabricante", fabricanteRouter)
 app.use("/plc",plcRouter)
+app.use("/fabrica", fabricaRouter)
 // app.use("/empresa", empresaRouter);
 // app.use("/industria", industriaRouter);
 // app.use("/alerta", alertaRouter);
