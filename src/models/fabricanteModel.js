@@ -1,13 +1,63 @@
-const database = require("../database/config")
+const database = require("../database/config");
 
+async function create(dados) {
+    try {
+        const { cnpj, razao_social, estado, cidade, bairro, logradouro, numero, complemento } = dados;
 
+        const instrucaoEndereco = `
+            INSERT INTO endereco (estado, cidade, bairro, logradouro, numLogradouro, complemento)
+            VALUES ('${estado}', '${cidade}', '${bairro}', '${logradouro}', '${numero}', '${complemento}');
+        `;
+        console.log("Executando query de inserção de endereço:", instrucaoEndereco);
+        const enderecoResult = await database.inserir(instrucaoEndereco);
+        console.log("Resultado da inserção do endereço:", enderecoResult);
 
-function create(dados) {
-    const sql = `INSERT INTO empresa_fabricante (cnpj,razao_social, endereco_id, qtdParcerias) VALUES ('${dados.cnpj}', '${dados.razao_social}', 1, 0)`;
-    return database.executar(sql);
+        const fkEndereco = enderecoResult.insertId;
+
+        const instrucaoFabricante = `
+            INSERT INTO empresa_fabricante (cnpj, razao_social, endereco_id)
+            VALUES ('${cnpj}', '${razao_social}', ${fkEndereco});
+        `;
+
+        console.log("Executando query de inserção de fabricante:", instrucaoFabricante);
+        const fabricanteResult = await database.inserir(instrucaoFabricante);
+        console.log("Resultado da inserção do fabricante:", fabricanteResult);
+
+        return fabricanteResult;
+    } catch (error) {
+        console.error("Erro ao cadastrar fabricante e endereço:", error);
+        throw error;
+    }
 }
 
+function listarTudo() {
+    const instrucao = `SELECT id, cnpj, razao_social FROM empresa_fabricante;`;
+    try {
+        const resultados = database.executar(instrucao);
+        return resultados;
+    } catch (error) {
+        console.error("Erro ao listar fabricantes:", error);
+        throw error;
+    }
+}
+
+function listar() {
+    const instrucao = `
+        SELECT id, razao_social FROM empresa_fabricante;
+    `;
+    return database.executar(instrucao);
+}
+
+async function deleteFabricante(id) {
+    const instrucao = `
+        DELETE FROM empresa_fabricante WHERE id = ${id};
+    `;
+    return database.executar(instrucao);
+}
 
 module.exports = {
-    create
+    create,
+    listarTudo,
+    listar,
+    delete: deleteFabricante
 };

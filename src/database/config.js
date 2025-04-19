@@ -1,7 +1,7 @@
 var mysql = require("mysql2");
 
 // settar variáveis de conexão com o mysql
-console.log("Usuário do Banco: " + process.env.DB_SELECT_USER)
+console.log("Usuário do Banco: " + process.env.DB_USER)
 
 var mySqlConfig = {
     host: process.env.DB_HOST,

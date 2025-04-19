@@ -150,7 +150,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <!-- <td>1</td>
                         <td>Siemens</td>
                         <td>000.000.000/0001-00</td>
                         <td class="central_viz_rem">
@@ -184,7 +184,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);"><path d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z"></path><path d="M9 10h2v8H9zm4 0h2v8h-2z"></path></svg>
                                 </button>
                             </td>
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -227,42 +227,74 @@
 </html>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('modalVisualizar');
-        const fecharModal = document.querySelector('.fecha');
-        const btnFechar = document.querySelector('.btn-fechar');
-        const btnVisualizar = document.querySelectorAll('.btn-visualizar');
-        
-        btnVisualizar.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.getAttribute('id');
-                // TESTE
-                const data = id === "1" 
-                    ? {razao: "Siemens", cnpj: "000.000.000/0001-00", endereco: "Av. Brasil, 66<br>Lebron<br>Rio de Janeiro<br>Rio de Janeiro", qtdParceria: 10}
-                    : {razao: "Mitsubishi", cnpj: "222.222.222/0001-22", endereco: "Av. Brasil, 66<br>Lebron<br>Rio de Janeiro<br>Rio de Janeiro", qtdParceria: 7};
-                
+    document.addEventListener('DOMContentLoaded', async function () {
+        const tbody = document.querySelector('.tabela tbody');
 
-                document.getElementById('detalheRazao').textContent = data.razao;
-                document.getElementById('detalheCNPJ').textContent = data.cnpj;
-                document.getElementById('detalheEndereco').innerHTML = data.endereco;
-                document.getElementById('detalheQtdParceria').textContent = data.qtdParceria;
+        // Função para buscar fabricantes
+        async function carregarFabricantes() {
+            try {
+                const response = await fetch("http://127.0.0.1:3000/fabricante");
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar fabricantes.");
+                }
+                const fabricantes = await response.json();
 
-                modal.style.display = 'flex';
-            });
-        });
-        
-        fecharModal.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        btnFechar.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
+                // Preencher a tabela com os dados
+                tbody.innerHTML = ""; // Limpar a tabela
+                fabricantes.forEach(fabricante => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${fabricante.id}</td>
+                        <td>${fabricante.razao_social}</td>
+                        <td>${fabricante.cnpj}</td>
+                        <td class="central_viz_rem">
+                            <button class="btn-visualizar" data-id="${fabricante.id}">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                                    <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                </svg>
+                            </button>
+                        </td>
+                        <td class="central_viz_rem">
+                            <button class="btn-remover" data-id="${fabricante.id}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);"><path d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z"></path><path d="M9 10h2v8H9zm4 0h2v8h-2z"></path></svg>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                // Adicionar eventos aos botões de remover
+                const btnRemover = document.querySelectorAll('.btn-remover');
+                btnRemover.forEach(btn => {
+                    btn.addEventListener('click', async function () {
+                        const id = this.getAttribute('data-id');
+                        const confirmar = confirm("Tem certeza que deseja excluir este fabricante?");
+                        if (confirmar) {
+                            try {
+                                const response = await fetch(`http://127.0.0.1:3000/fabricante/${id}`, {
+                                    method: "DELETE"
+                                });
+                                if (response.ok) {
+                                    alert("Fabricante excluído com sucesso!");
+                                    carregarFabricantes(); // Recarregar a tabela
+                                } else {
+                                    alert("Erro ao excluir fabricante.");
+                                }
+                            } catch (error) {
+                                console.error("Erro ao excluir fabricante:", error);
+                                alert("Erro ao excluir fabricante.");
+                            }
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error(error);
+                alert("Erro ao carregar fabricantes.");
             }
-        });
+        }
+
+        // Carregar fabricantes ao carregar a página
+        carregarFabricantes();
     });
 </script>

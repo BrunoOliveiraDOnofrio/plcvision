@@ -23,11 +23,11 @@
                     <div class="div-input">
                         <div class="box-email">
                             <span class="span-label_login">Usuário:</span>
-                            <input type="text" placeholder="cliente@email.com">
+                            <input type="text" id="ipt_email" placeholder="cliente@email.com">
                         </div>
                         <div class="box-senha">
                             <span class="span-label_login">Senha:</span>
-                            <input type="password" placeholder="#Senha123">
+                            <input type="password" id="ipt_senha" placeholder="#Senha123">
                         </div>
                     </div>
                 </div>
@@ -64,86 +64,66 @@
 </html>
 
 <script>
-
     function irHome() {
-        window.location = "./index.html"
+        window.location = "./index.html";
     }
 
-    // function entrar() {
+    async function entrar() {
+        const email = document.getElementById("ipt_email").value;
+        const senha = document.getElementById("ipt_senha").value;
 
-    // var email = ipt_email.value
-    // var senha = ipt_senha.value
+        if (!email || !senha) {
+            alert("Por favor, preencha todos os campos!");
+            return;
+        }
 
-    // var mensagem = ''
+        console.log("FORM LOGIN: ", email);
+        console.log("FORM SENHA: ", senha);
 
-    // if (email == "" || senha == "") {
-    //     mensagem += `Insira valores válidos`
-    // }
-    // // validarSenha.innerHTML = mensagem
-    // // validaremail.innerHTML = mensagem
+        try {
+            const response = await fetch("/usuario/autenticar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    emailServer: email,
+                    senhaServer: senha
+                })
+            });
 
+            console.log("ESTOU NO THEN DO entrar()!");
 
-    // console.log("FORM LOGIN: ", email);
-    // console.log("FORM SENHA: ", senha);
+            if (response.ok) {
+                console.log("RESPOSTA OK");
+                const json = await response.json();
+                console.log(json);
 
+                // Armazenar informações na sessionStorage
+                sessionStorage.EMAIL_USUARIO = json.email;
+                sessionStorage.NOME_USUARIO = json.nome;
+                sessionStorage.ID_USUARIO = json.id;
+                sessionStorage.NIVEL_USUARIO = json.nivel;
 
-
-    // fetch("/usuario/autenticar", {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         emailServer: email,
-    //         senhaServer: senha
-    //     })
-    // }).then(function (resposta) {
-    //     console.log("ESTOU NO THEN DO entrar()!")
-
-    //     if (resposta.ok) {
-
-    //         console.log("RESPOSTA OK")
-    //         console.log(resposta);
-
-    //         resposta.json().then(json => {
-    //             console.log(json);
-    //             console.log(JSON.stringify(json));
-    //             sessionStorage.EMAIL_USUARIO = json.email;
-    //             sessionStorage.NOME_USUARIO = json.nome;
-    //             sessionStorage.ID_USUARIO = json.id;
-    //             sessionStorage.NIVEL_USUARIO = json.nivel
-
-    //             setTimeout(function () {
-
-    //                 if(json.nivel == 0){
-    //                     window.location = "../nv0/Monitoramento.html";
-    //                 }else if(json.nivel == 1){
-    //                     window.location = "../nv1/Insigths.html";
-    //                 }else{
-    //                     window.location = "../nv2/Monitoramento.html";
-    //                 }
-
-    //             }, 1000);
-
-    //         });
-
-    //     } else {
-
-    //         console.log("Houve um erro ao tentar realizar o login!");
-    //         div_validarSenha.innerHTML = `Houve um erro ao tentar realizar o login!`
-
-    //         resposta.text().then(texto => {
-    //             console.error(texto);
-
-    //         });
-    //     }
-
-    // }).catch(function (erro) {
-    //     console.log(erro);
-    // })
-
-    // return false;
-
-    // }
-
+                // Redirecionar com base no nível do usuário
+                setTimeout(() => {
+                    if (json.nivel == 0) {
+                        window.location = "adm_empresa/fabricantes/fabricantes.html";
+                    } else if (json.nivel == 1) {
+                        window.location = "adm_empresa/fabricantes/fabricantes.html";
+                    } else {
+                        window.location = "adm_empresa/fabricantes/fabricantes.html";
+                    }
+                }, 1000);
+            } else {
+                console.log("Houve um erro ao tentar realizar o login!");
+                const errorText = await response.text();
+                alert(errorText); // Exibe o erro retornado pelo backend
+                console.error(errorText);
+            }
+        } catch (error) {
+            console.error("Erro ao tentar realizar o login:", error);
+            alert("Erro ao conectar ao servidor.");
+        }
+    }
 </script>

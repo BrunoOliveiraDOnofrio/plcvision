@@ -14,12 +14,10 @@ router.get("/", (req, res) => {
     usuarioController.get(req, res);
 })
 
-router.post("/cadastrar", function (req, res) {
-    usuarioController.cadastrar(req, res);
+router.post('/', (req, res) => {
+    usuarioController.store(req, res);
 })
 
-router.post("/autenticar", function (req, res) {
-    usuarioController.autenticar(req, res);
-});
+router.post("/autenticar", usuarioController.autenticar);
 
 module.exports = router;

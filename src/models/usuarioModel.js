@@ -17,36 +17,34 @@ function update(dados, id){
     return database.executar(sql)
 }
 
-
-
-
-
-
-function autenticar(email, senha) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
-    var instrucaoSql = `
-        SELECT idUsuario, nome, nivel, fkEmpresa FROM usuario WHERE email = '${email}' AND senha = '${senha}';
+async function autenticar(email, senha) {
+    const instrucao = `
+        SELECT idUsuario, nome, email, nivel
+        FROM usuario
+        WHERE email = '${email}' AND senha = '${senha}';
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.selecionar(instrucaoSql);
+
+    console.log("Executando a query:", instrucao);
+    return database.executar(instrucao);
 }
 
 // Coloque os mesmos parâmetros aqui. Vá para a instrucaoSql
-function cadastrar(nome, email, telCelular, senha, nivel, setor, cargo, fkEmpresa) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
-    
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
-    const instrucaoSql = `
-        INSERT INTO usuario (nome, email, telCelular, senha, nivel, setor, cargo, fkEmpresa) VALUES ('${nome}', '${email}', '${telCelular}',  '${senha}', '${nivel}', '${setor}', '${cargo}', '${fkEmpresa}');
+async function cadastrar(dados) {
+    const { nome, email, celular, senha, nivel, setor, cargo, fkFabricante } = dados;
+
+    const instrucao = `
+        INSERT INTO usuario (nome, email, telCelular, senha, nivel, setor, cargo, empresa_id)
+        VALUES ('${nome}', '${email}', '${celular}', '${senha}', ${nivel}, '${setor}', '${cargo}', ${fkFabricante});
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.inserir(instrucaoSql);
+
+    console.log("Executando query:", instrucao);
+
+    return database.executar(instrucao);
 }
 
 module.exports = {
     autenticar,
     cadastrar,
     get,
-    update
+    update,
 };

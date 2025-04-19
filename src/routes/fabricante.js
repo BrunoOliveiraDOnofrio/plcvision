@@ -10,6 +10,11 @@ const fabricanteController = require("../controllers/fabricanteController");
 router.post('/', (req, res) => {
     fabricanteController.store(req, res);
 })
+router.post("/testar", fabricanteController.testarDados);
+
+// router.get("/", fabricanteController.index);
+router.get("/", fabricanteController.listarFabricantes);
+router.delete("/:id", fabricanteController.destroy);
 
 module.exports = router;
 

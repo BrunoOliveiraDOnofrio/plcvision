@@ -147,37 +147,37 @@
                     <div class="left-field">
                         <div class="field">
                             <span>Razão Social:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_razaoSocial">
                         </div>
                         <div class="field">
                             <span>CNPJ:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_cnpj">
                         </div>
                         <div class="field">
                             <span>Estado:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_estado">
                         </div>
                         <div class="field">
                             <span>Cidade:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_cidade">
                         </div>
                     </div>
                     <div class="right-field">
                         <div class="field">
                             <span>Bairro:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_bairro">
                         </div>
                         <div class="field">
                             <span>Logradouro:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_logradouro">
                         </div>
                         <div class="field">
                             <span>Número:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_numero">
                         </div>
                         <div class="field">
                             <span>Complemento:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_complemento">
                         </div>
                     </div>
                 </div>
@@ -192,3 +192,45 @@
 </body>
 
 </html>
+
+<script>
+    async function cadastrar(){
+        var razaoSocial = document.getElementById('ipt_razaoSocial').value;
+        var cnpj = document.getElementById('ipt_cnpj').value;
+        var estado = document.getElementById('ipt_estado').value;
+        var cidade = document.getElementById('ipt_cidade').value;
+        var bairro = document.getElementById('ipt_bairro').value;
+        var logradouro = document.getElementById('ipt_logradouro').value;
+        var numero = document.getElementById('ipt_numero').value;
+        var complemento = document.getElementById('ipt_complemento').value;
+
+        const dados = {
+            razaoSocial: razaoSocial,
+            cnpj: cnpj,
+            estado: estado,
+            cidade: cidade,
+            bairro: bairro,
+            logradouro: logradouro,
+            numero: numero,
+            complemento: complemento
+        };
+
+        try {
+            const response = await fetch('/fabricante', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Fabricante cadastrado com sucesso:', data);
+            } else {
+                console.error('Erro ao cadastrar fabricante:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar fabricante:', error);
+        }
+    }
+</script>

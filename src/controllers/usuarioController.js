@@ -12,13 +12,7 @@ function get(req, res){
 }
 
 function update(req, res){
-    const nome = req.body.nome
-    const email = req.body.email
-    const nivel = req.body.nivel
-    const cargo = req.body.cargo
-    const setor = req.body.setor
-    const telCelular = req.body.telCelular
-    const senha = req.body.senha
+    const {nivel, cargo, nome, telCelular, setor, email, senha} = req.body
     
     const id = req.params.id
 
@@ -49,85 +43,64 @@ function update(req, res){
     })
 }
 
+async function autenticar(req, res) {
+    const { emailServer, senhaServer } = req.body;
 
-
-function autenticar(req, res) {
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
-
-    console.log("Estou no autenticar controller");
-    
-    if(!validarCredenciais(res, email, senha)){
-        return;
+    if (!emailServer || !senhaServer) {
+        return res.status(400).json({ error: "E-mail e senha são obrigatórios." });
     }
 
-    usuarioModel.autenticar(email, senha)
-    .then(
-        function (resultadoAutenticar) {
-            console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-            console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+    try {
+        const resultado = await usuarioModel.autenticar(emailServer, senhaServer);
 
-            if (resultadoAutenticar.length == 1) {
-                console.log(resultadoAutenticar);
-
-                res.json({
-                    id: resultadoAutenticar[0].idUsuario,
-                    nome: resultadoAutenticar[0].nome,
-                    nivel: resultadoAutenticar[0].nivel,
-                    fkEmpresa: resultadoAutenticar[0].fkEmpresa 
-                });
-                        
-            } else if (resultadoAutenticar.length == 0) {
-                res.status(403).send("Email e/ou senha inválido(s)");
-            } else {
-                res.status(403).send("Mais de um usuário com o mesmo login e senha!");
-            }
+        if (resultado.length === 1) {
+            const usuario = resultado[0];
+            res.status(200).json({
+                id: usuario.idUsuario,
+                nome: usuario.nome,
+                email: usuario.email,
+                nivel: usuario.nivel
+            });
+        } else if (resultado.length === 0) {
+            res.status(401).send("E-mail ou senha inválidos.");
+        } else {
+            res.status(500).send("Erro: múltiplos usuários encontrados com as mesmas credenciais.");
         }
-    ).catch(
-        function (erro) {
-            console.log(erro);
-            console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
+    } catch (error) {
+        console.error("Erro ao autenticar usuário:", error);
+        res.status(500).json({ error: "Erro ao autenticar usuário." });
+    }
 }
 
-function cadastrar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var nome = req.body.nomeServer;
-    var email = req.body.emailServer;
-    var telCelular = req.body.telCelularServer;
-    var nivel = req.body.nivelServer;
-    var setor = req.body.setorServer;
-    var cargo = req.body.cargoServer;
-    var senha = req.body.senhaServer;
-    var fkEmpresa = req.body.idEmpresaVincularServer;
-    
-    // Faça as validações dos valores
-    if (!validarCredenciais(res, email, senha)) {
-        return;
-    }
-    
-    if(!validarCadastro(res, nome, telCelular, nivel, setor, cargo, fkEmpresa)){
-        return;
+function store(req, res) {
+    console.log("Dados recebidos no corpo da requisição:", req.body);
+
+    const { nome, email, celular, nivel, setor, cargo, senha, fkFabricante } = req.body;
+
+    if (!nome || !email || !celular || !nivel || !setor || !cargo || !senha || !fkFabricante) {
+        return res.status(400).json({ error: "Todos os campos são obrigatórios." });
     }
 
-    // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-    usuarioModel.cadastrar(nome, email, telCelular, senha, nivel, setor, cargo, fkEmpresa)
-    .then(
-        function (resultado) {
-            res.json(resultado);
-        }
-    ).catch(
-        function (erro) {
-            console.log(erro);
-            console.log(
-                "\nHouve um erro ao realizar o cadastro! Erro: ",
-                erro.sqlMessage
-            );
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
+    const dados = {
+        nome: nome,
+        email: email,
+        celular: celular,
+        nivel: nivel,
+        setor: setor,
+        cargo: cargo,
+        senha: senha,
+        fkFabricante: fkFabricante
+    };
+
+    usuarioModel.cadastrar(dados)
+        .then(response => {
+            console.log("Usuário cadastrado:", response);
+            res.status(201).json({ message: "Usuário cadastrado com sucesso!", response });
+        })
+        .catch(error => {
+            console.error("Erro ao cadastrar usuário:", error);
+            res.status(500).json({ error: "Erro ao cadastrar usuário." });
+        });
 }
 
 function validarCadastro(res, nome, telCelular, nivel, setor, cargo, fkEmpresa){
@@ -140,7 +113,7 @@ function validarCadastro(res, nome, telCelular, nivel, setor, cargo, fkEmpresa){
     } 
     
     // tel de DDD+numeros (13 digitos numericos)
-    if ((telCelular == undefined || telCelular == '') || telCelular.length != 13) {
+    if ((telCelular == undefined || telCelular == '') || telCelular.length != 11) {
         res.status(400).send("Telefone Celular inválido!");
         return false;
     } 
@@ -194,7 +167,7 @@ function validarCredenciais(res, email, senha){
     }
 
     if (tamEmail < 8) {
-        res.status(400).send("Tamnho do email é inválido!");
+        res.status(400).send("Tamanho do email é inválido!");
         return false;
     }
 
@@ -235,7 +208,7 @@ function validarCredenciais(res, email, senha){
 
 module.exports = {
     autenticar,
-    cadastrar,
+    store,
     get,
     update
 }

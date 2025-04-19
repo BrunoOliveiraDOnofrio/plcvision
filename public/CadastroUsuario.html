@@ -147,43 +147,47 @@
                     <div class="left-field">
                         <div class="field">
                             <span>Nome:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_nome">
                         </div>
                         <div class="field">
                             <span>E-mail:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_email">
                         </div>
                         <div class="field">
                             <span>Celular:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_celular">
+                        </div>
+                        <div class="field">
+                            <span>Empresa:</span>
+                            <select id="ipt_fkFabricante">
+                                <option value="">Selecione um fabricante</option>
+                            </select>
                         </div>
                         <div class="field">
                             <span>Nível:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_nivel">
                         </div>
-                    </div>
-                    <div class="right-field">
                         <div class="field">
                             <span>Setor:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_setor">
                         </div>
                         <div class="field">
                             <span>Cargo:</span>
-                            <input type="text">
+                            <input type="text" id="ipt_cargo">
                         </div>
                         <div class="field">
                             <span>Senha:</span>
-                            <input type="text">
+                            <input type="password" id="ipt_senha">
                         </div>
                         <div class="field">
                             <span>Confirmar Senha:</span>
-                            <input type="text">
+                            <input type="password" id="ipt_confirmarSenha">
                         </div>
                     </div>
                 </div>
                 <div class="buttons">
                     <button class="exit-button" onclick="">Cancelar</button>
-                    <button class="register-button" onclick="">Cadastrar</button>
+                    <button class="register-button" onclick="cadastrarUsuario()">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -192,3 +196,90 @@
 </body>
 
 </html>
+
+<script>
+    async function carregarEmpresas() {
+    try {
+        const response = await fetch('/fabricante');
+        if (!response.ok) {
+            throw new Error("Erro ao buscar fabricantes.");
+        }
+        const fabricantes = await response.json();
+
+        const selectFabricante = document.getElementById('ipt_fkFabricante');
+        fabricantes.forEach(fabricante => {
+            const option = document.createElement('option');
+            option.value = fabricante.id; // Certifique-se de que o backend retorna "id"
+            option.textContent = fabricante.razao_social; // Certifique-se de que o backend retorna "razao_social"
+            selectFabricante.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Erro ao carregar fabricantes:", error);
+        alert("Erro ao carregar fabricantes.");
+    }
+}
+    
+    document.addEventListener('DOMContentLoaded', carregarEmpresas);
+
+    async function cadastrarUsuario() {
+        const nome = document.getElementById('ipt_nome').value;
+        const email = document.getElementById('ipt_email').value;
+        const celular = document.getElementById('ipt_celular').value;
+        const nivel = document.getElementById('ipt_nivel').value;
+        const setor = document.getElementById('ipt_setor').value;
+        const cargo = document.getElementById('ipt_cargo').value;
+        const senha = document.getElementById('ipt_senha').value;
+        const confirmarSenha = document.getElementById('ipt_confirmarSenha').value;
+        const fkFabricante = document.getElementById('ipt_fkFabricante').value;
+        
+        console.log("Nome:", nome);
+        console.log("E-mail:", email);
+        console.log("Celular:", celular);
+        console.log("Nível:", nivel);
+        console.log("Setor:", setor);
+        console.log("Cargo:", cargo);
+        console.log("Senha:", senha);
+        console.log("Confirmar Senha:", confirmarSenha);
+        console.log("Empresa:", fkFabricante);
+
+        if (senha !== confirmarSenha) {
+            alert("Erro ao confirmar a senha. Ambas tem que serem iguais!");
+            return;
+        }
+
+        // Criar o objeto com os dados
+        const dados = {
+            nome: nome,
+            email: email,
+            celular: celular,
+            nivel: nivel,
+            setor: setor,
+            cargo: cargo,
+            senha: senha,
+            fkFabricante: fkFabricante
+        };
+        console.log("Dados enviados:", dados);
+
+        try {
+            const response = await fetch('/usuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Usuário cadastrado com sucesso:', data);
+                alert("Usuário cadastrado com sucesso!");
+            } else {
+                console.error('Erro ao cadastrar usuário:', response.statusText);
+                alert("Erro ao cadastrar usuário.");
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar usuário:', error);
+            alert("Erro ao conectar ao servidor.");
+        }
+    }
+</script>
