@@ -147,38 +147,39 @@
                 <div class="box-field-factory">
                     <div class="name-field">
                         <div class="field">
-                            <select name="" id="">
+                            <span>Nome da Empresa:</span>
+                            <select name="" id="select_empresa">
                                 <option value="#">Escolha uma empresa</option>
                             </select>
                         </div>
                         <div class="field">
                             <span>Nome da Fábrica:</span>
-                            <input type="text" placeholder="Ex: Volkswagen - Unidade 01">
+                            <input type="text" placeholder="Ex: Volkswagen - Unidade 01" id="input_fabrica">
                         </div>
                     </div>
 
                     <div class="way-field">
                         <div class="field street-input">
                             <span>Logradouro:</span>
-                            <input  type="text">
+                            <input  type="text" id="input_logradouro">
                         </div>
                         <div class="field">
                             <span>Número:</span>
-                            <input type="text">
+                            <input type="text" id="input_numero">
                         </div>
                     </div>
                     <div class="city-field">
                         <div class="field burgh-city-input">
                             <span>Bairro:</span>
-                            <input type="text">
+                            <input type="text" id="input_bairro">
                         </div>
                         <div class="field burgh-city-input">
                             <span>Cidade:</span>
-                            <input type="text">
+                            <input type="text" id="input_cidade">
                         </div>
                         <div class="field">
                             <span>Estado:</span>
-                            <select name="" id="">
+                            <select name="" id="select_estado">
                                 <option value="#"></option>
                                 <option value="0">AC</option>
                                 <option value="1">AL</option>
@@ -213,11 +214,11 @@
                     <div class="last-field">
                         <div class="field">
                             <span>Complemento:</span>
-                            <input type="text">
+                            <input type="text" id="input_complemento">
                         </div>
                         <div class="field sector-input">
                             <span>Quantidade de Setores:</span>
-                            <input type="text">
+                            <input type="text" id="input_qtdSetor">
                         </div>
                     </div>
                 </div>
@@ -231,4 +232,5 @@
 
 </body>
 
+<script src="../../js/empresas_consumidoras/select_empresa.js"></script>
 </html>

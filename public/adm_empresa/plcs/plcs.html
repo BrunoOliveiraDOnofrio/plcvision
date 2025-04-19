@@ -186,6 +186,7 @@
                     <span id="detalheHost"></span>
                 </div>
             </div>
+            <button class="btn-configurar">Configurar</button>
             <div class="modal-btn-fechar">
                 <button class="btn-fechar">Fechar</button>
             </div>
@@ -199,42 +200,5 @@
 </html>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('modalVisualizar');
-        const fecharModal = document.querySelector('.fecha');
-        const btnFechar = document.querySelector('.btn-fechar');
-        const btnVisualizar = document.querySelectorAll('.btn-visualizar');
-        
-        btnVisualizar.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.getAttribute('id');
-                // TESTE
-                const data = id === "1" 
-                    ? {modelo: "S7-1200", ano: 2013, ram: 4, enderecoMAC: "00:19:B9:FB:E2:58", host: "Localhost"}
-                    : {modelo: "S7-1200", ano: 2013, ram: 4, enderecoMAC: "00:19:B9:FB:E2:58", host: "Localhost"};
-                
-                document.getElementById('detalheModelo').textContent = data.modelo;
-                document.getElementById('detalheAno').textContent = data.ano;
-                document.getElementById('detalheRAM').textContent = data.ram;
-                document.getElementById('detalheEnderecoMAC').textContent = data.enderecoMAC;
-                document.getElementById('detalheHost').textContent = data.host;
-
-                modal.style.display = 'flex';
-            });
-        });
-        
-        fecharModal.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        btnFechar.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    });
+ 
 </script>
