@@ -209,8 +209,8 @@
         const selectFabricante = document.getElementById('ipt_fkFabricante');
         fabricantes.forEach(fabricante => {
             const option = document.createElement('option');
-            option.value = fabricante.id; // Certifique-se de que o backend retorna "id"
-            option.textContent = fabricante.razao_social; // Certifique-se de que o backend retorna "razao_social"
+            option.value = fabricante.id;
+            option.textContent = fabricante.razao_social;
             selectFabricante.appendChild(option);
         });
     } catch (error) {

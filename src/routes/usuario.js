@@ -14,10 +14,20 @@ router.get("/", (req, res) => {
     usuarioController.get(req, res);
 })
 
+router.get('/:id', (req, res) => {
+    usuarioController.getById(req, res);
+});
+
+router.put('/:id', usuarioController.update);
+
 router.post('/', (req, res) => {
     usuarioController.store(req, res);
 })
 
 router.post("/autenticar", usuarioController.autenticar);
+
+router.delete('/:id', (req, res) => {
+    usuarioController.delete(req, res);
+});
 
 module.exports = router;

@@ -1,9 +1,19 @@
+const { destroy } = require("../controllers/usuarioController");
 var database = require("../database/config")
 
 function get(){
     const sql = `SELECT * FROM usuario`;
 
     return database.executar(sql)
+}
+
+function getById(id) {
+    const instrucao = `
+        SELECT idUsuario, nome, email, telCelular, setor, nivel, cargo
+        FROM usuario
+        WHERE idUsuario = ${id};
+    `;
+    return database.executar(instrucao).then(resultados => resultados[0]);
 }
 
 function update(dados, id){
@@ -42,9 +52,18 @@ async function cadastrar(dados) {
     return database.executar(instrucao);
 }
 
+function deleteUsuario(id) {
+    const instrucao = `
+        DELETE FROM usuario WHERE idUsuario = ${id};
+    `;
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     get,
+    getById,
     update,
+    deleteUsuario
 };

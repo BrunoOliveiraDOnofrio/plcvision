@@ -11,19 +11,27 @@ function get(req, res){
     })
 }
 
+function getById(req, res) {
+    const id = req.params.id;
+
+    usuarioModel.getById(id)
+        .then(usuario => {
+            if (usuario) {
+                res.status(200).json(usuario);
+            } else {
+                res.status(404).json({ error: "Usuário não encontrado." });
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao buscar usuário:", error);
+            res.status(500).json({ error: "Erro ao buscar usuário." });
+        });
+}
+
 function update(req, res){
-    const {nivel, cargo, nome, telCelular, setor, email, senha} = req.body
+    const {nivel, cargo, nome, telCelular, setor, email} = req.body
     
     const id = req.params.id
-
-    const response = []
-    if(senha){
-        // chama a outra, adiciona numa variavel que armazena a resposta
-    }
-
-    // validacoes
-
-    // chamada
 
     const dados = {
         nivel: nivel, 
@@ -41,6 +49,19 @@ function update(req, res){
     }).catch(e => {
         res.json(e)
     })
+}
+
+function deleteUsuario(req, res) {
+    const id = req.params.id;
+
+    usuarioModel.deleteUsuario(id)
+        .then(() => {
+            res.status(200).json({ message: "Usuário removido com sucesso!" });
+        })
+        .catch(error => {
+            console.error("Erro ao remover usuário:", error);
+            res.status(500).json({ error: "Erro ao remover usuário." });
+        });
 }
 
 async function autenticar(req, res) {
@@ -210,5 +231,7 @@ module.exports = {
     autenticar,
     store,
     get,
-    update
+    update,
+    getById,
+    delete: deleteUsuario
 }

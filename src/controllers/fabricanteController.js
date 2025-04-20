@@ -37,6 +37,23 @@ function store(req, res){
         });
 }
 
+function getById(req, res) {
+    const id = req.params.id;
+
+    fabricanteModel.getById(id)
+        .then(fabricante => {
+            if (fabricante) {
+                res.status(200).json(fabricante);
+            } else {
+                res.status(404).json({ error: "Usuário não encontrado." });
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao buscar usuário:", error);
+            res.status(500).json({ error: "Erro ao buscar usuário." });
+        });
+}
+
 
 // function index(req, res) {
 //     try {
@@ -91,6 +108,7 @@ function listarFabricantes(req, res) {
 
 module.exports = {
     store,
+    getById,
     // index,
     destroy,
     testarDados,

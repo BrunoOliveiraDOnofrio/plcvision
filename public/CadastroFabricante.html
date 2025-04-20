@@ -183,7 +183,7 @@
                 </div>
                 <div class="buttons">
                     <button class="exit-button" onclick="">Cancelar</button>
-                    <button class="register-button" onclick="">Cadastrar</button>
+                    <button class="register-button" onclick="cadastrar()">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -194,43 +194,68 @@
 </html>
 
 <script>
-    async function cadastrar(){
-        var razaoSocial = document.getElementById('ipt_razaoSocial').value;
-        var cnpj = document.getElementById('ipt_cnpj').value;
-        var estado = document.getElementById('ipt_estado').value;
-        var cidade = document.getElementById('ipt_cidade').value;
-        var bairro = document.getElementById('ipt_bairro').value;
-        var logradouro = document.getElementById('ipt_logradouro').value;
-        var numero = document.getElementById('ipt_numero').value;
-        var complemento = document.getElementById('ipt_complemento').value;
+    async function cadastrar() {
+    // Capturar os valores dos campos do formulário
+    const razaoSocial = document.getElementById('ipt_razaoSocial').value.trim();
+    const cnpj = document.getElementById('ipt_cnpj').value.trim();
+    const estado = document.getElementById('ipt_estado').value.trim();
+    const cidade = document.getElementById('ipt_cidade').value.trim();
+    const bairro = document.getElementById('ipt_bairro').value.trim();
+    const logradouro = document.getElementById('ipt_logradouro').value.trim();
+    const numero = document.getElementById('ipt_numero').value.trim();
+    const complemento = document.getElementById('ipt_complemento').value.trim();
 
-        const dados = {
-            razaoSocial: razaoSocial,
-            cnpj: cnpj,
-            estado: estado,
-            cidade: cidade,
-            bairro: bairro,
-            logradouro: logradouro,
-            numero: numero,
-            complemento: complemento
-        };
+    // Montar o objeto com os dados
+    const dados = {
+        razao_social: razaoSocial,
+        cnpj: cnpj,
+        estado: estado,
+        cidade: cidade,
+        bairro: bairro,
+        logradouro: logradouro,
+        numero: numero,
+        complemento: complemento
+    };
 
-        try {
-            const response = await fetch('/fabricante', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dados)
-            });
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Fabricante cadastrado com sucesso:', data);
-            } else {
-                console.error('Erro ao cadastrar fabricante:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Erro ao cadastrar fabricante:', error);
-        }
+    // Verificar se todos os campos obrigatórios estão preenchidos
+    if (!razaoSocial || !cnpj || !estado || !cidade || !bairro || !logradouro || !numero) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
     }
+
+    try {
+        // Enviar os dados para o backend
+        console.log("Enviando dados para o backend:", dados);
+        const response = await fetch('/fabricante', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        // Verificar a resposta do servidor
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Fabricante cadastrado com sucesso:', data);
+            alert("Fabricante cadastrado com sucesso!");
+            // Limpar os campos do formulário
+            document.getElementById('ipt_razaoSocial').value = '';
+            document.getElementById('ipt_cnpj').value = '';
+            document.getElementById('ipt_estado').value = '';
+            document.getElementById('ipt_cidade').value = '';
+            document.getElementById('ipt_bairro').value = '';
+            document.getElementById('ipt_logradouro').value = '';
+            document.getElementById('ipt_numero').value = '';
+            document.getElementById('ipt_complemento').value = '';
+        } else {
+            const errorText = await response.text();
+            console.error('Erro ao cadastrar fabricante:', errorText);
+            alert(`Erro ao cadastrar fabricante: ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error('Erro ao cadastrar fabricante:', error);
+        alert("Erro ao cadastrar fabricante. Verifique sua conexão e tente novamente.");
+    }
+}
 </script>
