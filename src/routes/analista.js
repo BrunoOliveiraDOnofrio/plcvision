@@ -7,7 +7,7 @@ router.get('/alertas', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/analista/alertas/alertas.html'));
 })
 
-router.get('/monitoramento/:id', (req, res) => {
+router.get('/monitoramento', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/analista/dashboard/dashboard.html'));
 })
 

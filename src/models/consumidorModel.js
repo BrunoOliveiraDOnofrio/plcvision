@@ -1,9 +1,19 @@
 const database = require("../database/config")
 
-const getAll = () => {
-    const sql = `SELECT empresa_consumidor.id, razao_social, qtdFabrica,cnpj, concat(logradouro, ' ', numLogradouro, ' ', cidade, ' ', bairro) as endereco,segmento, token FROM empresa_consumidor join
-    endereco 
-    on endereco.id = empresa_consumidor.endereco_id;`
+const getAll = (empresa_fabricante_id) => {
+    // const sql = `SELECT empresa_consumidor.id, razao_social, qtdFabrica,cnpj, concat(logradouro, ' ', numLogradouro, ' ', cidade, ' ', bairro) as endereco,segmento, token FROM empresa_consumidor join
+    // endereco 
+    // on endereco.id = empresa_consumidor.endereco_id;`
+    const sql = `SELECT ec.id, ec.razao_social, ec.qtdFabrica, ec.cnpj, 
+concat(logradouro, ' ', numLogradouro, ' ', cidade, ' ', bairro) as endereco,
+ec.segmento, ec.token FROM empresa_fabricante as ef
+JOIN parceria p
+ON p.empresa_fabricante_id = ef.id
+JOIN empresa_consumidor ec
+ON ec.id = p.empresa_consumidor_id
+JOIN endereco e 
+ON e.id = ec.endereco_id
+WHERE ef.id = ${empresa_fabricante_id};`
     return database.executar(sql)
 }
 

@@ -1,5 +1,6 @@
 const consumidorModel = require("../models/consumidorModel");
 const enderecoModel = require("../models/enderecoModel");
+const parceriaModel = require("../models/parceriaModel")
 const crypto = require("crypto");
 
 const gerarToken = () => {
@@ -28,8 +29,10 @@ const show = (req, res) => {
 }
 
 const index = (req, res) => {
-    
-    consumidorModel.getAll().then(response => {
+    console.log(req.body)
+    const empresa_fabricante_id = req.body.empresa_fabricante_id
+    console.log(empresa_fabricante_id)
+    consumidorModel.getAll(empresa_fabricante_id).then(response => {
         res.status(200).json({
             message: "OK",
             empresas: response
@@ -153,11 +156,28 @@ const store = (req, res) => {
             enderecoId : enderecoId
         }
         consumidorModel.createConsumidor(dataEmpresa).then(response => {
-            res.status(200).json({
-                message: "Consumidor cadastrado com sucesso",
-                id: response.insertId,
-                enderecoId: enderecoId
-            })
+            const empresa_consumidor_id = response.insertId
+            const dataParceria = {
+                empresa_consumidor_id: empresa_consumidor_id,
+                empresa_fabricante_id: req.body.empresa_fabricante_id
+            }
+
+            parceriaModel.store(dataParceria).then(parceriaResponse => {
+                console.log(parceriaResponse)
+                res.status(200).json({
+                    message: "Consumidor cadastrado com sucesso",
+                    id: response.insertId,
+                    enderecoId: enderecoId
+                })
+            }).catch(e => {
+                res.status(500).json({
+                    error : "Erro ao cadastrar parceria",
+                    e: e
+                })
+            }
+        )
+
+            
         }).catch(e => {
             res.status(500).json({
                 error : "Erro ao cadastrar consumidor",

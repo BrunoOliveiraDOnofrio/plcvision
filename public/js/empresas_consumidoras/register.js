@@ -4,9 +4,10 @@ const cadastrar = async (event) => {
     
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+    data['empresa_fabricante_id'] = sessionStorage.getItem('EMPRESA_ID')
     console.log(data);
     try {
-        const response = await fetch('/consumidor', {
+        const response = await fetch('/consumidor/store', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

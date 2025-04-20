@@ -291,7 +291,7 @@
         font-family: 'Inter';
         font-size: 0.8vw;
         font-weight: lighter;
-        color: white;
+        color: #000;
     }
 
     .bottom-box {
@@ -411,6 +411,7 @@
 
 .div-input input {
     outline: none;
+    color: #000 !important ;
     padding: 8px;
     font-size: 22px;
     /* margin-bottom: 5px; */

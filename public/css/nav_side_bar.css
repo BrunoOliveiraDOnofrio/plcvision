@@ -44,6 +44,7 @@ body{
 }
 
 .collapse-menu{
+    z-index: 9;
     display: none;
     top: 90%;
     right: 5%;

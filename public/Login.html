@@ -108,12 +108,14 @@
 
                 // Redirecionar com base no nível do usuário
                 setTimeout(() => {
-                    if (json.nivel == 0) {
-                        window.location = "adm_empresa/fabricantes/fabricantes.html";
-                    } else if (json.nivel == 1) {
-                        window.location = "adm_empresa/fabricantes/fabricantes.html";
-                    } else {
-                        window.location = "adm_empresa/fabricantes/fabricantes.html";
+                    if (json.nivel == 1) {
+                        window.location = "tempo_real/plcs";
+                    } else if (json.nivel == 2) {
+                        window.location = "analista/plcs";
+                    } else if (json.nivel == 3) {
+                        window.location = "adm/consumidores";
+                    } else{
+                        // seria o root
                     }
                 }, 1000);
             } else {

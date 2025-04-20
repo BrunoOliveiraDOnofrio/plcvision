@@ -1,5 +1,17 @@
 const getAllEmpresas = async () => {
-    await fetch("/consumidor").then((response) => response.json().then((json) => {
+
+    data = {
+        empresa_fabricante_id: sessionStorage.getItem("EMPRESA_ID")
+    }
+    console.log(data)
+    await fetch("/consumidor",{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    }).then((response) => response.json().then((json) => {
+        console.log(sessionStorage.getItem("EMPRESA_ID"))
         console.log(json)
         fillEmpresas(json.empresas)
         empresasResults = json.empresas

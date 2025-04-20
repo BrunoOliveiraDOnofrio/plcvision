@@ -1,11 +1,49 @@
+let adm = false
+
+const url = window.location.href.split('/')
+url.forEach((item, index) => {
+    if (item == "adm") {
+        adm = true
+    }
+})
+
 const listarUsuarios = () => {
     fetch("http://localhost:3000/plc").then((response) => response.json().then((json) => {
         console.log(json)
+        if (adm) {
         fillUsuarios(json)
+        }else{
+            fillUsuariosAnalistaTempoReal(json)
+        }
     }))
 }
 
 const bodyTabelaPlcs = document.getElementById("tbody_plcs");
+
+const fillUsuariosAnalistaTempoReal = (dados) => {
+    let htmlString = "";
+    dados.map((plc) => {
+        htmlString += `<tr>
+        <td>${plc.id}</td>
+        <td>${plc.modelo}</td>
+        <td>${plc.ano}</td>
+        <td>${plc.capacidade_ram}</td>
+        <td>${plc.endereco_mac}</td>
+        <td>${plc.hostname}</td>
+        <td class="central_viz_rem">
+            <button class="btn-visualizar" data-id="${plc.id}" data-modelo="${plc.modelo}" data-ano="${plc.ano}" data-ram="${plc.capacidade_ram}" data-mac="${plc.endereco_mac}" data-host="${plc.hostname}">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                    <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                </svg>
+            </button>
+        </td>
+        
+    </tr>`;
+});
+
+bodyTabelaPlcs.innerHTML = htmlString;
+}
 
 const fillUsuarios = (dados) => {
     let htmlString = "";
