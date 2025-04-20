@@ -21,19 +21,34 @@ function getFabricas(){
     return database.executar(sql);
 }
 
-async function cadastrar(nomeEmpresa, nomeFabrica, qtdSetor){
+function getNomeEmpresa(empresa_consumidor_id){
+    const sql = `SELECT razao_social FROM empresa_consumidor where id = ${empresa_consumidor_id};`;
+
+    return database.executar(sql);
+}
+
+function cadastraEndereco(logradouro, numero, bairro, cidade, estado, complemento){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
+
+    const instrucaoSql = `INSERT INTO endereco (logradouro, numLogradouro, cidade, estado, bairro, complemento) VALUES ('${logradouro}', '${numero}', '${cidade}', '${estado}', '${bairro}', '${complemento}')`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.inserir(instrucaoSql);
+}
+
+async function cadastrar(empresa, fabrica, endereco_id, qtdSetor){
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
-    const sql = `SELECT id FROM empresa_consumidor WHERE razao_social = '${nomeEmpresa}'`;
+    const sql = `SELECT id FROM empresa_consumidor WHERE razao_social = '${empresa}'`;
 
     const resultado = await database.selecionar(sql);
 
     const idEmpresa = resultado[0].id;
 
     const instrucaoSql = `
-        INSERT INTO fabrica_consumidor (nome, empresa_consumidor_id, endereco_id, qtdSetor) VALUES ('${nomeFabrica}', '${idEmpresa}', 3, '${qtdSetor}');
+        INSERT INTO fabrica_consumidor (nome, empresa_consumidor_id, endereco_id, qtdSetor) VALUES ('${fabrica}', '${idEmpresa}', '${endereco_id}', '${qtdSetor}');
         `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.inserir(instrucaoSql);
@@ -48,7 +63,9 @@ function atualizar(){
 module.exports = {
     getEmpresa,
     getFabricas,
+    cadastraEndereco,
     cadastrar,
     atualizar,
+    getNomeEmpresa,
     getByEmpresaId
 };

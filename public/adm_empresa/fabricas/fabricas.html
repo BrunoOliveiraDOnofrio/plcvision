@@ -204,6 +204,7 @@
 
 <script src="../../js/nav_sidebar.js"></script>
 <script src="../../js/fabricas/listar.js"></script>
+<script src="../../js/fabricas/modal.js"></script>
 
 </html>
 
@@ -216,6 +217,7 @@
         
         btnVisualizar.forEach(btn => {
             btn.addEventListener('click', function() {
+                console.log('oi')
                 const id = this.getAttribute('id');
                 // TESTE
                 const data = id === "1" 
@@ -245,4 +247,8 @@
             }
         });
     });
+
+    function adicionar(){
+        window.location.href = "/outra-pagina";
+    }
 </script>

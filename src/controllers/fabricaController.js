@@ -1,3 +1,4 @@
+const { response } = require("express");
 const fabricaModel = require("../models/fabricaModel");
 
 
@@ -39,26 +40,40 @@ function getFabricas(req, res){
     })
 }
 
-function cadastrar(req, res){
+function getNomeEmpresa(req, res){
+    const id = req.params.id;
+
+    fabricaModel.getNomeEmpresa(id).then(response => {
+        res.json(response)
+    }).catch(e => {
+        console.log(e)
+        res.json(e)
+    })
+}
+
+async function cadastrar(req, res){
     // pegar os campos
-    let nomeEmpresa = req.body.select_empresa;
-    let nomeFabrica = req.body.input_fabrica;
-    let qtdSetor = req.body.input_qtdSetor;
+    let empresa = req.body.empresaServer;
+    let fabrica = req.body.fabricaServer;
+    let qtdSetor = req.body.qtdSetorServer;
+    // Dados do endereço
+    let logradouro = req.body.logradouroServer;
+    let numero = req.body.numeroServer;
+    let bairro = req.body.bairroServer;
+    let cidade = req.body.cidadeServer;
+    let estado = req.body.estadoServer;
+    let complemento = req.body.complementoServer;
 
     // Abertura para validações
 // if(numero > 0){}
     // Abertura para validaçõse
 
-    const dados = {
-        nomeEmpresa: nomeEmpresa,
-        nomeFabrica: nomeFabrica,
-        qtdSetor: qtdSetor
-    }
+    const cadEndereco = await fabricaModel.cadastraEndereco(logradouro, numero, bairro, cidade, estado, complemento);
 
-    fabricaModel.cadastrar(nomeEmpresa, nomeFabrica, qtdSetor).then(response => {
+    endereco_id = cadEndereco.insertId;
+
+    fabricaModel.cadastrar(empresa, fabrica, endereco_id, qtdSetor).then(response => {
         res.json(response);
-
-        const lastInsertedId = response.lastInsertedId;
     }).catch(e =>{
         console.log(e),
         res.json(e)
@@ -85,5 +100,6 @@ module.exports = {
     getFabricas,
     cadastrar,
     atualizar,
+    getNomeEmpresa,
     getByEmpresaId
 };
