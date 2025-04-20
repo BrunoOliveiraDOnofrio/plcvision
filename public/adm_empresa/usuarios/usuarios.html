@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/nav_side_bar.css">
     <link rel="stylesheet" href="../../css/corpo_consumidoras.css">
@@ -17,9 +20,10 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
+
 <body>
     <!-- Nav Bar -->
-     <header class="header-nav">
+    <header class="header-nav">
         <div class="menu-foto">
             <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
             <div class="foto"></div>
@@ -56,9 +60,9 @@
                 </nav>
             </div>
         </div>
-     </header>
+    </header>
 
-     <header class="header-nav header-nav-desk">
+    <header class="header-nav header-nav-desk">
         <div class="menu-foto">
             <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
             <div class="fotoEmpresa"></div>
@@ -98,11 +102,11 @@
                 </nav>
             </div>
         </div>
-     </header>
+    </header>
 
-     <!-- Side bar  -->
+    <!-- Side bar  -->
 
-     <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
         <div class="inicio">
             <ul>
                 <li>
@@ -112,7 +116,7 @@
                 </li>
                 <li>
                     <a href="../alertas/alertas.html">
-                        <i class='bx bxs-bell-ring' ></i>
+                        <i class='bx bxs-bell-ring'></i>
                     </a>
                 </li>
                 <li>
@@ -122,8 +126,8 @@
                 </li>
                 <li>
                     <a href="../setores/setores.html">
-                <i class='bx bx-category-alt'></i>
-                        
+                        <i class='bx bx-category-alt'></i>
+
                     </a>
                 </li>
                 <li>
@@ -142,97 +146,106 @@
             <ul>
                 <li>
                     <a href="#">
-                        <i class='bx bx-exit' ></i>
+                        <i class='bx bx-exit'></i>
                     </a>
                 </li>
             </ul>
         </div>
-     </nav>
+    </nav>
 
-     <div class="main">
+    <div class="main">
         <div class="container">
             <h1>Lista de Funciónarios cadastradas</h1>
             <button class="btn-adicionar" onclick="adicionar()">Adicionar</button>
-        <div class="container-tabela">
-            <table class="tabela">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Setor</th>
-                        <th>Cargo</th>
-                        <th class="viz_rem_colum">Vizualização</th>
-                        <th class="viz_rem_colum">Remover</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody_usuarios">
-                    
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <div class="container-tabela">
+                <table class="tabela">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Setor</th>
+                            <th>Cargo</th>
+                            <th class="viz_rem_colum">Vizualização</th>
+                            <th class="viz_rem_colum">Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_usuarios">
 
-    <div class="modal" id="modalVisualizar">
-        <div class="content_modal">
-            <div class="modal-header">
-                <h2>Detalhes do Funcionário</h2>
-                <button class="fecha">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Nome:</span>
-                    <span id="detalheNome"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">E-mail:</span>
-                    <span id="detalheEmail"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Telefone:</span>
-                    <span id="detalheTelefone"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Setor:</span>
-                    <span id="detalheSetor"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Nível:</span>
-                    <span id="detalheNivel"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Cargo:</span>
-                    <span id="detalheCargo"></span>
-                </div>
-            </div>
-            <div class="modal-btn-fechar">
-                <button class="btn-fechar">Fechar</button>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+
+        <div class="modal" id="modalVisualizar">
+            <div class="content_modal">
+                <div class="modal-header">
+                    <h2>Detalhes do Funcionário</h2>
+                    <button class="fecha">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Nome:</span>
+                        <span id="detalheNome"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">E-mail:</span>
+                        <span id="detalheEmail"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Telefone:</span>
+                        <span id="detalheTelefone"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Setor:</span>
+                        <span id="detalheSetor"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Nível:</span>
+                        <span id="detalheNivel"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Cargo:</span>
+                        <span id="detalheCargo"></span>
+                    </div>
+                </div>
+                <div class="modal-btn-fechar">
+                    <button class="btn-fechar">Fechar</button>
+                </div>
+            </div>
+        </div>
 </body>
 
 <script src="../../js/nav_sidebar.js"></script>
 <script src="../../js/usuarios/listar.js"></script>
+
 </html>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Função para carregar os usuários e renderizar na tabela
-    async function carregarUsuarios() {
-        try {
-            const response = await fetch('/usuario');
-            if (!response.ok) {
-                throw new Error("Erro ao buscar usuários.");
-            }
-            const usuarios = await response.json();
+    document.addEventListener('DOMContentLoaded', function () {
+        const empresaId = sessionStorage.EMPRESA_ID;
+        const tbody = document.getElementById('tbody_usuarios');
+        async function carregarUsuarios() {
+            try {
+                let response;
+                if (!empresaId) {
+                    console.log("NAO TA VINDO EMPRESA.");
+                    response = await fetch('/usuario');
+                } else {
+                    console.log(`Empresa ${empresaId}.`);
+                    response = await fetch(`/usuario/empresa/${empresaId}`);
+                }
 
-            const tbody = document.getElementById('tbody_usuarios');
-            tbody.innerHTML = ""; // Limpar a tabela
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar usuários.");
+                }
 
-            // Renderizar os usuários na tabela
-            usuarios.forEach(usuario => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
+                const usuarios = await response.json();
+
+                tbody.innerHTML = "";
+
+                usuarios.forEach(usuario => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
                     <td>${usuario.idUsuario}</td>
                     <td>${usuario.nome}</td>
                     <td>${usuario.setor}</td>
@@ -253,83 +266,80 @@ document.addEventListener('DOMContentLoaded', function () {
                         </button>
                     </td>
                 `;
-                tbody.appendChild(tr);
-            });
-
-            // Adicionar eventos aos botões "Visualizar"
-            const btnVisualizar = document.querySelectorAll('.btn-visualizar');
-            btnVisualizar.forEach(btn => {
-                btn.addEventListener('click', async function () {
-                    const id = this.getAttribute('data-id');
-                    await visualizarUsuario(id);
+                    tbody.appendChild(tr);
                 });
-            });
 
-            // Adicionar eventos aos botões "Remover"
-            const btnRemover = document.querySelectorAll('.btn-remover');
-            btnRemover.forEach(btn => {
-                btn.addEventListener('click', async function () {
-                    const id = this.getAttribute('data-id');
-                    const confirmar = confirm("Tem certeza que deseja remover este usuário?");
-                    if (confirmar) {
-                        try {
-                            console.log("Enviando requisição DELETE para:", `/usuario/${id}`);
-                            const response = await fetch(`/usuario/${id}`, {
-                                method: "DELETE"
-                            });
-                            if (response.ok) {
-                                alert("Usuário removido com sucesso!");
-                                carregarUsuarios(); // Recarregar a tabela de usuários
-                            } else {
+                // Adicionar eventos aos botões "Visualizar"
+                const btnVisualizar = document.querySelectorAll('.btn-visualizar');
+                btnVisualizar.forEach(btn => {
+                    btn.addEventListener('click', async function () {
+                        const id = this.getAttribute('data-id');
+                        await visualizarUsuario(id);
+                    });
+                });
+
+                // Adicionar eventos aos botões "Remover"
+                const btnRemover = document.querySelectorAll('.btn-remover');
+                btnRemover.forEach(btn => {
+                    btn.addEventListener('click', async function () {
+                        const id = this.getAttribute('data-id');
+                        const confirmar = confirm("Tem certeza que deseja remover este usuário?");
+                        if (confirmar) {
+                            try {
+                                const response = await fetch(`/usuario/${id}`, {
+                                    method: "DELETE"
+                                });
+                                if (response.ok) {
+                                    alert("Usuário removido com sucesso!");
+                                    carregarUsuarios(); // Recarregar a tabela de usuários
+                                } else {
+                                    alert("Erro ao remover usuário.");
+                                }
+                            } catch (error) {
+                                console.error("Erro ao remover usuário:", error);
                                 alert("Erro ao remover usuário.");
                             }
-                        } catch (error) {
-                            console.error("Erro ao remover usuário:", error);
-                            alert("Erro ao remover usuário.");
                         }
-                    }
+                    });
                 });
-            });
-        } catch (error) {
-            console.error("Erro ao carregar usuários:", error);
-            alert("Erro ao carregar usuários.");
-        }
-    }
-
-    // Função para visualizar os detalhes de um usuário
-    async function visualizarUsuario(id) {
-        try {
-            const response = await fetch(`/usuario/${id}`);
-            if (!response.ok) {
-                throw new Error("Erro ao buscar detalhes do usuário.");
+            } catch (error) {
+                console.error("Erro ao carregar usuários:", error);
+                alert("Erro ao carregar usuários.");
             }
-            const usuario = await response.json();
-
-            // Preencher o modal com os dados do usuário
-            document.getElementById('detalheNome').textContent = usuario.nome;
-            document.getElementById('detalheEmail').textContent = usuario.email;
-            document.getElementById('detalheTelefone').textContent = usuario.telefone;
-            document.getElementById('detalheSetor').textContent = usuario.setor;
-            document.getElementById('detalheNivel').textContent = usuario.nivel;
-            document.getElementById('detalheCargo').textContent = usuario.cargo;
-
-            // Exibir o modal
-            const modal = document.getElementById('modalVisualizar');
-            modal.style.display = 'flex';
-
-            // Fechar o modal ao clicar no botão "Fechar"
-            const btnFechar = modal.querySelector('.btn-fechar');
-            btnFechar.addEventListener('click', function () {
-                modal.style.display = 'none';
-            });
-        } catch (error) {
-            console.error("Erro ao buscar detalhes do usuário:", error);
-            alert("Erro ao buscar detalhes do usuário.");
         }
-    }
 
-    // Carregar os usuários ao carregar a página
-    carregarUsuarios();
-});
+        async function visualizarUsuario(id) {
+            try {
+                const response = await fetch(`/usuario/${id}`);
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar detalhes do usuário.");
+                }
+                const usuario = await response.json();
+
+                // Preencher o modal com os dados do usuário
+                document.getElementById('detalheNome').textContent = usuario.nome;
+                document.getElementById('detalheEmail').textContent = usuario.email;
+                document.getElementById('detalheTelefone').textContent = usuario.telefone;
+                document.getElementById('detalheSetor').textContent = usuario.setor;
+                document.getElementById('detalheNivel').textContent = usuario.nivel;
+                document.getElementById('detalheCargo').textContent = usuario.cargo;
+
+                // Exibir o modal
+                const modal = document.getElementById('modalVisualizar');
+                modal.style.display = 'flex';
+
+                // Fechar o modal ao clicar no botão "Fechar"
+                const btnFechar = modal.querySelector('.btn-fechar');
+                btnFechar.addEventListener('click', function () {
+                    modal.style.display = 'none';
+                });
+            } catch (error) {
+                console.error("Erro ao buscar detalhes do usuário:", error);
+                alert("Erro ao buscar detalhes do usuário.");
+            }
+        }
+
+        // Carregar os usuários ao carregar a página
+        carregarUsuarios();
+    });
 </script>
-

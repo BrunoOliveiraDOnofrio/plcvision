@@ -23,7 +23,7 @@ function update(dados, id){
     cargo = '${dados.cargo}',
     nivel = '${dados.nivel}',
     telCelular = '${dados.telCelular}'
-    WHERE id = ${id}`
+    WHERE idUsuario = ${id}`
     return database.executar(sql)
 }
 
