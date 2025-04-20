@@ -29,7 +29,7 @@ function update(dados, id){
 
 async function autenticar(email, senha) {
     const instrucao = `
-        SELECT idUsuario, nome, email, nivel
+        SELECT id,empresa_id, nome, email,telCelular,setor,cargo, nivel
         FROM usuario
         WHERE email = '${email}' AND senha = '${senha}';
     `;

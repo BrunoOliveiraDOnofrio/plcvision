@@ -1,5 +1,14 @@
 const database = require("../database/config");
 
+
+const getByEmpresaId = empresaId => {
+    const sql = `select fc.id as fabrica_id, fc.nome, e.logradouro, e.numLogradouro, e.cidade, e.estado, e.bairro from fabrica_consumidor as fc
+                join  endereco e 
+                on fc.endereco_id = e.id
+                where empresa_consumidor_id = ${empresaId};`
+    return database.executar(sql)
+}
+
 function getEmpresa(){
     const sql = `SELECT * FROM empresa_consumidor`;
 
@@ -40,5 +49,6 @@ module.exports = {
     getEmpresa,
     getFabricas,
     cadastrar,
-    atualizar
+    atualizar,
+    getByEmpresaId
 };

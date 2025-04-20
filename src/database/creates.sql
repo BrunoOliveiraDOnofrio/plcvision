@@ -1,6 +1,7 @@
 
 CREATE DATABASE PlcVision;
 USE PlcVision;
+
 -- drop database PlcVision;
 
 
@@ -120,12 +121,13 @@ CREATE TABLE config_plc (
     FOREIGN KEY (plc_id) REFERENCES plc(id),
     fabrica_consumidor_id INT NULL
     ,CONSTRAINT fkfabricaconsumidorconfig FOREIGN KEY (fabrica_consumidor_id) REFERENCES fabrica_consumidor(id)
+    ,padrao TINYINT NULL
 );
+
 
 CREATE TABLE alerta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     criticidade TINYINT,
-    captura_id INT,
     descricao VARCHAR(45),
     link_chamado VARCHAR(45),
     dataHora DATETIME,
@@ -136,3 +138,4 @@ CREATE TABLE alerta (
     ,config_plc_id INT 
     ,CONSTRAINT fkconfigplcalerta FOREIGN KEY (config_plc_id) REFERENCES config_plc(id)
 );
+

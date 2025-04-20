@@ -77,13 +77,14 @@ async function autenticar(req, res) {
         if (resultado.length === 1) {
             const usuario = resultado[0];
             res.status(200).json({
-                id: usuario.idUsuario,
+                id: usuario.id,
                 nome: usuario.nome,
                 email: usuario.email,
-                nivel: usuario.nivel
+                nivel: usuario.nivel,
+                empresa_id: usuario.empresa_id
             });
         } else if (resultado.length === 0) {
-            res.status(401).send("E-mail ou senha inválidos.");
+            res.status(401).json({status :"E-mail ou senha inválidos."});
         } else {
             res.status(500).send("Erro: múltiplos usuários encontrados com as mesmas credenciais.");
         }

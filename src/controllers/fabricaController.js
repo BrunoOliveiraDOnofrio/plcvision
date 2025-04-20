@@ -1,5 +1,26 @@
 const fabricaModel = require("../models/fabricaModel");
 
+
+const getByEmpresaId = (req, res) => {
+    const empresaId = req.params.empresaId
+
+    fabricaModel.getByEmpresaId(empresaId).then(response => {
+        if(response.length == 0){
+            res.status(400).json({
+                error: "Esta empresa não tem fábricas cadastradas"
+            })
+            return
+        }
+        res.status(200).json({
+            fabricas: response
+        })
+    }).catch(e => {
+        res.status(500).json({
+            error: "Erro ao buscar fábricas"
+        })
+    })
+}
+
 function getEmpresa(req, res){
     fabricaModel.getEmpresa().then(response => {
         res.json(response)
@@ -63,5 +84,6 @@ module.exports = {
     getEmpresa,
     getFabricas,
     cadastrar,
-    atualizar
+    atualizar,
+    getByEmpresaId
 };
