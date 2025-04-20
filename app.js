@@ -21,6 +21,11 @@ const fabricanteRouter = require('./src/routes/fabricante')
 const plcRouter = require('./src/routes/plc')
 const fabricaRouter = require('./src/routes/fabrica')
 const plcRegister = require('./src/routes/plc_register')
+const consumidorRouter = require('./src/routes/consumidor')
+
+const admRouter = require("./src/routes/adm");
+const analistaRouter = require("./src/routes/analista");
+const tempoReal = require("./src/routes/tempoReal");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,11 +39,11 @@ app.use("/fabricante", fabricanteRouter)
 app.use("/plc",plcRouter)
 app.use("/fabrica", fabricaRouter)
 app.use("/plc/register", plcRegister)
-// app.use("/empresa", empresaRouter);
-// app.use("/industria", industriaRouter);
-// app.use("/alerta", alertaRouter);
-// app.use("/plc", plcRouter);
-// app.use("/contato", contatoRouter);
+app.use("/adm", admRouter);
+app.use('/analista', analistaRouter);
+app.use("/tempo_real", tempoReal);
+app.use("/consumidor", consumidorRouter)
+
 
 app.listen(PORTA_APP, function () {
     console.log(`

@@ -1,0 +1,77 @@
+const path = require('path');
+const express = require('express');
+const router = express.Router();
+
+
+router.get('/consumidores', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/empresas_consumidoras/empresas_consumidoras.html'));
+})
+
+router.get('/consumidores/form', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/empresas_consumidoras/cadClientes.html'));
+})
+
+router.get('/consumidores/:id/form', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/empresas_consumidoras/alterar_consumidor.html'));
+})
+
+router.get('/alertas', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/alertas/alertas.html'));
+})
+
+router.get('/fabricas', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/fabricas/fabricas.html'));
+})
+
+
+router.get('/fabricas/:id/form', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/fabricas/AlterarFabrica.html'));
+})
+
+
+router.get('/fabricas/form', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/fabricas/CadastroFabrica.html'));
+})
+
+router.get('/plcs', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/plcs/plcs.html'));
+})
+
+router.get('/plcs/:id/show', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/plcs/visualizar_plc.html'));
+})
+
+router.get('/plcs/:id/form', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/plcs/edit_plc.html'));
+})
+
+router.get('/setores', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/setores/setores.html'));
+})
+
+router.get('/setores', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/setores/setores.html'));
+})
+
+router.get('/setores/form', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/setores/cadSetor.html'));
+})
+
+router.get('/setores/:id/form', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/setores/editar.html'));
+})
+
+router.get('/usuarios', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/usuarios/usuarios.html'));
+})
+
+router.get('/usuarios/form', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/usuarios/CadastroUsuario.html'));
+})
+
+router.get('/usuarios/:id/form', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/usuarios/editar.html'));
+})
+
+
+module.exports = router;

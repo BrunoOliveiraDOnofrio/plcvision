@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento</title>
+    <!-- Fonte google  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    
+    <!-- Link dos icones - boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../../css/plcs/view.css">
+
+</head>
+<body>
+    <!-- Nav Bar -->
+     <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <!-- Side bar  -->
+
+     <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+                <li>
+                    <a href="./consumidores">
+                        <i class='bx bx-group'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./alertas">
+                        <i class='bx bxs-bell-ring' ></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./fabricas">
+                        <i class='bx bxs-factory'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./setores">
+                <i class='bx bx-category-alt'></i>
+                        
+                    </a>
+                </li>
+                <li>
+                    <a href="./usuarios">
+                        <i class='bx bxs-user'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./plcs">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit' ></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+     </nav>
+
+     <div class="main">
+        <div class="content">
+            <div class="title-div">
+                <h1>Visualizar PLC - <span id="span_nome">PLC-NAME</span></h1>
+                
+            </div>
+
+            <div class="title-div infos-location">
+                <small>Fábrica - sp1, Av Paulista 512, Setor: Cortes</small>
+                <small>Empresa Contratante: Friboi</small>
+            </div>
+
+            <div class="bloco-infos">
+                <h2>Informações do PLC</h2>
+
+                <div class="table">
+                    <div class="item-table">
+                        <div class="title">
+                            <span>Modelo</span>
+                        </div>
+                        <div class="value">
+                            <span id="span_modelo">Simens S7-1500</span>
+                        </div>
+                    </div>
+                    <div class="item-table">
+                        <div class="title">
+                            <span>Ano</span>
+                        </div>
+                        <div class="value">
+                            <span id="span_ano">2019</span>
+                        </div>
+                    </div>
+                    <div class="item-table">
+                        <div class="title">
+                            <span>RAM</span>
+                        </div>
+                        <div class="value">
+                            <span id="span_ram">16GB</span>
+                        </div>
+                    </div>
+                    <div class="item-table">
+                        <div class="title">
+                            <span>Endereço MAC</span>
+                        </div>
+                        <div class="value">
+                            <span id="span_mac">00:00:00:00:00:00</span>
+                        </div>
+                    </div>
+                    <div class="item-table">
+                        <div class="title">
+                            <span>SO</span>
+                        </div>
+                        <div class="value">
+                            <span id="span_so">Ubuntu Server</span>
+                        </div>
+                    </div>
+                    <div class="item-table">
+                        <div class="title">
+                            <span >Hostname</span>
+                        </div>
+                        <div class="value">
+                            <span id="span_hostname">plc-01</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bloco-configuracoes">
+                <div class="table">
+                    <div class="header-table">
+                        <div class="span">Componente</div>
+                        <div class="span">Unidade Medida</div>
+                        <div class="span">Limites</div>
+                        <div class="span">Desativar</div>
+                    </div>
+                    <div class="item-table">
+                        <div class="span">
+                            <p>CPU Frequência</p>
+                        </div>
+                        <div class="span">
+                            <p>Mhz</p>
+                        </div>
+                        <div class="span">
+                            <p>Atenção: 40, Crítico: 80</p>
+                        </div>
+                        <div class="span">
+                            <i onclick="abrirModalDesativar()" class='bx bx-error-alt'></i>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="btn-area">
+                <button onclick="abrirModalAdicionar()" type="button">Adicionar Configuração</button>
+            </div>
+        </div>
+    </div>
+    
+    <dialog id="dialog_adicionar" class="modal-adicionar-config">
+        <div class="content-modal">
+            <div class="header-modal">
+                <h1>Configuração de PLC <span>(plc-01)</span></h1>
+            </div>
+            <div class="main-modal">
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="Componente">Componente:</label>
+                        <select  name="" id="">
+                            <option value="">CPU %</option>
+                            <option value="">RAM %</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Limite Atencao">Limite Atenção:</label>
+                        <input placeholder="EX: 40" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="Limite Crítico">Limite Crítico:</label>
+                        <input placeholder="EX: 80" type="text">
+                    </div>
+
+                    <div class="footer-modal">
+                        <div class="btn-areas">
+                            <button onclick="fecharModalAdicionar()" type="button">Cancelar</button>
+                            <button class="blue-btn" type="submit">Salvar</button>
+                        </div>
+                    </div>
+
+                    
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="dialog_desativar" class="modal-adicionar-config">
+        <div class="content-modal">
+            <div class="header-modal">
+                <h1>Deseja mesmo desativar configuração?</span></h1>
+            </div>
+            <div class="main-modal">
+                <form method="post" action="">
+                   
+
+                    <div class="footer-modal">
+                        <div class="btn-areas">
+                            <button onclick="fecharModalDesativar()" type="button">Cancelar</button>
+                            <button class="blue-btn" type="submit">Desativar</button>
+                        </div>
+                    </div>
+
+                    
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+
+</body>
+
+<script src="../../js/nav_sidebar.js"></script>
+<script src="../../js/plcs/view.js"></script>
+
+</html>

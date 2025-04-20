@@ -1,5 +1,21 @@
 const database = require("../database/config")
 
+const getAll = () => {
+    const sql = `SELECT empresa_consumidor.id, razao_social, qtdFabrica,cnpj, concat(logradouro, ' ', numLogradouro, ' ', cidade, ' ', bairro) as endereco,segmento, token FROM empresa_consumidor join
+    endereco 
+    on endereco.id = empresa_consumidor.endereco_id;`
+    return database.executar(sql)
+}
+
+const getById = (id) => {
+    const sql = `SELECT empresa_consumidor.id, endereco.id as enderecoId, razao_social, qtdFabrica,cnpj, logradouro,   numLogradouro,  cidade,  bairro , complemento, estado, segmento FROM empresa_consumidor join
+    endereco 
+    on endereco.id = empresa_consumidor.endereco_id
+    WHERE empresa_consumidor.id = ${id};`
+    return database.executar(sql)
+}
+
+
 const getByToken = (token, id) => {
     const sql = `SELECT ec.id, ec.razao_social, p.id as parceriaId from usuario as u
                 join empresa_fabricante ef
@@ -12,6 +28,20 @@ const getByToken = (token, id) => {
     return database.executar(sql)
 }
 
+const createConsumidor = (data) => {
+    const sql = `INSERT INTO empresa_consumidor (razao_social, segmento,cnpj,  token, qtdFabrica,endereco_id) VALUES ('${data.razaoSocial}', '${data.segmento}', '${data.cnpj}',  '${data.token}', ${data.qtdFabricas}, ${data.enderecoId})`;
+    return database.executar(sql)
+}
+
+const updateConsumidor = (data, id) => {
+    const sql = `UPDATE empresa_consumidor SET razao_social = '${data.razaoSocial}', segmento = '${data.segmento}', cnpj = '${data.cnpj}', qtdFabrica = ${data.qtdFabricas} WHERE id = ${id}`;
+    return database.executar(sql)
+}
+
 module.exports = {
-    getByToken
+    getByToken,
+    createConsumidor,
+    getAll,
+    getById,
+    updateConsumidor
 }

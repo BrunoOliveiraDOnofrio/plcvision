@@ -14,17 +14,9 @@ router.get("/", function (req, res) {
     res.render("index");
 });
 
-router.get('/consumidores', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public/adm_empresa/empresas_consumidoras/empresas_consumidoras.html'));
-})
 
-router.get('/consumidores/form', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public/adm_empresa/empresas_consumidoras/cadClientes.html'));
-})
 
-router.get('/consumidores/:id/form', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public/adm_empresa/empresas_consumidoras/AlterarConsumidor.html'));
-})
+
 
 router.get("/monitoramento/:id", (req,res) => {
     

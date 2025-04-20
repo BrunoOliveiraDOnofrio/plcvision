@@ -1,3 +1,7 @@
+
+
+
+
 const pegarEmpresa = () =>{
     fetch("http://localhost:3000/fabrica/empresas").then((response) => response.json().then((json) => {
         console.log(json)
@@ -19,3 +23,4 @@ const fillEmpresa = (dados) =>{
     bodyOptionEmpresa.innerHTML = htmlString;
 
 }
+

@@ -16,21 +16,36 @@
     list-style: none;
 }
 
+
+button{
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
 @media (max-width:702px){
 
+    input{
+        border: none;
+        outline: none;
+        /* padding: 10px; */
+    }
     .main{
         display: flex;
         flex-direction: column;
         background-color: #E4E4E4;
-        height: 100vh;
+        /* height: 100vh; */
         justify-content: center;
         align-items: center;
+        
     }
     
     .container{
         /* border: solid blue; */
         background-color: white;
-        border-radius: 10px;
+        /* border-radius: 10px; */
+        width: 100%;
+        /* border: 1px solid black; */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -136,11 +151,16 @@
         /* border: solid blue; */
         /* width: 80vw;
         height: 90vh; */
-        background-color: white;
+        
         border-radius: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    input{
+        padding: 15px;
+        font-size: 22px;
     }
 
     .full-box{
@@ -190,14 +210,15 @@
             font-family: 'Abel';
             width: 10vw;
         }
-
+        gap:10px;
         & input{
             border: solid black 1px;
             border-radius: 5px;
-            width: 25vw;
+            width: 20vw;
             height: 4vh;    
             font-family: "Inter";
-            font-size: 1vw;
+            font-size: 1.2vw;
+            outline: none;
         }
 
         & select {
@@ -237,7 +258,7 @@
     .row-2 .campo-logr {
         border: solid black 1px;
         border-radius: 5px;
-        width: 52.5vw;
+        width: 30vw;
         height: 4vh;    
         font-family: "Inter";
         font-size: 1vw;
