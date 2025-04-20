@@ -13,10 +13,11 @@
         rel="stylesheet">
     <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/nav_side_bar.css">
-    <link rel="stylesheet" href="../../css/StyleCadastroUsuario.css">
+    <link rel="stylesheet" href="../../css/cadCliente.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../../js/nav_sidebar.js"></script>
-    <title>Cadastro</title>
+    <title>Cadastro Clientes</title>
 </head>
 
 <body>
@@ -108,7 +109,7 @@
         <div class="inicio">
             <ul>
                 <li>
-                    <a href="../empresas_consumidoras/empresas_consumidoras.html">
+                    <a href="./empresas_consumidoras.html">
                         <i class='bx bx-group'></i>
                     </a>
                 </li>
@@ -150,45 +151,93 @@
             </ul>
         </div>
      </nav>
-    <!-- Cadastro do Usuário -->
+
+    <!-- Cadastro do Cliente -->
 
     <div class="main">
-        <div class="content">
-            <div class="title">
-                <h1>Atualizar Usuário:</h1>
-            </div>
-            <div class="box-register">
-                <div class="box-field">
-                    <div class="left-field">
-                        <div class="field">
-                            <span>Nome:</span>
-                            <input type="text" id="ipt_nome">
+        <div class="container">
+            <div class="full-box">
+                <div class="tittle">Cadastrar Clientes:</div>
+                <div class="box-form">
+                    <div class="row-1">
+                        <div class="campo">
+                            <span>Razão Social:</span>
+                            <input type="text">
                         </div>
-                        <div class="field">
-                            <span>E-mail:</span>
-                            <input type="text" id="ipt_email">
+                        <div class="campo">
+                            <span>Segmento:</span>
+                            <input type="text">                    <span></span>
                         </div>
-                        <div class="field">
-                            <span>Celular:</span>
-                            <input type="text" id="ipt_celular">
+                        <div class="campo">
+                            <span>Qtd. Fábricas:</span>
+                            <input type="text">
                         </div>
-                        <div class="field">
-                            <span>Nível:</span>
-                            <input type="text" id="ipt_nivel">
+                    </div>
+                    <div class="row-2">
+                        <div class="campo">
+                            <span>Logradouro:</span>
+                            <input type="text" class="campo-logr">
                         </div>
-                        <div class="field">
-                            <span>Setor:</span>
-                            <input type="text" id="ipt_setor">
+                        <div class="campo">
+                            <span>Número:</span>
+                            <input type="text">
                         </div>
-                        <div class="field">
-                            <span>Cargo:</span>
-                            <input type="text" id="ipt_cargo">
+                    </div>
+                    <div class="row-3">
+                        <div class="campo">
+                            <span>Bairro:</span>
+                            <input type="text">
+                        </div>
+                        <div class="campo">
+                            <span>Cidade:</span>
+                            <input type="text">
+                        </div>
+                        <div class="campo">
+                            <span>Estado:</span>
+                            <select name="" id="">
+                                <option value="#"></option>
+                                <option value="0">AC</option>
+                                <option value="1">AL</option>
+                                <option value="2">AP</option>
+                                <option value="3">AM</option>
+                                <option value="4">BA</option>
+                                <option value="5">CE</option>
+                                <option value="6">DF</option>
+                                <option value="7">ES</option>
+                                <option value="8">GO</option>
+                                <option value="9">MA</option>
+                                <option value="10">MT</option>
+                                <option value="11">MS</option>
+                                <option value="12">MG</option>
+                                <option value="13">PA</option>
+                                <option value="14">PB</option>
+                                <option value="15">PR</option>
+                                <option value="16">PE</option>
+                                <option value="17">PI</option>
+                                <option value="18">RJ</option>
+                                <option value="19">RN</option>
+                                <option value="20">RS</option>
+                                <option value="21">RO</option>
+                                <option value="22">RR</option>
+                                <option value="23">SC</option>
+                                <option value="24">SP</option>
+                                <option value="25">SE</option>
+                                <option value="26">TO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row-4">
+                        <div class="campo">
+                            <span>Complemento:</span>
+                            <input type="text">
                         </div>
                     </div>
                 </div>
-                <div class="buttons">
-                    <button class="exit-button" onclick="">Cancelar</button>
-                    <button class="register-button" onclick="cadastrarUsuario()">Atualizar</button>
+                <div class="box-btns">
+                    <div class="btns-wrapper">
+                        <button class="btn">Cancelar</button>
+                        <button class="btn">Cadastrar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,54 +246,3 @@
 </body>
 
 </html>
-
-<script>
-    async function atualizarUsuario() {
-        const nome = document.getElementById('ipt_nome').value;
-        const email = document.getElementById('ipt_email').value;
-        const celular = document.getElementById('ipt_celular').value;
-        const nivel = document.getElementById('ipt_nivel').value;
-        const setor = document.getElementById('ipt_setor').value;
-        const cargo = document.getElementById('ipt_cargo').value;
-        
-        console.log("Nome:", nome);
-        console.log("E-mail:", email);
-        console.log("Celular:", celular);
-        console.log("Nível:", nivel);
-        console.log("Setor:", setor);
-        console.log("Cargo:", cargo);
-
-        // Criar o objeto com os dados
-        const dados = {
-            nome: nome,
-            email: email,
-            celular: celular,
-            nivel: nivel,
-            setor: setor,
-            cargo: cargo,
-        };
-        console.log("Dados enviados:", dados);
-
-        try {
-            const response = await fetch('/usuario', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dados)
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Usuário atualizado com sucesso:', data);
-                alert("Usuário atualizado com sucesso!");
-            } else {
-                console.error('Erro ao atualizar usuário:', response.statusText);
-                alert("Erro ao atualizar usuário.");
-            }
-        } catch (error) {
-            console.error('Erro ao atualizar usuário:', error);
-            alert("Erro ao conectar ao servidor.");
-        }
-    }
-</script>

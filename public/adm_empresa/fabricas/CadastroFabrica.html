@@ -11,12 +11,13 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="./css/fonts.css">
-    <link rel="stylesheet" href="./css/nav_side_bar.css">
-    <link rel="stylesheet" href="./css/cadCliente.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/StyleCadastroUsuario.css">
+    <link rel="stylesheet" href="../../css/StyleCadastroFabrica.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Cadastro Clientes</title>
+    <script src="../../js/nav_sidebar.js"></script>
+    <title>Cadastro</title>
 </head>
 
 <body>
@@ -108,13 +109,29 @@
         <div class="inicio">
             <ul>
                 <li>
-                    <a href="#">
-                        <i class='bx bx-bar-chart-square'></i>
+                    <a href="../empresas_consumidoras/empresas_consumidoras.html">
+                        <i class='bx bx-group'></i>
                     </a>
                 </li>
                 <li>
                     <a href="../alertas/alertas.html">
-                        <i class='bx bxs-bell-ring'></i>
+                        <i class='bx bxs-bell-ring' ></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./fabricas.html">
+                        <i class='bx bxs-factory'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="../setores/setores.html">
+                <i class='bx bx-category-alt'></i>
+                        
+                    </a>
+                </li>
+                <li>
+                    <a href="../usuarios/usuarios.html">
+                        <i class='bx bxs-user'></i>
                     </a>
                 </li>
                 <li>
@@ -128,56 +145,57 @@
             <ul>
                 <li>
                     <a href="#">
-                        <i class='bx bx-exit'></i>
+                        <i class='bx bx-exit' ></i>
                     </a>
                 </li>
             </ul>
         </div>
-    </nav>
+     </nav>
 
-    <!-- Cadastro do Cliente -->
+    <!-- Cadastro do Usuário -->
 
     <div class="main">
-        <div class="container">
-            <div class="full-box">
-                <div class="tittle">Cadastrar Clientes:</div>
-                <div class="box-form">
-                    <div class="row-1">
-                        <div class="campo">
-                            <span>Razão Social:</span>
-                            <input type="text">
+        <div class="content">
+            <div class="title">
+                <h1>Cadastrar Fábrica:</h1>
+            </div>
+            <div class="box-register">
+                <div class="box-field-factory">
+                    <div class="name-field">
+                        <div class="field">
+                            <span>Nome da Empresa:</span>
+                            <select name="" id="select_empresa">
+                                <option value="#">Escolha uma empresa</option>
+                            </select>
                         </div>
-                        <div class="campo">
-                            <span>Segmento:</span>
-                            <input type="text">                    <span></span>
-                        </div>
-                        <div class="campo">
-                            <span>Qtd. Fábricas:</span>
-                            <input type="text">
+                        <div class="field">
+                            <span>Nome da Fábrica:</span>
+                            <input type="text" placeholder="Ex: Volkswagen - Unidade 01" id="input_fabrica">
                         </div>
                     </div>
-                    <div class="row-2">
-                        <div class="campo">
+
+                    <div class="way-field">
+                        <div class="field street-input">
                             <span>Logradouro:</span>
-                            <input type="text" class="campo-logr">
+                            <input  type="text" id="input_logradouro">
                         </div>
-                        <div class="campo">
+                        <div class="field">
                             <span>Número:</span>
-                            <input type="text">
+                            <input type="text" id="input_numero">
                         </div>
                     </div>
-                    <div class="row-3">
-                        <div class="campo">
+                    <div class="city-field">
+                        <div class="field burgh-city-input">
                             <span>Bairro:</span>
-                            <input type="text">
+                            <input type="text" id="input_bairro">
                         </div>
-                        <div class="campo">
+                        <div class="field burgh-city-input">
                             <span>Cidade:</span>
-                            <input type="text">
+                            <input type="text" id="input_cidade">
                         </div>
-                        <div class="campo">
+                        <div class="field">
                             <span>Estado:</span>
-                            <select name="" id="">
+                            <select name="" id="select_estado">
                                 <option value="#"></option>
                                 <option value="0">AC</option>
                                 <option value="1">AL</option>
@@ -209,18 +227,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row-4">
-                        <div class="campo">
+                    <div class="last-field">
+                        <div class="field">
                             <span>Complemento:</span>
-                            <input type="text">
+                            <input type="text" id="input_complemento">
+                        </div>
+                        <div class="field sector-input">
+                            <span>Quantidade de Setores:</span>
+                            <input type="text" id="input_qtdSetor">
                         </div>
                     </div>
                 </div>
-                <div class="box-btns">
-                    <div class="btns-wrapper">
-                        <button class="btn">Cancelar</button>
-                        <button class="btn">Cadastrar</button>
-                    </div>
+                <div class="buttons">
+                    <button class="exit-button" onclick="">Cancelar</button>
+                    <button class="register-button" onclick="">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -228,4 +248,5 @@
 
 </body>
 
+<script src="../../js/empresas_consumidoras/select_empresa.js"></script>
 </html>

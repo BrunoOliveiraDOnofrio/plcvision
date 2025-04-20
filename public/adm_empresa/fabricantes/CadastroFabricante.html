@@ -11,12 +11,11 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="./css/fonts.css">
-    <link rel="stylesheet" href="./css/nav_side_bar.css">
-    <link rel="stylesheet" href="./css/StyleCadastroUsuario.css">
-    <link rel="stylesheet" href="./css/StyleCadastroFabrica.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/StyleCadastroUsuario.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="./js/nav_sidebar.js"></script>
+    <script src="../../js/nav_sidebar.js"></script>
     <title>Cadastro</title>
 </head>
 
@@ -109,13 +108,29 @@
         <div class="inicio">
             <ul>
                 <li>
-                    <a href="#">
-                        <i class='bx bx-bar-chart-square'></i>
+                    <a href="../../empresas_consumidoras.html">
+                        <i class='bx bx-group'></i>
                     </a>
                 </li>
                 <li>
                     <a href="../alertas/alertas.html">
-                        <i class='bx bxs-bell-ring'></i>
+                        <i class='bx bxs-bell-ring' ></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="../fabricas/fabricas.html">
+                        <i class='bx bxs-factory'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="../setores/setores.html">
+                <i class='bx bx-category-alt'></i>
+                        
+                    </a>
+                </li>
+                <li>
+                    <a href="../usuarios/usuarios.html">
+                        <i class='bx bxs-user'></i>
                     </a>
                 </li>
                 <li>
@@ -129,102 +144,61 @@
             <ul>
                 <li>
                     <a href="#">
-                        <i class='bx bx-exit'></i>
+                        <i class='bx bx-exit' ></i>
                     </a>
                 </li>
             </ul>
         </div>
-    </nav>
-
+     </nav>
     <!-- Cadastro do Usuário -->
 
     <div class="main">
         <div class="content">
             <div class="title">
-                <h1>Cadastrar Fábrica:</h1>
+                <h1>Cadastrar Fabricante:</h1>
             </div>
             <div class="box-register">
-                <div class="box-field-factory">
-                    <div class="name-field">
+                <div class="box-field">
+                    <div class="left-field">
                         <div class="field">
-                            <span>Nome da Empresa:</span>
-                            <select name="" id="select_empresa">
-                                <option value="#">Escolha uma empresa</option>
-                            </select>
+                            <span>Razão Social:</span>
+                            <input type="text" id="ipt_razaoSocial">
                         </div>
                         <div class="field">
-                            <span>Nome da Fábrica:</span>
-                            <input type="text" placeholder="Ex: Volkswagen - Unidade 01" id="input_fabrica">
-                        </div>
-                    </div>
-
-                    <div class="way-field">
-                        <div class="field street-input">
-                            <span>Logradouro:</span>
-                            <input  type="text" id="input_logradouro">
-                        </div>
-                        <div class="field">
-                            <span>Número:</span>
-                            <input type="text" id="input_numero">
-                        </div>
-                    </div>
-                    <div class="city-field">
-                        <div class="field burgh-city-input">
-                            <span>Bairro:</span>
-                            <input type="text" id="input_bairro">
-                        </div>
-                        <div class="field burgh-city-input">
-                            <span>Cidade:</span>
-                            <input type="text" id="input_cidade">
+                            <span>CNPJ:</span>
+                            <input type="text" id="ipt_cnpj">
                         </div>
                         <div class="field">
                             <span>Estado:</span>
-                            <select name="" id="select_estado">
-                                <option value="#"></option>
-                                <option value="0">AC</option>
-                                <option value="1">AL</option>
-                                <option value="2">AP</option>
-                                <option value="3">AM</option>
-                                <option value="4">BA</option>
-                                <option value="5">CE</option>
-                                <option value="6">DF</option>
-                                <option value="7">ES</option>
-                                <option value="8">GO</option>
-                                <option value="9">MA</option>
-                                <option value="10">MT</option>
-                                <option value="11">MS</option>
-                                <option value="12">MG</option>
-                                <option value="13">PA</option>
-                                <option value="14">PB</option>
-                                <option value="15">PR</option>
-                                <option value="16">PE</option>
-                                <option value="17">PI</option>
-                                <option value="18">RJ</option>
-                                <option value="19">RN</option>
-                                <option value="20">RS</option>
-                                <option value="21">RO</option>
-                                <option value="22">RR</option>
-                                <option value="23">SC</option>
-                                <option value="24">SP</option>
-                                <option value="25">SE</option>
-                                <option value="26">TO</option>
-                            </select>
+                            <input type="text" id="ipt_estado">
+                        </div>
+                        <div class="field">
+                            <span>Cidade:</span>
+                            <input type="text" id="ipt_cidade">
                         </div>
                     </div>
-                    <div class="last-field">
+                    <div class="right-field">
+                        <div class="field">
+                            <span>Bairro:</span>
+                            <input type="text" id="ipt_bairro">
+                        </div>
+                        <div class="field">
+                            <span>Logradouro:</span>
+                            <input type="text" id="ipt_logradouro">
+                        </div>
+                        <div class="field">
+                            <span>Número:</span>
+                            <input type="text" id="ipt_numero">
+                        </div>
                         <div class="field">
                             <span>Complemento:</span>
-                            <input type="text" id="input_complemento">
-                        </div>
-                        <div class="field sector-input">
-                            <span>Quantidade de Setores:</span>
-                            <input type="text" id="input_qtdSetor">
+                            <input type="text" id="ipt_complemento">
                         </div>
                     </div>
                 </div>
                 <div class="buttons">
                     <button class="exit-button" onclick="">Cancelar</button>
-                    <button class="register-button" onclick="">Cadastrar</button>
+                    <button class="register-button" onclick="cadastrar()">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -232,5 +206,71 @@
 
 </body>
 
-<script src="../../js/empresas_consumidoras/select_empresa.js"></script>
 </html>
+
+<script>
+    async function cadastrar() {
+    // Capturar os valores dos campos do formulário
+    const razaoSocial = document.getElementById('ipt_razaoSocial').value.trim();
+    const cnpj = document.getElementById('ipt_cnpj').value.trim();
+    const estado = document.getElementById('ipt_estado').value.trim();
+    const cidade = document.getElementById('ipt_cidade').value.trim();
+    const bairro = document.getElementById('ipt_bairro').value.trim();
+    const logradouro = document.getElementById('ipt_logradouro').value.trim();
+    const numero = document.getElementById('ipt_numero').value.trim();
+    const complemento = document.getElementById('ipt_complemento').value.trim();
+
+    // Montar o objeto com os dados
+    const dados = {
+        razao_social: razaoSocial,
+        cnpj: cnpj,
+        estado: estado,
+        cidade: cidade,
+        bairro: bairro,
+        logradouro: logradouro,
+        numero: numero,
+        complemento: complemento
+    };
+
+    // Verificar se todos os campos obrigatórios estão preenchidos
+    if (!razaoSocial || !cnpj || !estado || !cidade || !bairro || !logradouro || !numero) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+    }
+
+    try {
+        // Enviar os dados para o backend
+        console.log("Enviando dados para o backend:", dados);
+        const response = await fetch('/fabricante', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        // Verificar a resposta do servidor
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Fabricante cadastrado com sucesso:', data);
+            alert("Fabricante cadastrado com sucesso!");
+            // Limpar os campos do formulário
+            document.getElementById('ipt_razaoSocial').value = '';
+            document.getElementById('ipt_cnpj').value = '';
+            document.getElementById('ipt_estado').value = '';
+            document.getElementById('ipt_cidade').value = '';
+            document.getElementById('ipt_bairro').value = '';
+            document.getElementById('ipt_logradouro').value = '';
+            document.getElementById('ipt_numero').value = '';
+            document.getElementById('ipt_complemento').value = '';
+        } else {
+            const errorText = await response.text();
+            console.error('Erro ao cadastrar fabricante:', errorText);
+            alert(`Erro ao cadastrar fabricante: ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error('Erro ao cadastrar fabricante:', error);
+        alert("Erro ao cadastrar fabricante. Verifique sua conexão e tente novamente.");
+    }
+}
+</script>
