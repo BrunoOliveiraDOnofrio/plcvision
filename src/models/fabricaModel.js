@@ -6,6 +6,12 @@ function getEmpresa(){
     return database.executar(sql);
 }
 
+function getFabricas(){
+    const sql = `SELECT * FROM fabrica_consumidor`;   
+
+    return database.executar(sql);
+}
+
 async function cadastrar(nomeEmpresa, nomeFabrica, qtdSetor){
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
 
@@ -24,9 +30,15 @@ async function cadastrar(nomeEmpresa, nomeFabrica, qtdSetor){
     return database.inserir(instrucaoSql);
 }
 
+function atualizar(){
+    const sql = ``;
+}
+
 // SELECT id FROM empresa_consumidor WHERE razao_social = '${dados.nomeEmpresa}' 
 // pegar o ID da empresa_consumidor cadastrado
 module.exports = {
     getEmpresa,
-    cadastrar
+    getFabricas,
+    cadastrar,
+    atualizar
 };

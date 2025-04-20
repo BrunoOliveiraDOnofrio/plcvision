@@ -9,6 +9,15 @@ function getEmpresa(req, res){
     });
 }
 
+function getFabricas(req, res){
+    fabricaModel.getFabricas().then(response => {
+        res.json(response)
+    }).catch(e => {
+        console.log(e)
+        res.json(e)
+    })
+}
+
 function cadastrar(req, res){
     // pegar os campos
     let nomeEmpresa = req.body.select_empresa;
@@ -36,7 +45,23 @@ function cadastrar(req, res){
 
 }
 
+function atualizar(req, res){
+    // pegar os campos
+    let nomeFabrica = req.body.input_fabrica;
+    let qtdSetor = req.body.input_qtdSetor;
+
+    fabricaModel.atualizar(nomeFabrica, qtdSetor).then(response => {
+        res.json(response);
+
+    }).catch(e =>{
+        console.log(e),
+        res.json(e)
+    })
+}
+
 module.exports = {
     getEmpresa,
-    cadastrar
+    getFabricas,
+    cadastrar,
+    atualizar
 };

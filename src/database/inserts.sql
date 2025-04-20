@@ -56,8 +56,9 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('DISCO', 'Uso do Disco Bytes Linux', 'Bytes', 'disco_uso', 'psutil.disk_usage("/").used'),
 ('DISCO', 'Uso do Disco Windows', '%', 'disco_percent', 'psutil.disk_usage("C:\\").percent'),
 ('DISCO', 'Uso do Disco Linux', '%', 'disco_percent', 'psutil.disk_usage("/").percent'),
-('Bateria', 'Tempo Restante', 'minutos', 'bateria_restante', 'int(psutil.sensors_battery().secsleft / 60)');
-
+('Bateria', 'Tempo Restante', 'minutos', 'bateria_restante', 'int(psutil.sensors_battery().secsleft / 60)'),
+('REDE', 'Pacote Recebido', 'Unidade', 'rede_recv', 'psutil.net_io_counters().packets_recv'),
+('REDE', 'Pacote Mandado', 'Unidade', 'rede_sent', 'psutil.net_io_counters().packets_sent');
 
 -- Inserindo configurações de PLC
 -- Alterar a coluna "plc_id" de acordo com o ID do seu PLC.
@@ -69,4 +70,6 @@ INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico,  
 (12, 3, 70, 80,  1),
 (10, 3, 8000000, 9000000,  1),
 (4, 3, 12, 15,  1),
-(6, 3, 9000, 8000,  1);
+(6, 3, 9000, 8000,  1),
+(15, 3, 500000, 400000, 1),
+(16, 3, 2100000, 2000000, 1);
