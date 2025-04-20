@@ -16,6 +16,16 @@ function get(req, res){
     })
 }
 
+function listarUm(req, res) {
+    const id = req.params.id;
+    plcModel.listarUm(id).then(response => {
+        res.json(response[0]);
+    }).catch(e => {
+        console.log(e);
+        res.json(e);
+    });
+}
+
 const getConfigs = (req, res) => {
     const plc_id = req.params.plcId
 
@@ -108,5 +118,6 @@ module.exports = {
     get,
     getByMac,
     store,
-    getConfigs
+    getConfigs,
+    listarUm
 };

@@ -31,14 +31,15 @@ const getByMac = (mac) => {
     return database.executar(sql)
 }
 
-function listarUm(){
-    
-    const sql = `SELECT * FROM plc WHERE id = ${sessionStorage.plcID}`
+function listarUm(id){
+    const sql = `SELECT * FROM plc WHERE id = ${id}`;
+    return database.executar(sql)
 }
 
 module.exports = {
     get,
     getByMac,
     create,
-    getConfigs
+    getConfigs,
+    listarUm
 };
