@@ -1,4 +1,4 @@
-const { destroy } = require("../controllers/usuarioController");
+const { destroy, listarPorEmpresa } = require("../controllers/usuarioController");
 var database = require("../database/config")
 
 function get(){
@@ -16,6 +16,15 @@ function getById(id) {
     return database.executar(instrucao).then(resultados => resultados[0]);
 }
 
+function listarMesmaEmpresa(empresaId) {
+    const instrucao = `
+        SELECT idUsuario, nome, email, setor, cargo, telCelular, nivel
+        FROM usuario 
+        WHERE empresa_id = ${empresaId};
+    `;
+    return database.executar(instrucao);
+}
+
 function update(dados, id){
     const sql = `UPDATE usuario SET nome = '${dados.nome}',
     setor = '${dados.setor}',
@@ -29,7 +38,7 @@ function update(dados, id){
 
 async function autenticar(email, senha) {
     const instrucao = `
-        SELECT id,empresa_id, nome, email,telCelular,setor,cargo, nivel
+        SELECT idUsuario,empresa_id, nome, email,telCelular,setor,cargo, nivel
         FROM usuario
         WHERE email = '${email}' AND senha = '${senha}';
     `;
@@ -65,5 +74,6 @@ module.exports = {
     get,
     getById,
     update,
-    deleteUsuario
+    deleteUsuario,
+    listarMesmaEmpresa
 };

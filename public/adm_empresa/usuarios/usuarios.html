@@ -232,7 +232,7 @@
                     response = await fetch('/usuario');
                 } else {
                     console.log(`Empresa ${empresaId}.`);
-                    response = await fetch(`/usuario/empresa/${empresaId}`);
+                    response = await fetch(`/usuario/lista/${empresaId}`);
                 }
 
                 if (!response.ok) {
@@ -314,16 +314,14 @@
                 const usuario = await response.json();
                 document.getElementById('detalheNome').textContent = usuario.nome;
                 document.getElementById('detalheEmail').textContent = usuario.email;
-                document.getElementById('detalheTelefone').textContent = usuario.telefone;
+                document.getElementById('detalheTelefone').textContent = usuario.telCelular;
                 document.getElementById('detalheSetor').textContent = usuario.setor;
                 document.getElementById('detalheNivel').textContent = usuario.nivel;
                 document.getElementById('detalheCargo').textContent = usuario.cargo;
 
-                // Exibir o modal
                 const modal = document.getElementById('modalVisualizar');
                 modal.style.display = 'flex';
 
-                // Fechar o modal ao clicar no botão "Fechar"
                 const btnFechar = modal.querySelector('.btn-fechar');
                 btnFechar.addEventListener('click', function () {
                     modal.style.display = 'none';
@@ -333,8 +331,6 @@
                 alert("Erro ao buscar detalhes do usuário.");
             }
         }
-
-        // Carregar os usuários ao carregar a página
         carregarUsuarios();
     });
 </script>

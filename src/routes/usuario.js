@@ -18,6 +18,10 @@ router.get('/:id', (req, res) => {
     usuarioController.getById(req, res);
 });
 
+router.get('/lista/:empresaId', (req, res) => {
+    usuarioController.listarMesmaEmpresa(req, res);
+});
+
 router.put('/:id', usuarioController.update);
 
 router.post('/', (req, res) => {

@@ -11,6 +11,23 @@ function get(req, res){
     })
 }
 
+function listarMesmaEmpresa(req, res) {
+    const empresaId = req.params.empresaId;
+
+    if (!empresaId) {
+        return res.status(400).json({ error: "ID da empresa não fornecido." });
+    }
+
+    usuarioModel.listarMesmaEmpresa(empresaId)
+        .then(usuarios => {
+            res.status(200).json(usuarios);
+        })
+        .catch(error => {
+            console.error("Erro ao listar usuários por empresa:", error);
+            res.status(500).json({ error: "Erro ao listar usuários por empresa." });
+        });
+}
+
 function getById(req, res) {
     const id = req.params.id;
 
@@ -65,28 +82,20 @@ function deleteUsuario(req, res) {
 }
 
 async function autenticar(req, res) {
-    const { emailServer, senhaServer } = req.body;
+    const { email, senha } = req.body;
 
-    if (!emailServer || !senhaServer) {
+    if (!email || !senha) {
         return res.status(400).json({ error: "E-mail e senha são obrigatórios." });
     }
 
     try {
-        const resultado = await usuarioModel.autenticar(emailServer, senhaServer);
+        const resultado = await usuarioModel.autenticar(email, senha);
 
         if (resultado.length === 1) {
             const usuario = resultado[0];
-            res.status(200).json({
-                id: usuario.id,
-                nome: usuario.nome,
-                email: usuario.email,
-                nivel: usuario.nivel,
-                empresa_id: usuario.empresa_id
-            });
-        } else if (resultado.length === 0) {
-            res.status(401).json({status :"E-mail ou senha inválidos."});
+            res.status(200).json(usuario); // Certifique-se de que `idUsuario` está incluído aqui
         } else {
-            res.status(500).send("Erro: múltiplos usuários encontrados com as mesmas credenciais.");
+            res.status(401).json({ error: "E-mail ou senha inválidos." });
         }
     } catch (error) {
         console.error("Erro ao autenticar usuário:", error);
@@ -234,5 +243,6 @@ module.exports = {
     get,
     update,
     getById,
-    delete: deleteUsuario
+    delete: deleteUsuario,
+    listarMesmaEmpresa
 }
