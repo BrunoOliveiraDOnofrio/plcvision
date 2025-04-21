@@ -17,12 +17,24 @@ router.get("/nomeEmpresa/:id", (req, res) => {
     fabricaController.getNomeEmpresa(req, res);
 });
 
+router.get("/enderecoFabrica/:id", (req, res) => {
+    fabricaController.getEnderecoFabrica(req,res);
+})
+
 router.post('/cadastrar', (req, res) =>{
     fabricaController.cadastrar(req, res);
 });
 
-router.put('/atualizar', (req,res) => {
+router.get('/atualizarCampo/:id', (req, res) => {
+    fabricaController.atualizarCampo(req, res);
+});
+
+router.put('/atualizar/:id', (req, res) => {
     fabricaController.atualizar(req, res);
+})
+
+router.delete('/excluir/:id', (req, res) => {
+    fabricaController.excluir(req, res);
 });
 
 module.exports = router;

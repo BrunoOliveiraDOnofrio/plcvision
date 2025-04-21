@@ -51,6 +51,17 @@ function getNomeEmpresa(req, res){
     })
 }
 
+function getEnderecoFabrica(req, res){
+    const id = req.params.id;
+
+    fabricaModel.getEnderecoFabrica(id).then(response => {
+        res.json(response)
+    }).catch(e => {
+        console.log(e)
+        res.json(e)
+    })
+}
+
 async function cadastrar(req, res){
     // pegar os campos
     let empresa = req.body.empresaServer;
@@ -81,25 +92,61 @@ async function cadastrar(req, res){
 
 }
 
-function atualizar(req, res){
+function atualizarCampo(req, res) {
+    const id = req.params.id;
+    fabricaModel.atualizarCampo(id)
+        .then(result => {
+                const dadosFabrica = result[0];
+                res.status(200).json(dadosFabrica); // Retorna os dados como JSON
+        })
+        .catch(erro => {
+            res.status(500).json({ mensagem: "Erro ao obter dados da fábrica", erro });
+        });
+}
+
+async function atualizar(req, res){
+    const id = req.params.id;
+
     // pegar os campos
-    let nomeFabrica = req.body.input_fabrica;
-    let qtdSetor = req.body.input_qtdSetor;
+    let fabrica = req.body.fabricaServer;
+    let qtdSetor = req.body.qtdSetorServer;
+    // Dados do endereço
+    let logradouro = req.body.logradouroServer;
+    let numero = req.body.numeroServer;
+    let bairro = req.body.bairroServer;
+    let cidade = req.body.cidadeServer;
+    let estado = req.body.estadoServer;
+    let complemento = req.body.complementoServer;
 
-    fabricaModel.atualizar(nomeFabrica, qtdSetor).then(response => {
+    fabricaModel.atualizar(id, fabrica, qtdSetor, logradouro, numero, bairro, cidade, estado, complemento).then(response => {
         res.json(response);
-
     }).catch(e =>{
         console.log(e),
         res.json(e)
     })
+
+}
+
+function excluir(req, res){
+    const id = req.params.id;
+
+    fabricaModel.excluir(id).then(response => {
+        res.json(response)
+    }).catch(e => {
+        console.log(e)
+        res.json(e)
+    })
+
 }
 
 module.exports = {
     getEmpresa,
     getFabricas,
     cadastrar,
+    atualizarCampo,
     atualizar,
+    excluir,
     getNomeEmpresa,
+    getEnderecoFabrica,
     getByEmpresaId
 };

@@ -62,3 +62,7 @@ function cadastrar() {
         console.log(`#ERRO: ${resposta}`);
     });
 }
+
+function voltar(){
+    window.location.href = `./`;
+}

@@ -149,11 +149,11 @@ h1 {
 .modal-btn-fechar {
     padding: 15px 20px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-evenly;
     border-top: 1px solid #e5e7eb;
 }
 
-.btn-fechar {
+.btn-fechar, .btn-editar {
     background-color: #1a1a47;
     color: white;
     border: none;

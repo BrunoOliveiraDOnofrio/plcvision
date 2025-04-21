@@ -2,14 +2,21 @@ function modal(id, nome, qtd, empresa_id){
     const modal = document.getElementById('modalVisualizar');
     console.log('oi id:' + id);
 
-    fetch(`http://localhost:3000/fabrica/nomeEmpresa/${empresa_id}`).then((response) => response.json().then((json) => {
+    const btnEditar = document.getElementById('editarFabrica');
+    btnEditar.setAttribute('data-id', id);
+
+    fetch(`/fabrica/nomeEmpresa/${empresa_id}`).then((response) => response.json().then((json) => {
         console.log(json)
         document.getElementById('detalheEmpresa').innerHTML = json[0].razao_social;
     }))
     
     document.getElementById('detalheNome').textContent = nome;
-    // document.getElementById('detalheEndereco').textContent = data.empresa;
     document.getElementById('detalheQtdSetor').innerHTML = qtd;
+
+    fetch(`/fabrica/enderecoFabrica/${id}`).then((response) => response.json().then((json) => {
+        console.log(json)
+        document.getElementById('detalheEndereco').innerHTML = `${json[0].logradouro} <br> ${json[0].cidade} <br> ${json[0].bairro}`;
+    }))
 
     modal.style.display = 'flex';
 }
@@ -18,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('modalVisualizar');
     const fecharModal = document.querySelector('.fecha');
     const btnFechar = document.querySelector('.btn-fechar');
-
+    const btnEditar = document.getElementById('editarFabrica');
     fecharModal.addEventListener('click', function() {
         modal.style.display = 'none';
     });
@@ -31,5 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target === modal) {
             modal.style.display = 'none';
         }
+    });
+
+    btnEditar.addEventListener('click', function() {
+        const id = btnEditar.getAttribute('data-id');
+        localStorage.setItem("id", id);
+        window.location.href = `./${id}/form`;
     });
 });
