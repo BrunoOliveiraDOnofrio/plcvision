@@ -18,7 +18,7 @@ def enviar_arquivo(arquivo):
     data_hora_brasil = data_hora_brasil.replace(":", "-")
     caminho = "Scripts/csvs/" + arquivo + ".csv"
     nome_arquivo_s3 = f"monitoramento/{data_hora_brasil}/{arquivo}.csv"
-    nome_bucket = "bucket-python-plcvision"
+    nome_bucket = "plcvision-raw"
     s3 = conexao_aws()
     s3.upload_file(caminho, nome_bucket, nome_arquivo_s3)
     print("Upload concluido...")

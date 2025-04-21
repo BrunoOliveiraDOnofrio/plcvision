@@ -2,18 +2,7 @@
 CREATE DATABASE PlcVision;
 USE PlcVision;
 
--- drop database PlcVision;
-select * from parceria;
-SELECT ec.id, ec.razao_social, ec.qtdFabrica, ec.cnpj, 
-concat(logradouro, ' ', numLogradouro, ' ', cidade, ' ', bairro) as endereco,
-ec.segmento, ec.token FROM empresa_fabricante as ef
-JOIN parceria p
-ON p.empresa_fabricante_id = ef.id
-JOIN empresa_consumidor ec
-ON ec.id = p.empresa_consumidor_id
-JOIN endereco e 
-ON e.id = ec.endereco_id
-WHERE ef.id = 2;
+
 -- SELECT co.id, co.funcao_python,co.tipo_dado, conf.limite_atencao, conf.limite_critico, co.hardware, co.coluna_captura from componente as co 
 --                   join config_plc as conf on conf.componente_id = co.id 
 --                   join plc as p on p.id = conf.plc_id 
@@ -69,11 +58,7 @@ CREATE TABLE empresa_consumidor (
     token VARCHAR(100)
     ,FOREIGN KEY (endereco_id) REFERENCES endereco(id)
 );
-select * from empresa_consumidor;
-select * from endereco;
-select * from usuario;
 
-desc endereco;
 
 CREATE TABLE parceria (
     id INT PRIMARY KEY AUTO_INCREMENT,

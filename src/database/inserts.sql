@@ -1,4 +1,6 @@
 -- Inserindo endereços
+
+
 INSERT INTO endereco (logradouro, numLogradouro, cidade, estado, bairro, complemento) VALUES
 ('Avenida Paulista', 1000, 'São Paulo', 'SP', 'Bela Vista', 'Andar 5'),
 ('Rua XV de Novembro', 500, 'Curitiba', 'PR', 'Centro', 'Sala 12'),
@@ -60,6 +62,8 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('REDE', 'Pacote Recebido', 'Unidade', 'rede_recv', 'psutil.net_io_counters().packets_recv'),
 ('REDE', 'Pacote Mandado', 'Unidade', 'rede_sent', 'psutil.net_io_counters().packets_sent');
 
+
+
 -- Inserindo configurações de PLC
 -- Alterar a coluna "plc_id" de acordo com o ID do seu PLC.
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico,  fabrica_consumidor_id) VALUES
@@ -73,3 +77,4 @@ INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico,  
 (6, 3, 9000, 8000,  1),
 (15, 3, 500000, 400000, 1),
 (16, 3, 2100000, 2000000, 1);
+
