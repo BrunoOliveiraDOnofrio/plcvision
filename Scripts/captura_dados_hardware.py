@@ -138,7 +138,7 @@ def coletar_dados():
         conteudo_csv = []
         contador = 0
         
-        while contador <= 10:
+        while contador <= 100:
             #limpar_tela()
             
             print('Coletando Dados...')
@@ -203,7 +203,7 @@ def coletar_dados():
             nome_csv = f"{data_hora_brasil}_{id_plc}"
 
             sendToWdv.enviar(colunas_wdv,valores_inserir, id_plc)
-            if contador == 10:
+            if contador == 100:
                 with     open(f"Scripts/csvs/{nome_csv}.csv", 'w', newline='') as arquivo_csv:
                     escritor = csv.writer(arquivo_csv)
                     for linha in conteudo_csv:
@@ -211,7 +211,7 @@ def coletar_dados():
                 print("Gerando CSV...")
                 time.sleep(1)
                 print("Enviando Bucket...")
-                # aws.enviar_arquivo(nome_csv)
+                aws.enviar_arquivo(nome_csv)
             time.sleep(1)
 
 
