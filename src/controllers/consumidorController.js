@@ -196,7 +196,8 @@ const store = (req, res) => {
 const getByToken = (req, res) => {
     const id = req.params.id
     const token = req.body.token
-
+    console.log(token)
+    console.log(id)
     consumidorModel.getByToken(token, id).then(response => {
         if(response.length == 0){
             res.status(400).json({

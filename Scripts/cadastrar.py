@@ -25,8 +25,8 @@ def login():
     senha = input(f"Digite sua senha:\n")
     
     dicionario = {
-        "emailServer" : email,
-        "senhaServer" : senha
+        "email" : email,
+        "senha" : senha
     }
 
     json_up = json.dumps(dicionario)
@@ -62,7 +62,7 @@ def validarParceria():
     json_data = json.dumps(dicionario)
 
     headers = {'Content-Type': 'application/json'}
-    
+    print(user, "AQUI ESTA O USER")
     usuario_id = user.get("id")
     
     url = API_URL + f"/empresas/{usuario_id}"

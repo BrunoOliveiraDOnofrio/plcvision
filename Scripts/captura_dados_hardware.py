@@ -156,10 +156,10 @@ def coletar_dados():
                 try:
                     valor = eval(info.get('funcao_python')) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
 
-                    if valor >= info.get('limite_critico'):
-                        selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 1)
-                    elif valor >= info.get('limite_atencao'):
-                        selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 0)
+                    # if valor >= info.get('limite_critico'):
+                    #     selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 1)
+                    # elif valor >= info.get('limite_atencao'):
+                    #     selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 0)
                     
                     
                     
