@@ -15,7 +15,8 @@ INSERT INTO empresa_fabricante (cnpj, razao_social, endereco_id, qtdParcerias) V
 -- Inserindo usuários
 INSERT INTO usuario (empresa_id, nome, email, telCelular, senha, nivel, setor, cargo) VALUES
 (1, 'Carlos Silva', 'carlos.silva@siemens.com', '5511998765432', 'senha123', 2, 'Engenharia', 'Engenheiro de Automação'),
-(2, 'Mariana Souza', 'mariana.souza@schneider.com', '5541998765432', 'senha456', 1, 'TI', 'Analista de Sistemas');
+(2, 'Mariana Souza', 'mariana.souza@schneider.com', '5541998765432', 'senha456', 1, 'TI', 'Analista de Sistemas'),
+(2, 'Douglas Pellegrino', 'douglas@email.com', '11348461078', 'senha789', 3, 'TI', 'Analista de Sistemas');
 
 -- Inserindo empresas consumidoras
 INSERT INTO empresa_consumidor (razao_social, segmento, cnpj, endereco_id, qtdFabrica, token) VALUES
@@ -39,7 +40,7 @@ INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
 ('Produção de Chocolates', 2, 10);
 
 -- Inserir N PLCs de acordo com o seu id. Ex: Se o seu PLC é id = 4, ADD 4 PLCs
-INSERT INTO PLC (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
+INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
 ('Siemens s7-1500', 2021, 1,1, 'Windowns CE', '2GB', '00:1A:2B:3C:4D:5E', 'plc-s7-1500-01'),
 ('Schneider M340', 2022, 2,2, 'Linux', '4GB', '00:1B:2C:3D:4E:5F', 'plc-M340-01'),
 ('Siemens XRL8', 2015, 1,1, 'Linux', '2GB', '00:3F:3F:3F:5E:1A', 'plc-XRL8-01');
@@ -66,15 +67,15 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 
 -- Inserindo configurações de PLC
 -- Alterar a coluna "plc_id" de acordo com o ID do seu PLC.
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico,  fabrica_consumidor_id) VALUES
-(2, 3, 70.0, 90.0,  1),
-(8, 3, 4000.0, 5000.0,  1),
-(5, 3, 70, 80,  1),
-(9, 3, 4000000, 5000000,  1),
-(12, 3, 70, 80,  1),
-(10, 3, 8000000, 9000000,  1),
-(4, 3, 12, 15,  1),
-(6, 3, 9000, 8000,  1),
-(15, 3, 500000, 400000, 1),
-(16, 3, 2100000, 2000000, 1);
+INSERT INTO config_plc (componente_id,  limite_atencao, limite_critico,  fabrica_consumidor_id) VALUES
+(2,  70.0, 90.0,  1),
+(8,  4000.0, 5000.0,  1),
+(5,  70, 80,  1),
+(9,  4000000, 5000000,  1),
+(12,  70, 80,  1),
+(10,  8000000, 9000000,  1),
+(4,  12, 15,  1),
+(6,  9000, 8000,  1),
+(15,  500000, 400000, 1),
+(16,  2100000, 2000000, 1);
 

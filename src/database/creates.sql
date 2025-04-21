@@ -1,6 +1,6 @@
-
-CREATE DATABASE PlcVision;
-USE PlcVision;
+-- DROP DATABASE IF EXISTS plcvision;
+-- CREATE DATABASE IF NOT EXISTS PlcVision;
+USE plcvision;
 
 
 -- SELECT co.id, co.funcao_python,co.tipo_dado, conf.limite_atencao, conf.limite_critico, co.hardware, co.coluna_captura from componente as co 

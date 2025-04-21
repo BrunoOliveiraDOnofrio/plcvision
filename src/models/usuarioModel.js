@@ -9,16 +9,16 @@ function get(){
 
 function getById(id) {
     const instrucao = `
-        SELECT idUsuario, nome, email, telCelular, setor, nivel, cargo
+        SELECT id, nome, email, telCelular, setor, nivel, cargo
         FROM usuario
-        WHERE idUsuario = ${id};
+        WHERE id = ${id};
     `;
     return database.executar(instrucao).then(resultados => resultados[0]);
 }
 
 function listarMesmaEmpresa(empresaId) {
     const instrucao = `
-        SELECT idUsuario, nome, email, setor, cargo, telCelular, nivel
+        SELECT id, nome, email, setor, cargo, telCelular, nivel
         FROM usuario 
         WHERE empresa_id = ${empresaId};
     `;
@@ -32,13 +32,13 @@ function update(dados, id){
     cargo = '${dados.cargo}',
     nivel = '${dados.nivel}',
     telCelular = '${dados.telCelular}'
-    WHERE idUsuario = ${id}`
+    WHERE id = ${id}`
     return database.executar(sql)
 }
 
 async function autenticar(email, senha) {
     const instrucao = `
-        SELECT idUsuario,empresa_id, nome, email,telCelular,setor,cargo, nivel
+        SELECT id,empresa_id, nome, email,telCelular,setor,cargo, nivel
         FROM usuario
         WHERE email = '${email}' AND senha = '${senha}';
     `;
@@ -63,7 +63,7 @@ async function cadastrar(dados) {
 
 function deleteUsuario(id) {
     const instrucao = `
-        DELETE FROM usuario WHERE idUsuario = ${id};
+        DELETE FROM usuario WHERE id = ${id};
     `;
     return database.executar(instrucao);
 }
