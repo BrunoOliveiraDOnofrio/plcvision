@@ -269,7 +269,6 @@
                     tbody.appendChild(tr);
                 });
 
-                // Adicionar eventos aos botões "Visualizar"
                 const btnVisualizar = document.querySelectorAll('.btn-visualizar');
                 btnVisualizar.forEach(btn => {
                     btn.addEventListener('click', async function () {
@@ -277,8 +276,6 @@
                         await visualizarUsuario(id);
                     });
                 });
-
-                // Adicionar eventos aos botões "Remover"
                 const btnRemover = document.querySelectorAll('.btn-remover');
                 btnRemover.forEach(btn => {
                     btn.addEventListener('click', async function () {
@@ -291,7 +288,7 @@
                                 });
                                 if (response.ok) {
                                     alert("Usuário removido com sucesso!");
-                                    carregarUsuarios(); // Recarregar a tabela de usuários
+                                    carregarUsuarios();
                                 } else {
                                     alert("Erro ao remover usuário.");
                                 }
@@ -315,8 +312,6 @@
                     throw new Error("Erro ao buscar detalhes do usuário.");
                 }
                 const usuario = await response.json();
-
-                // Preencher o modal com os dados do usuário
                 document.getElementById('detalheNome').textContent = usuario.nome;
                 document.getElementById('detalheEmail').textContent = usuario.email;
                 document.getElementById('detalheTelefone').textContent = usuario.telefone;
