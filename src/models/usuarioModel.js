@@ -25,15 +25,13 @@ function listarMesmaEmpresa(empresaId) {
     return database.executar(instrucao);
 }
 
-function update(dados, id){
-    const sql = `UPDATE usuario SET nome = '${dados.nome}',
-    setor = '${dados.setor}',
-    email = '${dados.email}',
-    cargo = '${dados.cargo}',
-    nivel = '${dados.nivel}',
-    telCelular = '${dados.telCelular}'
-    WHERE id = ${id}`
-    return database.executar(sql)
+function update(dados, id) {
+    const sql = `
+        UPDATE usuario 
+        SET nome = '${dados.nome}', email = '${dados.email}', setor = '${dados.setor}', cargo = '${dados.cargo}', nivel = '${dados.nivel}', telCelular = '${dados.celular}'
+            WHERE id = ${id};
+    `;
+    return database.executar(sql);
 }
 
 async function autenticar(email, senha) {

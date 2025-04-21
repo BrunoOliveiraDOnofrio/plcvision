@@ -7,7 +7,6 @@ def conexao_aws():
         aws_session_token =''
         )
     
-    
     return s3
 
 

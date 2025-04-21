@@ -16,7 +16,7 @@ var HOST_APP = process.env.APP_HOST;
 var app = express();
 
 var indexRouter = require("./src/routes/index");
-var usuarioRouter = require("./src/routes/usuario");
+const usuarioRouter = require("./src/routes/usuario");
 const fabricanteRouter = require('./src/routes/fabricante')
 const plcRouter = require('./src/routes/plc')
 const fabricaRouter = require('./src/routes/fabrica')

@@ -45,27 +45,18 @@ function getById(req, res) {
         });
 }
 
-function update(req, res){
-    const {nivel, cargo, nome, telCelular, setor, email} = req.body
-    
-    const id = req.params.id
+function atualizar(req, res) {
+    const id = req.params.id;
+    const dados = req.body;
 
-    const dados = {
-        nivel: nivel, 
-        cargo: cargo,
-        nome: nome, 
-        telCelular: telCelular,
-        setor: setor,
-        email: email
-    }
-
-    
-
-    usuarioModel.update(dados, id).then(resposta => {
-        res.json(resposta)
-    }).catch(e => {
-        res.json(e)
-    })
+    usuarioModel.update(dados, id)
+        .then(() => {
+            res.status(200).json({ message: "Usuário atualizado com sucesso!" });
+        })
+        .catch(error => {
+            console.error("Erro ao atualizar usuário:", error);
+            res.status(500).json({ error: "Erro ao atualizar usuário." });
+        });
 }
 
 function deleteUsuario(req, res) {
@@ -93,7 +84,7 @@ async function autenticar(req, res) {
 
         if (resultado.length === 1) {
             const usuario = resultado[0];
-            res.status(200).json(usuario); // Certifique-se de que `idUsuario` está incluído aqui
+            res.status(200).json(usuario);
         } else {
             res.status(401).json({ error: "E-mail ou senha inválidos." });
         }
@@ -241,7 +232,7 @@ module.exports = {
     autenticar,
     store,
     get,
-    update,
+    atualizar,
     getById,
     delete: deleteUsuario,
     listarMesmaEmpresa
