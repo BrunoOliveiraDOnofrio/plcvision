@@ -1,5 +1,18 @@
 const database = require("../database/config")
 
+
+function getEmpresa() {
+    const sql = "SELECT * from empresa_consumidor"
+
+    return database.executar(sql);
+}
+
+function getFabrica() {
+    const sql = "SELECT * from fabrica_consumidor"
+
+    return database.executar(sql);
+}
+
 function cadastrar(empresa, fabrica, nomeSetor) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", empresa, fabrica, nomeSetor);
     
@@ -13,6 +26,8 @@ function cadastrar(empresa, fabrica, nomeSetor) {
 }
 
 module.exports = {
-    cadastrar
+    cadastrar,
+    getEmpresa,
+    getFabrica
 };
 
