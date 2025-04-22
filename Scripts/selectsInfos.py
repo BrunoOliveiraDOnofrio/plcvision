@@ -36,6 +36,7 @@ def buscarConfiguracoes(id_plc):
     url = API_URL + f"/config/{id_plc}"
     response = requests.get(url)
     response_json = response.json()
+    
     if(response_json.get('error')):
         print(response_json.get('error'))
         return False

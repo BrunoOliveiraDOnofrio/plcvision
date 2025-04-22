@@ -7,5 +7,9 @@ const alertaController = require("../controllers/alertaController");
 //    alertaController.funcao(req, res);
 //});
 
+router.post("/last", (req, res) => {
+    alertaController.getUltimoAlerta(req, res);
+});
+
 module.exports = router;
 

@@ -7,6 +7,28 @@ const gerarToken = () => {
     return crypto.randomBytes(16).toString("hex");
 }
 
+const getByFabricanteId = (req, res) => {
+    const id = req.params.fabricanteId
+    consumidorModel.getByFabricanteId(id).then(response => {
+        if(response.length == 0){
+            res.status(400).json({
+                error : "Consumidor não encontrado"
+            })
+        }else {
+            res.status(200).json({
+                message: "OK",
+                empresas: response
+            })
+        } 
+    }).catch(e => {
+        res.status(500).json({
+            error : "Erro ao buscar empresa consumidora",
+            e : e
+        })
+    }) 
+}
+
+
 const show = (req, res) => {
     const id = req.params.id
     consumidorModel.getById(id).then(response => {
@@ -221,5 +243,6 @@ module.exports = {
     store,
     index,
     show,
-    update
+    update,
+    getByFabricanteId
 };

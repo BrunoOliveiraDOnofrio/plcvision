@@ -4,6 +4,17 @@ const database = require("../database/config")
     // query = "alguma query sql cm as fks";
     // return database.executar(query);
 //}
+
+const listarPorEmpresa = (empresaId) => {
+    const sql = `SELECT plc.id,concat(fc.nome, ' ',plc.hostname) as plc FROM plc
+JOIN setor_fabrica sf
+ON sf.id = plc.setor_fabrica_id
+JOIN fabrica_consumidor fc
+ON fc.id = sf.fabrica_consumidor_id
+WHERE fc.empresa_consumidor_id = ${empresaId};`;
+    return database.executar(sql)
+}
+
 function get(){
     const sql = `SELECT * FROM plc`;
 
@@ -11,7 +22,7 @@ function get(){
 }
 
 const getConfigs = id => {
-    const sql = `SELECT conf.id as config_id,co.id, co.funcao_python,co.tipo_dado, conf.limite_atencao, conf.limite_critico, co.hardware, co.coluna_captura from componente as co 
+    const sql = `SELECT conf.id as config_id,co.id, co.hardware, co.tipo_dado, co.unidade_dado, co.funcao_python,co.tipo_dado, conf.limite_atencao, conf.limite_critico, co.hardware, co.coluna_captura from componente as co 
                    join config_plc as conf on conf.componente_id = co.id 
                    join plc as p on p.id = conf.plc_id 
                    where conf.plc_id = ${id}`
@@ -41,5 +52,6 @@ module.exports = {
     getByMac,
     create,
     getConfigs,
-    listarUm
+    listarUm,
+    listarPorEmpresa
 };

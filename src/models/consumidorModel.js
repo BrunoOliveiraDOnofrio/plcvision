@@ -1,5 +1,16 @@
 const database = require("../database/config")
 
+
+const getByFabricanteId = (id) => {     
+    const sql = `select ec.id , ec.razao_social FROM empresa_consumidor as ec
+JOIN parceria par
+ON par.empresa_consumidor_id = ec.id
+JOIN empresa_fabricante ef
+ON par.empresa_fabricante_id = ef.id
+WHERE ef.id =${id};`
+    return database.executar(sql)
+}
+
 const getAll = (empresa_fabricante_id) => {
     // const sql = `SELECT empresa_consumidor.id, razao_social, qtdFabrica,cnpj, concat(logradouro, ' ', numLogradouro, ' ', cidade, ' ', bairro) as endereco,segmento, token FROM empresa_consumidor join
     // endereco 
@@ -53,5 +64,6 @@ module.exports = {
     createConsumidor,
     getAll,
     getById,
-    updateConsumidor
+    updateConsumidor,
+    getByFabricanteId
 }

@@ -138,11 +138,11 @@ def coletar_dados():
         conteudo_csv = []
         contador = 0
         
+        informacoes_componentes = coletar_informacoes_componentes()
         while contador <= 100:
             #limpar_tela()
             
             print('Coletando Dados...')
-            informacoes_componentes = coletar_informacoes_componentes()
             fuso_brasil = timezone(timedelta(hours=-3))
             
             
@@ -150,19 +150,21 @@ def coletar_dados():
             colunas_inserir = []
             colunas_wdv = []
             valores_inserir = []
+            campos_wdv = []
             for info in informacoes_componentes:
                 
 
                 try:
                     valor = eval(info.get('funcao_python')) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
-
-                    # if valor >= info.get('limite_critico'):
-                    #     selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 1)
-                    # elif valor >= info.get('limite_atencao'):
-                    #     selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 0)
+                    print(info)
+                    campo_wdv = info.get('hardware') + " " + info.get('tipo_dado') + " " + info.get('unidade_dado')
+                    if valor >= info.get('limite_critico'):
+                        selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 1)
+                    elif valor >= info.get('limite_atencao'):
+                        selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 0)
                     
                     
-                    
+                    campos_wdv.append(campo_wdv)
                     valores_inserir.append(valor)
                     colunas_inserir.append(info.get('coluna_captura'))
                     colunas_wdv.append(info.get('coluna_captura'))
@@ -185,7 +187,7 @@ def coletar_dados():
             valores_inserir.append(data_hora_brasil)
             valores_inserir.append(id_plc)
             colunas_wdv.append('dataHora')
-            colunas_wdv.append('maquinaId')
+            
             conteudo_csv.append(valores_inserir)
             print("MONITORAMENTO")
             print("+=========================================")
@@ -202,7 +204,7 @@ def coletar_dados():
             contador = contador +1
             nome_csv = f"{data_hora_brasil}_{id_plc}"
 
-            sendToWdv.enviar(colunas_wdv,valores_inserir, id_plc)
+            sendToWdv.enviar(colunas_wdv,valores_inserir,campos_wdv , id_plc)
             if contador == 100:
                 with     open(f"Scripts/csvs/{nome_csv}.csv", 'w', newline='') as arquivo_csv:
                     escritor = csv.writer(arquivo_csv)
@@ -211,7 +213,7 @@ def coletar_dados():
                 print("Gerando CSV...")
                 time.sleep(1)
                 print("Enviando Bucket...")
-                aws.enviar_arquivo(nome_csv)
+                # aws.enviar_arquivo(nome_csv)
             time.sleep(1)
 
 
@@ -339,8 +341,7 @@ def coletar_informacoes_componentes():
 if __name__ == '__main__':
     # quando o arquivo iniciar, configura o banco e inicia a aplicação
     
-    select_user = conexao_select()
-    insert_user = conexao_insert()
+    
    
     # coletar_dados()
     # coletar_informacoes_componentes()

@@ -7,6 +7,28 @@
 //function funcao(req, res) {
     // fazer algo
 //}
+
+const listarPorEmpresa = (req, res) => {
+    const empresaId = req.params.empresaId
+    plcModel.listarPorEmpresa(empresaId).then(response => {
+        if(response.length == 0){
+            res.status(400).json({
+                error : "Nenhum PLC encontrado"
+            })
+        }else {
+            res.status(200).json({
+                message: "OK",
+                plcs: response
+            })
+        } 
+    }).catch(e => {
+        res.status(500).json({
+            error : "Erro ao buscar PLC",
+            e : e
+        })
+    })
+}
+
 function get(req, res){
     plcModel.get().then(response => {
         res.json(response)
@@ -119,5 +141,6 @@ module.exports = {
     getByMac,
     store,
     getConfigs,
-    listarUm
+    listarUm,
+    listarPorEmpresa
 };
