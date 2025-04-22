@@ -21,4 +21,3 @@ def enviar_arquivo(arquivo):
     s3 = conexao_aws()
     s3.upload_file(caminho, nome_bucket, nome_arquivo_s3)
     print("Upload concluido...")
-
