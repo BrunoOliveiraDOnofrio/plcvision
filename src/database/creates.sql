@@ -32,6 +32,7 @@ CREATE TABLE empresa_fabricante (
     razao_social VARCHAR(45),
     endereco_id INT,
     qtdParcerias INT,
+    status TINYINT,
     FOREIGN KEY (endereco_id) REFERENCES endereco(id)
 );
 
