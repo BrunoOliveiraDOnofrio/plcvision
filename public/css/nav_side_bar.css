@@ -44,7 +44,7 @@ body{
 }
 
 .collapse-menu{
-    z-index: 9;
+    z-index: 99999999;
     display: none;
     top: 90%;
     right: 5%;
@@ -81,7 +81,7 @@ body{
     left: 0;
     top: 0;
     height: 100vh;
-    
+    z-index: 999999;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
