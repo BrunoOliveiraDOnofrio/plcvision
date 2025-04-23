@@ -13,6 +13,41 @@
     }
 }
 
+.wrap-all-div{
+    position: relative;
+    margin-top: 10%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    padding-bottom: 30px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.kpi-pagination {
+    top: auto !important;
+    bottom: 0% !important;
+}
+.kpi-next, .kpi-prev{
+    top: auto !important;
+    bottom: 0% !important;
+    opacity: 0;
+}
+
+.chart-next, .chart-prev{
+    top: auto !important;
+    
+    opacity: 0;
+}
+.kpi-next::after, .kpi-prev::after, .chart-next::after, .chart-prev::after{
+    font-size: 20px !important;
+    color: #333 !important;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #333 !important;
+}
+
+
 .line-select-alertas{
     display: flex;
     width: 100%;
@@ -56,20 +91,23 @@
 }
 
 .kpis-div{
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 1%;
+    /* margin-top: 1%;  */
+    padding: 20px !important;
 }
 
 .all-charts-div{
     margin-top: 2%;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 100%; */
+    padding: 10px !important;
+    padding-bottom:30px !important; ;
 }
 
 .charts-div{
@@ -86,14 +124,17 @@
     /* padding: 20px; */
     background-color: #fff;
     width: 100%;
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     min-height: 20vh;
     margin-top: 2%;
+    & .desc{
+        display: flex;
+    }
     & span{
-        font-size: 24px;
+        font-size: 16px;
     }
 
 }
@@ -164,28 +205,68 @@
     }
     
     .kpis-div{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
+        /* display: flex;
+        /* flex-direction: row;
+        flex-wrap: wrap; */
+        /* justify-content: flex-start;
         gap: 1%;
-        align-items: center;
+        align-items: center; */ 
     }
 
     .kpi-box{
-        width: 22%;
-        max-width: 22%; 
+        
         & span{
             font-size: 16px;
             text-align: center;
         }
     }
     .all-charts-div{
-        display: flex;
+        /* display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 3%;
+        gap: 3%; */
+    }
+
+    .swiper-button-next, .swiper-button-prev, .div-componentes{
+        opacity: 0;
+    }
+
+    .wrap-all-div{
+        margin-top: 2%;
+        background-color: #fff;
+        border-radius: 10px;
+        position: relative;
+        padding: 20px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .kpi-next{
+        right: 0 !important;
+        top: 10% !important;
+        width: 5px ;
+    }
+
+    .kpi-prev{
+        right: 5% !important;
+        top: 10% !important;
+        left: auto !important;
+
+    }
+
+    .kpi-prev::after{
+        font-size: 25px  !important;
+        z-index: 9999 !important;
+    }
+
+    .kpi-next::after{
+        font-size: 25px  !important;
+        z-index: 9999 !important;
+    }
+
+    .kpi-pagination{
+        bottom: 0 !important;
+        left: 0 !important;
     }
     .charts-div{
         width: 28%;

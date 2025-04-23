@@ -1,3 +1,26 @@
+let carrosseisCriados = false
+let valoresKpisSpans = []
+
+let kpisCriados = false
+
+const atualizarValoresKpis = (data, campos) => {
+  valoresKpisSpans.forEach((span, index) => {
+    const valor = data[index]
+    campos.forEach((campo) => {
+    if(campo == span.getAttribute("campo")){
+      console.log("campos iguais")
+
+    
+      span.innerHTML = valor
+    }
+    })
+  })
+  }
+
+
+  console.log(valoresKpisSpans.length)
+
+
 function getCurrentDateTime() {
   const now = new Date();
 
@@ -11,6 +34,7 @@ function getCurrentDateTime() {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
 
 const fecharAlerta = () => {
   const divAlerta = document.querySelector('#div_alerta')
@@ -103,6 +127,8 @@ const criarHtmlsGraficoseKpis = (data) => {
     html_kpis_text = ""
 
     let dadosParaCriacao = data[data.length - 1]
+    let dadosDasKpis = []
+    let camposDasKpis = []
     dadosParaCriacao.pop()
     dadosParaCriacao.forEach(dado => {
 
@@ -113,16 +139,18 @@ const criarHtmlsGraficoseKpis = (data) => {
         dado.valor = Number((dado.valor / (1024 **3)).toFixed(2))
         dado.campo = "RAM Memória Livre em GB"
       }
-      html_kpis_text += `<div class="kpi-box">
+      html_kpis_text += `<div class="kpi-box swiper-slide">
                     <div class="value">
-                        <span>${dado.valor}</span> 
+                        <span campo="${dado.campo}" class="valores-kpis">${dado.valor}</span> 
                     </div>
                     <div class="desc">
                        <span>${dado.campo}</span>
                     </div>
                 </div>`
+                dadosDasKpis.push(dado.valor)
+                camposDasKpis.push(dado.campo)
       if(!graficosCriados){
-      html_graficos_text += `<div class="charts-div">
+      html_graficos_text += `<div class="charts-div swiper-slide">
                     <div class="header-chart">
                         <span>${dado.campo}</span>
                     </div>
@@ -175,13 +203,27 @@ const criarHtmlsGraficoseKpis = (data) => {
     
     const kpis = document.querySelector('#div_kpis')
     const charts = document.querySelector('#div_charts')
-    kpis.innerHTML = html_kpis_text
+    if(!kpisCriados){
+      kpis.innerHTML = html_kpis_text
+      valoresKpisSpans = document.querySelectorAll('.valores-kpis')
+      kpisCriados = true
+    }else{
+      atualizarValoresKpis(dadosDasKpis, camposDasKpis)
+    }
     if(!graficosCriados){
 
       charts.innerHTML = html_graficos_text
     }
     criarOuAtualizarGraficosChartJs(dadosParaGrafico, horarios)
+    if(!carrosseisCriados){
+      gerarCarrossel()
+      document.querySelectorAll('.swiper-button-next').forEach(el => el.style.opacity = 1)
+      document.querySelectorAll('.swiper-button-prev').forEach(el => el.style.opacity = 1)  
+      document.querySelector('.div-componentes').style.opacity = 1
+      carrosseisCriados = true
+    }
     graficosCriados = true
+    kpisCriados = true
 
   }
 
@@ -205,13 +247,19 @@ const startMonitoramento = async (id) => {
         kpis.innerHTML = `<h1>Não há dados para monitorar deste PLC</h1>`
         charts.innerHTML = ``
         graficosCriados = false
+        kpisCriados = false
+        carrosseisCriados = false
+
         instanciasGraficos = []
+        document.querySelectorAll('.swiper-button-next').forEach(el => el.style.opacity = 0)
+        document.querySelectorAll('.swiper-button-prev').forEach(el => el.style.opacity = 0)  
+        document.querySelector('.div-componentes').style.opacity = 0
         return
     }
 
-    
-      criarHtmlsGraficoseKpis(data.dados)
-    
+      
+        criarHtmlsGraficoseKpis(data.dados)
+      
 
 
 
@@ -368,7 +416,7 @@ const criarOuAtualizarGraficosChartJs = (datas, horarios) => {
         options: {
           scales: {
             y: {
-              beginAtZero: true
+              // beginAtZero: true
             }
           },
           plugins: {
@@ -382,4 +430,54 @@ const criarOuAtualizarGraficosChartJs = (datas, horarios) => {
       instanciasGraficos[i] = novoGrafico
     }
   })
+}
+
+const gerarCarrossel = () => {
+const swiper = new Swiper('.kpisCarrossel', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+  slidesPerView: 1.3,
+  spaceBetween: 10,
+  breakpoints: {
+    580: {
+      slidesPerView: 4,
+      spaceBetween: 10,
+    }
+  },
+  pagination: {
+    el: '.kpi-pagination',
+    clickable: true,
+  },
+  navigation: {
+    nextEl: '.kpi-next',
+    prevEl: '.kpi-prev',
+  },
+});
+
+const swiperCharts = new Swiper('.chartsCarrossel', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+  slidesPerView: 1.4,
+  spaceBetween: 15,
+  breakpoints: {
+    580: {
+      slidesPerView: 3,
+      spaceBetween: 10,
+    }
+  },
+  // centeredSlides: true,
+  pagination: {
+    el: '.chart-pagination',
+    clickable: true,
+  },
+  navigation: {
+    nextEl: '.chart-next',
+    prevEl: '.chart-prev',
+  },
+  
+});
+
+console.log(swiper)
 }

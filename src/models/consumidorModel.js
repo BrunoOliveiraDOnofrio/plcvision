@@ -1,6 +1,8 @@
 const database = require("../database/config")
 
 
+
+
 const getByFabricanteId = (id) => {     
     const sql = `select ec.id , ec.razao_social FROM empresa_consumidor as ec
 JOIN parceria par
