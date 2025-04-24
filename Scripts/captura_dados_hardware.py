@@ -23,8 +23,8 @@ def conexao_select():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='root',
-        password='linkinpark',
+        user='laysa',
+        password='Urubu@100',
         database='plcvision'
     )
 
