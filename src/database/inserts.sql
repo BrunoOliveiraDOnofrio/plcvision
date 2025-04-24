@@ -78,4 +78,3 @@ INSERT INTO config_plc (componente_id,  limite_atencao, limite_critico,  fabrica
 (6,  9000, 8000,  1),
 (15,  500000, 400000, 1),
 (16,  2100000, 2000000, 1);
-

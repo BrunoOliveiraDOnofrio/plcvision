@@ -28,6 +28,8 @@ const admRouter = require("./src/routes/adm");
 const analistaRouter = require("./src/routes/analista");
 const tempoReal = require("./src/routes/tempoReal");
 
+const setorRegister = require("./src/routes/setor_register");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -46,6 +48,7 @@ app.use("/tempo_real", tempoReal);
 app.use("/consumidor", consumidorRouter)
 app.use("/alerta", alertaRouter)
 
+app.use("/setor",setorRegister)
 
 app.listen(PORTA_APP, function () {
     console.log(`

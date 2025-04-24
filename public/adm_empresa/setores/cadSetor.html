@@ -173,12 +173,8 @@
                         <div class="campo">
                             <span>Nome da Fábrica:</span>
                             <select name="slt-fabrica" id="select_fabrica">
-                                <option value="#">Selecione uma fábrica</option>
-                                <option value="1">Fábrica 1</option>
-                                <option value="2">Fábrica 2</option>
-                                <option value="3">Fábrica 3</option>
-                                <option value="4">Fábrica 4</option>
-                            </select>                  <span></span>
+                                <option value="#">Selecione uma Fábrica</option>
+                            </select>              
                         </div>
                     </div>
                     <div class="row-2">
@@ -208,7 +204,7 @@
 
 async function getFabricas() {
     try {
-        const response = await fetch('/fabrica');
+        const response = await fetch('/fabrica/fabricas');
         if (!response.ok) {
             throw new Error("Erro ao buscar fabricas.");
         }
@@ -239,7 +235,7 @@ async function cadastrarSetor() {
     }
 
     try {
-        const response = await fetch("/setor", {
+        const response = await fetch("/setor/cadastrarSetor", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -255,7 +251,7 @@ async function cadastrarSetor() {
         if (response.ok) {
             alert("Setor cadastrado com sucesso!");
             console.log("Setor cadastrado:", resultado);
-            window.location.href = "./setores";
+            window.location.href = "../setores";
         } else {
             console.error("Erro ao cadastrar setor:", resultado);
             alert("Erro ao cadastrar setor.");

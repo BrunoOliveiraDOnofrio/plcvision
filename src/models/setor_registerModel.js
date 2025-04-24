@@ -12,14 +12,14 @@ async function cadastrarSetor(dados) {
     const { nome, fkFabrica } = dados;
 
     const instrucao = `INSERT INTO setor_fabrica(nome, fabrica_consumidor_id) VALUES
-                      ('${nome}', ${fkFabrica})`
+                      ('${nome}', ${fkFabrica});`
 
     return database.executar(instrucao);
 }
 
 function deletarSetor(id) {
     const instrucao = `DELETE FROM setor_fabrica
-                       WHERE id = ${id}`
+                       WHERE id = ${id};`
 
     return database.executar(instrucao);
 }
@@ -27,7 +27,7 @@ function deletarSetor(id) {
 
 function listarSetorFabrica(fabricaId) {
     const instrucao = `SELECT id, nome, qtdPlc FROM setor_fabrica
-                       WHERE fabrica_consumidor_id = ${fabricaId}`
+                       WHERE fabrica_consumidor_id = ${fabricaId};`
 
     return database.executar(instrucao);
 }
@@ -35,7 +35,7 @@ function listarSetorFabrica(fabricaId) {
 function atualizarSetor(dados, id) {
     const instrucao = `UPDATE setor_fabrica
                        SET nome = '${dados.nome}', fabrica_consumidor_id = ${dados.fkFabrica}, qtdPlc = ${dados.qtdPLC}
-                       WHERE id = ${id}`
+                       WHERE id = ${id};`
 
     return database.executar(instrucao);
 }
