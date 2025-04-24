@@ -1,6 +1,6 @@
 const setor_registerModel = require("../models/setor_registerModel");
 
-function store(req, res) {
+function cadastrarSetor(req, res) {
     const { nome, fkFabrica } = req.body;
 
     if (!nome || !fkFabrica) {
@@ -69,7 +69,7 @@ function atualizarSetor(req, res) {
 
 
 module.exports = {
-    store,
+    cadastrarSetor,
     deletarSetor,
     listarSetorFabrica,
     atualizarSetor
