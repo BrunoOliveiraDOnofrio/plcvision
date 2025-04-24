@@ -1,14 +1,18 @@
 let carrosseisCriados = false
 let valoresKpisSpans = []
-
+let configuracoesObtidas = false
+let configuracoesPlcs = []
+let configuracaoAtual = null
 let kpisCriados = false
+
+
 
 const atualizarValoresKpis = (data, campos) => {
   valoresKpisSpans.forEach((span, index) => {
     const valor = data[index]
     campos.forEach((campo) => {
     if(campo == span.getAttribute("campo")){
-      console.log("campos iguais")
+      
 
     
       span.innerHTML = valor
@@ -114,10 +118,19 @@ let graficosCriados = false
 
 let monitoramentoInterval = null
 
+const selecionarConfiguracaoAtual = (id) => {
+  configuracoesPlcs.forEach(config => {
+    if(config.plc_id == id){
+      configuracaoAtual = config.configuracoes
+    }
+  })
+}
+
 selectPlcs.addEventListener('change', (event) => {
     fecharAlerta()
     const selectedValue = event.target.value;
     monitoramentoInterval && clearInterval(monitoramentoInterval)
+    selecionarConfiguracaoAtual(selectedValue)
     startMonitoramento(selectedValue)
 
 })
@@ -129,6 +142,7 @@ const criarHtmlsGraficoseKpis = (data) => {
     let dadosParaCriacao = data[data.length - 1]
     let dadosDasKpis = []
     let camposDasKpis = []
+    let idsConfigs = []
     dadosParaCriacao.pop()
     dadosParaCriacao.forEach(dado => {
 
@@ -149,6 +163,7 @@ const criarHtmlsGraficoseKpis = (data) => {
                 </div>`
                 dadosDasKpis.push(dado.valor)
                 camposDasKpis.push(dado.campo)
+                
       if(!graficosCriados){
       html_graficos_text += `<div class="charts-div swiper-slide">
                     <div class="header-chart">
@@ -165,6 +180,7 @@ const criarHtmlsGraficoseKpis = (data) => {
     let dadosGrafico = []
       data.forEach(dado => {
         let linhaDeValores = []
+        let linhaDeConfigsId = []
         dado.forEach(dado => {
       // console.log(dado)
       
@@ -181,24 +197,72 @@ const criarHtmlsGraficoseKpis = (data) => {
           dado.campo = "RAM Memória Livre em GB"
         }
         linhaDeValores.push(dado.valor)
+        linhaDeConfigsId.push(dado.config_id)
+        
       }
         
     }) 
     
     dadosGrafico.push(linhaDeValores)
+    idsConfigs.push(linhaDeConfigsId)
+    
   })
 
     //organizar os dados para o gráfico
 
     let dadosParaGrafico = []
-
+    let configsParaGrafico = []
+    
+    
     for(let j = 0; j < dadosGrafico[0].length; j++){
       let linha = []
+      let linhasConfigs = []
       for(let i = 0; i < dadosGrafico.length; i++){
+        
         linha.push(dadosGrafico[i][j])
+        linhasConfigs.push(idsConfigs[i][j])
       }
       dadosParaGrafico.push(linha)
+      configsParaGrafico.push(linhasConfigs)
     } 
+
+    let coresParaGraficos = []
+
+    let cor = {
+      cor1: "rgba(0, 123, 255, 1)",
+      cor2: "rgba(0, 123, 255, 0.2)",
+    }
+    
+    configsParaGrafico.forEach(config => config.forEach((config, index) => {
+      configuracaoAtual.forEach(configuracao => {
+        
+        if(configuracao.config_id == config){
+          let corDefinida = false;
+          dadosParaGrafico[index].forEach((dado, i) => {
+            if(dado >= configuracao.limite_critico && !corDefinida){
+              
+              cor = {
+                cor1: "rgba(255, 0, 0, 1)",
+                cor2: "rgba(255, 0, 0, 0.2)",
+              }
+
+              corDefinida = true
+            }else if(dado >= configuracao.limite_atencao && !corDefinida){
+              
+              cor = {
+                cor1: "rgba(255, 255, 0, 1)",
+                cor2: "rgba(255, 255, 0, 0.2)",
+              }
+              corDefinida = true
+            }
+        })
+        console.log(cor)
+          coresParaGraficos.push(cor)
+      }
+      })
+    })
+  )
+        
 
     
     const kpis = document.querySelector('#div_kpis')
@@ -214,7 +278,7 @@ const criarHtmlsGraficoseKpis = (data) => {
 
       charts.innerHTML = html_graficos_text
     }
-    criarOuAtualizarGraficosChartJs(dadosParaGrafico, horarios)
+    criarOuAtualizarGraficosChartJs(dadosParaGrafico, horarios, coresParaGraficos)
     if(!carrosseisCriados){
       gerarCarrossel()
       document.querySelectorAll('.swiper-button-next').forEach(el => el.style.opacity = 1)
@@ -241,7 +305,7 @@ const startMonitoramento = async (id) => {
   })
   const data = await dataFromPython.json()
     if (data == "No data") { 
-        console.log("No data")
+        
         const charts = document.querySelector('#div_charts')
         const kpis = document.querySelector('#div_kpis')
         kpis.innerHTML = `<h1>Não há dados para monitorar deste PLC</h1>`
@@ -282,6 +346,17 @@ const fillSelectPlcs = (data) => {
     })
 }
 
+const pegarConfiguracoes = (plcs) => {
+  plcs.forEach(plc => {
+    const configuracoes = {
+      plc_id: plc.id,
+      configuracoes: plc.configs
+    }
+    configuracoesPlcs.push(configuracoes)
+
+})
+} 
+
 const getPlcsByEmpresaId = async (id) => {
   try{
     const response = await fetch('/plc/get/' + id, {
@@ -293,6 +368,7 @@ const getPlcsByEmpresaId = async (id) => {
     const data = await response.json()
     console.log(data)
     fillSelectPlcs(data.plcs)
+    pegarConfiguracoes(data.plcs)
   } catch (error) {
     console.error('Error:', error);
   }
@@ -337,52 +413,10 @@ getEmpresasByFabricanteId(1)
 
 
 
-// const criarGraficosChartJs = (datas, horarios) => {
-
-// const graficos = document.querySelectorAll('.meuGrafico')
-// console.log(graficos)
-
-
-// for(let i =0; i < graficos.length; i++){
-//     const ctx = graficos[i].getContext('2d')
-//     const meuGrafico = new Chart(ctx, {
-//         type: 'line',
-//         data: {
-//           labels: horarios,
-//           datasets: [{
-//             label: 'Valor',
-//             data: datas[i],
-//             fill: true,
-//             backgroundColor: 'rgba(0, 123, 255, 0.2)',
-//             borderColor: 'rgba(0, 123, 255, 1)',
-//             borderWidth: 2,
-//             tension: 0.4,
-//             pointBackgroundColor: '#fff',
-//             pointBorderColor: 'rgba(0, 123, 255, 1)',
-//             pointRadius: 5
-//           }]
-//         },
-//         options: {
-//           scales: {
-//             y: {
-//               beginAtZero: true,
-//               // max: 100
-//             }
-//           },
-//           plugins: {
-//             legend: {
-//               display: false
-//             }
-//           }
-//         }
-//       });
-      
-// }
-// }
 
 let instanciasGraficos = []
 
-const criarOuAtualizarGraficosChartJs = (datas, horarios) => {
+const criarOuAtualizarGraficosChartJs = (datas, horarios, cores) => {
   const graficos = document.querySelectorAll('.meuGrafico')
 
   graficos.forEach((canvas, i) => {
@@ -392,7 +426,8 @@ const criarOuAtualizarGraficosChartJs = (datas, horarios) => {
     if (instanciasGraficos[i]) {
       instanciasGraficos[i].data.labels = horarios
       instanciasGraficos[i].data.datasets[0].data = datas[i]
-      
+      instanciasGraficos[i].data.datasets[0].backgroundColor = cores[i].cor2
+      instanciasGraficos[i].data.datasets[0].borderColor = cores[i].cor1
       instanciasGraficos[i].update()
     } else {
       // Cria o gráfico e armazena a instância

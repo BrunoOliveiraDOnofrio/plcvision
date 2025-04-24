@@ -16,10 +16,27 @@ const listarPorEmpresa = (req, res) => {
                 error : "Nenhum PLC encontrado"
             })
         }else {
-            res.status(200).json({
-                message: "OK",
-                plcs: response
+
+            Promise.all(response.map(async plc => {
+                const plcId = plc.id
+                const configs = await plcModel.getConfigs(plcId)
+                return {
+                    ...plc,
+                    configs: configs
+                }
+            }
+            )).then(response => {
+                res.status(200).json({
+                    message: "OK",
+                    plcs: response
+                })
+            }).catch(e => {
+                res.status(500).json({
+                    error : "Erro ao buscar PLC",
+                    e : e
+                })
             })
+            
         } 
     }).catch(e => {
         res.status(500).json({

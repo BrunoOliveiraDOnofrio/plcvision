@@ -3,8 +3,8 @@ import json
 import time
 url = "http://localhost:3000/monitoramento/0"
 
-def enviar(colunas, dados,campos, id_plc):
-    dicionario = tratamento(colunas, dados, campos)
+def enviar(colunas, dados,campos, config_ids,id_plc):
+    dicionario = tratamento(colunas, dados, campos, config_ids)
     dicionario = {
         "maquina": id_plc,
         "dados": dicionario
@@ -15,7 +15,7 @@ def enviar(colunas, dados,campos, id_plc):
     response = requests.get(url, headers=headers, data=data)
 
 
-def tratamento(colunas, dados, campos):
+def tratamento(colunas, dados, campos, config_ids):
     dicts = []
     for index, coluna in enumerate(colunas):
 
@@ -30,7 +30,8 @@ def tratamento(colunas, dados, campos):
             dicionario = {
               
                     "valor": dados[index],
-                    "campo": campos[index]
+                    "campo": campos[index],
+                    "config_id": config_ids[index]
                 
             }
         dicts.append(dicionario)

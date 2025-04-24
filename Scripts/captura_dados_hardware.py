@@ -151,6 +151,7 @@ def coletar_dados():
             colunas_wdv = []
             valores_inserir = []
             campos_wdv = []
+            config_ids_wdv = []
             for info in informacoes_componentes:
                 
 
@@ -168,6 +169,7 @@ def coletar_dados():
                     valores_inserir.append(valor)
                     colunas_inserir.append(info.get('coluna_captura'))
                     colunas_wdv.append(info.get('coluna_captura'))
+                    config_ids_wdv.append(info.get('config_id'))
                 except Exception as e:
                     print(e)
                     valor = None
@@ -204,7 +206,7 @@ def coletar_dados():
             contador = contador +1
             nome_csv = f"{data_hora_brasil}_{id_plc}"
 
-            sendToWdv.enviar(colunas_wdv,valores_inserir,campos_wdv , id_plc)
+            sendToWdv.enviar(colunas_wdv,valores_inserir,campos_wdv , config_ids_wdv,id_plc)
             if contador == 100:
                 with     open(f"Scripts/csvs/{nome_csv}.csv", 'w', newline='') as arquivo_csv:
                     escritor = csv.writer(arquivo_csv)
