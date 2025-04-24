@@ -223,7 +223,47 @@ async function getFabricas() {
         });
     } catch (error) {
         console.error("Erro ao carregar fabrica:", error);
-        alert("Erro ao carregar fabricantes.");
+        alert("Erro ao carregar fabricas.");
+    }
+}
+
+document.addEventListener('DOMContentLoaded', getFabricas);
+
+async function cadastrarSetor() {
+    const nomeSetor = document.getElementById("ipt_nome_setor").value;
+    const fkFabrica = document.getElementById("select_fabrica").value;
+
+    if (!nomeSetor || fkFabrica == "#") {
+        alert("Por favor, preencha todos os campos!");
+        return;
+    }
+
+    try {
+        const response = await fetch("/setor", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: nomeSetor,
+                fkFabrica: fkFabrica
+            })
+        });
+
+        const resultado = await response.json();
+
+        if (response.ok) {
+            alert("Setor cadastrado com sucesso!");
+            console.log("Setor cadastrado:", resultado);
+            window.location.href = "./setores";
+        } else {
+            console.error("Erro ao cadastrar setor:", resultado);
+            alert("Erro ao cadastrar setor.");
+        }
+
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+        alert("Erro ao tentar cadastrar o setor.");
     }
 }
 
