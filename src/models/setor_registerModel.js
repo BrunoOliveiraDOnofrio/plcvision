@@ -1,33 +1,52 @@
-const database = require("../database/config")
+const database = require("../database/config");
 
+async function getNumPlc(fkSetor) {
+    const instrucao = `SELECT COUNT(setor_fabrica_id) FROM plc
+                       WHERE setor_fabrica_id = ${fkSetor}`
 
-function getEmpresa() {
-    const sql = "SELECT * from empresa_consumidor"
-
-    return database.executar(sql);
+    return database.executar(instrucao);
 }
 
-function getFabrica() {
-    const sql = "SELECT * from fabrica_consumidor"
-
-    return database.executar(sql);
-}
-
-function cadastrar(empresa, fabrica, nomeSetor) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", empresa, fabrica, nomeSetor);
+async function cadastrarSetor(dados) {
     
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
-      instrucaoSql = `
-        INSERT INTO setor_fabrica(nome, fabrica_consumidor_id) VALUES ('${nomeSetor}', '${fabrica}');
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    const { nome, fkFabrica } = dados;
+
+    const instrucao = `INSERT INTO setor_fabrica(nome, fabrica_consumidor_id) VALUES
+                      ('${nome}', ${fkFabrica})`
+
+    return database.executar(instrucao);
 }
+
+function deletarSetor(id) {
+    const instrucao = `DELETE FROM setor_fabrica
+                       WHERE id = ${id}`
+
+    return database.executar(instrucao);
+}
+
+
+function listarSetorFabrica(fabricaId) {
+    const instrucao = `SELECT id, nome, qtdPlc FROM setor_fabrica
+                       WHERE fabrica_consumidor_id = ${fabricaId}`
+
+    return database.executar(instrucao);
+}
+
+function atualizarSetor(dados, id) {
+    const instrucao = `UPDATE setor_fabrica
+                       SET nome = '${dados.nome}', fabrica_consumidor_id = ${dados.fkFabrica}, qtdPlc = ${dados.qtdPLC}
+                       WHERE id = ${id}`
+
+    return database.executar(instrucao);
+}
+
+
 
 module.exports = {
-    cadastrar,
-    getEmpresa,
-    getFabrica
+    cadastrarSetor,
+    deletarSetor,
+    listarSetorFabrica,
+    atualizarSetor,
+    getNumPlc
 };
 
