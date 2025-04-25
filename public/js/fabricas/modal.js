@@ -15,7 +15,7 @@ function modal(id, nome, qtd, empresa_id){
 
     fetch(`/fabrica/enderecoFabrica/${id}`).then((response) => response.json().then((json) => {
         console.log(json)
-        document.getElementById('detalheEndereco').innerHTML = `${json[0].logradouro} <br> ${json[0].cidade} <br> ${json[0].bairro}`;
+        document.getElementById('detalheEndereco').innerHTML = `${json[0].endereco}`;
     }))
 
     modal.style.display = 'flex';

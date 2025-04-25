@@ -5,11 +5,15 @@ const setor_registerController = require("../controllers/setor_registerControlle
 
 router.post("/cadastrarSetor", function (req, res) {
     setor_registerController.cadastrarSetor(req, res);
-})
+});
 
-router.get('/listarSetorFabrica/:fabricaId', (req, res) => {
+router.get('/listarSetorFabrica/:id', (req, res) => {
     setor_registerController.listarSetorFabrica(req, res);
 });
+
+router.get('/pegarIdFabrica/:id', (req,res) => {
+    setor_registerController.pegarIdFabrica(req,res);
+})
 
 router.put('/atualizarSetor/:id', (req, res) => {
     setor_registerController.atualizarSetor(req, res);

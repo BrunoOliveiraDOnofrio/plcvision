@@ -1,5 +1,7 @@
+empresa_id = sessionStorage.getItem("EMPRESA_ID")
+
 const listarFabricas = () => {
-    fetch("/fabrica/fabricas").then((response) => response.json().then((json) => {
+    fetch(`/fabrica/fabricas/${empresa_id}`).then((response) => response.json().then((json) => {
         console.log(json)
         fillFabricas(json)
     }))

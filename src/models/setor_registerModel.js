@@ -25,9 +25,15 @@ function deletarSetor(id) {
 }
 
 
-function listarSetorFabrica(fabricaId) {
+function listarSetorFabrica(id) {
     const instrucao = `SELECT id, nome, qtdPlc FROM setor_fabrica
-                       WHERE fabrica_consumidor_id = ${fabricaId};`
+                       WHERE fabrica_consumidor_id = ${id};`
+
+    return database.executar(instrucao);
+}
+
+function pegarIdFabrica(id) {
+    const instrucao = `SELECT id FROM fabrica_consumidor WHERE empresa_consumidor_id = ${id}`
 
     return database.executar(instrucao);
 }
@@ -47,6 +53,7 @@ module.exports = {
     deletarSetor,
     listarSetorFabrica,
     atualizarSetor,
-    getNumPlc
+    getNumPlc,
+    pegarIdFabrica
 };
 

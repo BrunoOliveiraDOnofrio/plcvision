@@ -9,7 +9,7 @@ router.get("/empresas", (req, res) => {
     fabricaController.getEmpresa(req, res);
 });
 
-router.get("/fabricas", (req, res) => {
+router.get("/fabricas/:id", (req, res) => {
     fabricaController.getFabricas(req, res);
 });
 

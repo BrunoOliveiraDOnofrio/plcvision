@@ -15,8 +15,8 @@ function getEmpresa(){
     return database.executar(sql);
 }
 
-function getFabricas(){
-    const sql = `SELECT * FROM fabrica_consumidor`;   
+function getFabricas(id){
+    const sql = `SELECT * FROM fabrica_consumidor WHERE empresa_consumidor_id = ${id}`;   
 
     return database.executar(sql);
 }
@@ -28,7 +28,7 @@ function getNomeEmpresa(empresa_consumidor_id){
 }
 
 function getEnderecoFabrica(id){
-    const sql = `SELECT e.logradouro, e.cidade, e.bairro FROM endereco e JOIN fabrica_consumidor f ON e.id = f.endereco_id WHERE f.id = ${id}`;
+    const sql = `SELECT concat(logradouro , " " , numLogradouro , " " , cidade , " " , bairro) as endereco FROM endereco e JOIN fabrica_consumidor f ON e.id = f.endereco_id WHERE f.id = ${id}`;
 
     return database.executar(sql);
 }

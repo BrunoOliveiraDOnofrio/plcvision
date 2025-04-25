@@ -37,13 +37,13 @@ function deletarSetor(req, res) {
 }
 
 function listarSetorFabrica(req, res) {
-    const fabricaId = req.params.fabricaId;
-
-    if (!fabricaId) {
+    const id = req.params.id;
+    console.log(id)
+    if (id == null) {
         return res.status(400).json({ error: "ID da fábrica não fornecido." });
     }
 
-    setor_registerModel.listarSetorFabrica(fabricaId)
+    setor_registerModel.listarSetorFabrica(id)
         .then(setor => {
             res.status(200).json(setor);
         })
@@ -51,6 +51,20 @@ function listarSetorFabrica(req, res) {
             console.error("Erro ao listar setores por fábrica:", error);
             res.status(500).json({ error: "Erro ao listar setor por fábrica." });
         });
+}
+
+function pegarIdFabrica(req, res) {
+    const id = req.params.id;
+    console.log(id);
+
+    setor_registerModel.pegarIdFabrica(id)
+        .then(setor => {
+            res.status(200).json(setor);
+        })
+        .catch(error => {
+            console.error("Erro ao pegar id da fábrica:", error);
+            res.status(500).json({ error: "Erro ao pegar id da fábrica." });
+        })
 }
 
 function atualizarSetor(req, res) {
@@ -72,5 +86,6 @@ module.exports = {
     cadastrarSetor,
     deletarSetor,
     listarSetorFabrica,
-    atualizarSetor
+    atualizarSetor,
+    pegarIdFabrica
 };

@@ -152,7 +152,16 @@
      <div class="main">
         <div class="container">
             <h1>Lista de Setores cadastradas</h1>
-            <button class="btn-adicionar" onclick="adicionar()">Adicionar</button>
+            <div class="filtro">
+                <button class="btn-adicionar" onclick="adicionar()">Adicionar</button>
+                <select name="" id="select_fabrica">
+                    <option value="#">Selecione uma Empresa</option>
+                </select>
+                <select name="" id="select_setor">
+                    <option value="#">Selecione um Setor</option>
+                </select>
+            </div>
+            
         <div class="container-tabela">
             <table class="tabela">
                 <thead>
@@ -164,8 +173,8 @@
                         <th class="viz_rem_colum">Remover</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="tbody_setores">
+                    <!-- <tr>
                         <td>1</td>
                         <td>Moldagem</td>
                         <td>10</td>
@@ -201,8 +210,7 @@
                                 </button>
                             </td>
                         </td>
-                    </tr>
-                </tbody>
+                    </tr> -->
             </table>
         </div>
     </div>
@@ -235,7 +243,7 @@
 </body>
 
 <script src="../../js/nav_sidebar.js"></script>
-
+<script src="../../js/setores/listar.js"></script>
 </html>
 
 <script>
