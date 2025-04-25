@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório</title>
+    <!-- Fonte google  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/dashboards/monitoramento_tempo_real.css">
+    <link rel="stylesheet" href="../../css/dashboards/historico.css">
+    <!-- Link dos icones - boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Nav Bar -->
+     <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <!-- Side bar  -->
+     <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+                <li>
+                    <a href="./monitoramento">
+                        <i class='bx bx-bar-chart-square'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./dashboard">
+                        <i class='bx bx-timer'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./alertas">
+                        <i class='bx bxs-bell-ring' ></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./plcs">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit' ></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+     </nav>
+
+     <div class="main">
+        <div class="content">
+            <div class="header">
+                <h1>Relatório</h1>
+                <p>Histórico dos recursos</p>
+            </div>
+            
+            <div class="kpi-container">
+                <div class="kpi-card">
+                    <div class="kpi-value" style="color: orange;">85%</div>
+                    <div class="kpi-label">CPU Média</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" style="color: blue;">78.2%</div>
+                    <div class="kpi-label">RAM Média</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">5</div>
+                    <div class="kpi-label">Picos de CPU</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">2</div>
+                    <div class="kpi-label">Máquinas em Alerta</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">5.45GB</div>
+                    <div class="kpi-label">Tráfego de Rede</div>
+                </div>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h2>Ciclos de uso de CPU ao longo do dia por máquina</h2>
+                    <div class="chart-container">
+                        <canvas id="cpuChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">Tráfego de rede médio por hora do dia</div>
+                    <div class="chart-container">
+                        <canvas id="networkChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">CPU média de todos PLCs por hora do dia</div>
+                    <div class="chart-container">
+                        <canvas id="cpuMediaChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">Uso de RAM por máquina</div>
+                    <div class="chart-container">
+                        <canvas id="ramChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tabela-container">
+                <div class="chart-header">Horários de Pico CPU por PLC</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Máquina ID</th>
+                            <th>Horários de Pico</th>
+                            <th>CPU Média (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td s>PLC 4</td>
+                            <td >14:00</td>
+                            <td >78.4%</td>
+                        </tr>
+                        <tr>
+                            <td style="color: orange;">PLC 5</td>
+                            <td style="color: orange;">09:00, 11:00, 17:00</td>
+                            <td style="color: orange;">85.6%</td>
+                        </tr>
+                        <tr>
+                            <td style="color: red;">PLC 6</td>
+                            <td style="color: red;">12:00</td>
+                            <td style="color: red;">98.9%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tabela-container">
+                <div class="chart-header">Horários de Pico RAM por PLC</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Máquina ID</th>
+                            <th>Horários de Pico</th>
+                            <th>RAM Média (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PLC 4</td>
+                            <td>11:00, 12:00, 19:00</td>
+                            <td>74.2%</td>
+                        </tr>
+                        <tr>
+                            <td>PLC 5</td>
+                            <td>15:00, 19:00, 20:00</td>
+                            <td>68.9%</td>
+                        </tr>
+                        <tr>
+                            <td style="color: red;">PLC 6</td>
+                            <td style="color: red;">17:00, 19:00, 20:00</td>
+                            <td style="color: red;">91.5%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tabela-container">
+                <h2>Outliers por Data</h2>
+                <table id="outliers-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Data</th>
+                            <th>Total Outliers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/nav_sidebar.js"></script>
+    <script>
+        // Dados para os gráficos
+        const hoursOfDay = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+        
+        // Dados para o gráfico de CPU por máquina
+        const cpuData = {
+            labels: hoursOfDay,
+            datasets: [
+                {
+                    label: 'Máquina 4',
+                    data: [65.0, 68.5, 72.3, 76.4, 79.8, 82.1, 84.5, 86.0, 87.3,
+                    85.6, 83.1, 80.2, 77.5, 75.0, 72.4, 70.2, 68.7],
+                    borderColor: '#00264D',
+                    tension: 0.1,
+                    fill: false
+                },
+                {
+                    label: 'Máquina 5',
+                    data: [88.0, 79.3, 83.7, 91.5, 85.1, 89.0, 82.6, 86.4, 84.3,
+                    87.5, 80.2, 88.9, 81.3, 85.7, 83.1, 87.2, 84.9],
+                    borderColor: '#003366',
+                    tension: 0.1,
+                    fill: false
+                },
+                {
+                    label: 'Máquina 6',
+                    data: [82.5, 85.3, 88.1, 91.2, 94.0, 96.7, 98.9, 97.3, 95.0,
+                    92.8, 89.7, 87.4, 84.6, 81.9, 80.3, 78.0, 75.2],
+                    borderColor: '#004080',
+                    tension: 0.1,
+                    fill: false
+                }
+            ]
+        };
+
+        // Dados para o gráfico de tráfego de rede
+        const networkData = {
+            labels: hoursOfDay,
+            datasets: [
+                {
+                    label: 'Tráfego Médio (MB)',
+                    data: [120, 135, 210, 450, 320, 230, 520, 480, 330, 290, 420, 550, 380, 320, 280, 230, 180],
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgba(153, 102, 255, 1)'
+                }
+            ]
+        };
+        
+        // Dados para o gráfico de CPU média
+        const cpuMediaData = {
+            labels: hoursOfDay,
+            datasets: [
+                {
+                    label: 'CPU Média (%)',
+                    data: [68, 70, 75, 85, 88, 85, 87, 86, 85, 90, 87, 85, 80, 76, 73, 70, 65],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgba(54, 162, 235, 1)'
+                }
+            ]
+        };
+        
+        // Dados para o gráfico de RAM
+        const ramData = {
+            labels: ['PLC 4', 'PLC 5', 'PLC 6'],
+            datasets: [
+                {
+                    label: 'RAM Média (%)',
+                    data: [74.2, 68.9, 91.5],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        // Dados dos outliers
+        const outliersData = [
+            { data: '2025-03-16', total: 13 },
+            { data: '2025-03-06', total: 12 },
+            { data: '2025-03-21', total: 11 },
+            { data: '2025-03-26', total: 11 },
+            { data: '2025-03-23', total: 10 },
+            { data: '2025-03-09', total: 8 },
+            { data: '2025-03-18', total: 7 },
+            { data: '2025-03-19', total: 7 },
+            { data: '2025-03-22', total: 6 },
+            { data: '2025-03-04', total: 5 }
+        ];
+        
+        // Função para inicializar os gráficos e tabelas
+        window.addEventListener('load', function() {
+            // Inicializar o gráfico de CPU
+            const cpuCtx = document.getElementById('cpuChart').getContext('2d');
+            new Chart(cpuCtx, {
+                type: 'line',
+                data: cpuData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'CPU (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hora do dia'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    }
+                }
+            });
+            
+            // Inicializar o gráfico de tráfego de rede
+            const networkCtx = document.getElementById('networkChart').getContext('2d');
+            new Chart(networkCtx, {
+                type: 'line',
+                data: networkData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Tráfego (MB)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hora do dia'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    }
+                }
+            });
+            
+            // Inicializar o gráfico de CPU média
+            const cpuMediaCtx = document.getElementById('cpuMediaChart').getContext('2d');
+            new Chart(cpuMediaCtx, {
+                type: 'line',
+                data: cpuMediaData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'CPU (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hora do dia'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    }
+                }
+            });
+            
+            // Inicializar o gráfico de RAM
+            const ramCtx = document.getElementById('ramChart').getContext('2d');
+            new Chart(ramCtx, {
+                type: 'bar',
+                data: ramData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'RAM (%)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    }
+                }
+            });
+            
+            // Preencher a tabela de outliers
+            const tableBody = document.getElementById('outliers-table').getElementsByTagName('tbody')[0];
+            outliersData.forEach((item, index) => {
+                const row = tableBody.insertRow();
+                const cellIndex = row.insertCell(0);
+                const cellData = row.insertCell(1);
+                const cellTotal = row.insertCell(2);
+                
+                cellIndex.textContent = index + 1;
+                
+                // Formatar data para o padrão brasileiro
+                const dateParts = item.data.split('-');
+                const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+                cellData.textContent = formattedDate;
+                
+                cellTotal.textContent = item.total;
+            });
+        });
+    </script>
+</body>
+</html>
