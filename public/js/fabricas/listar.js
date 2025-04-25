@@ -41,5 +41,5 @@ const fillFabricas = (dados) => {
 }
 
 function adicionar(){
-    window.location.href = "./form";
+    window.location.href = "/adm/fabricas/form";
 }

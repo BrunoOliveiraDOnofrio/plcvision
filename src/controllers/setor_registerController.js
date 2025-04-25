@@ -53,18 +53,32 @@ function listarSetorFabrica(req, res) {
         });
 }
 
-function pegarIdFabrica(req, res) {
+function pegarNomeFabrica(req, res) {
     const id = req.params.id;
     console.log(id);
 
-    setor_registerModel.pegarIdFabrica(id)
+    setor_registerModel.pegarNomeFabrica(id)
         .then(setor => {
             res.status(200).json(setor);
         })
         .catch(error => {
-            console.error("Erro ao pegar id da fábrica:", error);
-            res.status(500).json({ error: "Erro ao pegar id da fábrica." });
+            console.error("Erro ao pegar nome da fábrica:", error);
+            res.status(500).json({ error: "Erro ao pegar nome da fábrica." });
         })
+}
+
+function pegarIdFabrica(req, res) {
+    const id = req.params.id;
+    console.log(id)
+
+    setor_registerModel.pegarIdFabrica(id)
+    .then(setor => {
+        res.status(200).json(setor);
+    })
+    .catch(error => {
+        console.error("Erro ao pegar id da fábrica:", error);
+        res.status(500).json({ error: "Erro ao pegar id da fábrica." });
+    })
 }
 
 function atualizarSetor(req, res) {
@@ -87,5 +101,6 @@ module.exports = {
     deletarSetor,
     listarSetorFabrica,
     atualizarSetor,
+    pegarNomeFabrica,
     pegarIdFabrica
 };

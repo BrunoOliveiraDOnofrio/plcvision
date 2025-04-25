@@ -23,7 +23,8 @@ const getByEmpresaId = (req, res) => {
 }
 
 function getEmpresa(req, res){
-    fabricaModel.getEmpresa().then(response => {
+    id = req.params.id;
+    fabricaModel.getEmpresa(id).then(response => {
         res.json(response)
     }).catch(e => {
         console.log(e)

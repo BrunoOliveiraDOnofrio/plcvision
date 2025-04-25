@@ -32,8 +32,14 @@ function listarSetorFabrica(id) {
     return database.executar(instrucao);
 }
 
+function pegarNomeFabrica(id) {
+    const instrucao = `SELECT nome, id FROM fabrica_consumidor WHERE empresa_consumidor_id = ${id};`
+
+    return database.executar(instrucao);
+}
+
 function pegarIdFabrica(id) {
-    const instrucao = `SELECT id FROM fabrica_consumidor WHERE empresa_consumidor_id = ${id}`
+    const instrucao = `SELECT * FROM setor_fabrica WHERE fabrica_consumidor_id = "${id}";`
 
     return database.executar(instrucao);
 }
@@ -54,6 +60,7 @@ module.exports = {
     listarSetorFabrica,
     atualizarSetor,
     getNumPlc,
+    pegarNomeFabrica,
     pegarIdFabrica
 };
 

@@ -5,7 +5,7 @@ const fabricaController = require("../controllers/fabricaController");
 
 
 
-router.get("/empresas", (req, res) => {
+router.get("/empresas/:id", (req, res) => {
     fabricaController.getEmpresa(req, res);
 });
 

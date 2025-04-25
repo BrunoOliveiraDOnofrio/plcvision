@@ -9,8 +9,8 @@ const getByEmpresaId = empresaId => {
     return database.executar(sql)
 }
 
-function getEmpresa(){
-    const sql = `SELECT * FROM empresa_consumidor`;
+function getEmpresa(id){
+    const sql = `SELECT * FROM empresa_consumidor WHERE id = ${id}`;
 
     return database.executar(sql);
 }

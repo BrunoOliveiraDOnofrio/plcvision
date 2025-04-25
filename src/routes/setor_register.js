@@ -11,7 +11,11 @@ router.get('/listarSetorFabrica/:id', (req, res) => {
     setor_registerController.listarSetorFabrica(req, res);
 });
 
-router.get('/pegarIdFabrica/:id', (req,res) => {
+router.get('/pegarNomeFabrica/:id', (req,res) => {
+    setor_registerController.pegarNomeFabrica(req,res);
+})
+
+router.get('/pegarIdFabrica/:id', (req, res) => {
     setor_registerController.pegarIdFabrica(req,res);
 })
 

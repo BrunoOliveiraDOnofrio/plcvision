@@ -1,27 +1,5 @@
 // const { response } = require("express");
 
-let empresa_id = sessionStorage.getItem("EMPRESA_ID");
-console.log(empresa_id)
-
-let fabrica_id;
-
-const pegarIdFabrica = (empresa_id) => {
-    fetch(`/setor/pegarIdFabrica/${empresa_id}`).then((response) => response.json().then((json) => {
-        console.log(json)
-        fabrica_id = (json)
-    }))
-}
-
-console.log(fabrica_id)
-
-const listarSetorFabrica = (fabrica_id) => {
-    fetch(`/setor/listarSetorFabrica/${fabrica_id}`).then((response) => response.json().then((json) => {
-        console.log(json)
-        fillSetores(json)
-    }))
-}
-
-listarSetorFabrica();
 
 const bodyTabelaSetores = document.getElementById("tbody_setores");
 
@@ -53,6 +31,24 @@ const fillSetores = (dados) => {
 
     bodyTabelaSetores.innerHTML = htmlString;
 }
+
+document.getElementById('select_fabrica').addEventListener('change', function() {
+    var selectedOption = document.getElementById('select_fabrica').value;
+    console.log('Você selecionou: ' + selectedOption)
+    fetch(`http://localhost:3000/setor/pegarIdFabrica/${selectedOption}`).then((response) => response.json().then((json) => {
+        console.log(json)
+        fillSetores(json)
+    }))
+});
+
+document.getElementById('select_empresa').addEventListener('change', function() {
+    var selectedOption = document.getElementById('select_fabrica').value;
+    console.log('Você selecionou: ' + selectedOption)
+    fetch(`http://localhost:3000/setor/pegarIdFabrica/${selectedOption}`).then((response) => response.json().then((json) => {
+        console.log(json)
+        fillSetores(json)
+    }))
+});
 
 function adicionar(){
     window.location.href = "./form";

@@ -197,73 +197,76 @@
 </body>
 
 <script src="../../js/empresas_consumidoras/select_empresa.js"></script>
+<script src="../../js/nav_sidebar.js"></script>
+<script src="../../js/setores/listar.js"></script>
+<script src="../../js/setores/select_fabrica.js"></script>
 
 </html>
 
 <script>
 
-async function getFabricas() {
-    try {
-        const response = await fetch('/fabrica/fabricas');
-        if (!response.ok) {
-            throw new Error("Erro ao buscar fabricas.");
-        }
-        const fabricas = await response.json();
+// async function getFabricas() {
+//     try {
+//         const response = await fetch('/fabrica/fabricas');
+//         if (!response.ok) {
+//             throw new Error("Erro ao buscar fabricas.");
+//         }
+//         const fabricas = await response.json();
 
-        const selectFabrica = document.getElementById('select_fabrica');
-        fabricas.forEach(fabrica => {
-            const option = document.createElement('option');
-            option.value = fabrica.id;
-            option.textContent = fabrica.nome;
-            selectFabrica.appendChild(option);
-        });
-    } catch (error) {
-        console.error("Erro ao carregar fabrica:", error);
-        alert("Erro ao carregar fabricas.");
-    }
-}
+//         const selectFabrica = document.getElementById('select_fabrica');
+//         fabricas.forEach(fabrica => {
+//             const option = document.createElement('option');
+//             option.value = fabrica.id;
+//             option.textContent = fabrica.nome;
+//             selectFabrica.appendChild(option);
+//         });
+//     } catch (error) {
+//         console.error("Erro ao carregar fabrica:", error);
+//         alert("Erro ao carregar fabricas.");
+//     }
+// }
 
-document.addEventListener('DOMContentLoaded', getFabricas);
+// document.addEventListener('DOMContentLoaded', getFabricas);
 
-async function cadastrarSetor() {
-    const nomeSetor = document.getElementById("ipt_nome_setor").value;
-    const fkFabrica = document.getElementById("select_fabrica").value;
+// async function cadastrarSetor() {
+//     const nomeSetor = document.getElementById("ipt_nome_setor").value;
+//     const fkFabrica = document.getElementById("select_fabrica").value;
 
-    if (!nomeSetor || fkFabrica == "#") {
-        alert("Por favor, preencha todos os campos!");
-        return;
-    }
+//     if (!nomeSetor || fkFabrica == "#") {
+//         alert("Por favor, preencha todos os campos!");
+//         return;
+//     }
 
-    try {
-        const response = await fetch("/setor/cadastrarSetor", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                nome: nomeSetor,
-                fkFabrica: fkFabrica
-            })
-        });
+//     try {
+//         const response = await fetch("/setor/cadastrarSetor", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json"
+//             },
+//             body: JSON.stringify({
+//                 nome: nomeSetor,
+//                 fkFabrica: fkFabrica
+//             })
+//         });
 
-        const resultado = await response.json();
+//         const resultado = await response.json();
 
-        if (response.ok) {
-            alert("Setor cadastrado com sucesso!");
-            console.log("Setor cadastrado:", resultado);
-            window.location.href = "../setores";
-        } else {
-            console.error("Erro ao cadastrar setor:", resultado);
-            alert("Erro ao cadastrar setor.");
-        }
+//         if (response.ok) {
+//             alert("Setor cadastrado com sucesso!");
+//             console.log("Setor cadastrado:", resultado);
+//             window.location.href = "../setores";
+//         } else {
+//             console.error("Erro ao cadastrar setor:", resultado);
+//             alert("Erro ao cadastrar setor.");
+//         }
 
-    } catch (error) {
-        console.error("Erro na requisição:", error);
-        alert("Erro ao tentar cadastrar o setor.");
-    }
-}
+//     } catch (error) {
+//         console.error("Erro na requisição:", error);
+//         alert("Erro ao tentar cadastrar o setor.");
+//     }
+// }
 
-function voltar(){
-    window.location.href = `./`;
-}
+// function voltar(){
+//     window.location.href = `./`;
+// }
 </script>
