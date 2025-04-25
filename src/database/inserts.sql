@@ -55,10 +55,6 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('Bateria', 'Quantidade', '%', 'bateria_porcentagem', 'psutil.sensors_battery().percent'),
 ('CPU', 'Frequência', 'Mhz', 'cpu_freq', 'psutil.cpu_freq().current' ),
 ('RAM','Uso em Bytes', 'Bytes', 'ram_uso' ,'psutil.virtual_memory().used'),
-('DISCO', 'Uso do Disco Bytes Windows', 'Bytes', 'disco_uso', 'psutil.disk_usage("C:\\").used'),
-('DISCO', 'Uso do Disco Bytes Linux', 'Bytes', 'disco_uso', 'psutil.disk_usage("/").used'),
-('DISCO', 'Uso do Disco Windows', '%', 'disco_percent', 'psutil.disk_usage("C:\\").percent'),
-('DISCO', 'Uso do Disco Linux', '%', 'disco_percent', 'psutil.disk_usage("/").percent'),
 ('Bateria', 'Tempo Restante', 'minutos', 'bateria_restante', 'int(psutil.sensors_battery().secsleft / 60)'),
 ('REDE', 'Pacote Recebido', 'Unidade', 'rede_recv', 'psutil.net_io_counters().packets_recv'),
 ('REDE', 'Pacote Mandado', 'Unidade', 'rede_sent', 'psutil.net_io_counters().packets_sent');
@@ -68,13 +64,12 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 -- Inserindo configurações de PLC
 -- Alterar a coluna "plc_id" de acordo com o ID do seu PLC.
 INSERT INTO config_plc (componente_id,  limite_atencao, limite_critico,  fabrica_consumidor_id) VALUES
-(2,  70.0, 90.0,  1),
+(2,  85.0, 95.0,  1),
 (8,  4000.0, 5000.0,  1),
 (5,  70, 80,  1),
 (9,  4000000, 5000000,  1),
-(12,  70, 80,  1),
-(10,  8000000, 9000000,  1),
+(12,  8000000, 9000000,  1),
+(11,  8000000, 9000000,  1),
 (4,  12, 15,  1),
-(6,  9000, 8000,  1),
-(15,  500000, 400000, 1),
-(16,  2100000, 2000000, 1);
+(6,  9000, 8000,  1);
+

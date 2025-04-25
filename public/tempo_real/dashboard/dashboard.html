@@ -16,6 +16,12 @@
     <!-- Link dos icones - boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 </head>
 <body>
@@ -113,6 +119,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="./dashboard">
+                        <i class='bx bx-timer'></i>
+                    </a>
+                </li>
+                <li>
                     <a href="./alertas">
                         <i class='bx bxs-bell-ring' ></i>
                     </a>
@@ -142,75 +153,46 @@
             <div class="title-div">
                 <h1>Monitoramento de Recursos</h1>
                 <small>Acompanhe métricas em tempo real</small>
-            </div>
+                <div class="line-select-alertas">
+                <div class="group-selects">
+                    <select name="" id="select_empresas">
+                        <option value="">Selecione uma empresa</option>
+                        
+                    </select>
+                    <select name="" id="select_plcs">
+                        <option value="0">Selecione um PLC</option>
+                    </select>
+                </div>
+                <div class="" id="div_alerta">
+                
+                </div>
 
-            <div class="kpis-div">
-                <div class="kpi-box">
-                    <div class="value">
-                        <span>85%</span> 
-                    </div>
-                    <div class="desc">
-                       <span>Uso CPU</span>
-                    </div>
                 </div>
-                <div class="kpi-box">
-                    <div class="value">
-                        <span>85%</span> 
-                    </div>
-                    <div class="desc">
-                       <span>Uso CPU</span>
-                    </div>
-                </div><div class="kpi-box">
-                    <div class="value">
-                        <span>85%</span> 
-                    </div>
-                    <div class="desc">
-                       <span>Uso CPU</span>
-                    </div>
-                </div><div class="kpi-box">
-                    <div class="value">
-                        <span>85%</span> 
-                    </div>
-                    <div class="desc">
-                       <span>Uso CPU</span>
-                    </div>
+            </div>
+            <div class="wrap-all-div">
+            <h1>Últimas métricas capturadas</h1>
+            <div class="swiper kpisCarrossel">
+                <div id="div_kpis" class="kpis-div swiper-wrapper">
+                    <h1>Não há dados para monitorar deste PLC</h1>
+                    
+                    
                 </div>
-                <div class="kpi-box">
-                    <div class="value">
-                        <span>85%</span> 
-                    </div>
-                    <div class="desc">
-                       <span>Uso CPU</span>
-                    </div>
-                </div>
-                
                 
             </div>
-            <div class="all-charts-div">
-                <div class="charts-div">
-                    <div class="header-chart">
-                        <span>Uso CPU</span>
-                    </div>
-                    <div class="content-chart">
-                        <canvas class="meuGrafico"></canvas>
-                    </div>
+            <div class="swiper-pagination kpi-pagination"></div>
+            <div class="swiper-button-next kpi-next"></div>
+            <div class="swiper-button-prev kpi-prev"></div>
+            </div>
+            <div class="wrap-all-div div-componentes">
+            <h1>Comportamento dos Componentes</h1>
+            <div class="swiper chartsCarrossel">
+                <div id="div_charts" class="all-charts-div swiper-wrapper">
+                    
                 </div>
-                <div class="charts-div">
-                    <div class="header-chart">
-                        <span>Uso RAM</span>
-                    </div>
-                    <div class="content-chart">
-                        <canvas class="meuGrafico"></canvas>
-                    </div>
-                </div>
-                <div class="charts-div">
-                    <div class="header-chart">
-                        <span>Uso CPU Frequência</span>
-                    </div>
-                    <div class="content-chart">
-                        <canvas class="meuGrafico"></canvas>
-                    </div>
-                </div>
+            </div>
+            <div class="swiper-pagination chart-pagination"></div>
+            <div class="swiper-button-next chart-next"></div>
+            <div class="swiper-button-prev chart-prev"></div>
             </div>
         </div>
     </div>

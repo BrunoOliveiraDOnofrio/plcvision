@@ -8,7 +8,7 @@ url.forEach((item, index) => {
 })
 
 const listarUsuarios = () => {
-    fetch("http://localhost:3000/plc").then((response) => response.json().then((json) => {
+    fetch("/plc").then((response) => response.json().then((json) => {
         console.log(json)
         if (adm) {
         fillUsuarios(json)
@@ -83,10 +83,12 @@ function setupModalEventListeners() {
     const btnFechar = document.querySelector('.btn-fechar');
     const btnConfigurar = document.querySelector('.btn-configurar');
     const btnVisualizar = document.querySelectorAll('.btn-visualizar');
-    
+    let idDoPlc;
+
     btnVisualizar.forEach(btn => {
         btn.addEventListener('click', function() {
             const id = this.getAttribute('data-id');
+            idDoPlc = id; 
             const modelo = this.getAttribute('data-modelo');
             const ano = this.getAttribute('data-ano');
             const ram = this.getAttribute('data-ram');
@@ -105,7 +107,7 @@ function setupModalEventListeners() {
     });
     if (btnConfigurar) {
         btnConfigurar.addEventListener('click', function() {
-            window.location.href = 'visualizar_plc.html';
+            window.location.href = `./plcs/${idDoPlc}/show`;
         });
     }
 

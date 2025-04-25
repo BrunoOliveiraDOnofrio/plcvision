@@ -2,6 +2,15 @@ const express = require("express");
 const router = express.Router();
 
 const plcController = require("../controllers/plcController");
+const configPlcController = require("../controllers/configPlcController");
+
+router.put('/config/:id', (req, res) => {
+    configPlcController.desativar(req, res);
+});
+
+router.post('/config/:plcId', (req, res) => {
+    configPlcController.store(req, res);
+});
 
 router.get("/", (req, res) => {
     plcController.get(req, res);

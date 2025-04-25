@@ -139,7 +139,7 @@ def coletar_dados():
         contador = 0
         
         informacoes_componentes = coletar_informacoes_componentes()
-        while contador <= 100:
+        while contador <= 1000:
             #limpar_tela()
             
             print('Coletando Dados...')
@@ -154,7 +154,7 @@ def coletar_dados():
             config_ids_wdv = []
             for info in informacoes_componentes:
                 
-
+            
                 try:
                     valor = eval(info.get('funcao_python')) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
                     print(info)

@@ -12,6 +12,8 @@ const alertaController = require('../controllers/alertaController')
 const { config } = require("dotenv");
 
 
+
+
 router.post('/alerta', (req, res) => {
     alertaController.store(req, res)
 })

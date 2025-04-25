@@ -22,7 +22,7 @@ const atualizarValoresKpis = (data, campos) => {
   }
 
 
-  console.log(valoresKpisSpans.length)
+  
 
 
 function getCurrentDateTime() {
@@ -122,6 +122,7 @@ const selecionarConfiguracaoAtual = (id) => {
   configuracoesPlcs.forEach(config => {
     if(config.plc_id == id){
       configuracaoAtual = config.configuracoes
+      console.log("CONFIGURACAO ATUAL", configuracaoAtual)
     }
   })
 }
@@ -225,7 +226,8 @@ const criarHtmlsGraficoseKpis = (data) => {
       dadosParaGrafico.push(linha)
       configsParaGrafico.push(linhasConfigs)
     } 
-
+    console.log(configsParaGrafico, "CONFIGURACOES PARA GRAFICO CERTO")
+    console.log(dadosParaGrafico, "DADOS PARA GRAFICO CERTO")
     let coresParaGraficos = []
 
     let cor = {
@@ -233,11 +235,15 @@ const criarHtmlsGraficoseKpis = (data) => {
       cor2: "rgba(0, 123, 255, 0.2)",
     }
     
-    configsParaGrafico.forEach(config => config.forEach((config, index) => {
+    configsParaGrafico.forEach((config, index) => config.forEach((config) => {
+      console.log("CONFIGURACAO NO FOREACH", configuracaoAtual)
       configuracaoAtual.forEach(configuracao => {
-        
+        console.log("CONFIGURACAO UMA A UMA", configuracao)
         if(configuracao.config_id == config){
           let corDefinida = false;
+          console.log(dadosParaGrafico[index], "DADOS PARA GRAFICO INTEIRO")
+          console.log(dadosParaGrafico[index], "DADOS PARA GRAFICO")
+          console.log(index, "INDEX")
           dadosParaGrafico[index].forEach((dado, i) => {
             if(dado >= configuracao.limite_critico && !corDefinida){
               
@@ -355,6 +361,7 @@ const pegarConfiguracoes = (plcs) => {
     configuracoesPlcs.push(configuracoes)
 
 })
+console.log(configuracoesPlcs, "TODAS")
 } 
 
 const getPlcsByEmpresaId = async (id) => {
@@ -498,7 +505,7 @@ const swiperCharts = new Swiper('.chartsCarrossel', {
   spaceBetween: 15,
   breakpoints: {
     580: {
-      slidesPerView: 3,
+      slidesPerView: 2.8,
       spaceBetween: 10,
     }
   },

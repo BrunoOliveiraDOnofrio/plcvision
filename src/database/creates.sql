@@ -1,5 +1,5 @@
--- DROP DATABASE IF EXISTS plcvision;
--- CREATE DATABASE IF NOT EXISTS PlcVision;
+ DROP DATABASE IF EXISTS plcvision;
+ CREATE DATABASE IF NOT EXISTS PlcVision;
 USE plcvision;
 
 
@@ -122,6 +122,7 @@ CREATE TABLE config_plc (
     fabrica_consumidor_id INT NULL
     ,CONSTRAINT fkfabricaconsumidorconfig FOREIGN KEY (fabrica_consumidor_id) REFERENCES fabrica_consumidor(id)
     ,padrao TINYINT NULL
+    ,ativo TINYINT DEFAULT 1
 );
 
 
