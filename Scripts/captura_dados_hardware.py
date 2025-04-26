@@ -156,6 +156,8 @@ def coletar_dados():
                 
             
                 try:
+                    
+                    
                     valor = eval(info.get('funcao_python')) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
                     print(info)
                     campo_wdv = info.get('hardware') + " " + info.get('tipo_dado') + " " + info.get('unidade_dado')

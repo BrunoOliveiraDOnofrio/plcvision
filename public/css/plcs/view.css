@@ -220,6 +220,8 @@ button, i{
         & .span{
             font-size: 18px;
             min-width: 22vw;
+            
+            
         }
     }
     .item-table{
@@ -237,6 +239,11 @@ button, i{
         & p{
             font-size: 18px;
             min-width: 22vw;
+            max-width: 22vw;
+            text-wrap: normal;
+            overflow: visible;
+            
+            white-space:wrap;
             
         }
 

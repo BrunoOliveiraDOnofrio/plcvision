@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoramento</title>
+    <title>Visualizar PLC</title>
     <!-- Fonte google  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -108,33 +108,33 @@
         <div class="inicio">
             <ul>
                 <li>
-                    <a href="./consumidores">
+                    <a href="../../consumidores">
                         <i class='bx bx-group'></i>
                     </a>
                 </li>
                 <li>
-                    <a href="./alertas">
+                    <a href="../../alertas">
                         <i class='bx bxs-bell-ring' ></i>
                     </a>
                 </li>
                 <li>
-                    <a href="./fabricas">
+                    <a href="../../fabricas">
                         <i class='bx bxs-factory'></i>
                     </a>
                 </li>
                 <li>
-                    <a href="./setores">
+                    <a href="../../setores">
                 <i class='bx bx-category-alt'></i>
                         
                     </a>
                 </li>
                 <li>
-                    <a href="./usuarios">
+                    <a href="../../usuarios">
                         <i class='bx bxs-user'></i>
                     </a>
                 </li>
                 <li>
-                    <a href="./plcs">
+                    <a href="../../plcs">
                         <i class='bx bx-desktop'></i>
                     </a>
                 </li>
@@ -226,21 +226,7 @@
                         <div class="span">Limites</div>
                         <div class="span">Desativar</div>
                     </div>
-                    <div class="item-table">
-                        <div class="span">
-                            <p>CPU Frequência</p>
-                        </div>
-                        <div class="span">
-                            <p>Mhz</p>
-                        </div>
-                        <div class="span">
-                            <p>Atenção: 40, Crítico: 80</p>
-                        </div>
-                        <div class="span">
-                            <i onclick="abrirModalDesativar()" class='bx bx-error-alt'></i>
-                        </div>
-                        
-                    </div>
+                    
                 </div>
             </div>
             <div class="btn-area">
@@ -253,29 +239,30 @@
         <div class="content-modal">
             <div class="header-modal">
                 <h1>Configuração de PLC <span>(plc-01)</span></h1>
+                <small style="font-size: 12px;color:#333">Atenção, selecionando um componente já configurando você poderá modificar suas métricas de alertas.</small>
             </div>
             <div class="main-modal">
-                <form method="post" action="">
+                <form id="form_adicionar_config" method="post" action="">
                     <div class="form-group">
                         <label for="Componente">Componente:</label>
-                        <select  name="" id="">
+                        <select  name="componente_id" id="select_componente">
                             <option value="">CPU %</option>
                             <option value="">RAM %</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="Limite Atencao">Limite Atenção:</label>
-                        <input placeholder="EX: 40" type="text">
+                        <input name="limite_atencao" placeholder="EX: 40" type="text">
                     </div>
                     <div class="form-group">
                         <label for="Limite Crítico">Limite Crítico:</label>
-                        <input placeholder="EX: 80" type="text">
+                        <input name="limite_critico" placeholder="EX: 80" type="text">
                     </div>
-
+                    <input type="hidden" value="0" name="padrao">
                     <div class="footer-modal">
                         <div class="btn-areas">
                             <button onclick="fecharModalAdicionar()" type="button">Cancelar</button>
-                            <button class="blue-btn" type="submit">Salvar</button>
+                            <button class="blue-btn" onclick="adicionarConfiguracao()" type="button">Salvar</button>
                         </div>
                     </div>
 
@@ -297,7 +284,7 @@
                     <div class="footer-modal">
                         <div class="btn-areas">
                             <button onclick="fecharModalDesativar()" type="button">Cancelar</button>
-                            <button class="blue-btn" type="submit">Desativar</button>
+                            <button class="blue-btn" onclick="desativarConfig()" id="btn_desativar" type="button">Desativar</button>
                         </div>
                     </div>
 

@@ -11,6 +11,7 @@ var dados = [
 ]
 
 router.get("/login", function (req, res) {
+    
     res.sendFile(path.join(__dirname, "../../public/login.html"));
 })
 
@@ -25,7 +26,9 @@ router.get("/", function (req, res) {
 router.get("/monitoramento/:id", (req,res) => {
     
     const id = req.params.id
+    
     let response = "OOK"
+    //serve para diferenciar se o python esta mandando dados ou se eu qeuero visualizar os dados
     if(req.body.maquina && id == 0){
         // tem que verificar se ja existe o id da maquina no json global
         

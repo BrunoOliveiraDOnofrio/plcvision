@@ -23,6 +23,7 @@ const fabricaRouter = require('./src/routes/fabrica')
 const plcRegister = require('./src/routes/plc_register')
 const consumidorRouter = require('./src/routes/consumidor')
 const alertaRouter = require('./src/routes/alerta')
+const componenteRouter = require('./src/routes/componente')
 
 const admRouter = require("./src/routes/adm");
 const analistaRouter = require("./src/routes/analista");
@@ -47,6 +48,7 @@ app.use('/analista', analistaRouter);
 app.use("/tempo_real", tempoReal);
 app.use("/consumidor", consumidorRouter)
 app.use("/alerta", alertaRouter)
+app.use("/componente", componenteRouter)
 
 app.use("/setor",setorRegister)
 
