@@ -13,6 +13,46 @@
     }
 }
 
+.title-legendas{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: flex-start;
+    & .legenda-div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        & span{
+            font-size: 14px ;
+        }
+        & .box{
+            width: 40px;
+            height: 14px;
+            background-color: #333;
+        }
+
+        & .blue{
+            background-color: rgba(0, 123, 255, 0.5);
+            border-color: rgba(0, 123, 255, 0.2);
+            border: 1px solid ;
+        }
+        & .yellow{
+            background-color: rgba(255, 255, 0, 0.5);
+            border-color: rgba(255, 255, 0, 0.2);
+            border: 1px solid ;
+        }
+        & .red{
+            background-color: rgba(255, 0, 0, 0.5);
+            border-color:rgba(255, 0, 0, 0.2);
+            border: 1px solid ;
+        }
+    }
+
+}
+
 .wrap-all-div{
     position: relative;
     margin-top: 10%;
@@ -245,6 +285,45 @@
         right: 0 !important;
         top: 10% !important;
         width: 5px ;
+    }
+
+    .title-legendas{
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        justify-content: space-between;
+        align-items: center;
+        & .legenda-div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            & span{
+                font-size: 12px ;
+            }
+            & .box{
+                width: 40px;
+                height: 14px;
+                background-color: #333;
+            }
+
+            & .blue{
+                background-color: rgba(0, 123, 255, 0.5);
+                border-color: rgba(0, 123, 255, 0.2);
+                border: 1px solid ;
+            }
+            & .yellow{
+                background-color: rgba(255, 255, 0, 0.5);
+                border-color: rgba(255, 255, 0, 0.2);
+                border: 1px solid ;
+            }
+            & .red{
+                background-color: rgba(255, 0, 0, 0.5);
+                border-color:rgba(255, 0, 0, 0.2);
+                border: 1px solid ;
+            }
+        }
+
     }
 
     .kpi-prev{

@@ -1,3 +1,5 @@
+
+
 let carrosseisCriados = false
 let valoresKpisSpans = []
 let configuracoesObtidas = false
@@ -7,25 +9,64 @@ let kpisCriados = false
 
 
 
-const atualizarValoresKpis = (data, campos) => {
+const atualizarValoresKpis = (data, campos, configs) => {
+  const horariosKpis = document.querySelectorAll('.horarios-kpis')
   valoresKpisSpans.forEach((span, index) => {
     const valor = data[index]
     campos.forEach((campo) => {
     if(campo == span.getAttribute("campo")){
       
-
+      try{
+        let valorEscrito = Number(span.innerHTML)
+        if(!isNaN(valorEscrito) ){
+          if(valor > valorEscrito){
+            
+            configuracaoAtual.forEach(configuracao => {
+              if(configuracao.config_id == configs[index]){
+                if(valor >= configuracao.limite_critico){
+                  console.log("AQUIIII OOOOOOO", span.parentNode.parentNode.style.boxShadow)
+                  span.parentNode.parentNode.style.boxShadow = `2px 2px 8px rgba(255, 0, 0, 0.9)`
+                  span.style.color = ` rgba(255, 0, 0, 0.9)`
+                }else if(valor >= configuracao.limite_atencao){
+                  span.parentNode.parentNode.style.boxShadow = `2px 2px 8px rgba(255, 255, 0, 0.9)`
+                  span.style.color = ` rgba(255, 255, 0, 0.9)`
+                }
+              }
+            })
+            horariosKpis[index].innerHTML = getCurrentTime()
+            span.innerHTML = valor
+          }
+        }
+      }catch(e){
+        console.log(e)
+      }
     
-      span.innerHTML = valor
     }
     })
   })
   }
 
 
+  function getCurrentTime() {
+    const now = new Date();
+  
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // meses começam em 0
+    const day = String(now.getDate()).padStart(2, '0');
+  
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    return `${hours}:${minutes}:${seconds}`
+    
+    
+  }
+
   
 
 
-function getCurrentDateTime() {
+function getCurrentDateTime(completar_kpi) {
   const now = new Date();
 
   const year = now.getFullYear();
@@ -35,7 +76,9 @@ function getCurrentDateTime() {
   const hours = String(now.getHours()).padStart(2, '0');
   const minutes = String(now.getMinutes()).padStart(2, '0');
   const seconds = String(now.getSeconds()).padStart(2, '0');
-
+  if(completar_kpi){
+    document.querySelector('#span_data_comeco').innerText = `desde ${hours}:${minutes}:${seconds}`
+  }
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
@@ -145,6 +188,7 @@ const criarHtmlsGraficoseKpis = (data) => {
     let camposDasKpis = []
     let idsConfigs = []
     dadosParaCriacao.pop()
+    let configsDasKpis = []
     dadosParaCriacao.forEach(dado => {
 
       if(dado.campo == "RAM Uso em Bytes Bytes"){
@@ -161,9 +205,13 @@ const criarHtmlsGraficoseKpis = (data) => {
                     <div class="desc">
                        <span>${dado.campo}</span>
                     </div>
+                    <div class="desc">
+                       <span class="horarios-kpis">Horário: ${getCurrentTime()}</span>
+                    </div>
                 </div>`
                 dadosDasKpis.push(dado.valor)
                 camposDasKpis.push(dado.campo)
+                configsDasKpis.push(dado.config_id)
                 
       if(!graficosCriados){
       html_graficos_text += `<div class="charts-div swiper-slide">
@@ -183,7 +231,7 @@ const criarHtmlsGraficoseKpis = (data) => {
         let linhaDeValores = []
         let linhaDeConfigsId = []
         dado.forEach(dado => {
-      // console.log(dado)
+      
       
         
       if(dado.campo == "none"){
@@ -221,13 +269,14 @@ const criarHtmlsGraficoseKpis = (data) => {
       for(let i = 0; i < dadosGrafico.length; i++){
         
         linha.push(dadosGrafico[i][j])
-        linhasConfigs.push(idsConfigs[i][j])
+        if(i == 0){
+          linhasConfigs.push(idsConfigs[i][j])
+        }
       }
       dadosParaGrafico.push(linha)
       configsParaGrafico.push(linhasConfigs)
     } 
-    console.log(configsParaGrafico, "CONFIGURACOES PARA GRAFICO CERTO")
-    console.log(dadosParaGrafico, "DADOS PARA GRAFICO CERTO")
+    
     let coresParaGraficos = []
 
     let cor = {
@@ -236,14 +285,17 @@ const criarHtmlsGraficoseKpis = (data) => {
     }
     
     configsParaGrafico.forEach((config, index) => config.forEach((config) => {
-      console.log("CONFIGURACAO NO FOREACH", configuracaoAtual)
+      
       configuracaoAtual.forEach(configuracao => {
-        console.log("CONFIGURACAO UMA A UMA", configuracao)
         if(configuracao.config_id == config){
+          
           let corDefinida = false;
-          console.log(dadosParaGrafico[index], "DADOS PARA GRAFICO INTEIRO")
-          console.log(dadosParaGrafico[index], "DADOS PARA GRAFICO")
-          console.log(index, "INDEX")
+          cor = {
+            cor1: "rgba(0, 123, 255, 1)",
+            cor2: "rgba(0, 123, 255, 0.2)",
+          }
+          
+          
           dadosParaGrafico[index].forEach((dado, i) => {
             if(dado >= configuracao.limite_critico && !corDefinida){
               
@@ -262,14 +314,14 @@ const criarHtmlsGraficoseKpis = (data) => {
               corDefinida = true
             }
         })
-        console.log(cor)
-          coresParaGraficos.push(cor)
+        
       }
-      })
+    })
+    coresParaGraficos.push(cor)
     })
   )
         
-
+  
     
     const kpis = document.querySelector('#div_kpis')
     const charts = document.querySelector('#div_charts')
@@ -278,7 +330,7 @@ const criarHtmlsGraficoseKpis = (data) => {
       valoresKpisSpans = document.querySelectorAll('.valores-kpis')
       kpisCriados = true
     }else{
-      atualizarValoresKpis(dadosDasKpis, camposDasKpis)
+      atualizarValoresKpis(dadosDasKpis, camposDasKpis, configsDasKpis)
     }
     if(!graficosCriados){
 
@@ -299,7 +351,7 @@ const criarHtmlsGraficoseKpis = (data) => {
 
 
 const startMonitoramento = async (id) => {
-  horaMudanca = getCurrentDateTime()
+  horaMudanca = getCurrentDateTime(true)
   monitoramentoInterval = setInterval(async() => {
   try{
     const dataFromPython = await fetch('/monitoramento/' + id,{      
