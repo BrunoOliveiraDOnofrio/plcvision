@@ -12,7 +12,7 @@
     .main{
         display: flex;
         flex-direction: column;
-        background-color: #E4E4E4;
+        background-color: #F9F9F9;
         height: 100vh;
         justify-content: center;
         align-items: center;
@@ -32,6 +32,10 @@
         flex-direction: column;
         justify-content: space-between;
         align-content: center;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
     }
 
     .tittle{
@@ -80,22 +84,27 @@
         }
 
         & input{
-            border: solid black 1px;
             border-radius: 5px;
             width: 80vw;
             height: 4vh;
-
             font-size: 4vw;
             margin-bottom: 1vh;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            border-color: #bebebe;
+            border-top: #bebebe;
+            border-left: #bebebe;
         }
 
         & select {
-            border: solid black 1px;
             border-radius: 5px;
             width: 80vw;
             height: 4vh;
             font-size: 4vw;
             margin-bottom: 1vh;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            border-color: #bebebe;
+            border-top: #bebebe;
+            border-left: #bebebe;
         }
 
         & select option {
@@ -118,7 +127,7 @@
 @media only screen and (min-width:702px){
 
     .main{
-        background-color: #E4E4E4;
+        background-color: #F9F9F9;
         height: 85%;
     }
     
@@ -135,6 +144,8 @@
         flex-direction: column;
         justify-content: space-between;
         align-content: center;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-radius: 7px;
     }
 
     .tittle{
@@ -175,19 +186,25 @@
         }
 
         & input{
-            border: solid black 1px;
             border-radius: 5px;
             width: 28vw;
             height: 4vh;    
             font-size: 1vw;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            border-color: #bebebe;
+            border-top: #bebebe;
+            border-left: #bebebe;
         }
 
         & select {
-            border: solid black 1px;
             border-radius: 5px;
             width: 28vw;
             height: 4vh; 
             font-size: 1vw;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            border-color: #bebebe;
+            border-top: #bebebe;
+            border-left: #bebebe;
         }
 
         & select option {

@@ -29,6 +29,10 @@ button{
         border: none;
         outline: none;
         /* padding: 10px; */
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
     }
     .main{
         display: flex;
@@ -56,6 +60,10 @@ button{
         flex-direction: column;
         justify-content: space-between;
         align-content: center;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
     }
 
     .tittle{
@@ -91,6 +99,10 @@ button{
     }
 
     .row-1, .row-2, .row-3, .row-4, .campo{
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -101,29 +113,37 @@ button{
         & span{
             display: flex;
             align-self: flex-start;
-            font-family: 'Abel';
             width: 40vw;
         }
 
         & input{
-            border: solid black 1px;
+       
             border-radius: 5px;
             width: 80vw;
             height: 4vh; 
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
         }
 
         & select {
-            border: solid black 1px;
             border-radius: 5px;
             width: 80vw;
             height: 4vh; 
-            font-family: "Inter";
             font-size: 4vw;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
         }
 
         & select option {
-            font-family: "Inter";
             font-size: 4vw;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
         }
     
     }
@@ -162,6 +182,10 @@ button{
     input{
         padding: 15px;
         font-size: 22px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
     }
 
     .full-box{
@@ -171,6 +195,12 @@ button{
         height: 90vh; */
         justify-content: space-between;
         align-content: center;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
+        border-radius: 10px;
+
     }
 
     .tittle{
@@ -191,6 +221,7 @@ button{
         width: 80vw;
         height: fit-content;
         margin: 30px 30px 0 30px;
+        
     }
 
     .row-1, .row-2, .row-3, .row-4 {
@@ -208,61 +239,71 @@ button{
         & span{
             display: flex;
             align-self: flex-start;
-            font-family: 'Abel';
             width: 10vw;
         }
         gap:10px;
         & input{
-            border: solid black 1px;
-            border-radius: 5px;
+
+            border-radius: 10px;
             width: 18vw;
             height: 4vh;    
-            font-family: "Inter";
             font-size: 1.2vw;
             outline: none;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
         }
 
         & select {
-            border: solid black 1px;
-            border-radius: 5px;
+   
+            border-radius: 10px;
             width: 10vw;
             height: 4.4vh; 
-            font-family: "Inter";
             font-size: 1vw;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
         }
 
         & select option {
-            font-family: "Inter";
             font-size: 1vw;
         }
         
     }
 
     .row-3 .campo input {
-        border: solid black 1px;
-        border-radius: 5px;
+        border-radius: 10px;
         width: 30vw;
         height: 4vh;    
-        font-family: "Inter";
         font-size: 1vw;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
     }
 
     .row-4 .campo input {
-        border: solid black 1px;
-        border-radius: 5px;
+        border-radius: 10px;
         width: 80vw;
         height: 4vh;    
-        font-family: "Inter";
         font-size: 1vw;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
     }
 
     .row-2 .campo-logr {
-        border: solid black 1px;
-        border-radius: 5px;
+        border-radius: 10px;
         width: 28.5vw;
         height: 4vh;    
-        font-family: "Inter";
         font-size: 1vw;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        border-color: #bebebe;
+        border-top: #bebebe;
+        border-left: #bebebe;
     }
 
     .box-btns{
