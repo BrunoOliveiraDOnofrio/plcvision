@@ -8,6 +8,8 @@ router.put('/config/:id', (req, res) => {
     configPlcController.desativar(req, res);
 });
 
+router.get('/config/:fabricaId', (req, res) => plcController.getConfigsFabrica(req, res))
+
 router.post('/config/:plcId', (req, res) => {
     configPlcController.store(req, res);
 });

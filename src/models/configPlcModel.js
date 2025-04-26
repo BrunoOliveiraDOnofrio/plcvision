@@ -5,13 +5,23 @@ const checkIfExists = (plc_ic, componente_id) => {
     return database.executar(sql)
 }
 
+const checkIfExistsFabrica = (fabrica_id, componente_id) => {
+    const sql = `SELECT id FROM config_plc WHERE fabrica_consumidor_id = ${fabrica_id} and componente_id = ${componente_id}`
+    return database.executar(sql)
+}
+
 const desativar = (id) => {
     const sql = `UPDATE config_plc SET ativo = 0 WHERE id = ${id}`
     return database.executar(sql)
 }   
 
 const create = (data) => {
-    const sql = `INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, padrao) VALUES (${data.componente_id}, ${data.plc_id}, ${data.limite_atencao}, ${data.limite_critico}, ${data.padrao})`;
+    let sql;
+    if(data.fabrica_consumidor_id){
+        sql = `INSERT INTO config_plc (componente_id, limite_atencao, limite_critico, padrao, fabrica_consumidor_id) VALUES (${data.componente_id},  ${data.limite_atencao}, ${data.limite_critico}, ${data.padrao}, ${data.fabrica_consumidor_id})`;
+    }else{
+        sql = `INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, padrao) VALUES (${data.componente_id}, ${data.plc_id}, ${data.limite_atencao}, ${data.limite_critico}, ${data.padrao})`;
+    }
     return database.executar(sql)
 }
 
@@ -28,6 +38,7 @@ const getDefaultsFabrica = (fabricaId) => {
 module.exports = {
     create,
     checkIfExists,
+    checkIfExistsFabrica,
     getDefaultsFabrica,
     update,
     desativar

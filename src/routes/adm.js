@@ -29,6 +29,10 @@ router.get('/fabricas/:id/form', (req, res) => {
 })
 
 
+router.get('/fabricas/:id/config', (req,res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/fabricas/configurarFabrica.html'));
+})
+
 router.get('/fabricas/form', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/adm_empresa/fabricas/CadastroFabrica.html'));
 })

@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Fábricas</title>
+    <title>Configurar Fábrica</title>
     <!-- Fonte google  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/fonts.css">
-    <link rel="stylesheet" href="../../css/nav_side_bar.css">
-    <link rel="stylesheet" href="../../css/corpo_consumidoras.css">
+    <link rel="stylesheet" href="../../../../css/fonts.css">
+    <link rel="stylesheet" href="../../../../css/nav_side_bar.css">
+    
     <!-- Link dos icones - boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../../../../css/plcs/view.css">
 
 </head>
 <body>
@@ -106,33 +108,33 @@
         <div class="inicio">
             <ul>
                 <li>
-                    <a href="./consumidores">
+                    <a href="../../consumidores">
                         <i class='bx bx-group'></i>
                     </a>
                 </li>
                 <li>
-                    <a href="./alertas">
+                    <a href="../../alertas">
                         <i class='bx bxs-bell-ring' ></i>
                     </a>
                 </li>
                 <li>
-                    <a href="./fabricas">
+                    <a href="../../fabricas">
                         <i class='bx bxs-factory'></i>
                     </a>
                 </li>
                 <li>
-                    <a href="./setores">
+                    <a href="../../setores">
                 <i class='bx bx-category-alt'></i>
                         
                     </a>
                 </li>
                 <li>
-                    <a href="./usuarios">
+                    <a href="../../usuarios">
                         <i class='bx bxs-user'></i>
                     </a>
                 </li>
                 <li>
-                    <a href="./plcs">
+                    <a href="../../plcs">
                         <i class='bx bx-desktop'></i>
                     </a>
                 </li>
@@ -150,104 +152,105 @@
      </nav>
 
      <div class="main">
-        <div class="container">
-            <h1>Lista de Fábricas cadastradas</h1>
-            <button class="btn-adicionar" onclick="adicionar()">Adicionar</button>
-        <div class="container-tabela">
-            <table class="tabela">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Setores</th>
-                        <th class="viz_rem_colum">Vizualização</th>
-                        <th class="viz_rem_colum">Remover</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody_fabricas">
-                    
-                </tbody>
-            </table>
-        </div>
-    </div>
+        <div class="content">
+            
 
-    <div class="modal" id="modalVisualizar">
-        <div class="content_modal">
-            <div class="modal-header">
-                <h2>Detalhes da Fábrica</h2>
-                <button class="fecha">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Nome da Fábrica:</span>
-                    <span id="detalheNome"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Empresa:</span>
-                    <span id="detalheEmpresa"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Quantidade de Setores:</span>
-                    <span id="detalheQtdSetor"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Endereço:</span>
-                    <span id="detalheEndereco"></span>
+            
+
+            <div class="bloco-infos">
+                <h2>Configurar Fábrica</h2>
+
+                <div class="table">
+                    <div class="item-table">
+                        <div class="title">
+                            <span>Aqui você pode configurar métricas a serem capturadas por todos os PLCs alocados nesta fábrica, além de definir seus limites de alertas.</span>
+                        </div>
+                        
+                    </div>
+                 
                 </div>
             </div>
-            <div class="modal-btn-fechar">
-                <button class="btn-editar" id="editarFabrica">Editar</button>
-                <button class="btn-editar" id="configFabrica">Configurar</button>
-                <button class="btn-fechar">Fechar</button>
+
+            <div class="bloco-configuracoes">
+                <div id="div_list_configs" class="table">
+                    <div class="header-table">
+                        <div class="span">Componente</div>
+                        <div class="span">Unidade Medida</div>
+                        <div class="span">Limites</div>
+                        <div class="span">Desativar</div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="btn-area">
+                <button onclick="abrirModalAdicionar()" type="button">Adicionar Configuração</button>
             </div>
         </div>
     </div>
+    
+    <dialog id="dialog_adicionar" class="modal-adicionar-config">
+        <div class="content-modal">
+            <div class="header-modal">
+                <h1>Configuração de PLC <span>(plc-01)</span></h1>
+                <small style="font-size: 12px;color:#333">Atenção, selecionando um componente já configurando você poderá modificar suas métricas de alertas.</small>
+            </div>
+            <div class="main-modal">
+                <form id="form_adicionar_config" method="post" action="">
+                    <div class="form-group">
+                        <label for="Componente">Componente:</label>
+                        <select  name="componente_id" id="select_componente">
+                            <option value="">CPU %</option>
+                            <option value="">RAM %</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Limite Atencao">Limite Atenção:</label>
+                        <input name="limite_atencao" placeholder="EX: 40" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="Limite Crítico">Limite Crítico:</label>
+                        <input name="limite_critico" placeholder="EX: 80" type="text">
+                    </div>
+                    <input type="hidden" value="1" name="padrao">
+                    <div class="footer-modal">
+                        <div class="btn-areas">
+                            <button onclick="fecharModalAdicionar()" type="button">Cancelar</button>
+                            <button class="blue-btn" onclick="adicionarConfiguracao()" type="button">Salvar</button>
+                        </div>
+                    </div>
+
+                    
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="dialog_desativar" class="modal-adicionar-config">
+        <div class="content-modal">
+            <div class="header-modal">
+                <h1>Deseja mesmo desativar configuração?</span></h1>
+            </div>
+            <div class="main-modal">
+                <form method="post" action="">
+                   
+
+                    <div class="footer-modal">
+                        <div class="btn-areas">
+                            <button onclick="fecharModalDesativar()" type="button">Cancelar</button>
+                            <button class="blue-btn" onclick="desativarConfig()" id="btn_desativar" type="button">Desativar</button>
+                        </div>
+                    </div>
+
+                    
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+
 </body>
 
-<script src="../../js/nav_sidebar.js"></script>
-<script src="../../js/fabricas/listar.js"></script>
-<script src="../../js/fabricas/modal.js"></script>
-<script src="../../js/fabricas/excluir.js"></script>
+<script src="../../../../js/nav_sidebar.js"></script>
+<script src="../../../../js/fabricas/config.js"></script>
+
 </html>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('modalVisualizar');
-        const fecharModal = document.querySelector('.fecha');
-        const btnFechar = document.querySelector('.btn-fechar');
-        const btnVisualizar = document.querySelectorAll('.btn-visualizar');
-        
-        btnVisualizar.forEach(btn => {
-            btn.addEventListener('click', function() {
-                console.log('oi')
-                const id = this.getAttribute('id');
-                // TESTE
-                const data = id === "1" 
-                    ? {nome: "Volkswagen - Und 01", empresa:"Volkswagen", endereco: "Av. Brasil, 66<br>Lebron<br>Rio de Janeiro<br>Rio de Janeiro", qtdSetor: 10}
-                    : {nome: "Volkswagen - Und 02", empresa:"Volkswagen", endereco: "Av. Brasil, 66<br>Lebron<br>Rio de Janeiro<br>Rio de Janeiro", qtdSetor: 10};
-                
-                document.getElementById('detalheNome').textContent = data.nome;
-                document.getElementById('detalheEmpresa').textContent = data.empresa;
-                document.getElementById('detalheEndereco').innerHTML = data.endereco;
-                document.getElementById('detalheQtdSetor').innerHTML = data.qtdSetor;
-
-                modal.style.display = 'flex';
-            });
-        });
-        
-        fecharModal.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        btnFechar.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    });
-
-</script>

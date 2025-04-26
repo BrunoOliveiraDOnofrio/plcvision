@@ -3,6 +3,7 @@ function modal(id, nome, qtd, empresa_id){
     console.log('oi id:' + id);
 
     const btnEditar = document.getElementById('editarFabrica');
+    
     btnEditar.setAttribute('data-id', id);
 
     fetch(`/fabrica/nomeEmpresa/${empresa_id}`).then((response) => response.json().then((json) => {
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fecharModal = document.querySelector('.fecha');
     const btnFechar = document.querySelector('.btn-fechar');
     const btnEditar = document.getElementById('editarFabrica');
+    const btnConfigurar = document.getElementById('configFabrica')
     fecharModal.addEventListener('click', function() {
         modal.style.display = 'none';
     });
@@ -43,6 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
     btnEditar.addEventListener('click', function() {
         const id = btnEditar.getAttribute('data-id');
         localStorage.setItem("id", id);
-        window.location.href = `./${id}/form`;
+        window.location.href = `./fabricas/${id}/form`;
+    });
+    btnConfigurar.addEventListener('click', function() {
+        const id = btnEditar.getAttribute('data-id');
+        localStorage.setItem("id", id);
+        window.location.href = `./fabricas/${id}/config`;
     });
 });

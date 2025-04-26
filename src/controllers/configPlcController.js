@@ -119,6 +119,7 @@ const checkIfConfigFabricaExists = async(req, res) => {
 const store = async (req, res) =>{
     const plc_id = req.params.plcId
     const configuracoes = req.body.configuracoes
+    
     let deuRuim = false
     let contador = 0 
     try{
@@ -131,8 +132,13 @@ const store = async (req, res) =>{
 
                 //verificar se a a configuração ja existe
                 try{
-                    let exists = await model.checkIfExists(plc_id, configuracao.componente_id)
-                    
+                    let exists;
+                    if(configuracoes[0].plc_id){
+                        exists = await model.checkIfExists(plc_id, configuracao.componente_id)
+                    }else{
+                        exists = await model.checkIfExistsFabrica(plc_id, configuracao.componente_id)
+
+                    }
                     if(exists.length == 0){
                         configuracao['plc_id'] = plc_id
                         configuracao['padrao'] = 1

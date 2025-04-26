@@ -29,6 +29,14 @@ const getConfigs = id => {
     return database.executar(sql)                   
 }
 
+const getConfigsFabrica = id => {
+    const sql = `SELECT conf.id as config_id, co.id, co.hardware, co.tipo_dado, co.unidade_dado, co.funcao_python,co.tipo_dado, conf.limite_atencao, conf.limite_critico, co.hardware, co.coluna_captura from componente as co 
+                   join config_plc as conf on conf.componente_id = co.id 
+                   where conf.fabrica_consumidor_id = ${id} and conf.ativo = 1`;
+    return database.executar(sql)                   
+}
+
+
 const create = (dados) => {
     
     const sql = `INSERT INTO plc (modelo, ano, sistema_operacional, capacidade_ram, endereco_mac, hostname, setor_fabrica_id, parceria_id) VALUES ('${dados.modelo}', '${dados.ano}', '${dados.sistema_operacional}', '${dados.capacidade_ram}', '${dados.endereco_mac}', '${dados.hostname}', ${dados.setor_fabrica_id}, ${dados.parceria_id})`
@@ -49,6 +57,7 @@ function listarUm(id){
 
 module.exports = {
     get,
+    getConfigsFabrica,
     getByMac,
     create,
     getConfigs,

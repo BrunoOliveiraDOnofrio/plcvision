@@ -1,6 +1,7 @@
 // const industriaModel = require("../models/industriaModel");
 // const empresaModel = require("../models/empresaModel");
  const plcModel = require("../models/plcModel");
+ const configPlcModel = require('../models/configPlcModel')
 // const { get } = require("../routes/plc");
 // para cadastrar um plc especifico, precisa fk da industria e da empresa
 
@@ -64,6 +65,21 @@ function listarUm(req, res) {
         res.json(e);
     });
 }
+
+
+const getConfigsFabrica = (req, res) => {
+    const fabrica_id = req.params.fabricaId
+
+    plcModel.getConfigsFabrica(fabrica_id).then(response => {
+        res.status(200).json(response)
+    }).catch(e => {
+        res.status(500).json({
+            error: "Erro ao buscar configurações de fábrica",
+            e: e
+        })
+    })
+}
+
 
 const getConfigs = (req, res) => {
     const plc_id = req.params.plcId
@@ -159,5 +175,6 @@ module.exports = {
     store,
     getConfigs,
     listarUm,
-    listarPorEmpresa
+    listarPorEmpresa,
+    getConfigsFabrica
 };
