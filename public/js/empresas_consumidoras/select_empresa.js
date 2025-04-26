@@ -1,8 +1,7 @@
-let empresa_id = sessionStorage.getItem("EMPRESA_ID");
-console.log(empresa_id)
+
 
 const pegarEmpresa = () =>{
-    fetch(`http://localhost:3000/fabrica/empresas/${empresa_id}`).then((response) => response.json().then((json) => {
+    fetch(`http://localhost:3000/fabrica/empresas`).then((response) => response.json().then((json) => {
         console.log(json)
         fillEmpresa(json)
     }))

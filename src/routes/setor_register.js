@@ -19,11 +19,23 @@ router.get('/pegarIdFabrica/:id', (req, res) => {
     setor_registerController.pegarIdFabrica(req,res);
 })
 
+router.get('/pegaFabrica/:id', (req, res) => {
+    setor_registerController.pegaFabrica(req,res)
+})
+
 router.put('/atualizarSetor/:id', (req, res) => {
     setor_registerController.atualizarSetor(req, res);
 });
 
-router.delete('/:id', (req, res) => {
+router.get('/atualizarSetor/:id', (req, res) => {
+    setor_registerController.obterSetorPorId(req,res)
+});
+
+router.get('/buscarFabricaPorSetor/:id', (req, res) => {
+    setor_registerController.buscarFabricaPorSetor(req, res);
+});
+
+router.delete('/excluir/:id', (req, res) => {
     setor_registerController.deletarSetor(req, res);
 });
 

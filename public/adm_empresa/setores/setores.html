@@ -154,8 +154,11 @@
             <h1>Lista de Setores cadastradas</h1>
             <div class="filtro">
                 <button class="btn-adicionar" onclick="adicionar()">Adicionar</button>
-                <select name="" id="select_fabrica">
+                <select name="" id="select_empresa">
                     <option value="#">Selecione uma Empresa</option>
+                </select>
+                <select name="" id="select_fabrica">
+                    <option value="#">Selecione uma Fábrica</option>
                 </select>
             </div>
             
@@ -233,6 +236,7 @@
                 </div>
             </div>
             <div class="modal-btn-fechar">
+                <button class="btn-editar" id="editarFabrica">Editar</button>
                 <button class="btn-fechar">Fechar</button>
             </div>
         </div>
@@ -241,14 +245,14 @@
 
 <script src="../../js/nav_sidebar.js"></script>
 <script src="../../js/setores/listar.js"></script>
-<script src="../../js/setores/select_fabrica.js"></script>
+<script src="../../js/setores/modal.js"></script>
+<script src="../../js/setores/excluir.js"></script>
 </html>
 
 <script>
 
     function adicionar() {
-
-        window.location.href = `./setores/form`
+        window.location.href = `./form`
     }
 
 
@@ -260,6 +264,7 @@
         
         btnVisualizar.forEach(btn => {
             btn.addEventListener('click', function() {
+                console.log("oi")
                 const id = this.getAttribute('id');
                 // TESTE
                 const data = id === "1" 

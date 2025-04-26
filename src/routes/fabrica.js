@@ -5,11 +5,11 @@ const fabricaController = require("../controllers/fabricaController");
 
 
 
-router.get("/empresas/:id", (req, res) => {
+router.get("/empresas/", (req, res) => {
     fabricaController.getEmpresa(req, res);
 });
 
-router.get("/fabricas/:id", (req, res) => {
+router.get("/fabricas", (req, res) => {
     fabricaController.getFabricas(req, res);
 });
 

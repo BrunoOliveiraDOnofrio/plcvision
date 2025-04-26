@@ -11,13 +11,13 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../../css/fonts.css">
-    <link rel="stylesheet" href="../../css/nav_side_bar.css">
-    <link rel="stylesheet" href="../../css/cadSetor.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/nav_side_bar.css">
+    <link rel="stylesheet" href="/css/cadSetor.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Alterar Setor</title>
-    <script src="../../js/nav_sidebar.js"></script>
+    <script src="/js/nav_sidebar.js"></script>
 </head>
 
 <body>
@@ -200,49 +200,122 @@
 
 </body>
 
-<script src="../../js/empresas_consumidoras/select_empresa.js"></script>
+<!-- <script src="/js/setores/select_empresa.js"></script> -->
 
 </html>
 
 <script>
+    
+let idSetor;
 
-async function getFabricas() {
+async function carregarEmpresas() {
     try {
-        const response = await fetch('/fabrica');
-        if (!response.ok) {
-            throw new Error("Erro ao buscar fabricas.");
-        }
-        const fabricas = await response.json();
-
-        const selectFabrica = document.getElementById('select_fabrica');
-        fabricas.forEach(fabrica => {
-            const option = document.createElement('option');
-            option.value = fabrica.id;
-            option.textContent = fabrica.nome;
-            selectFabrica.appendChild(option);
-        });
-    } catch (error) {
-        console.error("Erro ao carregar fabrica:", error);
-        alert("Erro ao carregar fabricas.");
+        const response = await fetch("http://localhost:3000/fabrica/empresas");
+        const empresas = await response.json();
+        preencherSelectEmpresas(empresas);
+        return empresas;
+    } catch (erro) {
+        console.error('Erro ao carregar empresas:', erro);
+        alert('Erro ao carregar empresas.');
     }
 }
 
-document.addEventListener('DOMContentLoaded', getFabricas);
+function preencherSelectEmpresas(dados) {
+    const selectEmpresa = document.getElementById("select_empresa");
+    let htmlString = "<option value='#'>Selecione uma Empresa</option>";
+
+    dados.forEach((empresa) => {
+        htmlString += `<option value="${empresa.id}">${empresa.razao_social}</option>`;
+    });
+
+    selectEmpresa.innerHTML = htmlString;
+}
+
+async function carregarFabricas(empresaId) {
+    if (!empresaId || empresaId === '#') {
+        console.error('ID da empresa inválido:', empresaId);
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/setor/pegarNomeFabrica/${empresaId}`);
+        const fabricas = await response.json();
+        preencherSelectFabricas(fabricas);
+        return fabricas;
+    } catch (erro) {
+        console.error('Erro ao carregar fábricas:', erro);
+        alert('Erro ao carregar fábricas.');
+    }
+}
+
+function preencherSelectFabricas(dados) {
+    const selectFabrica = document.getElementById('select_fabrica');
+    let htmlString = "<option value='#'>Selecione uma Fábrica</option>";
+    
+    dados.forEach((fabrica) => {
+        htmlString += `<option value="${fabrica.id}">${fabrica.nome}</option>`;
+    });
+    
+    selectFabrica.innerHTML = htmlString;
+}
+
+async function carregarDadosSetor() {
+    idSetor = localStorage.getItem('id');
+
+    if (!idSetor) {
+        alert('Nenhum setor selecionado.');
+        window.location.href = './setores';
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/setor/atualizarSetor/${idSetor}`);
+        if (!response.ok) {
+            throw new Error(`Erro HTTP: ${response.status}`);
+        }
+        
+        const setor = await response.json();
+        
+        const fabricaResponse = await fetch(`http://localhost:3000/setor/pegaFabrica/${setor.fkFabrica}`);
+        const fabrica = await fabricaResponse.json();
+        
+        if (fabrica && fabrica.length > 0) {
+            const empresaId = fabrica[0].empresa_consumidor_id;
+
+            await carregarEmpresas();
+
+            document.getElementById('select_empresa').value = empresaId;
+            
+            await carregarFabricas(empresaId);
+            
+            document.getElementById('select_fabrica').value = setor.fkFabrica;
+        }
+        
+
+        document.getElementById('ipt_nome_setor').value = setor.nome;
+        
+    } catch (erro) {
+        console.error('Erro ao carregar dados do setor:', erro);
+        alert('Erro ao carregar dados do setor.');
+    }
+}
+
 
 async function EditarSetor() {
-    const nomeSetor = document.getElementById("ipt_nome_setor").value;
-    const fkFabrica = document.getElementById("select_fabrica").value;
+    const nomeSetor = document.getElementById('ipt_nome_setor').value;
+    const fkFabrica = document.getElementById('select_fabrica').value;
 
-    if (!nomeSetor || fkFabrica == "#") {
+    if (!nomeSetor || fkFabrica === "#") {
         alert("Por favor, preencha todos os campos!");
         return;
     }
 
     try {
-        const response = await fetch("/setor", {
-            method: "POST",
+
+        const response = await fetch(`http://localhost:3000/setor/atualizarSetor/${idSetor}`, {
+            method: 'PUT',
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 nome: nomeSetor,
@@ -250,24 +323,38 @@ async function EditarSetor() {
             })
         });
 
-        const resultado = await response.json();
-
         if (response.ok) {
-            alert("Setor cadastrado com sucesso!");
-            console.log("Setor cadastrado:", resultado);
-            window.location.href = "./setores";
+            alert('Setor atualizado com sucesso!');
+            window.location.href = '../';
         } else {
-            console.error("Erro ao cadastrar setor:", resultado);
-            alert("Erro ao cadastrar setor.");
+            const erro = await response.json();
+            console.error('Erro ao editar setor:', erro);
+            alert('Erro ao editar setor: ' + (erro.error || 'Erro desconhecido'));
         }
 
-    } catch (error) {
-        console.error("Erro na requisição:", error);
-        alert("Erro ao tentar cadastrar o setor.");
+    } catch (erro) {
+        console.error('Erro na requisição:', erro);
+        alert('Erro ao tentar editar o setor.');
     }
 }
 
-function voltar(){
-    window.location.href = `./`;
+function voltar() {
+    window.location.href = "../";
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    carregarDadosSetor();
+
+    document.getElementById('select_empresa').addEventListener('change', function() {
+        const empresaId = this.value;
+        if (empresaId !== '#') {
+            carregarFabricas(empresaId);
+        } else {
+
+            document.getElementById('select_fabrica').innerHTML = 
+                "<option value='#'>Selecione uma Fábrica</option>";
+        }
+    });
+});
 </script>
