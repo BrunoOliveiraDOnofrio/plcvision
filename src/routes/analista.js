@@ -16,7 +16,11 @@ router.get('/dashboard', (req, res) => {
 })
 
 router.get('/plcs', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public/analista/plcs/plcs.html'));
+    res.sendFile(path.join(__dirname, '../../public/analista/plcs/plcs.html'),  {
+        headers: {
+            'Content-Type': 'text/html'
+        }
+    });
 })
 
 router.get('/plcs/:id/show', (req, res) => {

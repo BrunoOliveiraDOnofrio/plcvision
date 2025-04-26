@@ -1,6 +1,18 @@
+let adm = false
+
+
+
+let url = window.location.href.split('/')
+url.forEach((item, index) => {
+    if (item == "adm") {
+        adm = true
+    }
+})
+
+
 const modalAdicionar = document.querySelector('#dialog_adicionar')
 const modalDesativar = document.querySelector('#dialog_desativar')
-let url = window.location.href
+url = window.location.href
 const urlParts = url.split('/')
 const plcID = urlParts[urlParts.length - 2]
 const select_componentes = document.querySelector('#select_componente')
@@ -65,7 +77,7 @@ const getConfigs = () => {
         configs = configs.configs
         const configsContainer = document.querySelector('#div_list_configs')
         let html_text = ""
-
+        if(adm){
         configs.forEach(config => {
             html_text += `<div class="item-table">
                         <div class="span">
@@ -83,6 +95,23 @@ const getConfigs = () => {
                         
                     </div>`
         })
+        }else{
+            configs.forEach(config => {
+                html_text += `<div class="item-table">
+                            <div class="span">
+                                <p>${config.hardware}</p>
+                            </div>
+                            <div class="span">
+                                <p>${config.unidade_dado}</p>
+                            </div>
+                            <div class="span">
+                                <p>Atenção: ${config.limite_atencao}, Crítico: ${config.limite_critico}</p>
+                            </div>
+                            
+                            
+                        </div>`
+            })
+        }
         configsContainer.innerHTML += html_text
     }).catch(error => {
         console.error('Erro ao obter as configurações do PLC:', error)

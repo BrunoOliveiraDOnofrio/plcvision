@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoramento</title>
+    <title>Visualizar PLC</title>
     <!-- Fonte google  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/fonts.css">
-    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../../../css/fonts.css">
+    <link rel="stylesheet" href="../../../../css/nav_side_bar.css">
     
     <!-- Link dos icones - boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="../../css/plcs/view.css">
+    <link rel="stylesheet" href="../../../../css/plcs/view.css">
 
 </head>
 <body>
@@ -108,25 +108,21 @@
         <div class="inicio">
             <ul>
                 
+                
                 <li>
-                    <a href="../monitoramento">
-                        <i class='bx bx-bar-chart-square'></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="../dashboard">
+                    <a href="../../dashboard">
                         <i class='bx bx-timer'></i>
                     </a>
                 </li>
                 <li>
-                    <a href="../alertas">
+                    <a href="../../alertas">
                         <i class='bx bxs-bell-ring' ></i>
                     </a>
                 </li>
                
                
                 <li>
-                    <a href="../plcs">
+                    <a href="../../plcs">
                         <i class='bx bx-desktop'></i>
                     </a>
                 </li>
@@ -211,33 +207,17 @@
             </div>
 
             <div class="bloco-configuracoes">
-                <div class="table">
+                <div id="div_list_configs" class="table">
                     <div class="header-table">
                         <div class="span">Componente</div>
                         <div class="span">Unidade Medida</div>
                         <div class="span">Limites</div>
-                        <div class="span">Desativar</div>
-                    </div>
-                    <div class="item-table">
-                        <div class="span">
-                            <p>CPU Frequência</p>
-                        </div>
-                        <div class="span">
-                            <p>Mhz</p>
-                        </div>
-                        <div class="span">
-                            <p>Atenção: 40, Crítico: 80</p>
-                        </div>
-                        <div class="span">
-                            <i onclick="abrirModalDesativar()" class='bx bx-error-alt'></i>
-                        </div>
                         
                     </div>
+                    
                 </div>
             </div>
-            <div class="btn-area">
-                <button onclick="abrirModalAdicionar()" type="button">Adicionar Configuração</button>
-            </div>
+            
         </div>
     </div>
     
@@ -245,29 +225,30 @@
         <div class="content-modal">
             <div class="header-modal">
                 <h1>Configuração de PLC <span>(plc-01)</span></h1>
+                <small style="font-size: 12px;color:#333">Atenção, selecionando um componente já configurando você poderá modificar suas métricas de alertas.</small>
             </div>
             <div class="main-modal">
-                <form method="post" action="">
+                <form id="form_adicionar_config" method="post" action="">
                     <div class="form-group">
                         <label for="Componente">Componente:</label>
-                        <select  name="" id="">
+                        <select  name="componente_id" id="select_componente">
                             <option value="">CPU %</option>
                             <option value="">RAM %</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="Limite Atencao">Limite Atenção:</label>
-                        <input placeholder="EX: 40" type="text">
+                        <input name="limite_atencao" placeholder="EX: 40" type="text">
                     </div>
                     <div class="form-group">
                         <label for="Limite Crítico">Limite Crítico:</label>
-                        <input placeholder="EX: 80" type="text">
+                        <input name="limite_critico" placeholder="EX: 80" type="text">
                     </div>
-
+                    <input type="hidden" value="0" name="padrao">
                     <div class="footer-modal">
                         <div class="btn-areas">
                             <button onclick="fecharModalAdicionar()" type="button">Cancelar</button>
-                            <button class="blue-btn" type="submit">Salvar</button>
+                            <button class="blue-btn" onclick="adicionarConfiguracao()" type="button">Salvar</button>
                         </div>
                     </div>
 
@@ -289,7 +270,7 @@
                     <div class="footer-modal">
                         <div class="btn-areas">
                             <button onclick="fecharModalDesativar()" type="button">Cancelar</button>
-                            <button class="blue-btn" type="submit">Desativar</button>
+                            <button class="blue-btn" onclick="desativarConfig()" id="btn_desativar" type="button">Desativar</button>
                         </div>
                     </div>
 
@@ -302,7 +283,8 @@
 
 </body>
 
-<script src="../../js/nav_sidebar.js"></script>
-<script src="../../js/plcs/view.js"></script>
+<script src="../../../../js/nav_sidebar.js"></script>
+
+<script src="../../../../js/plcs/view.js"></script>
 
 </html>
