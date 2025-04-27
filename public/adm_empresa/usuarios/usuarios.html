@@ -202,16 +202,14 @@
                     </div>
                 </div>
                 <div class="modal-btn-fechar">
-                    <button class="btn-fechar">Fechar</button>
-                </div>
-                <div class="modal-btn-fechar">
                     <button class="btn-editar">Editar</button>
+                    <button class="btn-fechar">Fechar</button>
                 </div>
             </div>
         </div>
 </body>
 
-<script src="../../js/nav_sidebar.js"></script>
+<script src="../../../../js/nav_sidebar.js"></script>
 <script src="../../js/usuarios/listar.js"></script>
 
 </html>
@@ -330,13 +328,50 @@
 
                 const btnEditar = modal.querySelector('.btn-editar');
                 btnEditar.addEventListener('click', function () {
-                    window.location.href = `./editar.html?id=${id}`;
-                });
+                    window.location.href = `/adm/usuarios/${id}/form`;
+                }); 
             } catch (error) {
                 console.error("Erro ao buscar detalhes do usuário:", error);
                 alert("Erro ao buscar detalhes do usuário.");
             }
         }
         carregarUsuarios();
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('modalVisualizar');
+        const fecharModal = document.querySelector('.fecha');
+        const btnFechar = document.querySelector('.btn-fechar');
+        const btnVisualizar = document.querySelectorAll('.btn-visualizar');
+        
+        btnVisualizar.forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log("oi")
+                const id = this.getAttribute('id');
+                const data = id === "1" 
+                    ? {nome: "Pintura", fabrica:"Volkswagen - Und. 01", qtdPLC: 10}
+                    : {nome: "Modelagem", fabrica:"Volkswagen - Und. 02", qtdPLC: 15};
+                
+                document.getElementById('detalheNome').textContent = data.nome;
+                document.getElementById('detalheFabrica').textContent = data.fabrica;
+                document.getElementById('detalheQtdPLC').innerHTML = data.qtdPLC;
+
+                modal.style.display = 'flex';
+            });
+        });
+        
+        fecharModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        btnFechar.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
     });
 </script>
