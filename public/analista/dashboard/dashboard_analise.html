@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <!-- Fonte google  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/nav_side_bar.css">
     <link rel="stylesheet" href="../../css/dashboards/monitoramento_tempo_real.css">
@@ -16,9 +19,10 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <!-- Nav Bar -->
-     <header class="header-nav">
+    <header class="header-nav">
         <div class="menu-foto">
             <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
             <div class="foto"></div>
@@ -55,9 +59,9 @@
                 </nav>
             </div>
         </div>
-     </header>
+    </header>
 
-     <header class="header-nav header-nav-desk">
+    <header class="header-nav header-nav-desk">
         <div class="menu-foto">
             <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
             <div class="fotoEmpresa"></div>
@@ -97,10 +101,10 @@
                 </nav>
             </div>
         </div>
-     </header>
+    </header>
 
-     <!-- Side bar  -->
-     <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+    <!-- Side bar  -->
+    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
         <div class="inicio">
             <ul>
                 <li>
@@ -115,7 +119,7 @@
                 </li>
                 <li>
                     <a href="./alertas">
-                        <i class='bx bxs-bell-ring' ></i>
+                        <i class='bx bxs-bell-ring'></i>
                     </a>
                 </li>
                 <li>
@@ -129,398 +133,912 @@
             <ul>
                 <li>
                     <a href="#">
-                        <i class='bx bx-exit' ></i>
+                        <i class='bx bx-exit'></i>
                     </a>
                 </li>
             </ul>
         </div>
-     </nav>
+    </nav>
 
-     <div class="main">
+    <div class="main">
         <div class="content">
             <div class="header">
                 <h1>Relatório</h1>
                 <p>Histórico dos recursos</p>
-            </div>
-            
-            <div class="kpi-container">
-                <div class="kpi-card">
-                    <div class="kpi-value" style="color: orange;">85%</div>
-                    <div class="kpi-label">CPU Média</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value" style="color: blue;">78.2%</div>
-                    <div class="kpi-label">RAM Média</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value">5</div>
-                    <div class="kpi-label">Picos de CPU</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value">2</div>
-                    <div class="kpi-label">Máquinas em Alerta</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value">5.45GB</div>
-                    <div class="kpi-label">Tráfego de Rede</div>
-                </div>
-            </div>
-            
-            <div class="chart-grid">
-                <div class="chart-card">
-                    <h2>Ciclos de uso de CPU ao longo do dia por máquina</h2>
-                    <div class="chart-container">
-                        <canvas id="cpuChart"></canvas>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-header">Tráfego de rede médio por hora do dia</div>
-                    <div class="chart-container">
-                        <canvas id="networkChart"></canvas>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-header">CPU média de todos PLCs por hora do dia</div>
-                    <div class="chart-container">
-                        <canvas id="cpuMediaChart"></canvas>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-header">Uso de RAM por máquina</div>
-                    <div class="chart-container">
-                        <canvas id="ramChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="tabela-container">
-                <div class="chart-header">Horários de Pico CPU por PLC</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Máquina ID</th>
-                            <th>Horários de Pico</th>
-                            <th>CPU Média (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td s>PLC 4</td>
-                            <td >14:00</td>
-                            <td >78.4%</td>
-                        </tr>
-                        <tr>
-                            <td style="color: orange;">PLC 5</td>
-                            <td style="color: orange;">09:00, 11:00, 17:00</td>
-                            <td style="color: orange;">85.6%</td>
-                        </tr>
-                        <tr>
-                            <td style="color: red;">PLC 6</td>
-                            <td style="color: red;">12:00</td>
-                            <td style="color: red;">98.9%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div class="filtros-container">
+                    <label for="ipt_dtInicial">Data Inicial:</label>
+                    <input type="date" id="ipt_dtInicial">
 
-            <div class="tabela-container">
-                <div class="chart-header">Horários de Pico RAM por PLC</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Máquina ID</th>
-                            <th>Horários de Pico</th>
-                            <th>RAM Média (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>PLC 4</td>
-                            <td>11:00, 12:00, 19:00</td>
-                            <td>74.2%</td>
-                        </tr>
-                        <tr>
-                            <td>PLC 5</td>
-                            <td>15:00, 19:00, 20:00</td>
-                            <td>68.9%</td>
-                        </tr>
-                        <tr>
-                            <td style="color: red;">PLC 6</td>
-                            <td style="color: red;">17:00, 19:00, 20:00</td>
-                            <td style="color: red;">91.5%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <label for="ipt_dtFinal">Data Final:</label>
+                    <input type="date" id="ipt_dtFinal">
 
-            <div class="tabela-container">
-                <h2>Outliers por Data</h2>
-                <table id="outliers-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Data</th>
-                            <th>Total Outliers</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                    <label for="filtro-fabrica">Fábrica:</label>
+                    <select id="filtro-fabrica">
+                        <option value="todas">Todas</option>
+                        <option value="und1">Volkswagen - Und. 1</option>
+                        <option value="und2">Volkswagen - Und. 2</option>
+                    </select>
+
+                    <label for="filtro-setor">Setor:</label>
+                    <select id="filtro-setor">
+                        <option value="todos">Todos</option>
+                        <option value="pintura">Pintura</option>
+                        <option value="solda">Solda</option>
+                        <option value="montagem">Montagem</option>
+                    </select>
+
+                    <button id="aplicar-filtros" onclick="filtrar()">Filtrar</button>
+                </div>
+
+                <div class="kpi-container">
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-cpu" style="color: orange;">85%</div>
+                        <div class="kpi-label">CPU Média</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-ram" style="color: blue;">78.2%</div>
+                        <div class="kpi-label">RAM Média</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-temperatura" style="color: blue;">70.2%</div>
+                        <div class="kpi-label">Temperatura Média</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-picos">5</div>
+                        <div class="kpi-label">Picos de CPU</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-alertas">2</div>
+                        <div class="kpi-label">Máquinas em Alerta</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="kpi-rede">5.45GB</div>
+                        <div class="kpi-label">Tráfego de Rede</div>
+                    </div>
+                </div>
+
+                <div class="chart-grid">
+                    <div class="chart-card">
+                        <h3>Ciclos de uso de CPU ao longo do dia por máquina</h3>
+                        <div class="chart-container">
+                            <canvas id="cpuGrafico"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Tráfego de rede médio</h3>
+                        <div class="chart-container">
+                            <canvas id="redeGrafico"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>CPU média de todos PLCs</h3>
+                        <div class="chart-container">
+                            <canvas id="cpuMediaGrafico"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Uso de RAM por máquina</h3>
+                        <div class="chart-container">
+                            <canvas id="ramGrafico"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Temperatura média</h3>
+                        <div class="chart-container">
+                            <canvas id="temperaturaGrafico"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabela-container">
+                    <div class="chart-header">Horários de Pico CPU por PLC</div>
+                    <table id="cpu-table">
+                        <thead>
+                            <tr>
+                                <th>Máquina ID</th>
+                                <th>Horários de Pico</th>
+                                <th>CPU Média (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tabela-container">
+                    <div class="chart-header">Horários de Pico RAM por PLC</div>
+                    <table id="ram-table">
+                        <thead>
+                            <tr>
+                                <th>Máquina ID</th>
+                                <th>Horários de Pico</th>
+                                <th>RAM Média (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tabela-container">
+                    <h2>Outliers por Data</h2>
+                    <table id="outliers-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Data</th>
+                                <th>Total Outliers</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="../../js/nav_sidebar.js"></script>
-    <script>
-        // Dados para os gráficos
-        const hoursOfDay = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
-        
-        // Dados para o gráfico de CPU por máquina
-        const cpuData = {
-            labels: hoursOfDay,
-            datasets: [
-                {
-                    label: 'Máquina 4',
-                    data: [65.0, 68.5, 72.3, 76.4, 79.8, 82.1, 84.5, 86.0, 87.3,
-                    85.6, 83.1, 80.2, 77.5, 75.0, 72.4, 70.2, 68.7],
-                    borderColor: '#00264D',
-                    tension: 0.1,
-                    fill: false
-                },
-                {
-                    label: 'Máquina 5',
-                    data: [88.0, 79.3, 83.7, 91.5, 85.1, 89.0, 82.6, 86.4, 84.3,
-                    87.5, 80.2, 88.9, 81.3, 85.7, 83.1, 87.2, 84.9],
-                    borderColor: '#003366',
-                    tension: 0.1,
-                    fill: false
-                },
-                {
-                    label: 'Máquina 6',
-                    data: [82.5, 85.3, 88.1, 91.2, 94.0, 96.7, 98.9, 97.3, 95.0,
-                    92.8, 89.7, 87.4, 84.6, 81.9, 80.3, 78.0, 75.2],
-                    borderColor: '#004080',
-                    tension: 0.1,
-                    fill: false
-                }
-            ]
-        };
+        <script src="../../js/nav_sidebar.js"></script>
 
-        // Dados para o gráfico de tráfego de rede
-        const networkData = {
-            labels: hoursOfDay,
-            datasets: [
-                {
-                    label: 'Tráfego Médio (MB)',
-                    data: [120, 135, 210, 450, 320, 230, 520, 480, 330, 290, 420, 550, 380, 320, 280, 230, 180],
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    backgroundColor: 'rgba(153, 102, 255, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    pointRadius: 5,
-                    pointBackgroundColor: 'rgba(153, 102, 255, 1)'
-                }
-            ]
-        };
-        
-        // Dados para o gráfico de CPU média
-        const cpuMediaData = {
-            labels: hoursOfDay,
-            datasets: [
-                {
-                    label: 'CPU Média (%)',
-                    data: [68, 70, 75, 85, 88, 85, 87, 86, 85, 90, 87, 85, 80, 76, 73, 70, 65],
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    pointRadius: 5,
-                    pointBackgroundColor: 'rgba(54, 162, 235, 1)'
-                }
-            ]
-        };
-        
-        // Dados para o gráfico de RAM
-        const ramData = {
-            labels: ['PLC 4', 'PLC 5', 'PLC 6'],
-            datasets: [
-                {
-                    label: 'RAM Média (%)',
-                    data: [74.2, 68.9, 91.5],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'rgba(255, 206, 86, 0.7)',
-                        'rgba(75, 192, 192, 0.7)',
-                        'rgba(153, 102, 255, 0.7)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1
-                }
-            ]
-        };
 
-        // Dados dos outliers
-        const outliersData = [
-            { data: '2025-03-16', total: 13 },
-            { data: '2025-03-06', total: 12 },
-            { data: '2025-03-21', total: 11 },
-            { data: '2025-03-26', total: 11 },
-            { data: '2025-03-23', total: 10 },
-            { data: '2025-03-09', total: 8 },
-            { data: '2025-03-18', total: 7 },
-            { data: '2025-03-19', total: 7 },
-            { data: '2025-03-22', total: 6 },
-            { data: '2025-03-04', total: 5 }
-        ];
-        
-        // Função para inicializar os gráficos e tabelas
-        window.addEventListener('load', function() {
-            // Inicializar o gráfico de CPU
-            const cpuCtx = document.getElementById('cpuChart').getContext('2d');
-            new Chart(cpuCtx, {
-                type: 'line',
-                data: cpuData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            title: {
-                                display: true,
-                                text: 'CPU (%)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Hora do dia'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
+        <script>
+            const horariosDisponiveis = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+
+            const plcs = [
+                // PLC 4 Und 1 Pintura
+                { id: 'PLC 4', cpu: 78.4, ram: 74.2, temperatura: 68.5, rede: 2.3, horario: '08:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: ['08:00'], picos_ram: ['11:00'] },
+                { id: 'PLC 4', cpu: 82.1, ram: 76.5, temperatura: 70.2, rede: 3.1, horario: '10:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: ['10:00'], picos_ram: ['12:00'] },
+                { id: 'PLC 4', cpu: 85.6, ram: 78.9, temperatura: 72.8, rede: 3.8, horario: '14:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: ['14:00'], picos_ram: ['14:00'] },
+                { id: 'PLC 4', cpu: 76.2, ram: 72.4, temperatura: 67.1, rede: 2.5, horario: '16:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: ['19:00'] },
+
+                { id: 'PLC 4', cpu: 81.5, ram: 75.3, temperatura: 69.8, rede: 2.9, horario: '09:00', data: '2025-04-17', fabrica: 'und1', setor: 'pintura', picos_cpu: ['09:00'], picos_ram: ['09:00'] },
+                { id: 'PLC 4', cpu: 79.3, ram: 73.8, temperatura: 68.9, rede: 2.7, horario: '13:00', data: '2025-04-17', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: [] },
+
+                // PLC 5 Und 2 Solda
+                { id: 'PLC 5', cpu: 85.6, ram: 68.9, temperatura: 75.4, rede: 4.2, horario: '09:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: ['09:00'], picos_ram: [] },
+                { id: 'PLC 5', cpu: 89.2, ram: 72.3, temperatura: 77.1, rede: 4.5, horario: '11:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: ['11:00'], picos_ram: [] },
+                { id: 'PLC 5', cpu: 10.5, ram: 76.8, temperatura: 78.9, rede: 4.9, horario: '17:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: ['17:00'], picos_ram: ['15:00'] },
+
+                { id: 'PLC 5', cpu: 87.4, ram: 70.5, temperatura: 76.3, rede: 4.3, horario: '10:00', data: '2025-04-17', fabrica: 'und2', setor: 'solda', picos_cpu: ['10:00'], picos_ram: [] },
+                { id: 'PLC 5', cpu: 90.8, ram: 74.2, temperatura: 78.1, rede: 4.7, horario: '16:00', data: '2025-04-17', fabrica: 'und2', setor: 'solda', picos_cpu: ['16:00'], picos_ram: ['19:00', '20:00'] },
+
+                // PLC 6 Und 1 Montagem
+                { id: 'PLC 6', cpu: 95.2, ram: 85.7, temperatura: 82.3, rede: 5.8, horario: '10:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 6', cpu: 98.9, ram: 91.5, temperatura: 85.1, rede: 6.3, horario: '12:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: ['12:00'], picos_ram: [] },
+                { id: 'PLC 6', cpu: 96.7, ram: 88.3, temperatura: 83.6, rede: 6.0, horario: '15:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 6', cpu: 97.5, ram: 90.2, temperatura: 84.5, rede: 6.2, horario: '18:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: ['17:00'] },
+
+                // PLC 6
+                { id: 'PLC 6', cpu: 97.1, ram: 89.6, temperatura: 84.0, rede: 6.1, horario: '11:00', data: '2025-04-17', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 6', cpu: 99.2, ram: 92.8, temperatura: 86.2, rede: 6.5, horario: '14:00', data: '2025-04-17', fabrica: 'und1', setor: 'montagem', picos_cpu: ['14:00'], picos_ram: ['17:00', '19:00'] }
+            ];
+
+            const outlier = [
+                { data: '2025-04-16', total: 13 },
+                { data: '2025-04-17', total: 9 },
+                { data: '2025-04-06', total: 12 },
+                { data: '2025-04-21', total: 11 },
+                { data: '2025-04-26', total: 11 },
+                { data: '2025-04-23', total: 10 },
+                { data: '2025-04-09', total: 8 },
+                { data: '2025-04-18', total: 7 },
+                { data: '2025-04-19', total: 7 },
+                { data: '2025-04-22', total: 6 },
+                { data: '2025-04-04', total: 5 }
+            ];
+
+            let graficoCPU = null;
+            let graficoRede = null;
+            let graficoCPUmedia = null;
+            let graficoRAM = null;
+            let graficoTemp = null;
+
+            // Verifica se a data Inicial e a data Final são do mesmo dia
+            // Se sim, aplica o filtro de um único dia
+            function mesmoDia(dataInicio, dataFim) {
+                return dataInicio.getFullYear() == dataFim.getFullYear() &&
+                    dataInicio.getMonth() == dataFim.getMonth() &&
+                    dataInicio.getDate() == dataFim.getDate();
+            }
+
+            function filtrar() {
+                const dataInicial = document.getElementById('ipt_dtInicial').value;
+                const dataFinal = document.getElementById('ipt_dtFinal').value;
+                const filtroFabrica = document.getElementById('filtro-fabrica').value;
+                const filtroSetor = document.getElementById('filtro-setor').value;
+
+                aplicarFiltros(dataInicial, dataFinal, filtroFabrica, filtroSetor);
+            }
+
+            function aplicarFiltros(dataInicial, dataFinal, filtroFabrica, filtroSetor) {
+                const dtInicial = new Date(dataInicial);
+                const dtFinal = new Date(dataFinal);
+                console.log(dtInicial, dtFinal);
+
+                const filtroDiario = mesmoDia(dtInicial, dtFinal);
+
+                const plcsFiltrados = [];
+                for (let i = 0; i < plcs.length; i++) {
+                    const plcAtual = plcs[i];
+                    const dataPlcAtual = new Date(plcAtual.data);
+
+                    if ((filtroFabrica == 'todas' || filtroFabrica == plcAtual.fabrica) && (filtroSetor == 'todos' || filtroSetor == plcAtual.setor) && (dataPlcAtual >= dtInicial && dataPlcAtual <= dtFinal)) {
+                        plcsFiltrados.push(plcAtual);
                     }
                 }
-            });
-            
-            // Inicializar o gráfico de tráfego de rede
-            const networkCtx = document.getElementById('networkChart').getContext('2d');
-            new Chart(networkCtx, {
-                type: 'line',
-                data: networkData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Tráfego (MB)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Hora do dia'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
+
+                const outliersFiltrados = [];
+                for (let i = 0; i < outlier.length; i++) {
+                    const outlierAtual = outlier[i];
+                    const dataOutlierAtual = new Date(outlierAtual.data);
+
+                    if (dataOutlierAtual >= dtInicial && dataOutlierAtual <= dtFinal) {
+                        outliersFiltrados.push(outlierAtual);
                     }
                 }
-            });
-            
-            // Inicializar o gráfico de CPU média
-            const cpuMediaCtx = document.getElementById('cpuMediaChart').getContext('2d');
-            new Chart(cpuMediaCtx, {
-                type: 'line',
-                data: cpuMediaData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            title: {
-                                display: true,
-                                text: 'CPU (%)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Hora do dia'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
+
+                const dadosFiltrados = {
+                    plcs: plcsFiltrados,
+                    outliers: outliersFiltrados,
+                    filtroDiario: filtroDiario
+                };
+
+                console.log(dadosFiltrados);
+
+                plotarKPI(dadosFiltrados);
+                plotarGrafico(dadosFiltrados);
+                plotarTabela(dadosFiltrados);
+            }
+
+            function plotarKPI(dadosFiltrados) {
+                if (dadosFiltrados.plcs.length == 0) {
+                    document.getElementById('kpi-cpu').textContent = "0%";
+                    document.getElementById('kpi-ram').textContent = "0%";
+                    document.getElementById('kpi-temperatura').textContent = "0%";
+                    document.getElementById('kpi-picos').textContent = "0";
+                    document.getElementById('kpi-alertas').textContent = "0";
+                    document.getElementById('kpi-rede').textContent = "0GB";
+                    return;
+                }
+
+                // Fazer a média das KPIs
+                let cpuTotal = 0;
+                let ramTotal = 0;
+                let tempTotal = 0;
+                let redeTotal = 0;
+
+                for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
+                    const plcAtual = dadosFiltrados.plcs[i];
+                    cpuTotal += plcAtual.cpu;
+                    ramTotal += plcAtual.ram;
+                    tempTotal += plcAtual.temperatura;
+                    redeTotal += plcAtual.rede;
+                }
+
+                const cpuMedia = cpuTotal / dadosFiltrados.plcs.length;
+                const ramMedia = ramTotal / dadosFiltrados.plcs.length;
+                const tempMedia = tempTotal / dadosFiltrados.plcs.length;
+
+                // Contagem de picos
+                let picosCpu = 0;
+                for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
+                    const plcAtual = dadosFiltrados.plcs[i];
+                    if (plcAtual.picos_cpu && plcAtual.picos_cpu.length > 0) {
+                        picosCpu++;
                     }
                 }
-            });
-            
-            // Inicializar o gráfico de RAM
-            const ramCtx = document.getElementById('ramChart').getContext('2d');
-            new Chart(ramCtx, {
-                type: 'bar',
-                data: ramData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            title: {
-                                display: true,
-                                text: 'RAM (%)'
+
+                // Contagem de picos de RAM
+                const plcsEmAlerta = [];
+                for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
+                    const plcAtual = dadosFiltrados.plcs[i];
+                    if (plcAtual.cpu > 80 || plcAtual.ram > 80) {
+                        let jaExiste = false;
+                        for (let j = 0; j < plcsEmAlerta.length; j++) {
+                            if (plcsEmAlerta[j] == plcAtual.id) {
+                                jaExiste = true;
+                                break;
                             }
                         }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
+                        if (!jaExiste) {
+                            plcsEmAlerta.push(plcAtual.id);
+                        }
                     }
                 }
+
+                console.log(plcsEmAlerta);
+
+                const maquinasAlerta = plcsEmAlerta.length;
+
+                document.getElementById('kpi-cpu').textContent = cpuMedia.toFixed(2) + '%';
+                document.getElementById('kpi-cpu').style.color = cpuMedia > 90 ? 'red' : (cpuMedia > 80 ? 'orange' : 'blue');
+
+                document.getElementById('kpi-ram').textContent = ramMedia.toFixed(2) + '%';
+                document.getElementById('kpi-ram').style.color = ramMedia > 90 ? 'red' : (ramMedia > 80 ? 'orange' : 'blue');
+
+                document.getElementById('kpi-temperatura').textContent = tempMedia.toFixed(2) + '%';
+                document.getElementById('kpi-temperatura').style.color = tempMedia > 80 ? 'red' : (tempMedia > 70 ? 'orange' : 'blue');
+
+                document.getElementById('kpi-picos').textContent = picosCpu;
+                document.getElementById('kpi-alertas').textContent = maquinasAlerta;
+                document.getElementById('kpi-rede').textContent = redeTotal.toFixed(2) + 'GB';
+            }
+
+            function plotarGrafico(dadosFiltrados) {
+                if (dadosFiltrados.plcs.length == 0) {
+                    graficoCPU.destroy();
+                    graficoRede.destroy();
+                    graficoCPUmedia.destroy();
+                    graficoRAM.destroy();
+                    graficoTemp.destroy();
+                    return;
+                }
+
+                const filtroDiario = dadosFiltrados.filtroDiario;
+                const ctx = {
+                    cpu: document.getElementById('cpuGrafico').getContext('2d'),
+                    rede: document.getElementById('redeGrafico').getContext('2d'),
+                    cpuMedia: document.getElementById('cpuMediaGrafico').getContext('2d'),
+                    ram: document.getElementById('ramGrafico').getContext('2d'),
+                    temperatura: document.getElementById('temperaturaGrafico').getContext('2d')
+                };
+
+                let labels = [];
+                let dadosCpu = [];
+                let dadosRam = [];
+                let dadosTemp = [];
+                let dadosRede = [];
+
+
+                // Se a pessoa escolher apenas um dia, o eixo X mostra os horários
+                if (filtroDiario) {
+                    // Construção de um JSON para criar um objeto com os horários e as médias de cada um deles
+                    const registrosPorHorario = {};
+
+                    for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
+                        const plcAtual = dadosFiltrados.plcs[i];
+                        const horario = plcAtual.horario;
+
+                        // Se o horário não existir, cria um novo objeto horario com tudo zerado
+                        if (!registrosPorHorario[horario]) {
+                            registrosPorHorario[horario] = {
+                                cont: 0,
+                                somaCPU: 0,
+                                somaRAM: 0,
+                                somaTemp: 0,
+                                somaRede: 0
+                            };
+                        }
+
+                        registrosPorHorario[horario].cont++;
+                        registrosPorHorario[horario].somaCPU += plcAtual.cpu;
+                        registrosPorHorario[horario].somaRAM += plcAtual.ram;
+                        registrosPorHorario[horario].somaTemp += plcAtual.temperatura;
+                        registrosPorHorario[horario].somaRede += plcAtual.rede;
+                    }
+
+                    for (let horario in registrosPorHorario) {
+                        labels.push(horario);
+                    }
+
+                    // Não sei fazer ordenação com strings, como você descobriu???
+                    // Ordena os horários em ordem crescente = labels["08:00", "09:00", n...]
+                    labels.sort();
+
+                    dadosCpu = [];
+                    dadosRam = [];
+                    dadosTemp = [];
+                    dadosRede = [];
+
+
+                    // Faz a média de cada um dos elementos dos horários e coloca no array de dados
+                    for (let i = 0; i < labels.length; i++) {
+                        const horario = labels[i];
+                        dadosCpu.push(registrosPorHorario[horario].somaCPU / registrosPorHorario[horario].cont);
+                        dadosRam.push(registrosPorHorario[horario].somaRAM / registrosPorHorario[horario].cont);
+                        dadosTemp.push(registrosPorHorario[horario].somaTemp / registrosPorHorario[horario].cont);
+                        dadosRede.push(registrosPorHorario[horario].somaRede);
+                    }
+                } else {
+                    // Se a pessoa escolher mais de um dia, o eixo X mostra os dias
+                    const registrosPorDia = {};
+
+                    for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
+                        const plc = dadosFiltrados.plcs[i];
+                        const data = plc.data;
+
+                        if (!registrosPorDia[data]) {
+                            registrosPorDia[data] = {
+                                cont: 0,
+                                somaCPU: 0,
+                                somaRAM: 0,
+                                somaTemp: 0,
+                                somaRede: 0
+                            };
+                        }
+
+                        registrosPorDia[data].cont++;
+                        registrosPorDia[data].somaCPU += plc.cpu;
+                        registrosPorDia[data].somaRAM += plc.ram;
+                        registrosPorDia[data].somaTemp += plc.temperatura;
+                        registrosPorDia[data].somaRede += plc.rede;
+                    }
+
+                    // Organiza datas em ordem cronológica
+                    for (let dia in registrosPorDia) {
+                        labels.push(dia);
+                    }
+
+
+                    // Exatamente, ainda não aprendi a fazer uma ordenação com strings
+                    labels.sort();
+
+                    // Aqui foi GPT total, desculpa
+                    // Formata datas DD/MM/YYYY
+                    const labelsFormatados = [];
+                    for (let i = 0; i < labels.length; i++) {
+                        const data = labels[i];
+                        const [ano, mes, dia] = data.split('-');
+                        labelsFormatados.push(`${dia}/${mes}/${ano}`);
+                    }
+
+                    dadosCpu = [];
+                    dadosRam = [];
+                    dadosTemp = [];
+                    dadosRede = [];
+
+                    for (let i = 0; i < labels.length; i++) {
+                        const data = labels[i];
+                        dadosCpu.push(registrosPorDia[data].somaCPU / registrosPorDia[data].cont);
+                        dadosRam.push(registrosPorDia[data].somaRAM / registrosPorDia[data].cont);
+                        dadosTemp.push(registrosPorDia[data].somaTemp / registrosPorDia[data].cont);
+                        dadosRede.push(registrosPorDia[data].somaRede);
+                    }
+
+                    labels = labelsFormatados;
+                }
+
+
+                // labels = eixo x, dadosAlgumaCoisa = eixo y
+                // ctx = aonde o gráfico vai ser plotado no front
+                // filtroDiario = se o gráfico é diário ou não. Caso diario, o eixo X é horário, se não o eixo X é a data
+                plotarGraficoCPU(ctx.cpu, labels, dadosCpu, filtroDiario);
+                plotarGraficoRede(ctx.rede, labels, dadosRede, filtroDiario);
+                plotarGraficoCPUMedia(ctx.cpuMedia, labels, dadosCpu, filtroDiario);
+                plotarGraficoRAM(ctx.ram, labels, dadosRam, filtroDiario);
+                plotarGraficoTemp(ctx.temperatura, labels, dadosTemp, filtroDiario);
+            }
+
+            function plotarGraficoCPU(ctx, labels, dados, filtroDiario) {
+                if (graficoCPU) {
+                    graficoCPU.destroy();
+                }
+
+                graficoCPU = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'CPU (%)',
+                            data: dados,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'CPU (%)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: filtroDiario ? 'Horário' : 'Dias'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function plotarGraficoRede(ctx, labels, dados, filtroDiario) {
+                if (graficoRede) {
+                    graficoRede.destroy();
+                }
+
+                graficoRede = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Tráfego de Rede (GB)',
+                            data: dados,
+                            backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Tráfego (GB)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: filtroDiario ? 'Horário' : 'Dias'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function plotarGraficoCPUMedia(ctx, labels, dados, filtroDiario) {
+                if (graficoCPUmedia) {
+                    graficoCPUmedia.destroy();
+                }
+
+                graficoCPUmedia = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'CPU Média (%)',
+                            data: dados,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'CPU (%)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: filtroDiario ? 'Horário' : 'Dias'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function plotarGraficoRAM(ctx, labels, dados, filtroDiario) {
+                if (graficoRAM) {
+                    graficoRAM.destroy();
+                }
+
+                graficoRAM = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'RAM Média (%)',
+                            data: dados,
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            backgroundColor: 'rgba(153, 102, 255, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'RAM (%)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: filtroDiario ? 'Horário' : 'Dias'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function plotarGraficoTemp(ctx, labels, dados, filtroDiario) {
+                if (graficoTemp) {
+                    graficoTemp.destroy();
+                }
+
+                graficoTemp = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Temperatura Média (%)',
+                            data: dados,
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            backgroundColor: 'rgba(255, 159, 64, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'Temperatura (%)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: filtroDiario ? 'Horário' : 'Dias'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function plotarTabela(dadosFiltrados) {
+                plotarTabelaCPU(dadosFiltrados);
+                plotarTabelaRAM(dadosFiltrados);
+                plotarTabelaOutlier(dadosFiltrados);
+            }
+
+            function plotarTabelaCPU(dadosFiltrados) {
+                const cpuTable = document.getElementById('cpu-table').getElementsByTagName('tbody')[0];
+                cpuTable.innerHTML = ''; // Limpar tabela
+
+                // Agrupar dados por máquina
+                const plcsDados = {};
+
+                for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
+                    const plc = dadosFiltrados.plcs[i];
+
+                    if (!plcsDados[plc.id]) {
+                        plcsDados[plc.id] = {
+                            id: plc.id,
+                            cpuTotal: 0,
+                            cont: 0,
+                            picos: []
+                        };
+                    }
+
+                    plcsDados[plc.id].cpuTotal += plc.cpu;
+                    plcsDados[plc.id].cont++;
+
+                    // Adicionar picos de CPU
+                    if (plc.picos_cpu && plc.picos_cpu.length > 0) {
+                        for (let j = 0; j < plc.picos_cpu.length; j++) {
+                            const pico = plc.picos_cpu[j];
+                            // Verifica se o pico já existe na lista
+                            let picoExiste = false;
+                            for (let k = 0; k < plcsDados[plc.id].picos.length; k++) {
+                                if (plcsDados[plc.id].picos[k] === pico) {
+                                    picoExiste = true;
+                                    break;
+                                }
+                            }
+                            if (!picoExiste) {
+                                plcsDados[plc.id].picos.push(pico);
+                            }
+                        }
+                    }
+                }
+
+                // Calcular média de CPU e formatar para a tabela
+                const plcsIds = Object.keys(plcsDados);
+                for (let i = 0; i < plcsIds.length; i++) {
+                    const plcId = plcsIds[i];
+                    const plc = plcsDados[plcId];
+
+                    const row = cpuTable.insertRow();
+                    const cellId = row.insertCell(0);
+                    const cellPicos = row.insertCell(1);
+                    const cellCpuMedia = row.insertCell(2);
+
+                    const cpuMedia = plc.cpuTotal / plc.cont;
+
+                    cellId.textContent = plc.id;
+
+                    // Junta os picos com vírgula ou coloca traço se vazio
+                    if (plc.picos.length > 0) {
+                        let picoTexto = '';
+                        for (let j = 0; j < plc.picos.length; j++) {
+                            if (j > 0) {
+                                picoTexto += ', ';
+                            }
+                            picoTexto += plc.picos[j];
+                        }
+                        cellPicos.textContent = picoTexto;
+                    } else {
+                        cellPicos.textContent = '-';
+                    }
+
+                    cellCpuMedia.textContent = cpuMedia.toFixed(1) + '%';
+
+                    // Estilizar conforme valor
+                    if (cpuMedia > 90) {
+                        cellId.style.color = 'red';
+                        cellPicos.style.color = 'red';
+                        cellCpuMedia.style.color = 'red';
+                    } else if (cpuMedia > 80) {
+                        cellId.style.color = 'orange';
+                        cellPicos.style.color = 'orange';
+                        cellCpuMedia.style.color = 'orange';
+                    }
+                }
+            }
+
+            function plotarTabelaRAM(dadosFiltrados) {
+                const ramTable = document.getElementById('ram-table').getElementsByTagName('tbody')[0];
+                ramTable.innerHTML = ''; // Limpar tabela
+
+                // Agrupar dados por máquina
+                const plcsDados = {};
+
+                for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
+                    const plc = dadosFiltrados.plcs[i];
+
+                    if (!plcsDados[plc.id]) {
+                        plcsDados[plc.id] = {
+                            id: plc.id,
+                            ramTotal: 0,
+                            cont: 0,
+                            picos: []
+                        };
+                    }
+
+                    plcsDados[plc.id].ramTotal += plc.ram;
+                    plcsDados[plc.id].cont++;
+
+                    // Adicionar picos de RAM
+                    if (plc.picos_ram && plc.picos_ram.length > 0) {
+                        for (let j = 0; j < plc.picos_ram.length; j++) {
+                            const pico = plc.picos_ram[j];
+                            // Verifica se o pico já existe na lista
+                            let picoExiste = false;
+                            for (let k = 0; k < plcsDados[plc.id].picos.length; k++) {
+                                if (plcsDados[plc.id].picos[k] === pico) {
+                                    picoExiste = true;
+                                    break;
+                                }
+                            }
+                            if (!picoExiste) {
+                                plcsDados[plc.id].picos.push(pico);
+                            }
+                        }
+                    }
+                }
+
+                // Calcular média de RAM e formatar para a tabela
+                const plcsIds = Object.keys(plcsDados);
+                for (let i = 0; i < plcsIds.length; i++) {
+                    const plcId = plcsIds[i];
+                    const plc = plcsDados[plcId];
+
+                    const row = ramTable.insertRow();
+                    const cellId = row.insertCell(0);
+                    const cellPicos = row.insertCell(1);
+                    const cellRamMedia = row.insertCell(2);
+
+                    const ramMedia = plc.ramTotal / plc.cont;
+
+                    cellId.textContent = plc.id;
+
+                    // Junta os picos com vírgula ou coloca traço se vazio
+                    if (plc.picos.length > 0) {
+                        let picoTexto = '';
+                        for (let j = 0; j < plc.picos.length; j++) {
+                            if (j > 0) {
+                                picoTexto += ', ';
+                            }
+                            picoTexto += plc.picos[j];
+                        }
+                        cellPicos.textContent = picoTexto;
+                    } else {
+                        cellPicos.textContent = '-';
+                    }
+
+                    cellRamMedia.textContent = ramMedia.toFixed(1) + '%';
+
+                    // Estilizar conforme valor
+                    if (ramMedia > 90) {
+                        cellId.style.color = 'red';
+                        cellPicos.style.color = 'red';
+                        cellRamMedia.style.color = 'red';
+                    } else if (ramMedia > 80) {
+                        cellId.style.color = 'orange';
+                        cellPicos.style.color = 'orange';
+                        cellRamMedia.style.color = 'orange';
+                    }
+                }
+            }
+
+            function plotarTabelaOutlier(dadosFiltrados) {
+                const corpoTabela = document.getElementById('outliers-table').getElementsByTagName('tbody')[0];
+                corpoTabela.innerHTML = ''; // Limpar tabela
+
+                for (let i = 0; i < dadosFiltrados.outliers.length - 1; i++) {
+                    for (let j = i + 1; j < dadosFiltrados.outliers.length; j++) {
+                        if (dadosFiltrados.outliers[j].total > dadosFiltrados.outliers[i].total) {
+                            const temp = dadosFiltrados.outliers[i];
+                            dadosFiltrados.outliers[i] = dadosFiltrados.outliers[j];
+                            dadosFiltrados.outliers[j] = temp;
+                        }
+                    }
+                }
+
+                for (let i = 0; i < dadosFiltrados.outliers.length; i++) {
+                    const item = dadosFiltrados.outliers[i];
+                    const row = corpoTabela.insertRow();
+                    const cellIndex = row.insertCell(0);
+                    const cellData = row.insertCell(1);
+                    const cellTotal = row.insertCell(2);
+
+                    cellIndex.textContent = i + 1;
+
+                    // Formatar data para o padrão brasileiro
+                    const dateParts = item.data.split('-');
+                    const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+                    cellData.textContent = formattedDate;
+
+                    cellTotal.textContent = item.total;
+
+                    // Estilizar conforme quantidade
+                    if (item.total > 10) {
+                        cellTotal.style.color = 'red';
+                    } else if (item.total > 7) {
+                        cellTotal.style.color = 'orange';
+                    }
+                }
+            }
+
+            window.addEventListener('load', function () {
+                const hoje = new Date();
+                const dataHoje = hoje.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+
+                document.getElementById('ipt_dtInicial').value = dataHoje;
+                document.getElementById('ipt_dtFinal').value = dataHoje;
+
+                aplicarFiltros(dataHoje, dataHoje, 'todas', 'todos');
             });
-            
-            // Preencher a tabela de outliers
-            const tableBody = document.getElementById('outliers-table').getElementsByTagName('tbody')[0];
-            outliersData.forEach((item, index) => {
-                const row = tableBody.insertRow();
-                const cellIndex = row.insertCell(0);
-                const cellData = row.insertCell(1);
-                const cellTotal = row.insertCell(2);
-                
-                cellIndex.textContent = index + 1;
-                
-                // Formatar data para o padrão brasileiro
-                const dateParts = item.data.split('-');
-                const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
-                cellData.textContent = formattedDate;
-                
-                cellTotal.textContent = item.total;
-            });
-        });
-    </script>
+        </script>
 </body>
+
 </html>
