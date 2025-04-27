@@ -34,7 +34,7 @@ def limpar_tela():
     print('\033[H\033[J')
 
 def coletar_dados():
-
+    global endereco_mac
     global id_plc
     global fabrica_id
 
