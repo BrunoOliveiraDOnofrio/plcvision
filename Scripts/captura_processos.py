@@ -35,15 +35,28 @@ def limpar_tela():
     print('\033[H\033[J')
 
 def coletar_dados():
+    global endereco_mac
     global id_plc
     global fabrica_id
 
-    interfaces = psutil.net_if_addrs()
+    try:
+        so = os.uname().sysname
+        print(f"Sistema Operacional: {so}")
+        so_str = str(so)
+    except Exception:
+        so_str = os.environ['OS']
 
-    if "Ethernet" in interfaces:
-            for endereco in interfaces["Ethernet"]:
-                if endereco.family == psutil.AF_LINK:
-                    endereco_mac = endereco.address
+    if("Windows" in so_str):
+        interfaces = psutil.net_if_addrs()
+
+        if "Ethernet" in interfaces:
+                for endereco in interfaces["Ethernet"]:
+                    if endereco.family == psutil.AF_LINK:
+                        endereco_mac = endereco.address
+    else:
+        comando = "ip link show | grep 'link/ether' | awk '{print $2}'"
+        saida = os.popen(comando).read().strip()
+        endereco_mac = saida.split("\n")[0]
 
     plcCadastrado = selectsInfos.verificarPlcCadastrado(endereco_mac)
     id_plc = plcCadastrado.get('id')
