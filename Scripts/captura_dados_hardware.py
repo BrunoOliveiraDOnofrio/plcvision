@@ -217,7 +217,7 @@ def coletar_dados():
                 print("Gerando CSV...")
                 time.sleep(1)
                 print("Enviando Bucket...")
-                aws.enviar_arquivo(nome_csv)
+                # aws.enviar_arquivo(nome_csv)
             time.sleep(1)
 
 

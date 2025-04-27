@@ -597,5 +597,5 @@ const swiperCharts = new Swiper('.chartsCarrossel', {
   
 });
 
-console.log(swiper)
+
 }

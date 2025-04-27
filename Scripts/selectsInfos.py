@@ -1,7 +1,7 @@
 import requests
 import json
 from datetime import timezone, timedelta, datetime
-API_URL = "http://52.2.47.7/:3000/plc/register"
+API_URL = "http://52.2.47.7:3000/plc/register"
 
 
 def inserirAlerta(config_id, valor_capturado, tipo_valor, criticidade):
