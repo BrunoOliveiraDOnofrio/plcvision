@@ -36,8 +36,10 @@ function update(dados, id) {
 
 async function autenticar(email, senha) {
     const instrucao = `
-        SELECT id,empresa_id, nome, email,telCelular,setor,cargo, nivel
-        FROM usuario
+        SELECT usuario.id as id,empresa_id,ef.razao_social, nome, email,telCelular,setor,cargo, nivel
+        FROM usuario JOIN empresa_fabricante ef
+        ON usuario.empresa_id = ef.id
+
         WHERE email = '${email}' AND senha = '${senha}';
     `;
 

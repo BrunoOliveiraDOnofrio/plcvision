@@ -213,6 +213,8 @@ const storeDefaultFabrica = async (req, res) =>{
                         configuracao['plc_id'] = plc_id
                         configuracao['padrao'] = 1
                         try{
+                            console.log(configuracao, "NESSE CONSOLE VOCE VAI DESCOBRIR O SEGREDO")
+                            configuracao['fabrica_consumidor_id'] = false
                             response = await model.create(configuracao)
                             contador++
                         }catch(e) {

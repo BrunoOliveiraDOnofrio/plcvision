@@ -3,6 +3,14 @@ const express = require('express');
 const router = express.Router();
 
 
+router.get('/monitoramento', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/dashboard/dashboard.html'));
+})
+
+router.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/dashboard/dashboard_analise.html'));
+})
+
 router.get('/consumidores', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/adm_empresa/empresas_consumidoras/empresas_consumidoras.html'));
 })

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento</title>
+    <!-- Fonte google  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/dashboards/monitoramento_tempo_real.css">
+    <!-- Link dos icones - boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+</head>
+<body>
+    <!-- Nav Bar -->
+     <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <!-- Side bar  -->
+
+     <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+                
+               
+                <li>
+                    <a href="./dashboard">
+                        <i class='bx bx-timer'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./alertas">
+                        <i class='bx bxs-bell-ring' ></i>
+                    </a>
+                </li>
+               
+               
+                <li>
+                    <a href="./plcs">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit' ></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+     </nav>
+
+     <div class="main">
+        <div class="content">
+            <div class="title-div">
+                <h1>Monitoramento de Recursos</h1>
+                <small>Acompanhe métricas em tempo real</small>
+                <div class="line-select-alertas">
+                <div class="group-selects">
+                    <select name="" id="select_empresas">
+                        <option value="">Selecione uma empresa</option>
+                        
+                    </select>
+                    <select name="" id="select_plcs">
+                        <option value="0">Selecione um PLC</option>
+                    </select>
+                </div>
+                <div class="" id="div_alerta">
+                
+                </div>
+
+                </div>
+            </div>
+            <div class="wrap-all-div">
+            <h1>Picos das métricas capturadas <span id="span_data_comeco"></span></h1>
+            <div class="swiper kpisCarrossel">
+                <div id="div_kpis" class="kpis-div swiper-wrapper">
+                    <h1>Não há dados para monitorar deste PLC</h1>
+                    
+                    
+                </div>
+                
+            </div>
+            <div class="swiper-pagination kpi-pagination"></div>
+            <div class="swiper-button-next kpi-next"></div>
+            <div class="swiper-button-prev kpi-prev"></div>
+            </div>
+            <div class="wrap-all-div div-componentes">
+            <div class="title-legendas">
+                <h1>Comportamento dos Componentes</h1>
+                <div class="legenda-div">
+                    <div class="box blue"></div>
+                    <span>Estável</span>
+                </div>
+                <div class="legenda-div">
+                    <div class="box yellow"></div>
+                    <span>Atenção</span>
+                </div>
+                <div class="legenda-div">
+                    <div class="box red"></div>
+                    <span>Crítico</span>
+                </div>
+            </div>
+            <div class="swiper chartsCarrossel">
+                <div id="div_charts" class="all-charts-div swiper-wrapper">
+                    
+                </div>
+            </div>
+            <div class="swiper-pagination chart-pagination"></div>
+            <div class="swiper-button-next chart-next"></div>
+            <div class="swiper-button-prev chart-prev"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="../../js/nav_sidebar.js"></script>
+<script src="../../js/dashboard/grafico.js"></script>
+
+</html>

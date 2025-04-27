@@ -45,11 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
     btnEditar.addEventListener('click', function() {
         const id = btnEditar.getAttribute('data-id');
         localStorage.setItem("id", id);
-        window.location.href = `./fabricas/${id}/form`;
+        window.location.href = enderecoApp + rotasAdm.editarFabrica(id);
     });
     btnConfigurar.addEventListener('click', function() {
         const id = btnEditar.getAttribute('data-id');
         localStorage.setItem("id", id);
-        window.location.href = `./fabricas/${id}/config`;
+        window.location.href = enderecoApp + rotasAdm.configFabrica(id);
     });
 });

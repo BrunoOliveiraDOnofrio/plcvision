@@ -15,8 +15,8 @@ INSERT INTO empresa_fabricante (cnpj, razao_social, endereco_id, qtdParcerias, s
 -- Inserindo usuários
 INSERT INTO usuario (empresa_id, nome, email, telCelular, senha, nivel, setor, cargo) VALUES
 (1, 'Carlos Silva', 'carlos.silva@siemens.com', '5511998765432', 'senha123', 2, 'Engenharia', 'Engenheiro de Automação'),
-(2, 'Mariana Souza', 'mariana.souza@schneider.com', '5541998765432', 'senha456', 1, 'TI', 'Analista de Sistemas'),
-(2, 'Douglas Pellegrino', 'douglas@email.com', '11348461078', 'senha789', 3, 'TI', 'Analista de Sistemas');
+(1, 'Mariana Souza', 'mariana.souza@schneider.com', '5541998765432', 'senha456', 1, 'TI', 'Analista de Sistemas'),
+(1, 'Douglas Pellegrino', 'douglas@email.com', '11348461078', 'senha789', 3, 'TI', 'Analista de Sistemas');
 
 -- Inserindo empresas consumidoras
 INSERT INTO empresa_consumidor (razao_social, segmento, cnpj, endereco_id, qtdFabrica, token) VALUES

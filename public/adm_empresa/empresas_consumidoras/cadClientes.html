@@ -245,7 +245,7 @@
                 </div>
                 <div class="box-btns">
                     <div class="btns-wrapper">
-                        <button type="button" class="btn" onclick="window.location.href = './';">Cancelar</button>
+                        <button type="button" class="btn" onclick="irListaPlcs()">Cancelar</button>
                         <button type="button" onclick="cadastrar()" class="btn">Cadastrar</button>
                     </div>
                 </div>
@@ -254,6 +254,10 @@
     </div>
 
 </body>
+
+<script>
+    const irListaPlcs = () => window.location.href =  enderecoApp + rotasAdm.consumidores;
+</script>
 
 <script src="../../js/empresas_consumidoras/register.js"></script>
 <script src="../../js/empresas_consumidoras/viacep.js"></script>

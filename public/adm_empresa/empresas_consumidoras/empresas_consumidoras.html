@@ -226,7 +226,7 @@
 <script>
 
     const adicionar = () => {
-        window.location.href = "./form";
+        window.location.href = enderecoApp + rotasAdm.adcConsumidores;
     }
 
     let empresasResults
@@ -245,7 +245,9 @@
             btn.addEventListener('click', function () {
                 const id = this.getAttribute('id');
                 const btn_alterar = document.getElementById('btn_alterar')
-                btn_alterar.setAttribute('onclick', `window.location.href = './${id}/form'`)
+                btn_alterar.addEventListener('click', () => {
+                    window.location.href = enderecoApp + rotasAdm.editarConsumidores(id)
+                })
                 let data = null;
                 // TESTE
                 console.log(empresasResults)
