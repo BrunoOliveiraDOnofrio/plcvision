@@ -8,9 +8,9 @@ INSERT INTO endereco (logradouro, numLogradouro, cidade, estado, bairro, complem
 ('Rua dos Andradas', 300, 'Porto Alegre', 'RS', 'Centro Histórico', 'Loja 1');
 
 -- Inserindo empresas fabricantes
-INSERT INTO empresa_fabricante (cnpj, razao_social, endereco_id, qtdParcerias) VALUES
-('12345678000199', 'Siemens do Brasil', 1, 2),
-('98765432000188', 'Schneider Electric', 2, 3);
+INSERT INTO empresa_fabricante (cnpj, razao_social, endereco_id, qtdParcerias, status) VALUES
+('12345678000199', 'Siemens do Brasil', 1, 2, 1),
+('98765432000188', 'Schneider Electric', 2, 3, 1);
 
 -- Inserindo usuários
 INSERT INTO usuario (empresa_id, nome, email, telCelular, senha, nivel, setor, cargo) VALUES
