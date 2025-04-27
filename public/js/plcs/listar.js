@@ -83,7 +83,7 @@ const fillUsuarios = (dados) => {
 function setupModalEventListeners() {
     const modal = document.getElementById('modalVisualizar');
     const fecharModal = document.querySelector('.fecha');
-    const btnFechar = document.querySelector('.btn-fechar');
+    const btnFechar = document.querySelectorAll('.btn-fechar');
     const btnConfigurar = document.querySelector('.btn-configurar');
     const btnVisualizar = document.querySelectorAll('.btn-visualizar');
     let idDoPlc;
@@ -108,7 +108,13 @@ function setupModalEventListeners() {
             modal.style.display = 'flex';
         });
     });
-    if (btnConfigurar) {
+    if (btnConfigurar && !adm) {
+        btnConfigurar.addEventListener('click', function() {
+            window.location.href = `.././plcs/${idDoPlc}/show`;
+        });
+    }
+
+    if (btnConfigurar && adm) {
         btnConfigurar.addEventListener('click', function() {
             window.location.href = `./plcs/${idDoPlc}/show`;
         });
@@ -120,11 +126,14 @@ function setupModalEventListeners() {
         });
     }
     
-    if (btnFechar) {
-        btnFechar.addEventListener('click', function() {
-            modal.style.display = 'none';
+    if (btnFechar.length) {
+        btnFechar.forEach(btn => {
+            btn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
         });
     }
+    
     
     window.addEventListener('click', function(e) {
         if (e.target === modal) {
