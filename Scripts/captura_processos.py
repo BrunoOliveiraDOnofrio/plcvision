@@ -60,8 +60,8 @@ def coletar_dados():
             data_agora = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
             data_agora = data_agora.replace(" ", "_")
             data_agora = data_agora.replace(":", "-")
-            cpu = processos.cpu_percent(interval=1)
-            print(processos.cpu_percent(interval=1))
+            cpu = processos.cpu_percent(interval=0.01)
+            print(processos.cpu_percent(interval=0.01))
             memoria = processos.memory_percent()
             rede = processo.net_connections(kind='inet')
             status_list = [conn.status for conn in rede]
@@ -118,6 +118,9 @@ def coletar_dados():
             print("Gerando CSV...")
             time.sleep(1)
             writer.writerows(processos.values())
+            time.sleep(1)
+            print("Enviando Bucket...")
+            aws.enviar_arquivo_processo(nome_csv)
 
 
 def sair():

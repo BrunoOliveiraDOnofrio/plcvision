@@ -17,7 +17,20 @@ def enviar_arquivo(arquivo):
     data_hora_brasil = data_hora_brasil.replace(":", "-")
     caminho = "Scripts/csvs/" + arquivo + ".csv"
     nome_arquivo_s3 = f"monitoramento/{data_hora_brasil}/{arquivo}.csv"
-    nome_bucket = "plcvision-raw"
+    nome_bucket = "sprint2-bronze"
+    s3 = conexao_aws()
+    s3.upload_file(caminho, nome_bucket, nome_arquivo_s3)
+    print("Upload concluido...")
+
+    
+def enviar_arquivo_processo(arquivo):
+    fuso_brasil = timezone(timedelta(hours=-3))
+    data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d')
+    data_hora_brasil = data_hora_brasil.replace(" ", "_")
+    data_hora_brasil = data_hora_brasil.replace(":", "-")
+    caminho = "Scripts/csvs_processos/" + arquivo + ".csv"
+    nome_arquivo_s3 = f"monitoramento_processos/{data_hora_brasil}/{arquivo}.csv"
+    nome_bucket = "sprint2-bronze"
     s3 = conexao_aws()
     s3.upload_file(caminho, nome_bucket, nome_arquivo_s3)
     print("Upload concluido...")
