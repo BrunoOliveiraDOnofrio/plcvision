@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/nav_side_bar.css">
     <link rel="stylesheet" href="../../css/corpo_consumidoras.css">
@@ -18,9 +21,10 @@
     <link rel="shortcut icon" href="../../assets/imgs/logo-aba_white.png">
 
 </head>
+
 <body>
     <!-- Nav Bar -->
-     <header class="header-nav">
+    <header class="header-nav">
         <div class="menu-foto">
             <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
             <div class="foto"></div>
@@ -57,9 +61,9 @@
                 </nav>
             </div>
         </div>
-     </header>
+    </header>
 
-     <header class="header-nav header-nav-desk">
+    <header class="header-nav header-nav-desk">
         <div class="menu-foto">
             <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
             <div class="fotoEmpresa"></div>
@@ -99,11 +103,11 @@
                 </nav>
             </div>
         </div>
-     </header>
+    </header>
 
-     <!-- Side bar  -->
+    <!-- Side bar  -->
 
-     <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
         <div class="inicio">
             <ul>
                 <li>
@@ -113,7 +117,7 @@
                 </li>
                 <li>
                     <a href="./alertas">
-                        <i class='bx bxs-bell-ring' ></i>
+                        <i class='bx bxs-bell-ring'></i>
                     </a>
                 </li>
                 <li>
@@ -123,8 +127,8 @@
                 </li>
                 <li>
                     <a href="./setores">
-                <i class='bx bx-category-alt'></i>
-                        
+                        <i class='bx bx-category-alt'></i>
+
                     </a>
                 </li>
                 <li>
@@ -143,111 +147,112 @@
             <ul>
                 <li>
                     <a href="#">
-                        <i class='bx bx-exit' ></i>
+                        <i class='bx bx-exit'></i>
                     </a>
                 </li>
             </ul>
         </div>
-     </nav>
+    </nav>
 
-     <div class="main">
+    <div class="main">
         <div class="container">
             <h1>Lista de Consumidores cadastradas</h1>
             <button class="btn-adicionar" onclick="adicionar()">Adicionar</button>
-        <div class="container-tabela">
-            <table class="tabela">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Fábricas</th>
-                        <th>Segmento</th>
-                        <th class="viz_rem_colum">Vizualização</th>
-                        <th class="viz_rem_colum">Remover</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody_consumidores">
-                    
-                    
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <div class="container-tabela">
+                <table class="tabela">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Fábricas</th>
+                            <th>Segmento</th>
+                            <th class="viz_rem_colum">Vizualização</th>
+                            <th class="viz_rem_colum">Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_consumidores">
 
-    <div class="modal" id="modalVisualizar">
-        <div class="content_modal">
-            <div class="modal-header">
-                <h2>Detalhes da Empresa</h2>
-                <button class="fecha">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="detalhe-item">
-                    <span class="detalhe-label">CNPJ:</span>
-                    <span id="detalheCNPJ"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Nome:</span>
-                    <span id="detalheNome"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Fábricas:</span>
-                    <span id="detalheFabricas"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Segmento:</span>
-                    <span id="detalheSegmento"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Endereço:</span>
-                    <span id="detalheEndereco"></span>
-                </div>
-                <div class="detalhe-item">
-                    <span class="detalhe-label">Token:</span>
-                    <span id="token"></span>
-                </div>
-            </div>
-            <div class="modal-btn-fechar">
-                <button id="btn_alterar" style="margin-right: 5px;" class="btn-fechar">Alterar</button>
-                <button class="btn-fechar">Fechar</button>
+
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+
+        <div class="modal" id="modalVisualizar">
+            <div class="content_modal">
+                <div class="modal-header">
+                    <h2>Detalhes da Empresa</h2>
+                    <button class="fecha">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">CNPJ:</span>
+                        <span id="detalheCNPJ"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Nome:</span>
+                        <span id="detalheNome"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Fábricas:</span>
+                        <span id="detalheFabricas"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Segmento:</span>
+                        <span id="detalheSegmento"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Endereço:</span>
+                        <span id="detalheEndereco"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <span class="detalhe-label">Token:</span>
+                        <span id="token"></span>
+                    </div>
+                </div>
+                <div class="modal-btn-fechar">
+                    <button id="btn_alterar" style="margin-right: 5px;" class="btn-fechar">Alterar</button>
+                    <button class="btn-fechar">Fechar</button>
+                </div>
+            </div>
+        </div>
 </body>
 
 <script src="../../js/nav_sidebar.js"></script>
 <script src="../../js/empresas_consumidoras/listagem.js"></script>
+
 </html>
 
 <script>
 
     const adicionar = () => {
-        window.location.href = "./consumidores/form";
+        window.location.href = "./form";
     }
 
     let empresasResults
-    
-    document.addEventListener('DOMContentLoaded', async function() {
+
+    document.addEventListener('DOMContentLoaded', async function () {
         let response = await getAllEmpresas()
-        
+
         const modal = document.getElementById('modalVisualizar');
-        const fecharModal = document.querySelector('.fecha');
-        const btnFechar = document.querySelector('.btn-fechar');
+
+
         const btnVisualizar = document.querySelectorAll('.btn-visualizar');
         console.log(btnVisualizar)
-        
-        
+
+
         btnVisualizar.forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const id = this.getAttribute('id');
                 const btn_alterar = document.getElementById('btn_alterar')
-                btn_alterar.setAttribute('onclick', `window.location.href = './consumidores/${id}/form'`)
+                btn_alterar.setAttribute('onclick', `window.location.href = './${id}/form'`)
                 let data = null;
                 // TESTE
                 console.log(empresasResults)
                 empresasResults.forEach(empresa => {
                     if (empresa.id == id) {
                         data = empresa;
-                        
+
                     }
                 });
                 document.getElementById('detalheCNPJ').textContent = data.cnpj;
@@ -256,21 +261,25 @@
                 document.getElementById('detalheSegmento').textContent = data.segmento;
                 document.getElementById('detalheEndereco').innerHTML = data.endereco;
                 document.getElementById('token').innerHTML = data.token;
-                
+
                 modal.style.display = 'flex';
             });
         });
-        
-        fecharModal.addEventListener('click', function() {
+
+        const fecharModal = document.querySelector('.fecha');
+        fecharModal.addEventListener('click', function () {
             modal.style.display = 'none';
         });
-        
-        btnFechar.addEventListener('click', function() {
-            modal.style.display = 'none';
+
+        const btnFechar = document.querySelectorAll('.btn-fechar');
+        btnFechar.forEach(btn => {
+            btn.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
         });
-        
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
+
+        window.addEventListener('click', function (e) {
+            if (e.target == modal) {
                 modal.style.display = 'none';
             }
         });

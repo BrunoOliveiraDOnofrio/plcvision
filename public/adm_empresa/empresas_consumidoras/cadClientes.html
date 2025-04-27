@@ -11,9 +11,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../../css/fonts.css">
-    <link rel="stylesheet" href="../../css/nav_side_bar.css">
-    <link rel="stylesheet" href="../../css/cadCliente.css">
+    <link rel="stylesheet" href="../../../css/fonts.css">
+    <link rel="stylesheet" href="../../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../../css/cadCliente.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../../js/nav_sidebar.js"></script>
@@ -110,12 +110,12 @@
         <div class="inicio">
             <ul>
                 <li>
-                    <a href="../consumidores">
+                    <a href="./consumidores">
                         <i class='bx bx-group'></i>
                     </a>
                 </li>
                 <li>
-                    <a href="../alertas">
+                    <a href=".././alertas">
                         <i class='bx bxs-bell-ring' ></i>
                     </a>
                 </li>
@@ -171,7 +171,7 @@
                         </div>
                         <div class="campo">
                             <span>Segmento:</span>
-                            <input name="segmento" type="text">                    <span></span>
+                            <input name="segmento" type="text">
                         </div>
                         <div class="campo">
                             <span >Qtd. Fábricas:</span>
@@ -245,7 +245,7 @@
                 </div>
                 <div class="box-btns">
                     <div class="btns-wrapper">
-                        <button type="button"  class="btn">Cancelar</button>
+                        <button type="button" class="btn" onclick="window.location.href = './';">Cancelar</button>
                         <button type="button" onclick="cadastrar()" class="btn">Cadastrar</button>
                     </div>
                 </div>

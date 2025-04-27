@@ -16,7 +16,7 @@ const update = async () => {
             body: JSON.stringify(data)
         });
         if (response.ok) {
-            window.location.href = '../../consumidores';
+            window.location.href = '../../consumidores/';
         } else {
             console.log('Erro ao atualizar empresa consumidora:', response.statusText);
             const errorData = await response.json();
