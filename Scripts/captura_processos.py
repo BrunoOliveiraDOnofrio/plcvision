@@ -21,10 +21,10 @@ def conexao_select():
     # configurar var de ambientes e criar conexao com o banco de dados
 
     conexao_db = db.connect(
-        host='127.0.0.1',
+        host='52.2.47.7',
         port=3306,
-        user='root',
-        password='Afmarolive1!',
+        user='plc_manager',
+        password='plc_password',
         database='plcvision'
     )
 
@@ -127,8 +127,8 @@ def coletar_dados():
 
         primeiro_item = list(processos.values())[0]
         headers = primeiro_item.keys()
-
-        nome_csv = f"csvs_processo/processo_{data_agora}_{id_plc}.csv"
+        nome_csv_original = f"processo_{data_agora}_{id_plc}.csv"
+        nome_csv = f"Scripts/csvs_processo/{nome_csv_original}"
 
         with open(nome_csv, 'w', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=headers)
@@ -138,7 +138,7 @@ def coletar_dados():
             writer.writerows(processos.values())
             time.sleep(1)
             print("Enviando Bucket...")
-            aws.enviar_arquivo_processo(nome_csv)
+            aws.enviar_arquivo_processo(nome_csv, nome_csv_original)
 
 
 def sair():
