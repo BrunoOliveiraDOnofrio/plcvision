@@ -44,6 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
     btnEditar.addEventListener('click', function() {
         const id = btnEditar.getAttribute('data-id');
         localStorage.setItem("id", id);
-        window.location.href = `./${id}/form`;
+        window.location.href = `/adm/setores/${id}/form`;
     });
 });
