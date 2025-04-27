@@ -368,15 +368,8 @@ const startMonitoramento = async (id) => {
 
   const charts = document.querySelector('#div_charts')
   const kpis = document.querySelector('#div_kpis')
-  if(trocouPlc){
-    kpis.innerHTML = ``
-    charts.innerHTML = ``
-    graficosCriados = false
-    kpisCriados = false
-    carrosseisCriados = false
-    trocouPlc = false
-  }
-    if (data == "No data") { 
+  
+    if (data == "No data" || trocouPlc) { 
         
         const charts = document.querySelector('#div_charts')
         const kpis = document.querySelector('#div_kpis')
@@ -390,7 +383,8 @@ const startMonitoramento = async (id) => {
         document.querySelectorAll('.swiper-button-next').forEach(el => el.style.opacity = 0)
         document.querySelectorAll('.swiper-button-prev').forEach(el => el.style.opacity = 0)  
         document.querySelector('.div-componentes').style.opacity = 0
-        return
+        trocouPlc = false
+        
     }
 
       
