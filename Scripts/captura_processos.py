@@ -8,6 +8,7 @@ from datetime import datetime, timedelta, timezone
 import csv
 import aws
 import selectsInfos
+import os
 
 id_plc = None # Colocar id_plc
 
@@ -37,9 +38,12 @@ def coletar_dados():
     global id_plc
     global fabrica_id
 
-    comando = "ip link show | grep 'link/ether' | awk '{print $2}'"
-    saida = os.popen(comando).read().strip()
-    endereco_mac = saida.split("\n")[0]
+    interfaces = psutil.net_if_addrs()
+
+    if "Ethernet" in interfaces:
+            for endereco in interfaces["Ethernet"]:
+                if endereco.family == psutil.AF_LINK:
+                    endereco_mac = endereco.address
 
     plcCadastrado = selectsInfos.verificarPlcCadastrado(endereco_mac)
     id_plc = plcCadastrado.get('id')
@@ -49,23 +53,28 @@ def coletar_dados():
         data = defaultdict(list)
 
         for processo in psutil.process_iter(['pid', 'name']):
+            try:
+                processos = psutil.Process(processo.info['pid'])
 
-            processos = psutil.Process(processo.info['pid'])
+                fuso_brasil = timezone(timedelta(hours=-3))
+                data_agora = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
+                data_agora = data_agora.replace(" ", "_")
+                data_agora = data_agora.replace(":", "-")
+                cpu = processos.cpu_percent(interval=0.01)
+                print(processos.cpu_percent(interval=0.01))
+                memoria = processos.memory_percent()
+                rede = processo.net_connections(kind='inet')
+                status_list = [conn.status for conn in rede]
+                data['nomes'].append(processo.name())
+                data['cpu'].append(cpu)
+                data['memoria'].append(memoria)
+                data['status'].append(status_list)
+                data['dataHora'].append(data_agora)
+            except Exception as e:
+                print("ERRO: ", e)
             
-            fuso_brasil = timezone(timedelta(hours=-3))
-            data_agora = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
-            data_agora = data_agora.replace(" ", "_")
-            data_agora = data_agora.replace(":", "-")
-            cpu = processos.cpu_percent(interval=0.01)
-            print(processos.cpu_percent(interval=0.01))
-            memoria = processos.memory_percent()
-            rede = processo.net_connections(kind='inet')
-            status_list = [conn.status for conn in rede]
-            data['nomes'].append(processo.name())
-            data['cpu'].append(cpu)
-            data['memoria'].append(memoria)
-            data['status'].append(status_list)
-            data['dataHora'].append(data_agora)
+            
+            
 
         agrupamento = {}
 
