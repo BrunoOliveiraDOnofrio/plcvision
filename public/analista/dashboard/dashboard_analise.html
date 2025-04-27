@@ -199,18 +199,6 @@
 
                 <div class="chart-grid">
                     <div class="chart-card">
-                        <h3>Ciclos de uso de CPU ao longo do dia por máquina</h3>
-                        <div class="chart-container">
-                            <canvas id="cpuGrafico"></canvas>
-                        </div>
-                    </div>
-                    <div class="chart-card">
-                        <h3>Tráfego de rede médio</h3>
-                        <div class="chart-container">
-                            <canvas id="redeGrafico"></canvas>
-                        </div>
-                    </div>
-                    <div class="chart-card">
                         <h3>CPU média de todos PLCs</h3>
                         <div class="chart-container">
                             <canvas id="cpuMediaGrafico"></canvas>
@@ -226,6 +214,12 @@
                         <h3>Temperatura média</h3>
                         <div class="chart-container">
                             <canvas id="temperaturaGrafico"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Tráfego de rede médio</h3>
+                        <div class="chart-container">
+                            <canvas id="redeGrafico"></canvas>
                         </div>
                     </div>
                 </div>
@@ -287,32 +281,36 @@
             const horariosDisponiveis = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
 
             const plcs = [
-                // PLC 4 Und 1 Pintura
-                { id: 'PLC 4', cpu: 78.4, ram: 74.2, temperatura: 68.5, rede: 2.3, horario: '08:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: ['08:00'], picos_ram: ['11:00'] },
-                { id: 'PLC 4', cpu: 82.1, ram: 76.5, temperatura: 70.2, rede: 3.1, horario: '10:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: ['10:00'], picos_ram: ['12:00'] },
-                { id: 'PLC 4', cpu: 85.6, ram: 78.9, temperatura: 72.8, rede: 3.8, horario: '14:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: ['14:00'], picos_ram: ['14:00'] },
-                { id: 'PLC 4', cpu: 76.2, ram: 72.4, temperatura: 67.1, rede: 2.5, horario: '16:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: ['19:00'] },
+                { id: 'PLC 4', cpu: 41.2, ram: 62.1, temperatura: 65.3, rede: 2.5, horario: '07:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 4', cpu: 43.5, ram: 64.2, temperatura: 66.1, rede: 2.7, horario: '08:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 4', cpu: 87.1, ram: 88.9, temperatura: 76.3, rede: 3.8, horario: '09:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: ['09:00'], picos_ram: ['09:00'] },
+                { id: 'PLC 4', cpu: 80.2, ram: 82.5, temperatura: 74.1, rede: 3.4, horario: '10:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: [] },
 
-                { id: 'PLC 4', cpu: 81.5, ram: 75.3, temperatura: 69.8, rede: 2.9, horario: '09:00', data: '2025-04-17', fabrica: 'und1', setor: 'pintura', picos_cpu: ['09:00'], picos_ram: ['09:00'] },
-                { id: 'PLC 4', cpu: 79.3, ram: 73.8, temperatura: 68.9, rede: 2.7, horario: '13:00', data: '2025-04-17', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 5', cpu: 35.1, ram: 58.5, temperatura: 64.7, rede: 3.3, horario: '07:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 5', cpu: 36.7, ram: 59.8, temperatura: 65.4, rede: 3.5, horario: '08:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 5', cpu: 88.4, ram: 80.1, temperatura: 77.8, rede: 4.9, horario: '09:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: ['09:00'], picos_ram: ['09:00'] },
+                { id: 'PLC 5', cpu: 84.1, ram: 78.6, temperatura: 75.4, rede: 4.6, horario: '10:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: [], picos_ram: [] },
 
-                // PLC 5 Und 2 Solda
-                { id: 'PLC 5', cpu: 85.6, ram: 68.9, temperatura: 75.4, rede: 4.2, horario: '09:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: ['09:00'], picos_ram: [] },
-                { id: 'PLC 5', cpu: 89.2, ram: 72.3, temperatura: 77.1, rede: 4.5, horario: '11:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: ['11:00'], picos_ram: [] },
-                { id: 'PLC 5', cpu: 10.5, ram: 76.8, temperatura: 78.9, rede: 4.9, horario: '17:00', data: '2025-04-16', fabrica: 'und2', setor: 'solda', picos_cpu: ['17:00'], picos_ram: ['15:00'] },
+                { id: 'PLC 6', cpu: 50.2, ram: 69.1, temperatura: 69.8, rede: 5.1, horario: '07:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 6', cpu: 51.8, ram: 70.2, temperatura: 70.5, rede: 5.3, horario: '08:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 6', cpu: 95.2, ram: 91.7, temperatura: 82.3, rede: 6.5, horario: '09:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: ['09:00'], picos_ram: ['09:00'] },
+                { id: 'PLC 6', cpu: 90.3, ram: 89.2, temperatura: 80.9, rede: 6.2, horario: '10:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
 
-                { id: 'PLC 5', cpu: 87.4, ram: 70.5, temperatura: 76.3, rede: 4.3, horario: '10:00', data: '2025-04-17', fabrica: 'und2', setor: 'solda', picos_cpu: ['10:00'], picos_ram: [] },
-                { id: 'PLC 5', cpu: 90.8, ram: 74.2, temperatura: 78.1, rede: 4.7, horario: '16:00', data: '2025-04-17', fabrica: 'und2', setor: 'solda', picos_cpu: ['16:00'], picos_ram: ['19:00', '20:00'] },
+                { id: 'PLC 7', cpu: 38.7, ram: 60.5, temperatura: 65.1, rede: 2.8, horario: '07:00', data: '2025-04-16', fabrica: 'und2', setor: 'montagem', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 7', cpu: 40.1, ram: 62.2, temperatura: 66.4, rede: 3.0, horario: '08:00', data: '2025-04-16', fabrica: 'und2', setor: 'montagem', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 7', cpu: 86.8, ram: 84.9, temperatura: 75.6, rede: 5.4, horario: '09:00', data: '2025-04-16', fabrica: 'und2', setor: 'montagem', picos_cpu: ['09:00'], picos_ram: ['09:00'] },
 
-                // PLC 6 Und 1 Montagem
-                { id: 'PLC 6', cpu: 95.2, ram: 85.7, temperatura: 82.3, rede: 5.8, horario: '10:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
-                { id: 'PLC 6', cpu: 98.9, ram: 91.5, temperatura: 85.1, rede: 6.3, horario: '12:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: ['12:00'], picos_ram: [] },
-                { id: 'PLC 6', cpu: 96.7, ram: 88.3, temperatura: 83.6, rede: 6.0, horario: '15:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
-                { id: 'PLC 6', cpu: 97.5, ram: 90.2, temperatura: 84.5, rede: 6.2, horario: '18:00', data: '2025-04-16', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: ['17:00'] },
+                { id: 'PLC 8', cpu: 44.3, ram: 65.4, temperatura: 67.2, rede: 2.6, horario: '07:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 8', cpu: 45.7, ram: 66.8, temperatura: 68.1, rede: 2.9, horario: '08:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 8', cpu: 89.2, ram: 86.7, temperatura: 78.5, rede: 4.2, horario: '09:00', data: '2025-04-16', fabrica: 'und1', setor: 'pintura', picos_cpu: ['09:00'], picos_ram: ['09:00'] },
 
-                // PLC 6
-                { id: 'PLC 6', cpu: 97.1, ram: 89.6, temperatura: 84.0, rede: 6.1, horario: '11:00', data: '2025-04-17', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
-                { id: 'PLC 6', cpu: 99.2, ram: 92.8, temperatura: 86.2, rede: 6.5, horario: '14:00', data: '2025-04-17', fabrica: 'und1', setor: 'montagem', picos_cpu: ['14:00'], picos_ram: ['17:00', '19:00'] }
+                { id: 'PLC 4', cpu: 42.8, ram: 63.0, temperatura: 65.7, rede: 2.6, horario: '08:00', data: '2025-04-17', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 5', cpu: 37.2, ram: 59.5, temperatura: 65.1, rede: 3.4, horario: '08:00', data: '2025-04-17', fabrica: 'und2', setor: 'solda', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 6', cpu: 53.1, ram: 71.5, temperatura: 71.2, rede: 5.4, horario: '08:00', data: '2025-04-17', fabrica: 'und1', setor: 'montagem', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 7', cpu: 41.9, ram: 62.9, temperatura: 67.0, rede: 3.2, horario: '08:00', data: '2025-04-17', fabrica: 'und2', setor: 'montagem', picos_cpu: [], picos_ram: [] },
+
+                { id: 'PLC 4', cpu: 46.0, ram: 64.5, temperatura: 67.1, rede: 2.7, horario: '08:00', data: '2025-04-18', fabrica: 'und1', setor: 'pintura', picos_cpu: [], picos_ram: [] },
+                { id: 'PLC 5', cpu: 91.8, ram: 85.3, temperatura: 78.0, rede: 5.0, horario: '09:00', data: '2025-04-18', fabrica: 'und2', setor: 'solda', picos_cpu: ['09:00'], picos_ram: ['09:00'] },
             ];
 
             const outlier = [
@@ -421,35 +419,49 @@
                 const ramMedia = ramTotal / dadosFiltrados.plcs.length;
                 const tempMedia = tempTotal / dadosFiltrados.plcs.length;
 
-                // Contagem de picos
-                let picosCpu = 0;
+                // const horariosComPico = new Set();
+                // plcs.forEach(plc => {
+                //     plc.picos_cpu.forEach(horario => {
+                //         horariosComPico.add(`${plc.data} ${horario}`);
+                //     });
+                // });
+
+                // // Número de picos distintos
+                // console.log('Horários com pico', horariosComPico);
+                // const numeroDePicos = horariosComPico.size;
+
+                const plcMap = {};
+
                 for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
                     const plcAtual = dadosFiltrados.plcs[i];
-                    if (plcAtual.picos_cpu && plcAtual.picos_cpu.length > 0) {
-                        picosCpu++;
+
+                    if (!plcMap[plcAtual.id]) {
+                        plcMap[plcAtual.id] = {
+                            cpuTot: 0,
+                            ramTot: 0,
+                            cont: 0
+                        };
                     }
+
+                    plcMap[plcAtual.id].cpuTot += plcAtual.cpu;
+                    plcMap[plcAtual.id].ramTot += plcAtual.ram;
+                    plcMap[plcAtual.id].cont++;
                 }
 
-                // Contagem de picos de RAM
                 const plcsEmAlerta = [];
-                for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
-                    const plcAtual = dadosFiltrados.plcs[i];
-                    if (plcAtual.cpu > 80 || plcAtual.ram > 80) {
-                        let jaExiste = false;
-                        for (let j = 0; j < plcsEmAlerta.length; j++) {
-                            if (plcsEmAlerta[j] == plcAtual.id) {
-                                jaExiste = true;
-                                break;
-                            }
-                        }
-                        if (!jaExiste) {
-                            plcsEmAlerta.push(plcAtual.id);
-                        }
+
+                console.log('Plc MAP', plcMap);
+
+                for (const id in plcMap) {
+                    const dados = plcMap[id];
+                    const mediaCpu = dados.cpuTot / dados.cont;
+                    const mediaRam = dados.ramTot / dados.cont;
+                    if (mediaCpu > 80 || mediaRam > 80) {
+                        plcsEmAlerta.push(id);
                     }
                 }
 
-                console.log(plcsEmAlerta);
-
+                console.log('Plc em alerta', plcsEmAlerta);
                 const maquinasAlerta = plcsEmAlerta.length;
 
                 document.getElementById('kpi-cpu').textContent = cpuMedia.toFixed(2) + '%';
@@ -461,14 +473,12 @@
                 document.getElementById('kpi-temperatura').textContent = tempMedia.toFixed(2) + '%';
                 document.getElementById('kpi-temperatura').style.color = tempMedia > 80 ? 'red' : (tempMedia > 70 ? 'orange' : 'blue');
 
-                document.getElementById('kpi-picos').textContent = picosCpu;
-                document.getElementById('kpi-alertas').textContent = maquinasAlerta;
+                document.getElementById('kpi-alertas').innerHTML = maquinasAlerta;
                 document.getElementById('kpi-rede').textContent = redeTotal.toFixed(2) + 'GB';
             }
 
             function plotarGrafico(dadosFiltrados) {
                 if (dadosFiltrados.plcs.length == 0) {
-                    graficoCPU.destroy();
                     graficoRede.destroy();
                     graficoCPUmedia.destroy();
                     graficoRAM.destroy();
@@ -478,7 +488,6 @@
 
                 const filtroDiario = dadosFiltrados.filtroDiario;
                 const ctx = {
-                    cpu: document.getElementById('cpuGrafico').getContext('2d'),
                     rede: document.getElementById('redeGrafico').getContext('2d'),
                     cpuMedia: document.getElementById('cpuMediaGrafico').getContext('2d'),
                     ram: document.getElementById('ramGrafico').getContext('2d'),
@@ -604,52 +613,10 @@
                 // labels = eixo x, dadosAlgumaCoisa = eixo y
                 // ctx = aonde o gráfico vai ser plotado no front
                 // filtroDiario = se o gráfico é diário ou não. Caso diario, o eixo X é horário, se não o eixo X é a data
-                plotarGraficoCPU(ctx.cpu, labels, dadosCpu, filtroDiario);
                 plotarGraficoRede(ctx.rede, labels, dadosRede, filtroDiario);
                 plotarGraficoCPUMedia(ctx.cpuMedia, labels, dadosCpu, filtroDiario);
                 plotarGraficoRAM(ctx.ram, labels, dadosRam, filtroDiario);
                 plotarGraficoTemp(ctx.temperatura, labels, dadosTemp, filtroDiario);
-            }
-
-            function plotarGraficoCPU(ctx, labels, dados, filtroDiario) {
-                if (graficoCPU) {
-                    graficoCPU.destroy();
-                }
-
-                graficoCPU = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'CPU (%)',
-                            data: dados,
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            backgroundColor: 'rgba(54, 162, 235, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                max: 100,
-                                title: {
-                                    display: true,
-                                    text: 'CPU (%)'
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: filtroDiario ? 'Horário' : 'Dias'
-                                }
-                            }
-                        }
-                    }
-                });
             }
 
             function plotarGraficoRede(ctx, labels, dados, filtroDiario) {
@@ -821,89 +788,93 @@
             }
 
             function plotarTabelaCPU(dadosFiltrados) {
-                const cpuTable = document.getElementById('cpu-table').getElementsByTagName('tbody')[0];
-                cpuTable.innerHTML = ''; // Limpar tabela
+                const tabelaCPU = document.getElementById('cpu-table').getElementsByTagName('tbody')[0];
+                tabelaCPU.innerHTML = ''; // Limpar tabela
 
                 // Agrupar dados por máquina
-                const plcsDados = {};
+                const dadosPorMaquina = {};
 
                 for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
-                    const plc = dadosFiltrados.plcs[i];
+                    const maquinaAtual = dadosFiltrados.plcs[i];
 
-                    if (!plcsDados[plc.id]) {
-                        plcsDados[plc.id] = {
-                            id: plc.id,
-                            cpuTotal: 0,
-                            cont: 0,
-                            picos: []
+                    if (!dadosPorMaquina[maquinaAtual.id]) {
+                        dadosPorMaquina[maquinaAtual.id] = {
+                            id: maquinaAtual.id,
+                            somaCPU: 0,
+                            quantidade: 0,
+                            horariosPico: []
                         };
                     }
 
-                    plcsDados[plc.id].cpuTotal += plc.cpu;
-                    plcsDados[plc.id].cont++;
+                    dadosPorMaquina[maquinaAtual.id].somaCPU += maquinaAtual.cpu;
+                    dadosPorMaquina[maquinaAtual.id].quantidade++;
 
-                    // Adicionar picos de CPU
-                    if (plc.picos_cpu && plc.picos_cpu.length > 0) {
-                        for (let j = 0; j < plc.picos_cpu.length; j++) {
-                            const pico = plc.picos_cpu[j];
-                            // Verifica se o pico já existe na lista
-                            let picoExiste = false;
-                            for (let k = 0; k < plcsDados[plc.id].picos.length; k++) {
-                                if (plcsDados[plc.id].picos[k] === pico) {
-                                    picoExiste = true;
-                                    break;
-                                }
-                            }
-                            if (!picoExiste) {
-                                plcsDados[plc.id].picos.push(pico);
+                    // Adicionar horários de pico de CPU
+                    if (maquinaAtual.picos_cpu && maquinaAtual.picos_cpu.length > 0) {
+                        for (let j = 0; j < maquinaAtual.picos_cpu.length; j++) {
+                            const horarioPico = maquinaAtual.picos_cpu[j];
+                            if (!dadosPorMaquina[maquinaAtual.id].horariosPico.includes(horarioPico)) {
+                                dadosPorMaquina[maquinaAtual.id].horariosPico.push(horarioPico);
                             }
                         }
                     }
                 }
 
-                // Calcular média de CPU e formatar para a tabela
-                const plcsIds = Object.keys(plcsDados);
-                for (let i = 0; i < plcsIds.length; i++) {
-                    const plcId = plcsIds[i];
-                    const plc = plcsDados[plcId];
+                // Preencher a tabela
+                for (const idMaquina in dadosPorMaquina) {
+                    const dadosMaquina = dadosPorMaquina[idMaquina];
 
-                    const row = cpuTable.insertRow();
-                    const cellId = row.insertCell(0);
-                    const cellPicos = row.insertCell(1);
-                    const cellCpuMedia = row.insertCell(2);
+                    const linha = tabelaCPU.insertRow();
+                    const celulaId = linha.insertCell(0);
+                    const celulaPicos = linha.insertCell(1);
+                    const celulaMediaCPU = linha.insertCell(2);
 
-                    const cpuMedia = plc.cpuTotal / plc.cont;
+                    const mediaCPU = dadosMaquina.somaCPU / dadosMaquina.quantidade;
 
-                    cellId.textContent = plc.id;
+                    celulaId.textContent = dadosMaquina.id;
 
-                    // Junta os picos com vírgula ou coloca traço se vazio
-                    if (plc.picos.length > 0) {
-                        let picoTexto = '';
-                        for (let j = 0; j < plc.picos.length; j++) {
-                            if (j > 0) {
-                                picoTexto += ', ';
-                            }
-                            picoTexto += plc.picos[j];
-                        }
-                        cellPicos.textContent = picoTexto;
+                    if (dadosMaquina.horariosPico.length > 0) {
+                        celulaPicos.textContent = dadosMaquina.horariosPico.join(', ');
                     } else {
-                        cellPicos.textContent = '-';
+                        celulaPicos.textContent = '-';
                     }
 
-                    cellCpuMedia.textContent = cpuMedia.toFixed(1) + '%';
+                    celulaMediaCPU.textContent = mediaCPU.toFixed(1) + '%';
 
-                    // Estilizar conforme valor
-                    if (cpuMedia > 90) {
-                        cellId.style.color = 'red';
-                        cellPicos.style.color = 'red';
-                        cellCpuMedia.style.color = 'red';
-                    } else if (cpuMedia > 80) {
-                        cellId.style.color = 'orange';
-                        cellPicos.style.color = 'orange';
-                        cellCpuMedia.style.color = 'orange';
+                    if (mediaCPU > 90) {
+                        celulaId.style.color = 'red';
+                        celulaPicos.style.color = 'red';
+                        celulaMediaCPU.style.color = 'red';
+                    } else if (mediaCPU > 80) {
+                        celulaId.style.color = 'orange';
+                        celulaPicos.style.color = 'orange';
+                        celulaMediaCPU.style.color = 'orange';
                     }
                 }
+
+                contarEExibirPicos(dadosFiltrados);
             }
+
+            function contarEExibirPicos(dadosFiltrados) {
+                const horariosComPico = new Set();
+
+                for (let i = 0; i < dadosFiltrados.plcs.length; i++) {
+                    const maquina = dadosFiltrados.plcs[i];
+                    if (maquina.picos_cpu && maquina.picos_cpu.length > 0) {
+                        for (let j = 0; j < maquina.picos_cpu.length; j++) {
+                            const horario = maquina.picos_cpu[j];
+                            horariosComPico.add(`${maquina.data} ${horario}`);
+                        }
+                    }
+                }
+
+                const totalPicos = horariosComPico.size;
+
+                document.getElementById('kpi-picos').textContent = totalPicos;
+            }
+
+
+
 
             function plotarTabelaRAM(dadosFiltrados) {
                 const ramTable = document.getElementById('ram-table').getElementsByTagName('tbody')[0];
