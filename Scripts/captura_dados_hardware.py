@@ -69,9 +69,12 @@ def coletar_dados():
         # dt = saida.split("/")[3].strip().split(",")[0].strip()
 
 
-        comando = 'powershell.exe ipconfig /all | findstr "Endereço Físico"'
-        saida = os.popen(comando).read().strip()
-        endereco_mac = saida.split(":")[12].strip().split(" ")[0].strip()
+        interfaces = psutil.net_if_addrs()
+
+        if "Ethernet" in interfaces:
+                for endereco in interfaces["Ethernet"]:
+                    if endereco.family == psutil.AF_LINK:
+                        endereco_mac = endereco.address
     else:
         hostname = os.popen('hostname').read().strip()
 
@@ -87,9 +90,12 @@ def coletar_dados():
               dt = date_parts[1]
               dt = dt.split("-")[0]
         
-        comando = "ip link show | grep 'link/ether' | awk '{print $2}'"
-        saida = os.popen(comando).read().strip()
-        endereco_mac = saida.split("\n")[0]
+        interfaces = psutil.net_if_addrs()
+
+        if "Ethernet" in interfaces:
+            for endereco in interfaces["Ethernet"]:
+                if endereco.family == psutil.AF_LINK:
+                    endereco_mac = endereco.address
 
 
     plcCadastrado = selectsInfos.verificarPlcCadastrado(endereco_mac)
