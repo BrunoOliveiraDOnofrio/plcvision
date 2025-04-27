@@ -6,6 +6,7 @@ let configuracoesObtidas = false
 let configuracoesPlcs = []
 let configuracaoAtual = null
 let kpisCriados = false
+let trocouPlc = false
 
 
 
@@ -172,6 +173,7 @@ const selecionarConfiguracaoAtual = (id) => {
 
 selectPlcs.addEventListener('change', (event) => {
     fecharAlerta()
+    trocouPlc = true
     const selectedValue = event.target.value;
     monitoramentoInterval && clearInterval(monitoramentoInterval)
     selecionarConfiguracaoAtual(selectedValue)
@@ -366,11 +368,14 @@ const startMonitoramento = async (id) => {
 
   const charts = document.querySelector('#div_charts')
   const kpis = document.querySelector('#div_kpis')
-  kpis.innerHTML = ``
-  charts.innerHTML = ``
-  graficosCriados = false
-  kpisCriados = false
-  carrosseisCriados = false
+  if(trocouPlc){
+    kpis.innerHTML = ``
+    charts.innerHTML = ``
+    graficosCriados = false
+    kpisCriados = false
+    carrosseisCriados = false
+    trocouPlc = false
+  }
     if (data == "No data") { 
         
         const charts = document.querySelector('#div_charts')
