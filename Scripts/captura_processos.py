@@ -128,7 +128,7 @@ def coletar_dados():
         primeiro_item = list(processos.values())[0]
         headers = primeiro_item.keys()
 
-        nome_csv = f"processo_{data_agora}_{id_plc}.csv"
+        nome_csv = f"csvs_processo/processo_{data_agora}_{id_plc}.csv"
 
         with open(nome_csv, 'w', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=headers)
