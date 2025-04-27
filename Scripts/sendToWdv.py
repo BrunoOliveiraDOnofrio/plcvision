@@ -1,7 +1,7 @@
 import requests
 import json
 import time
-url = "http://localhost:3000/monitoramento/0"
+url = "http://52.2.47.7:3000/monitoramento/0"
 
 def enviar(colunas, dados,campos, config_ids,id_plc):
     dicionario = tratamento(colunas, dados, campos, config_ids)

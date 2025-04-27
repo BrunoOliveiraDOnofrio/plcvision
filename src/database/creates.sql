@@ -1,5 +1,5 @@
  DROP DATABASE IF EXISTS plcvision;
- CREATE DATABASE IF NOT EXISTS PlcVision;
+ CREATE DATABASE IF NOT EXISTS plcvision;
 USE plcvision;
 
 

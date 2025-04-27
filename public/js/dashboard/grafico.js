@@ -122,7 +122,7 @@ const getUltimoAlerta = async () => {
     if(dadosAlerta.tipo_valor == "RAM Uso em Bytes"){
       dadosAlerta.valor_capturado = Number((dadosAlerta.valor_capturado / (1024 **3)).toFixed(2))
       dadosAlerta.tipo_valor = "RAM Uso em GB"
-    }else if(dadosAlerta.tipo_valor == "RAM Memória Livre Bytes"){
+    }else if(dadosAlerta.tipo_valor == "RAM Memoria Livre Bytes"){
       dadosAlerta.valor_capturado = Number((dadosAlerta.valor_capturado / (1024 **3)).toFixed(2))
       dadosAlerta.tipo_valor = "RAM Memória Livre em GB"
     }
@@ -196,7 +196,7 @@ const criarHtmlsGraficoseKpis = (data) => {
         dado.campo = "RAM Uso em GB"
       }else if(dado.campo == "RAM Memória Livre Bytes"){
         dado.valor = Number((dado.valor / (1024 **3)).toFixed(2))
-        dado.campo = "RAM Memória Livre em GB"
+        dado.campo = "RAM Memoria Livre em GB"
       }
       html_kpis_text += `<div class="kpi-box swiper-slide">
                     <div class="value">
@@ -241,7 +241,7 @@ const criarHtmlsGraficoseKpis = (data) => {
         if(dado.campo == "RAM Uso em Bytes Bytes"){
           dado.valor = Number((dado.valor / (1024 **3)).toFixed(2))
           dado.campo = "RAM Uso em GB"
-        }else if(dado.campo == "RAM Memória Livre Bytes"){
+        }else if(dado.campo == "RAM Memoria Livre Bytes"){
           dado.valor = Number((dado.valor / (1024 **3)).toFixed(2))
           dado.campo = "RAM Memória Livre em GB"
         }
@@ -335,17 +335,18 @@ const criarHtmlsGraficoseKpis = (data) => {
     if(!graficosCriados){
 
       charts.innerHTML = html_graficos_text
+      graficosCriados = true
+
     }
     criarOuAtualizarGraficosChartJs(dadosParaGrafico, horarios, coresParaGraficos)
     if(!carrosseisCriados){
+      console.log("CRIANDO DNV")
       gerarCarrossel()
       document.querySelectorAll('.swiper-button-next').forEach(el => el.style.opacity = 1)
       document.querySelectorAll('.swiper-button-prev').forEach(el => el.style.opacity = 1)  
       document.querySelector('.div-componentes').style.opacity = 1
       carrosseisCriados = true
     }
-    graficosCriados = true
-    kpisCriados = true
 
   }
 
@@ -362,6 +363,14 @@ const startMonitoramento = async (id) => {
       
   })
   const data = await dataFromPython.json()
+
+  const charts = document.querySelector('#div_charts')
+  const kpis = document.querySelector('#div_kpis')
+  kpis.innerHTML = ``
+  charts.innerHTML = ``
+  graficosCriados = false
+  kpisCriados = false
+  carrosseisCriados = false
     if (data == "No data") { 
         
         const charts = document.querySelector('#div_charts')
@@ -371,7 +380,7 @@ const startMonitoramento = async (id) => {
         graficosCriados = false
         kpisCriados = false
         carrosseisCriados = false
-
+        // configuracoesObtidas = false
         instanciasGraficos = []
         document.querySelectorAll('.swiper-button-next').forEach(el => el.style.opacity = 0)
         document.querySelectorAll('.swiper-button-prev').forEach(el => el.style.opacity = 0)  
@@ -475,7 +484,7 @@ getEmpresasByFabricanteId(1)
 
 let instanciasGraficos = []
 
-const criarOuAtualizarGraficosChartJs = (datas, horarios, cores) => {
+const   criarOuAtualizarGraficosChartJs = (datas, horarios, cores) => {
   const graficos = document.querySelectorAll('.meuGrafico')
 
   graficos.forEach((canvas, i) => {
@@ -527,27 +536,42 @@ const criarOuAtualizarGraficosChartJs = (datas, horarios, cores) => {
 }
 
 const gerarCarrossel = () => {
-const swiper = new Swiper('.kpisCarrossel', {
-  // Optional parameters
-  direction: 'horizontal',
-  loop: true,
-  slidesPerView: 1.3,
-  spaceBetween: 10,
-  breakpoints: {
-    580: {
-      slidesPerView: 4,
-      spaceBetween: 10,
-    }
-  },
-  pagination: {
-    el: '.kpi-pagination',
-    clickable: true,
-  },
-  navigation: {
-    nextEl: '.kpi-next',
-    prevEl: '.kpi-prev',
-  },
+
+  const larguraDispositivo = window.innerWidth;
+  
+  let criarCarrossel = false
+  const qtdKpis = document.querySelectorAll('.kpi-box').length
+
+  if(larguraDispositivo > 580 && qtdKpis > 4){
+    criarCarrossel = true
+  }else if(larguraDispositivo <= 580 && qtdKpis > 1){
+    criarCarrossel = true
+  }
+
+if(criarCarrossel){
+  const swiper = new Swiper('.kpisCarrossel', {
+    // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+    slidesPerView: 1.3,
+    spaceBetween: 10,
+    breakpoints: {
+      580: {
+        slidesPerView: 4,
+        spaceBetween: 10,
+      }
+    },
+    pagination: {
+      el: '.kpi-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.kpi-next',
+      prevEl: '.kpi-prev',
+    },
 });
+}
+
 
 const swiperCharts = new Swiper('.chartsCarrossel', {
   // Optional parameters

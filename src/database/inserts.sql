@@ -51,7 +51,7 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('CPU', 'Atividade', 'dias', 'cpu_atividade_dias', 'int(psutil.boot_time() / (60 * 60 * 24))'),
 ('CPU', 'Ociosidade', 'dias', 'cpu_ociosidade_dias' , 'int(psutil.cpu_times().idle / (60 * 60 * 24))'),
 ('RAM', 'Uso', '%', 'ram_percent' , 'psutil.virtual_memory().percent'),
-('RAM', 'Memória Livre', 'Bytes', 'ram_livre' ,'int(psutil.virtual_memory().available)'),
+('RAM', 'Memoria Livre', 'Bytes', 'ram_livre' ,'int(psutil.virtual_memory().available)'),
 ('Bateria', 'Quantidade', '%', 'bateria_porcentagem', 'psutil.sensors_battery().percent'),
 ('CPU', 'Frequência', 'Mhz', 'cpu_freq', 'psutil.cpu_freq().current' ),
 ('RAM','Uso em Bytes', 'Bytes', 'ram_uso' ,'psutil.virtual_memory().used'),
