@@ -217,6 +217,11 @@
 </html>
 
 <script>
+
+    function adicionar() {
+        window.location.href = `/adm/usuarios/form`
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         const empresaId = sessionStorage.EMPRESA_ID;
         const tbody = document.getElementById('tbody_usuarios');

@@ -19,8 +19,7 @@ function cadastrar() {
         numero == null || numero == "" ||
         bairro == null || bairro == "" ||
         cidade == null || cidade == "" ||
-        estado == null || estado == "" ||
-        complemento == null || complemento == ""
+        estado == null || estado == "" 
     ) {
         alert("Por favor, preencha todos os campos antes de cadastrar.");
         return;

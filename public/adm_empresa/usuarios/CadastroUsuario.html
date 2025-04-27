@@ -211,7 +211,7 @@
 <script>
     async function carregarEmpresas() {
     try {
-        const response = await fetch('/fabricante');
+        const response = await fetch('/fabricante/');
         if (!response.ok) {
             throw new Error("Erro ao buscar fabricantes.");
         }
@@ -283,6 +283,7 @@
             if (response.ok) {
                 const data = await response.json();
                 console.log('Usuário cadastrado com sucesso:', data);
+                window.location.href = ``
                 alert("Usuário cadastrado com sucesso!");
             } else {
                 console.error('Erro ao cadastrar usuário:', response.statusText);
