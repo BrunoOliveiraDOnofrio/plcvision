@@ -542,18 +542,8 @@ const   criarOuAtualizarGraficosChartJs = (datas, horarios, cores) => {
 
 const gerarCarrossel = () => {
 
-  const larguraDispositivo = window.innerWidth;
   
-  let criarCarrossel = false
-  const qtdKpis = document.querySelectorAll('.kpi-box').length
 
-  if(larguraDispositivo > 580 && qtdKpis > 4){
-    criarCarrossel = true
-  }else if(larguraDispositivo <= 580 && qtdKpis > 1){
-    criarCarrossel = true
-  }
-
-if(criarCarrossel){
   const swiper = new Swiper('.kpisCarrossel', {
     // Optional parameters
     direction: 'horizontal',
@@ -575,7 +565,7 @@ if(criarCarrossel){
       prevEl: '.kpi-prev',
     },
 });
-}
+
 
 
 const swiperCharts = new Swiper('.chartsCarrossel', {
