@@ -9,9 +9,13 @@ url.forEach((item, index) => {
     }
 })
 
+const id_empresa = sessionStorage.getItem("EMPRESA_ID")
+
 const listarUsuarios = () => {
-    fetch("/plc").then((response) => response.json().then((json) => {
+    console.log(id_empresa)
+    fetch(`/plc/all/${id_empresa}`).then((response) => response.json().then((json) => {
         console.log(json)
+        console.log(id_empresa)
         if (adm) {
             fillUsuarios(json)
         }else{

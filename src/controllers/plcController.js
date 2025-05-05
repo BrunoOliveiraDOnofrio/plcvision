@@ -48,7 +48,8 @@ const listarPorEmpresa = (req, res) => {
 }
 
 function get(req, res){
-    plcModel.get().then(response => {
+    const empresaId = req.params.empresaId
+    plcModel.get(empresaId).then(response => {
         res.json(response)
     }).catch(e => {
         console.log(e)

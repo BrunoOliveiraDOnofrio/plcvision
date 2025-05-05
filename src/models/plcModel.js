@@ -15,8 +15,13 @@ WHERE fc.empresa_consumidor_id = ${empresaId};`;
     return database.executar(sql)
 }
 
-function get(){
-    const sql = `SELECT * FROM plc`;
+function get(empresaId){
+    const sql = `SELECT plc.id, plc.modelo, plc.ano, plc.capacidade_ram, plc.hostname, plc.endereco_mac FROM plc
+JOIN setor_fabrica sf
+ON sf.id = plc.setor_fabrica_id
+JOIN fabrica_consumidor fc
+ON fc.id = sf.fabrica_consumidor_id
+WHERE fc.empresa_consumidor_id = ${empresaId};`;
 
     return database.executar(sql)
 }
@@ -51,7 +56,10 @@ const getByMac = (mac) => {
 }
 
 function listarUm(id){
-    const sql = `SELECT * FROM plc WHERE id = ${id}`;
+    const sql = `select * from plc as p
+join parceria as par
+on p.parceria_id = par.id
+where par.empresa_fabricante_id = ${id}`;
     return database.executar(sql)
 }
 

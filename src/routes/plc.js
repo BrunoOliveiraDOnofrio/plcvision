@@ -14,7 +14,7 @@ router.post('/config/:plcId', (req, res) => {
     configPlcController.store(req, res);
 });
 
-router.get("/", (req, res) => {
+router.get("/all/:empresaId", (req, res) => {
     plcController.get(req, res);
 });
 
