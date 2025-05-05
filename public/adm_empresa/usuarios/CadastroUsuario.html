@@ -177,17 +177,19 @@
                     </div>
                     <div class="right-field">
 
+                        
                         <div class="field">
-                            <span>Nível:</span>
-                            <input type="text" id="ipt_nivel">
-                        </div>
-                        <div class="field">
-                            <span>Setor:</span>
+                            <span>Departamento:</span>
                             <input type="text" id="ipt_setor">
                         </div>
                         <div class="field">
                             <span>Cargo:</span>
-                            <input type="text" id="ipt_cargo">
+                            <select name="" id="ipt_cargo">
+                                <option value="#">Selecione um cargo</option>
+                                <option value="1">Gerente</option>
+                                <option value="2">Engenheiro</option>
+                                <option value="3">Analista</option>
+                            </select>
                         </div>
                         <div class="field">
                             <span>Senha:</span>
@@ -199,10 +201,10 @@
                         </div>
                     </div>
                     </div>
-                </div>
-                <div class="buttons">
-                    <button class="exit-button" onclick="">Cancelar</button>
-                    <button class="register-button" onclick="cadastrarUsuario()">Cadastrar</button>
+                    <div class="buttons">
+                        <button class="exit-button" onclick="voltar()">Cancelar</button>
+                        <button class="register-button" onclick="cadastrarUsuario()">Cadastrar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -297,5 +299,9 @@
             console.error('Erro ao cadastrar usuário:', error);
             alert("Erro ao conectar ao servidor.");
         }
+    }
+
+    function voltar(){
+        window.location.href = `../usuarios`;
     }
 </script>
