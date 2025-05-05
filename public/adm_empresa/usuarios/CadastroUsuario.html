@@ -186,9 +186,9 @@
                             <span>Cargo:</span>
                             <select name="" id="ipt_cargo">
                                 <option value="#">Selecione um cargo</option>
-                                <option value="1">Gerente</option>
+                                <option value="1">Analista</option>
                                 <option value="2">Engenheiro</option>
-                                <option value="3">Analista</option>
+                                <option value="3">Gerente</option>
                             </select>
                         </div>
                         <div class="field">
@@ -242,9 +242,16 @@
         const nome = document.getElementById('ipt_nome').value;
         const email = document.getElementById('ipt_email').value;
         const celular = document.getElementById('ipt_celular').value;
-        const nivel = document.getElementById('ipt_nivel').value;
         const setor = document.getElementById('ipt_setor').value;
-        const cargo = document.getElementById('ipt_cargo').value;
+        var cargo = document.getElementById('ipt_cargo').value;
+        const nivel = cargo;
+        if(cargo == 3){
+            cargo = "Gerente de Empresa";
+        }else if (cargo == 2){
+            cargo = "Engenheiro de Automação";
+        }else{
+            cargo = "Analista de Sistemas";
+        }
         const senha = document.getElementById('ipt_senha').value;
         const confirmarSenha = document.getElementById('ipt_confirmarSenha').value;
         const fkFabricante = document.getElementById('ipt_fkFabricante').value;
@@ -289,7 +296,7 @@
             if (response.ok) {
                 const data = await response.json();
                 console.log('Usuário cadastrado com sucesso:', data);
-                window.location.href = ``
+                window.location.href = `./`
                 alert("Usuário cadastrado com sucesso!");
             } else {
                 console.error('Erro ao cadastrar usuário:', response.statusText);

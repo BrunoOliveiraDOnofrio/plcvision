@@ -53,6 +53,7 @@ function cadastrar() {
 
         if (resposta.ok) {
         alert("Cadastro realizado com sucesso!");
+        window.location.href = `./`
         } else {
         throw "Houve um erro ao tentar realizar o cadastro!";
         }
