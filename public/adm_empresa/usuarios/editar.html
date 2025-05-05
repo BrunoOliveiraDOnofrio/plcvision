@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/fonts.css">
-    <link rel="stylesheet" href="../../css/nav_side_bar.css">
-    <link rel="stylesheet" href="../../css/StyleCadastroUsuario.css">
+    <link rel="stylesheet" href="../../../css/fonts.css">
+    <link rel="stylesheet" href="../../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../../css/StyleCadastroUsuario.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="../../js/nav_sidebar.js"></script>
+    <script src="../../../js/nav_sidebar.js"></script>
     <link rel="shortcut icon" href="../../assets/imgs/logo-aba_white.png">
     <title>PLCVision - Alterar Usuário</title>
 </head>
@@ -183,7 +183,7 @@
                     </div>
                     </div>
                     <div class="buttons">
-                        <button class="exit-button" onclick="">Cancelar</button>
+                        <button class="exit-button" onclick="voltar()">Cancelar</button>
                         <button class="register-button" onclick="atualizarUsuario()">Atualizar</button>
                     </div>
                 </div>
@@ -196,11 +196,40 @@
 </html>
 
 <script>
+
+    console.log(localStorage.getItem('id'))
+
+    function obterDadosUsuario() {
+    const usuarioId = localStorage.getItem('id');
+    console.log(usuarioId);
+    // Fazer a requisição para buscar os dados do usuario
+    fetch(`/usuario/atualizarCampo/${usuarioId}`)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data)
+            // Preencher os campos com os dados retornados
+            document.getElementById('ipt_nome').value = data.nome;
+            document.getElementById('ipt_email').value = data.email;
+            document.getElementById('ipt_celular').value = data.telCelular;
+            document.getElementById('ipt_nivel').value = data.nivel;
+            document.getElementById('ipt_setor').value = data.setor;
+            document.getElementById('ipt_cargo').value = data.cargo;
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da fábrica:', error);
+        });
+    }
+    obterDadosUsuario()
+
     async function atualizarUsuario() {
 
         
-        const params = new URLSearchParams(window.location.search);
-        const usuarioId = params.get('id');
+        // const params = new URLSearchParams(window.location.search);
+        // const usuarioId = params.get('id');
+        const usuarioId = localStorage.getItem('id');
+
         console.log("ID do usuário:", usuarioId);
 
         if (!usuarioId) {
@@ -238,7 +267,7 @@
                 const data = await response.json();
                 console.log('Usuário atualizado com sucesso:', data);
                 alert("Usuário atualizado com sucesso!");
-                window.location.href = "usuarios.html";
+                window.location.href = "../";
             } else {
                 console.error('Erro ao atualizar usuário:', response.statusText);
                 alert("Erro ao atualizar usuário.");
@@ -247,5 +276,9 @@
             console.error('Erro ao atualizar usuário:', error);
             alert("Erro ao conectar ao servidor.");
         }
+    }
+
+    function voltar(){
+        window.location.href = `../`;
     }
 </script>

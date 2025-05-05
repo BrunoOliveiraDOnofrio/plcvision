@@ -272,6 +272,7 @@
                 btnVisualizar.forEach(btn => {
                     btn.addEventListener('click', async function () {
                         const id = this.getAttribute('data-id');
+                        console.log(id)
                         await visualizarUsuario(id);
                     });
                 });
@@ -305,12 +306,14 @@
         }
 
         async function visualizarUsuario(id) {
+            const teste = id
             try {
                 const response = await fetch(`/usuario/${id}`);
                 if (!response.ok) {
                     throw new Error("Erro ao buscar detalhes do usuário.");
                 }
                 const usuario = await response.json();
+                console.log(id)
                 document.getElementById('detalheNome').textContent = usuario.nome;
                 document.getElementById('detalheEmail').textContent = usuario.email;
                 document.getElementById('detalheTelefone').textContent = usuario.telCelular;
@@ -328,7 +331,9 @@
 
                 const btnEditar = modal.querySelector('.btn-editar');
                 btnEditar.addEventListener('click', function () {
-                    window.location.href = `/adm/usuarios/${id}/form`;
+                    console.log(teste)
+                    localStorage.setItem('id', teste)
+                    window.location.href = `/adm/usuarios/${teste}/form`;
                 }); 
             } catch (error) {
                 console.error("Erro ao buscar detalhes do usuário:", error);

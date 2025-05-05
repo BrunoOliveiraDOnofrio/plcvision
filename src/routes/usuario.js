@@ -4,6 +4,9 @@ const usuarioController = require('../controllers/usuarioController');
 
 //Recebendo os dados do html e direcionando para a função cadastrar de usuarioController.js
 
+router.get('/atualizarCampo/:id', (req, res) => {
+    usuarioController.atualizarCampo(req, res);
+});
 
 router.put('/atualizar/:id', (req, res) => {
     usuarioController.atualizar(req, res);

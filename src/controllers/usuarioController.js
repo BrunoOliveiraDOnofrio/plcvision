@@ -45,6 +45,18 @@ function getById(req, res) {
         });
 }
 
+function atualizarCampo(req, res) {
+    const id = req.params.id;
+    usuarioModel.atualizarCampo(id)
+        .then(result => {
+                const dadosFabrica = result[0];
+                res.status(200).json(dadosFabrica); // Retorna os dados como JSON
+        })
+        .catch(erro => {
+            res.status(500).json({ mensagem: "Erro ao obter dados da fábrica", erro });
+        });
+}
+
 function atualizar(req, res) {
     const id = req.params.id;
     const dados = req.body;
@@ -235,5 +247,6 @@ module.exports = {
     atualizar,
     getById,
     delete: deleteUsuario,
-    listarMesmaEmpresa
+    listarMesmaEmpresa,
+    atualizarCampo
 }

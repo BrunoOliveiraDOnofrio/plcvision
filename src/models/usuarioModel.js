@@ -25,6 +25,15 @@ function listarMesmaEmpresa(empresaId) {
     return database.executar(instrucao);
 }
 
+function atualizarCampo(id) {
+
+    const sql = `SELECT * FROM usuario WHERE id = ${id};`;
+
+    console.log("Executando a instrução SQL para pegar usuario por id: \n" + sql);
+    return database.executar(sql);
+
+}
+
 function update(dados, id) {
     const sql = `
         UPDATE usuario 
@@ -75,5 +84,6 @@ module.exports = {
     getById,
     update,
     deleteUsuario,
-    listarMesmaEmpresa
+    listarMesmaEmpresa,
+    atualizarCampo
 };

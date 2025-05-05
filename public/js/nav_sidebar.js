@@ -35,7 +35,7 @@ const rotasAdm = {
     adcUsuarios: '/adm/usuarios/form',
     editarUsuarios : (id) => `/adm/usuarios/${id}/form`
 }
-const enderecoApp = 'http://52.2.47.7:3000'
+const enderecoApp = 'http://127.0.0.1:3000'
 
 const logout = () => {
     sessionStorage.clear()
