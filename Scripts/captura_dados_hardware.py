@@ -163,6 +163,7 @@ def coletar_dados():
                     valor = eval(info.get('funcao_python')) # Pegando a função utilizada para capturar os dados e a execultando através do eval() e verificando se é válido com o Try
                     print(info)
                     campo_wdv = info.get('hardware') + " " + info.get('tipo_dado') + " " + info.get('unidade_dado')
+
                     if valor >= info.get('limite_critico'):
                         selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 1)
                     elif valor >= info.get('limite_atencao'):
@@ -192,6 +193,7 @@ def coletar_dados():
             data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
             valores_inserir.append(data_hora_brasil)
             valores_inserir.append(id_plc)
+
             colunas_wdv.append('dataHora')
             
             conteudo_csv.append(valores_inserir)
@@ -211,6 +213,7 @@ def coletar_dados():
             nome_csv = f"{data_hora_brasil}_{id_plc}"
 
             sendToWdv.enviar(colunas_wdv,valores_inserir,campos_wdv , config_ids_wdv,id_plc)
+            
             if contador == 100:
                 with     open(f"Scripts/csvs/{nome_csv}.csv", 'w', newline='') as arquivo_csv:
                     escritor = csv.writer(arquivo_csv)

@@ -3,7 +3,7 @@ import json
 from tabulate import tabulate
 
 
-API_URL = "http://52.2.47.7:3000/plc/register"
+API_URL = "http://localhost:3000/plc/register"
 empresa_id = None
 
 parceria_id = None

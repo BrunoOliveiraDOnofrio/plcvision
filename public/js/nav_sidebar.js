@@ -1,5 +1,3 @@
-
-
 const rotasTempoReal = {
     alertas: '/tempo_real/alertas',
     monitoramento: '/tempo_real/monitoramento',
