@@ -9,6 +9,7 @@ import sendToWdv
 import selectsInfos
 import cadastrar
 
+import requests
 
 id_plc = None # Colocar id_plc
 
@@ -172,9 +173,33 @@ def coletar_dados():
                     campo_wdv = info.get('hardware') + " " + info.get('tipo_dado') + " " + info.get('unidade_dado')
 
                     if valor >= info.get('limite_critico'):
+                        dados_alerta = {
+                            "config_plc_id": info.get("config_id"),
+                            "valor": valor,
+                            "hardware": info.get("hardware"),
+                            "tipo_dado": info.get("tipo_dado"),
+                            "unidade_dado": info.get("unidade_dado"),
+                            "nivel": 1,
+                            "fabrica_id": fabrica_id,
+                            "plc_id": id_plc
+                        }
+                        response = requests.post("http://127.0.0.1:3000/alerta/store", json=dados_alerta)
+                        print(f"Alerta crítico enviado: {response.status_code}")
                         selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 1)
                         padrao = 2
                     elif valor >= info.get('limite_atencao'):
+                        dados_alerta = {
+                            "config_plc_id": info.get("config_id"),
+                            "valor": valor,
+                            "hardware": info.get("hardware"),
+                            "tipo_dado": info.get("tipo_dado"),
+                            "unidade_dado": info.get("unidade_dado"),
+                            "nivel": 0,
+                            "fabrica_id": fabrica_id,
+                            "plc_id": id_plc
+                        }
+                        response = requests.post("http://127.0.0.1:3000/alerta/store", json=dados_alerta)
+                        print(f"Alerta crítico enviado: {response.status_code}")
                         selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 0)
                         padrao = 1
                     

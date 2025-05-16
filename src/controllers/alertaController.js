@@ -27,9 +27,8 @@ const getUltimoAlerta = (req, res) => {
 
 const store = (req,res) => {
     console.log(req.body)
-
+    
     // verificar se existe um alerta nos ultimos 10 minutos com a mesma configuracao_id
-
     alertaModel.insertedInTheLastTenMinutes(req.body.config_plc_id).then(async response => {
         
         if(response[0].alertas > 0){
@@ -37,9 +36,19 @@ const store = (req,res) => {
                 error: "Alerta já criado"
             })
         }else{
+            // dados_alerta
+            const alertaInfo = {
+                hardware: req.body.hardware || "Não especificado",
+                tipoDado: req.body.tipo_dado || "Não especificado",
+                unidadeDado: req.body.unidade_dado || "",
+                valor: req.body.valor || 0,
+                nivel: req.body.nivel || 1,
+                fabrica_id: req.body.fabrica_id,
+                plc_id: req.body.plc_id
+            };
             
             // aqui voces vao chamar o jira, e o slack
-           await openJiraTaskSendSlackNotification()
+            await openJiraTaskSendSlackNotification(alertaInfo);
             
             alertaModel.create(req.body).then(response => {
                 console.log(response)
@@ -55,94 +64,122 @@ const store = (req,res) => {
             })
         }
     })
-
 }
 
-
-const openJiraTaskSendSlackNotification = async (task) => {
-  require("dotenv").config({path: '../../.env'});
+const openJiraTaskSendSlackNotification = async (alertaInfo) => {
+    require("dotenv").config({path: '../../.env'});
             
-  const email = "carvalhohugo425@gmail.com"
-  const key = process.env.JIRA_KEY
-  const urlApiJira = 'https://carvalhohugo425.atlassian.net/rest/api/3/issue'
-  const dataJira = `{
-      "fields": {
-        "project": {
-          "key": "SUP"
+    const email = "carvalhohugo425@gmail.com";
+    const key = process.env.JIRA_KEY;
+    const urlApiJira = 'https://carvalhohugo425.atlassian.net/rest/api/3/issue';
+    
+    // Título dinâmico com base nas informações do alerta
+    const nivelAlerta = alertaInfo.nivel === 1 ? "Crítico" : "Atenção";
+    if(alertaInfo.hardware == undefined || alertaInfo.hardware == null || alertaInfo.hardware == '' || alertaInfo.valor == 0 || alertaInfo.valor == undefined || alertaInfo.valor == null){
+      console.log("SAIA");
+      return;
+    }
+
+    const resultado = await alertaModel.nomeFabrica(alertaInfo.fabrica_id);
+    const nomeFabrica = resultado[0].nome
+
+    const resultado2 = await alertaModel.nomeSetor(alertaInfo.plc_id);
+    const nomeSetor = resultado2[0].nome
+
+    const titulo = `Alerta ${nivelAlerta}: ${alertaInfo.hardware} ${alertaInfo.tipoDado} (${alertaInfo.valor}${alertaInfo.unidadeDado}) Nome da Fábrica: ${nomeFabrica}`;
+
+    // Descrição com detalhes do alerta
+    const descricao = `
+    Foi detectado um alerta de ${nivelAlerta} para ${alertaInfo.hardware} ${alertaInfo.tipoDado}.
+    
+    Valor atual: ${alertaInfo.valor} ${alertaInfo.unidadeDado}
+    
+    Localização : Fábrica "${nomeFabrica}" | Setor "${nomeSetor}"
+
+    Este alerta foi gerado automaticamente pelo sistema de monitoramento.
+    `;
+    
+        const dataJira = {
+      fields: {
+        project: {
+          key: "SUP"
         },
-        "summary": "Alerta Atenção no Uso de RAM GB",
-        "description": {
-          "type": "doc",
-          "version": 1,
-          "content": [
+        summary: titulo,
+        description: {
+          type: "doc",
+          version: 1,
+          content: [
             {
-              "type": "paragraph",
-              "content": [
+              type: "paragraph",
+              content: [
                 {
-                  "text": "Usuário não consegue acessar com credenciais válidas. Aparece erro 500.",
-                  "type": "text"
+                  type: "text",
+                  text: descricao
                 }
               ]
             }
           ]
         },
-        "issuetype": {
-          "name": "Task"
+        issuetype: {
+          name: "Task"
         }
       }
-    }`
-    let url 
+    };
+    
+    let url;
     await fetch(`${urlApiJira}`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Basic ${Buffer.from(`${email}:${key}`).toString('base64')}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: dataJira}).then(response => response.json().then(response => {
-        console.log(response, "AQUI ESTA A RESPOSTA EM JSON")
-        url = response.self
-      })
-      .catch(e => {
-        console.log(e)
-      })).catch(e => {
-        console.log(e)
-      })
+        method: 'POST',
+        headers: {
+            'Authorization': `Basic ${Buffer.from(`${email}:${key}`).toString('base64')}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataJira)
+    }).then(response => response.json().then(response => {
+        console.log(response, "AQUI ESTA A RESPOSTA EM JSON");
+        url = response.self;
+    })
+    .catch(e => {
+        console.log(e);
+    })).catch(e => {
+        console.log(e);
+    });
 
-      const dataSlack = `    {
-    "attachments":[
-        {
-            "fallback":"Novo chamado aberto [Crítico]: <${url}|Ir para o JIRA>",
-            "pretext":"Novo chamado aberta [Crítico]: <${url}|Ir para o JIRAs>",
-            "color":"#D00000",
-            "fields":[
-                {
-                "title":"Alerta Uso CPU %",
-                "value":"Empresa: Casas Bahia",
-                "short":"Fábrica: Rua Maria Susano"
-                }
-            ]
-        }
-    ]
-    }`
+    const color = alertaInfo.nivel === 1 ? "#D00000" : "#FFA500"; // Vermelho para crítico, laranja para atenção
+    
+    const dataSlack = `{
+        "attachments":[
+            {
+                "fallback":"Novo chamado aberto [${nivelAlerta}]: <${url}|Ir para o JIRA>",
+                "pretext":"Novo chamado aberto [${nivelAlerta}]: <${url}|Ir para o JIRA>",
+                "color":"${color}",
+                "fields":[
+                    {
+                        "title":"${titulo}",
+                        "value":"Valor: ${alertaInfo.valor} ${alertaInfo.unidadeDado}",
+                        "short":false
+                    }
+                ]
+            }
+        ]
+    }`;
 
-    const urlSlack = `https://hooks.slack.com/services/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`
+    const urlSlack = `https://hooks.slack.com/services/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`;
 
     fetch(`${urlSlack}`, {
-      method: 'POST',
-      headers: {
-        
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: dataSlack}).then(response => {
-          console.log(response)
-          console.log("A RESPOSTA DO SLACK TA BEM AQUI JOVEM")
-      }).catch(e => {
-        console.log
-      })
-
-}
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: dataSlack
+    }).then(response => {
+        console.log(response);
+        console.log("A RESPOSTA DO SLACK TA BEM AQUI JOVEM");
+    }).catch(e => {
+        console.log(e);
+    });
+};
 
 module.exports = {
     store,

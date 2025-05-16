@@ -11,5 +11,9 @@ router.post("/last", (req, res) => {
     alertaController.getUltimoAlerta(req, res);
 });
 
+router.post("/store", (req, res) => {
+    alertaController.store(req, res);
+});
+
 module.exports = router;
 

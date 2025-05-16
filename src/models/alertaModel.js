@@ -19,13 +19,24 @@ const create = (dados) =>{
 const insertedInTheLastTenMinutes = (config_id) =>{
     const sql = `SELECT COUNT(*) as alertas FROM alerta 
 WHERE config_plc_id = ${config_id} and 
-dataHora BETWEEN date_sub(now(), interval 10 minute) AND now();`
+dataHora BETWEEN date_sub(now(), interval 20 second) AND now();`
     return database.executar(sql)
 }
 
+const nomeFabrica = (fabrica_id) =>{
+    const sql = `SELECT nome FROM fabrica_consumidor WHERE id = ${fabrica_id};`
+    return database.executar(sql)
+}
 
+const nomeSetor = (plc_id) => {
+    const sql = `SELECT setor_fabrica.nome FROM plc JOIN setor_fabrica ON plc.setor_fabrica_id = setor_fabrica.id WHERE plc.id = ${plc_id};`
+    return database.executar(sql)
+
+}
 module.exports = {
     create,
     insertedInTheLastTenMinutes,
-    getUltimoAlerta
+    getUltimoAlerta,
+    nomeFabrica,
+    nomeSetor
 };
