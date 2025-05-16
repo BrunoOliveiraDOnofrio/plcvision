@@ -1,0 +1,99 @@
+/* StyleList.css additions or new plc_list.css */
+
+/* Search Bar */
+.search-bar {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fff;
+    cursor: text;
+    font-family: 'Inter', sans-serif;
+}
+
+/* PLC Row */
+.plc-row {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.plc-row:hover {
+    background-color: #e8e8e8;
+}
+
+/* Criticidade Indicators */
+.criticidade {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #fff;
+    display: inline-block;
+}
+
+.criticidade.blue {
+    background-color: rgba(0, 123, 255, 0.8);
+}
+
+.criticidade.yellow {
+    background-color: rgba(255, 255, 0, 0.8);
+    color: #333;
+}
+
+.criticidade.red {
+    background-color: rgba(255, 0, 0, 0.8);
+}
+
+/* Reuse existing styles from monitoramento_tempo_real.css for consistency */
+.title-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.title-div h1 {
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.title-div small {
+    font-size: 16px;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+}
+
+.wrap-all-div {
+    position: relative;
+    margin-top: 10%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media only screen and (min-width: 760px) {
+    .wrap-all-div {
+        margin-top: 2%;
+        padding: 30px;
+    }
+
+    .search-bar input {
+        width: 50%;
+        font-size: 18px;
+    }
+
+    .criticidade {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .divListar {
+        padding: 20px;
+    }
+}

@@ -49,9 +49,12 @@ const create = (dados) => {
 }
 
 const getByMac = (mac) => {
-    const sql = `SELECT sf.fabrica_consumidor_id, p.id, p.hostname, p.endereco_mac, p.sistema_operacional FROM plc as p
+    const sql = `SELECT fc.empresa_consumidor_id as empresa_id, sf.fabrica_consumidor_id, p.id, p.hostname, p.endereco_mac, p.sistema_operacional FROM plc as p
     join setor_fabrica sf
-    on sf.id = p.setor_fabrica_id WHERE endereco_mac = '${mac}'`
+    on sf.id = p.setor_fabrica_id 
+    join fabrica_consumidor fc
+    on fc.id = sf.fabrica_consumidor_id
+    WHERE endereco_mac = '${mac}'`
     return database.executar(sql)
 }
 

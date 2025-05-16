@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de PLCs</title>
+    <!-- Fonte google  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/dashboards/monitoramento_tempo_real.css">
+    <!-- Link dos icones - boxicons -->
+     <link rel="stylesheet" href="../../css/dashboards/listagem.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .plcs-list-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 2%;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .plc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s ease;
+        }
+        .plc-item:hover {
+            background-color: #f9f9f9;
+        }
+        .plc-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .plc-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .status-green { background-color: rgba(0, 123, 255, 0.5); }
+        .status-yellow { background-color: rgba(255, 255, 0, 0.5); }
+        .status-red { background-color: rgba(255, 0, 0, 0.5); }
+        .alerts-badge {
+            background-color: #ff0000;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        .plc-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        @media only screen and (max-width: 760px) {
+            .plc-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .plc-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Nav Bar -->
+    <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side bar  -->
+    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+                <li>
+                    <a href="./monitoramento">
+                        <i class='bx bx-bar-chart-square'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./alertas">
+                        <i class='bx bxs-bell-ring' ></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./plcs">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit' ></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main">
+    <!-- <div class="content">
+        <div class="title-div">
+            <h1>Listagem de PLCs</h1>
+            <small>Visualize e gerencie os PLCs cadastrados</small>
+        </div>
+        <div class="wrap-all-div">
+            <div class="search-bar">
+                <input type="text" id="search-plc" placeholder="Pesquisar por PLC ou empresa..." />
+            </div>
+            <div class="divListar">
+                <div class="divTitulos">
+                    <div class="divTituloUnico">Nome do PLC</div>
+                    <div class="divTituloUnico">Empresa Parceira</div>
+                    <div class="divTituloUnico">Nível de Criticidade</div>
+                    <div class="divTituloUnico">Alertas Emitidos</div>
+                    <div class="divTituloUnico">Ações</div>
+                </div>
+                <!-- Example PLC rows -->
+                <div class="linha plc-row" onclick="viewPLCDetails('plc1')">
+                    <div class="linhaUnico">PLC-001</div>
+                    <div class="linhaUnico">Motorola</div>
+                    <div class="linhaUnico">
+                        <span class="criticidade red">Crítico</span>
+                    </div>
+                    <div class="linhaUnico">12</div>
+                    <div class="linhaUnico">
+                        <div class="botaoVisualizar">
+                            <button title="Visualizar"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="linha plc-row" onclick="viewPLCDetails('plc2')">
+                    <div class="linhaUnico">PLC-002</div>
+                    <div class="linhaUnico">Samsung</div>
+                    <div class="linhaUnico">
+                        <span class="criticidade yellow">Atenção</span>
+                    </div>
+                    <div class="linhaUnico">5</div>
+                    <div class="linhaUnico">
+                        <div class="botaoVisualizar">
+                            <button title="Visualizar"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="linha plc-row" onclick="viewPLCDetails('plc3')">
+                    <div class="linhaUnico">PLC-003</div>
+                    <div class="linhaUnico">Intel</div>
+                    <div class="linhaUnico">
+                        <span class="criticidade blue">Estável</span>
+                    </div>
+                    <div class="linhaUnico">0</div>
+                    <div class="linhaUnico">
+                        <div class="botaoVisualizar">
+                            <button title="Visualizar"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>
+
+    <!-- <script src="../../js/nav_sidebar.js"></script> -->
+</body>
+</html>

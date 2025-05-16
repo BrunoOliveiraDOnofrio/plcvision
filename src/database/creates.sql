@@ -53,7 +53,7 @@ CREATE TABLE empresa_consumidor (
     id INT PRIMARY KEY AUTO_INCREMENT,
     razao_social VARCHAR(45),
     segmento VARCHAR(45),
-    cnpj CHAR(14),
+    cnpj VARCHAR(30),
     endereco_id INT,
     qtdFabrica INT,
     token VARCHAR(100)
@@ -129,7 +129,7 @@ CREATE TABLE config_plc (
 CREATE TABLE alerta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     criticidade TINYINT,
-    descricao VARCHAR(45),
+    descricao VARCHAR(255),
     link_chamado VARCHAR(45),
     dataHora DATETIME,
     status VARCHAR(45),
