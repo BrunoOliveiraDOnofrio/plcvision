@@ -33,10 +33,27 @@ const nomeSetor = (plc_id) => {
     return database.executar(sql)
 
 }
+
+const qtdAlertaHardware = () => {
+    const sql = `SELECT tipo, COUNT(*) AS total
+    FROM (
+    SELECT 
+        CASE 
+        WHEN tipo_valor LIKE '%CPU%' THEN 'CPU'
+        WHEN tipo_valor LIKE '%RAM%' THEN 'RAM'
+        WHEN tipo_valor LIKE '%REDE%' THEN 'REDE'
+        WHEN tipo_valor LIKE '%Bateria%' THEN 'BATERIA'
+        END AS tipo
+    FROM alerta
+    ) AS tipos_alerta GROUP BY tipo ORDER BY total DESC LIMIT 1;`
+     return database.executar(sql)
+}
+
 module.exports = {
     create,
     insertedInTheLastTenMinutes,
     getUltimoAlerta,
     nomeFabrica,
-    nomeSetor
+    nomeSetor,
+    qtdAlertaHardware
 };

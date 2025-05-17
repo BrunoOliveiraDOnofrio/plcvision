@@ -137,34 +137,36 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
         body: JSON.stringify(dataJira)
     }).then(response => response.json().then(response => {
         console.log(response, "AQUI ESTA A RESPOSTA EM JSON");
-        url = response.self;
+        url = response.key;
     })
     .catch(e => {
         console.log(e);
     })).catch(e => {
         console.log(e);
     });
+    // essa é a URL para abrir o card no jira, utilizeio o json que é a url para pegar a chave key
+    url_alerta_jira = `https://carvalhohugo425.atlassian.net/jira/servicedesk/projects/SUP/boards/3?selectedIssue=${url}`
 
     const color = alertaInfo.nivel === 1 ? "#D00000" : "#FFA500"; // Vermelho para crítico, laranja para atenção
     
-    const dataSlack = `{
-        "attachments":[
+    const dataSlack = {
+        attachments:[
             {
-                "fallback":"Novo chamado aberto [${nivelAlerta}]: <${url}|Ir para o JIRA>",
-                "pretext":"Novo chamado aberto [${nivelAlerta}]: <${url}|Ir para o JIRA>",
-                "color":"${color}",
-                "fields":[
+                fallback:"Novo chamado aberto" + [nivelAlerta] +": <" + url_alerta_jira + "|Ir para o JIRA>",
+                pretext:"Novo chamado aberto" + [nivelAlerta] +": <" + url_alerta_jira + "|Ir para o JIRA>",
+                color: color,
+                fields:[
                     {
-                        "title":"${titulo}",
-                        "value":"Valor: ${alertaInfo.valor} ${alertaInfo.unidadeDado}",
-                        "short":false
+                        title:titulo,
+                        value:"Valor: "+ alertaInfo.valor +" "+ alertaInfo.unidadeDado,
+                        short:false
                     }
                 ]
             }
         ]
-    }`;
+    };
 
-    const urlSlack = `https://hooks.slack.com/services/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`;
+    const urlSlack = `https://hooks.slack.com/services/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`;
 
     fetch(`${urlSlack}`, {
         method: 'POST',
@@ -172,7 +174,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: dataSlack
+        body: JSON.stringify(dataSlack)
     }).then(response => {
         console.log(response);
         console.log("A RESPOSTA DO SLACK TA BEM AQUI JOVEM");
@@ -181,7 +183,116 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
     });
 };
 
+const qtdAlertaHardware = (req,res) => {
+    alertaModel.qtdAlertaHardware()
+        .then((dados) => {
+            res.status(200).json(dados[0]);
+        })
+        .catch((error) => {
+            console.error("Erro: ", error)
+            res.status(500).json({erro: erro.sqlMessage});
+        });
+}
+
+const jiraAberto = async (req, res) => {
+    const email = "carvalhohugo425@gmail.com";
+    const key = process.env.JIRA_KEY;
+
+    const auth = Buffer.from(`${email}:${key}`).toString("base64");
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=Suporte AND statusCategory!=Done`;
+
+    try {
+        const response = await fetch(urlApiJira, {
+            method: "GET",
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro do Jira: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        res.json({ total: data.total });
+
+    } catch (error) {
+        console.error("Erro ao buscar dados no Jira:", error.message);
+        res.status(500).json({ erro: "Erro ao buscar chamados do Jira" });
+    }
+};
+
+const jiraFechadoNow = async (req,res) => {
+    const email = "carvalhohugo425@gmail.com";
+    const key = process.env.JIRA_KEY;
+
+    const auth = Buffer.from(`${email}:${key}`).toString("base64");
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=Suporte AND statusCategory=Done AND statusCategoryChangedDate >= -1d`;
+
+    try {
+        const response = await fetch(urlApiJira, {
+            method: "GET",
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro do Jira: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        res.json({ total: data.total });
+
+    } catch (error) {
+        console.error("Erro ao buscar dados no Jira:", error.message);
+        res.status(500).json({ erro: "Erro ao buscar chamados do Jira" });
+    }
+};
+
+const tempoFechamento = async (req, res) => {
+
+    const email = "carvalhohugo425@gmail.com";
+    const key = process.env.JIRA_KEY;
+    const auth = Buffer.from(`${email}:${key}`).toString("base64");
+
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=Suporte AND resolution NOT IN (Declined, "Won't Do") AND statusCategory=Done&fields=created,resolutiondate`;
+
+    const response = await fetch(urlApiJira, {
+        method: "GET",
+        headers: {
+            'Authorization': `Basic ${auth}`,
+            'Accept': 'application/json'
+        }
+    });
+
+    const data = await response.json();
+
+    const temposResolucao = data.issues.filter(issue =>
+        issue.fields.created && issue.fields.resolutiondate
+    );
+
+    let totalMs = 0; 
+
+    for (let i = 0; i < temposResolucao.length; i++) {
+        const criado = Date.parse(temposResolucao[i].fields.created);
+        const resolvido = Date.parse(temposResolucao[i].fields.resolutiondate);
+        totalMs += (resolvido - criado); 
+    }
+
+    const mediaHoras = ((totalMs / temposResolucao.length) / 1000 / 60 / 60).toFixed(2);
+
+    res.json({ mediaHoras });
+
+}
+
 module.exports = {
     store,
-    getUltimoAlerta
+    getUltimoAlerta,
+    qtdAlertaHardware,
+    jiraAberto,
+    jiraFechadoNow,
+    tempoFechamento
 };

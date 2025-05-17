@@ -6,17 +6,17 @@
 
 .main {
     margin-left: 0;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 5% !important;
+    top: -40px;
 }
 
 .container {
     margin: 0 auto;
-    padding: 16px;
+    padding: 0 0 16px;
     & h1{
         font-size: 1.5em;
     }
@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    padding: 0 16px;
+    padding: 0 15px;
 }
 
 .kpis {
@@ -67,7 +67,7 @@ canvas#myChart {
     background-color: #24284B;
     border-radius: 12px;
     width: 100% !important;
-    height: 50vw !important;
+    height: 50vw;
     margin-bottom: 5%;
 }
 
@@ -75,6 +75,46 @@ canvas#mychart-2 {
     background-color: #24284B;
     border-radius: 12px;
     width: 100% !important;
-    height: 50vw !important;
+    height: 50vw;
     margin-bottom: 5%;
+}
+
+
+@media (min-width: 760px) {
+
+    .painel {
+        padding: 0 11px;
+    }
+
+    .kpis{
+        display: flex;
+        flex-direction: row;
+        & .kpi {
+            height: 7vw;
+            width: 20vw;
+            & h3 {
+                font-size: 1.5vw;
+            }
+        }
+    }
+
+    .dash{
+        display: flex;
+        max-width: none;
+        width: 100%;
+        justify-content: initial;
+        align-items: stretch;
+        gap: 20px;
+        & div {
+            width: 100%;
+        }
+    }
+
+    canvas#myChart{
+        width: 100% !important;
+    }
+
+    canvas#myChart-2 {
+        width: 100% !important;
+    }
 }
