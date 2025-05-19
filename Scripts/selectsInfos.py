@@ -2,7 +2,7 @@ import requests
 import json
 from datetime import timezone, timedelta, datetime
 API_URL = "http://localhost:3000/plc/register"
-
+PATH = "http://localhost:3000"
 
 def inserirAlerta(config_id, valor_capturado, tipo_valor, criticidade):
 
@@ -101,3 +101,8 @@ def verificarSeFabricaTemConfiguracoes(fabrica_id):
     if(response_json.get('status') == 1):
         return True
     return False
+
+def mandarAlertaJira(dados):
+    url = PATH + "/alerta/store"
+    response = requests.post(url, json=dados)
+    print(f"Alerta crítico enviado: {response.status_code}")

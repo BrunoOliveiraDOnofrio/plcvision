@@ -183,8 +183,7 @@ def coletar_dados():
                             "fabrica_id": fabrica_id,
                             "plc_id": id_plc
                         }
-                        response = requests.post("http://127.0.0.1:3000/alerta/store", json=dados_alerta)
-                        print(f"Alerta crítico enviado: {response.status_code}")
+                        selectsInfos.mandarAlertaJira(dados_alerta)
                         selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 1)
                         padrao = 2
                     elif valor >= info.get('limite_atencao'):
@@ -198,8 +197,7 @@ def coletar_dados():
                             "fabrica_id": fabrica_id,
                             "plc_id": id_plc
                         }
-                        response = requests.post("http://127.0.0.1:3000/alerta/store", json=dados_alerta)
-                        print(f"Alerta crítico enviado: {response.status_code}")
+                        selectsInfos.mandarAlertaJira(dados_alerta)
                         selectsInfos.inserirAlerta(info.get("config_id"), valor, f"{info.get("hardware")} {info.get("tipo_dado")}", 0)
                         padrao = 1
                     

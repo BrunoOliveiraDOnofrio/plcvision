@@ -166,7 +166,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
         ]
     };
 
-    const urlSlack = `https://hooks.slack.com/services/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`;
+    const urlSlack = `https://hooks.slack.com/services/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`;
 
     fetch(`${urlSlack}`, {
         method: 'POST',
