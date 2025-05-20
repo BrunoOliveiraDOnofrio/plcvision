@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mapa de Calor - PLCs</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  </head>
+  <body>
+    <div id="heatmap" style="max-width: 1000px; margin: auto;"></div>
+
+    <script>
+      async function carregarDados() {
+        const res = await fetch("http://localhost:3000/monitoramento/empresas/3/mapa");
+        const dadosRecebidos = await res.json();
+
+        const series = dadosRecebidos.dados.map(plc => {
+          return {
+            name: plc.name,
+            data: plc.data.map((valor, index) => {
+              const nomeCampo = plc.campos?.[index] || `Campo ${index + 1}`;
+              return {
+                x: ``, // manter eixo padronizado
+                y: valor,
+                campo: nomeCampo
+              };
+            })
+          };
+        });
+
+        const options = {
+          chart: {
+            height: 500,
+            type: "heatmap"
+          },
+          plotOptions: {
+            heatmap: {
+              shadeIntensity: 0.5,
+              colorScale: {
+                ranges: [
+                  { from: 0, to: 0, color: "#00FF00", name: "OK" },
+                  { from: 1, to: 1, color: "#FFA500", name: "LIMITE" },
+                  { from: 2, to: 2, color: "#FFD700", name: "ATENÇÃO" },
+                  { from: 3, to: 100, color: "#FF0000", name: "CRÍTICO" }
+                ]
+              }
+            }
+          },
+          tooltip: {
+            custom: function({ series, seriesIndex, dataPointIndex, w }) {
+              const data = w.config.series[seriesIndex].data[dataPointIndex];
+              return `
+                <div style="padding: 10px">
+                  <strong>Campo:</strong> ${data.campo}<br />
+                  <strong>Valor:</strong> ${data.y}<br />
+                  <strong>PLC:</strong> ${w.config.series[seriesIndex].name}
+                </div>
+              `;
+            }
+          },
+          dataLabels: {
+            enabled: true
+          },
+          title: {
+            text: "Mapa de Calor - Alertas por PLC e Campo"
+          },
+          xaxis: {
+            title: {
+              text: "Para visualizar o tipo de componente passe com o mouse nos quadrados"
+            }
+          },
+          yaxis: {
+            title: {
+              text: "PLCs"
+            }
+          },
+          series: series
+        };
+
+        const chart = new ApexCharts(document.querySelector("#heatmap"), options);
+        chart.render();
+      }
+
+      carregarDados();
+    </script>
+  </body>
+</html>

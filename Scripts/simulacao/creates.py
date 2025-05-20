@@ -7,12 +7,30 @@ faker = Faker('pt_BR')
 # IDs iniciais
 fabricante_id = 1
 componentes_ids = list(range(1, 13))
+componentes_possiveis = [id for id in componentes_ids if id not in (3, 4) and id not in (2, 5)]
+
 empresa_consumidor_id = 3
 endereco_id = 5
 parceria_id = 3
 fabrica_id = 3
 setor_id = 3
 plc_id = 4
+
+limites_gerados = {
+  1: (68.29, 72.84),        # CPU Temperatura (°C)
+  2: (72.49, 74.41),        # CPU Uso (%)
+  3: (313.3, 369.57),       # CPU Atividade (dias)
+  4: (360.26, 449.44),      # CPU Ociosidade (dias)
+  5: (72.42, 83.08),        # RAM Uso (%)
+  6: (3006428475.37, 3463255523.6),    # RAM Memória Livre (Bytes)
+  7: (33.55, 45.59),        # Bateria Quantidade (%)
+  8: (1190.38, 1362.68),    # CPU Frequência (MHz)
+  9: (2768805512.99, 3244864382.44),   # RAM Uso em Bytes
+  10: (48.73, 53.45),       # Bateria Tempo Restante (minutos)
+  11: (24605.64, 30687.03), # REDE Pacote Recebido
+  12: (3589.77, 28083.92),  # REDE Pacote Mandado
+}
+
 
 script = ""
 
@@ -50,10 +68,14 @@ for _ in range(4):  # 4 empresas consumidoras
             hostname = f"plc-{faker.word()}-{plc_id:02d}"
             script += f"INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES\n('{modelo}', {ano}, {parceria_id}, {setor_id}, '{so}', '{ram}', '{mac}', '{hostname}');\n"
 
-            for _ in range(random.randint(2, 4)):
-                componente_id = random.choice(componentes_ids)
-                limite_atencao = round(random.uniform(50, 8000), 2)
-                limite_critico = round(limite_atencao + random.uniform(5, 500), 2)
+
+
+            for componente_id in [2, 5]:
+                limite_atencao, limite_critico = limites_gerados[componente_id]
+                script += f"INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES\n({componente_id}, {plc_id}, {limite_atencao}, {limite_critico}, {fabrica_id});\n"
+            outros_componentes = random.sample(componentes_possiveis, k=random.randint(0, 2))
+            for componente_id in outros_componentes:
+                limite_atencao, limite_critico = limites_gerados[componente_id]
                 script += f"INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES\n({componente_id}, {plc_id}, {limite_atencao}, {limite_critico}, {fabrica_id});\n"
             plc_id += 1
         setor_id += 1

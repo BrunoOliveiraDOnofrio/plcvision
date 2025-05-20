@@ -46,7 +46,8 @@ const store = (req,res) => {
                 fabrica_id: req.body.fabrica_id,
                 plc_id: req.body.plc_id
             };
-            
+            console.log(alertaInfo)
+            console.log("OLHA A BUCETA DO OBJETO ZUADO JSON QUE VC TA MANDANDO SEU LIXO")
             // aqui voces vao chamar o jira, e o slack
             await openJiraTaskSendSlackNotification(alertaInfo);
             
@@ -77,6 +78,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
     const nivelAlerta = alertaInfo.nivel === 1 ? "Crítico" : "Atenção";
     if(alertaInfo.hardware == undefined || alertaInfo.hardware == null || alertaInfo.hardware == '' || alertaInfo.valor == 0 || alertaInfo.valor == undefined || alertaInfo.valor == null){
       console.log("SAIA");
+      console.log('CAIU NA VALIDAÇÃO FEZ O L BEM GRANDÃO AIIIIII')
       return;
     }
 

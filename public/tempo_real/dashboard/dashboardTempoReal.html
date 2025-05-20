@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento</title>
+    <!-- Fonte google  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/dashboards/monitoramento_tempo_real.css">
+    <!-- Link dos icones - boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+<link rel="stylesheet" href="../../css/dashboards/dash_tempo_real.css">
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+</head>
+<body>
+    <!-- Nav Bar -->
+     <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <!-- Side bar  -->
+
+     <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+                
+                <li>
+                    <a href="./monitoramento">
+                        <i class='bx bx-bar-chart-square'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./alertas">
+                        <i class='bx bxs-bell-ring' ></i>
+                    </a>
+                </li>
+               
+               
+                <li>
+                    <a href="./plcs">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit' ></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+     </nav>
+
+     <div class="main">
+        <div class="visao-geral">
+            <h1>Visão Geral</h1>
+            <div class="card-monitoramento">
+                <div class="textos-head">
+                    <span>Você está monitorando</span>
+                    <span id="span_nome_empresa">Casas Bahia</span>
+                </div>
+                <div class="barra-carregamento">
+                    <div class="barra-preenchida"></div>
+                </div>
+                <div class="tempo-pause">
+                    <span>Tempo para trocar automaticamente: <span id="span_tempo_restante">00:22:00</span></span>
+                    <i class='bx  bx-pause-circle'></i>
+                </div>
+            </div>
+            <div class="card-expansive">
+                <div class="titulo">
+                    <span>Clientes com estado crítico</span>
+                    <i class='bx  bx-caret-down'></i>
+                </div>
+                <div class="clientes-content">
+                    <div class="line-cliente">
+                        <span>Casas Bahia</span>
+                        <div class="barra-criticidade">
+                            <div class="barra-preenchida"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nivel-ok-content">
+                    <span>Nível OK</span>
+                    <div class="barra-criticidade">
+                            <div class="barra-preenchida"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-expansive">
+                <div class="titulo">
+                    <span>Clientes com estado crítico</span>
+                    <i class='bx  bx-caret-down'></i>
+                </div>
+                <div class="clientes-content">
+                    <div class="line-cliente">
+                        <span>Casas Bahia</span>
+                        <div class="alertas-rounded">
+                            <div class="criticos">
+                                <span>Críticos 8</span>
+                            </div>
+                            <div class="atencao">
+                                <span>Críticos 7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="monitoramento">
+            <h1>Monitoramento Casas Bahia</h1>
+            <div class="line-mon">
+                <div class="kpi">
+                    <div class="evenly-divs">
+                        <div class="icon-desc">
+                            <i></i>
+                            <span>
+                                PLCs com alertas atrasados
+                            </span>
+                        </div>
+                        <div class="value">
+                            <span>10</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi">
+                    <div class="evenly-divs">
+                        <div class="icon-desc">
+                            <i class='bx  bx-bell-ring'></i>
+                            <span>
+                                Alertas com tempo de resolução estourado
+                            </span>
+                        </div>
+                        <div class="value">
+                            <span>10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="line-mon">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="title-esc">
+                                <div class="titulo">
+                                    <!-- icone -->
+                                     <i></i>
+                                     <span>Alerta Crítico</span>
+                                </div>
+                                <i class='bx  bx-x'></i>
+                            </div>
+                            <div class="desc-alerta">
+                                <span>PLC - 01: Ram Uso  89%</span>
+                            </div>
+                            <div class="tempo-button">
+                                <span>7H atrasado.</span>
+                                <button>Comunicar Equipe Via Slack</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="line-mon">
+                <div style="width: 500px;" class="chart-container">
+                    <h2><i class='bx  bx-chart-bar-rows'></i> PLC com alertas atrasados X Componente Anormal</h2>
+                    <canvas id="myChart"></canvas>
+                </div>
+
+
+            </div>
+            <div class="line-mon">
+                <div class="time-line-container">
+                    <div class="event">
+                        <div class="ball-desc">
+                            <div class="ball"></div>
+                            <div class="desc">
+                                <span>13:40 Alerta Atenção</span>
+                                <span>PLC 01</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="ball-desc">
+                            <div class="ball"></div>
+                            <div class="desc">
+                                <span>13:40 Alerta Atenção</span>
+                                <span>PLC 01</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="ball-desc">
+                            <div class="ball"></div>
+                            <div class="desc">
+                                <span>13:40 Alerta Atenção</span>
+                                <span>PLC 01</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="../../js/nav_sidebar.js"></script>
+
+<script src="../../js/dashboard/criarTelaGrafico.js"></script>
+
+<script src="../../js/dashboard/graficoBarras.js"></script>
+
+</html>

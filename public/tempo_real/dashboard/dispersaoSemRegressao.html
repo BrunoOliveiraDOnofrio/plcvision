@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dispersão CPU × RAM</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  </head>
+  <body>
+    <div id="graficoDispersao" style="max-width: 800px; margin: auto"></div>
+
+    <script>
+      async function carregarDadosDaAPI() {
+        try {
+          const resposta = await fetch("http://localhost:3000/monitoramento/empresas/3/disperssao");
+          const dados = await resposta.json();
+
+          return dados;
+        } catch (erro) {
+          console.error("Erro ao buscar dados da API:", erro);
+          return [];
+        }
+      }
+
+      function montarGrafico(series) {
+        const options = {
+          chart: {
+            height: 450,
+            type: "scatter",
+            zoom: {
+              enabled: true,
+              type: "xy"
+            }
+          },
+          series: series,
+          title: {
+            text: "Dispersão CPU × RAM - Empresa 3"
+          },
+          xaxis: {
+            title: {
+              text: "Uso de CPU (%)"
+            },
+            tickAmount: 10,
+            min: 0,
+            max: 100
+          },
+          yaxis: {
+            title: {
+              text: "Uso de RAM (%)"
+            },
+            tickAmount: 10,
+            min: 0,
+            max: 100
+          },
+          tooltip: {
+            custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+              const point = w.config.series[seriesIndex].data[dataPointIndex];
+              return `
+                <b>${w.config.series[seriesIndex].name}</b><br/>
+                CPU: ${point.x}%<br/>
+                RAM: ${point.y}%<br/>
+                Máquina ID: ${point.meta.maquina_id}
+              `;
+            }
+          }
+        };
+
+        const chart = new ApexCharts(document.querySelector("#graficoDispersao"), options);
+        chart.render();
+      }
+
+      async function iniciar() {
+        const dados = await carregarDadosDaAPI();
+
+        const series = dados.map((plc) => ({
+          name: plc.name,
+          data: plc.data.map((ponto) => ({
+            x: ponto.x,
+            y: ponto.y,
+            meta: ponto.meta
+          }))
+        }));
+
+        montarGrafico(series);
+      }
+
+      iniciar();
+    </script>
+  </body>
+</html>

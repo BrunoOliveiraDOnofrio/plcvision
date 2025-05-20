@@ -61,6 +61,7 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 
 
 
+
 -- Inserindo configurações de PLC
 -- Alterar a coluna "plc_id" de acordo com o ID do seu PLC.
 INSERT INTO config_plc (componente_id,  limite_atencao, limite_critico,  fabrica_consumidor_id) VALUES

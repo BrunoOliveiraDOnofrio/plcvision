@@ -4,18 +4,24 @@ from datetime import timezone, timedelta, datetime
 API_URL = "http://localhost:3000/plc/register"
 
 
-def inserirAlerta(config_id, valor_capturado, tipo_valor, criticidade):
+def inserirAlerta(config_id, valor_capturado, tipo_valor, criticidade, tipo_dado, unidade_dado, hardware, fabrica_id, plc_id):
 
     print("INSERINDO ALERTA DE " + tipo_valor)
     fuso_brasil = timezone(timedelta(hours=-3))
     data_hora_brasil = datetime.now(fuso_brasil).strftime('%Y-%m-%d %H:%M:%S')
     dicionario = {
         "dataHora" : data_hora_brasil,
-        "criticidade" : criticidade,
+        "nivel" : criticidade,
+        "tipo_dado" : tipo_dado,
+        "unidade_dado" : unidade_dado,
+        "hardware" : hardware,
         "tipo_valor" : tipo_valor,
         "config_plc_id" : config_id,
-        "valor_capturado":valor_capturado
+        "valor":valor_capturado,
+        "fabrica_id" : fabrica_id,
+        "plc_id" : plc_id
     }
+
 
     json_data = json.dumps(dicionario)
     headers = {'Content-Type': 'application/json'}

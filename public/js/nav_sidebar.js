@@ -37,7 +37,7 @@ const enderecoApp = 'http://127.0.0.1:3000'
 
 const logout = () => {
     sessionStorage.clear()
-    
+    window.location.href = enderecoApp
 }
 
 const fotosDeUsuario = {

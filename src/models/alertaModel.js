@@ -1,5 +1,22 @@
 const database = require("../database/config")
 
+
+const getAlertasNasUltimas24Horas = (empresaId) => {
+    const sql = `SELECT COUNT(a.id) as qtdAlertas, ec.razao_social, ec.id as empresaId FROM alerta AS a
+                JOIN config_plc cp
+                ON cp.id = a.config_plc_id
+                JOIN plc p
+                ON p.id = cp.plc_id
+                JOIN parceria par
+                ON par.id = p.parceria_id
+                JOIN empresa_consumidor ec
+                ON ec.id = par.empresa_consumidor_id
+                WHERE par.empresa_fabricante_id = ${empresaId} AND
+                (dataHora BETWEEN date_sub(now(), INTERVAL 24 HOUR ) AND now())
+                GROUP BY ec.id`
+    return database.executar(sql)
+}
+
 const getUltimoAlerta = (dataHora, plcId) => {
     const sql = `SELECT a.id, a.criticidade, a.dataHora, a.tipo_valor, a.valor_capturado from alerta as a
     JOIN config_plc cp
@@ -55,5 +72,7 @@ module.exports = {
     getUltimoAlerta,
     nomeFabrica,
     nomeSetor,
+    getAlertasNasUltimas24Horas,
+    getAlertasNasUltimas24Horas,
     qtdAlertaHardware
 };

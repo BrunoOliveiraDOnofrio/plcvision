@@ -1,381 +1,356 @@
 INSERT INTO endereco (logradouro, numLogradouro, cidade, estado, bairro, complemento) VALUES
-('Largo Costela', 86, 'Siqueira', 'PE', 'Serra', 'Bloco 3');
+('Estrada Calebe Castro', 935, 'Santos Verde', 'MG', 'Nova Esperança', 'Bloco 1');
 INSERT INTO empresa_consumidor (razao_social, segmento, cnpj, endereco_id, qtdFabrica, token) VALUES
-('Sá', 'Alimentos', '18.029.674/0001-84', 5, 1, 'token_empresa_3');
-select * from plc;
-
-
+('Rios', 'Têxtil', '46.901.578/0001-10', 5, 1, 'token_empresa_3');
 
 INSERT INTO parceria (empresa_consumidor_id, empresa_fabricante_id, dataParceria, qtdPlc) VALUES
-(3, 1, '2025-01-09 04:55:45', 10);
+(3, 1, '2023-10-17 04:30:16', 10);
 
 INSERT INTO fabrica_consumidor (nome, empresa_consumidor_id, endereco_id, qtdSetor) VALUES
-('Fábrica Costa de Abreu', 3, 5, 2);
+('Fábrica Andrade', 3, 5, 2);
 INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
-('Setor Accusantium', 3, 5);
+('Setor Aliquid', 3, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2021, 3, 3, 'Linux', '4GB', '72:cc:8b:fb:a4:b6', 'plc-tenetur-04');
+('Siemens s7-1500', 2019, 3, 3, 'Windows CE', '2GB', 'da:69:df:6c:12:3a', 'plc-reprehenderit-04');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 4, 3693.58, 3822.42, 3);
+(2, 4, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 4, 3644.73, 3859.09, 3);
+(5, 4, 72.42, 83.08, 3);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(11, 4, 24605.64, 30687.03, 3);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(10, 4, 48.73, 53.45, 3);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2018, 3, 3, 'Windows CE', '4GB', 'de:9d:cb:a4:5b:fe', 'plc-maiores-05');
+('Schneider M340', 2021, 3, 3, 'Linux', '2GB', '20:35:ee:0a:59:67', 'plc-nisi-05');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 5, 4088.65, 4132.11, 3);
+(2, 5, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 5, 2463.5, 2527.22, 3);
+(5, 5, 72.42, 83.08, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 5, 6604.86, 6701.13, 3);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 5, 4462.55, 4692.73, 3);
+(7, 5, 33.55, 45.59, 3);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2022, 3, 3, 'Windows CE', '8GB', 'f4:1c:d6:e5:3e:41', 'plc-illo-06');
+('Siemens XRL8', 2018, 3, 3, 'VxWorks', '2GB', 'ac:00:c0:91:5f:e0', 'plc-consectetur-06');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(6, 6, 7072.68, 7186.05, 3);
+(2, 6, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 6, 2182.46, 2298.19, 3);
+(5, 6, 72.42, 83.08, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 6, 291.37, 684.36, 3);
+(12, 6, 3589.77, 28083.92, 3);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(9, 6, 2768805512.99, 3244864382.44, 3);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2024, 3, 3, 'Linux', '4GB', '7c:d3:8b:3e:a2:88', 'plc-dolor-07');
+('Siemens s7-1500', 2020, 3, 3, 'Windows CE', '2GB', 'f2:b8:78:e1:74:c9', 'plc-ratione-07');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(6, 7, 1200.49, 1385.0, 3);
+(2, 7, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 7, 2032.66, 2145.47, 3);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(1, 7, 3575.92, 3825.09, 3);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 7, 366.39, 509.56, 3);
+(5, 7, 72.42, 83.08, 3);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2023, 3, 3, 'Windows CE', '8GB', 'f8:27:d9:05:ac:1b', 'plc-quod-08');
+('Schneider M340', 2020, 3, 3, 'Linux', '4GB', 'e6:8a:b4:8e:5d:0b', 'plc-rem-08');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(1, 8, 6019.36, 6477.65, 3);
+(2, 8, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 8, 122.9, 356.19, 3);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(1, 8, 7129.13, 7429.98, 3);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(7, 8, 2037.04, 2257.55, 3);
+(5, 8, 72.42, 83.08, 3);
 INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
-('Setor Ut', 3, 5);
+('Setor Minus', 3, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2018, 3, 4, 'Windows CE', '2GB', '84:19:13:7b:fa:39', 'plc-hic-09');
+('Schneider M340', 2023, 3, 4, 'Windows CE', '2GB', 'ae:28:c2:e4:cb:72', 'plc-deleniti-09');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 9, 6530.31, 6616.03, 3);
+(2, 9, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 9, 3298.97, 3550.53, 3);
+(5, 9, 72.42, 83.08, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(1, 9, 1748.8, 1779.26, 3);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 9, 2571.77, 3032.71, 3);
+(10, 9, 48.73, 53.45, 3);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2024, 3, 4, 'VxWorks', '8GB', '9c:46:70:d0:61:26', 'plc-soluta-10');
+('Schneider M340', 2021, 3, 4, 'VxWorks', '2GB', 'e4:3b:a2:42:38:28', 'plc-dolores-10');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 10, 4322.43, 4637.52, 3);
+(2, 10, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 10, 1361.66, 1597.22, 3);
+(5, 10, 72.42, 83.08, 3);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(6, 10, 3006428475.37, 3463255523.6, 3);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(9, 10, 2768805512.99, 3244864382.44, 3);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2018, 3, 4, 'Windows CE', '8GB', '52:2d:b0:91:bc:80', 'plc-eveniet-11');
+('Siemens s7-1500', 2020, 3, 4, 'VxWorks', '8GB', '90:94:1e:29:e4:82', 'plc-temporibus-11');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 11, 4044.07, 4528.08, 3);
+(2, 11, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 11, 3242.72, 3683.78, 3);
+(5, 11, 72.42, 83.08, 3);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2020, 3, 4, 'VxWorks', '4GB', 'd6:75:b3:79:33:b7', 'plc-vel-12');
+('Siemens XRL8', 2021, 3, 4, 'Windows CE', '4GB', '32:ae:c8:66:1a:17', 'plc-omnis-12');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 12, 7448.59, 7759.31, 3);
+(2, 12, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 12, 3692.94, 4136.33, 3);
+(5, 12, 72.42, 83.08, 3);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2021, 3, 4, 'Windows CE', '8GB', '62:27:19:bd:d2:89', 'plc-vel-13');
+('Schneider M340', 2020, 3, 4, 'VxWorks', '8GB', '78:5b:eb:89:b0:0a', 'plc-nam-13');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 13, 4325.2, 4344.58, 3);
+(2, 13, 72.49, 74.41, 3);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(5, 13, 4222.48, 4442.52, 3);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 13, 7970.15, 8135.66, 3);
+(5, 13, 72.42, 83.08, 3);
 INSERT INTO endereco (logradouro, numLogradouro, cidade, estado, bairro, complemento) VALUES
-('Viela da Cunha', 938, 'Sá', 'PE', 'Betânia', 'Bloco 2');
+('Estrada Benício Dias', 6, 'Borges', 'RO', 'Piraja', 'Bloco 3');
 INSERT INTO empresa_consumidor (razao_social, segmento, cnpj, endereco_id, qtdFabrica, token) VALUES
-('Azevedo', 'Farmacêutico', '42.695.173/0001-11', 6, 1, 'token_empresa_4');
+('Pinto', 'Alimentos', '40.975.621/0001-05', 6, 1, 'token_empresa_4');
 
 INSERT INTO parceria (empresa_consumidor_id, empresa_fabricante_id, dataParceria, qtdPlc) VALUES
-(4, 1, '2024-03-17 21:15:57', 10);
+(4, 1, '2023-09-17 17:26:33', 10);
 
 INSERT INTO fabrica_consumidor (nome, empresa_consumidor_id, endereco_id, qtdSetor) VALUES
-('Fábrica Cardoso de Minas', 4, 6, 2);
+('Fábrica da Luz da Prata', 4, 6, 2);
 INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
-('Setor Vero', 4, 5);
+('Setor Quasi', 4, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2018, 4, 5, 'Windows CE', '2GB', 'd2:bf:96:d4:0f:0a', 'plc-temporibus-14');
+('Schneider M340', 2020, 4, 5, 'Windows CE', '8GB', '68:6c:2d:6f:da:f0', 'plc-impedit-14');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 14, 1150.82, 1585.77, 4);
+(2, 14, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(6, 14, 1179.13, 1434.53, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 14, 5792.45, 6187.51, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 14, 2437.67, 2766.53, 4);
+(5, 14, 72.42, 83.08, 4);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2024, 4, 5, 'VxWorks', '8GB', '14:d8:6b:ef:9c:9e', 'plc-maxime-15');
+('Siemens XRL8', 2023, 4, 5, 'Linux', '4GB', 'c6:b2:e8:16:9a:d7', 'plc-culpa-15');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 15, 117.04, 591.97, 4);
+(2, 15, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(5, 15, 7146.84, 7425.96, 4);
+(5, 15, 72.42, 83.08, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 15, 3617.82, 3891.13, 4);
+(10, 15, 48.73, 53.45, 4);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2023, 4, 5, 'Windows CE', '4GB', 'cc:15:1a:56:19:3f', 'plc-ratione-16');
+('Schneider M340', 2023, 4, 5, 'VxWorks', '8GB', '04:dc:ee:46:89:21', 'plc-molestias-16');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(10, 16, 1171.43, 1495.6, 4);
+(2, 16, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 16, 4792.1, 4877.41, 4);
+(5, 16, 72.42, 83.08, 4);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(11, 16, 24605.64, 30687.03, 4);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2023, 4, 5, 'Linux', '2GB', '5a:03:46:27:6d:27', 'plc-adipisci-17');
+('Siemens XRL8', 2020, 4, 5, 'Linux', '4GB', '7a:4d:bc:7c:f4:f1', 'plc-eius-17');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 17, 5098.1, 5207.34, 4);
+(2, 17, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 17, 5775.45, 5928.42, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(1, 17, 7868.5, 8027.9, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 17, 2745.91, 3146.24, 4);
+(5, 17, 72.42, 83.08, 4);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2018, 4, 5, 'VxWorks', '2GB', 'e2:9f:f2:7e:36:c7', 'plc-deserunt-18');
+('Siemens XRL8', 2018, 4, 5, 'VxWorks', '8GB', '28:5f:53:f4:a3:3b', 'plc-sequi-18');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(7, 18, 2111.7, 2295.44, 4);
+(2, 18, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 18, 5886.43, 6308.75, 4);
+(5, 18, 72.42, 83.08, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 18, 5950.34, 6285.9, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 18, 1115.59, 1480.59, 4);
+(9, 18, 2768805512.99, 3244864382.44, 4);
 INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
-('Setor Sunt', 4, 5);
+('Setor Aut', 4, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2021, 4, 6, 'VxWorks', '2GB', '9c:44:db:26:ff:aa', 'plc-velit-19');
+('Siemens s7-1500', 2020, 4, 6, 'VxWorks', '2GB', 'a2:e9:b9:67:26:54', 'plc-quod-19');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 19, 6371.76, 6408.4, 4);
+(2, 19, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 19, 6548.31, 6778.22, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 19, 7313.29, 7772.11, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(10, 19, 730.59, 911.08, 4);
+(5, 19, 72.42, 83.08, 4);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2019, 4, 6, 'VxWorks', '4GB', 'd6:ee:e5:0e:1d:be', 'plc-porro-20');
+('Schneider M340', 2019, 4, 6, 'VxWorks', '4GB', 'e8:17:9d:28:63:11', 'plc-voluptate-20');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 20, 6464.99, 6919.81, 4);
+(2, 20, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 20, 2469.47, 2496.9, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 20, 849.67, 895.02, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 20, 2826.96, 3045.09, 4);
+(5, 20, 72.42, 83.08, 4);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2019, 4, 6, 'Linux', '8GB', '8c:25:68:56:87:28', 'plc-omnis-21');
+('Siemens XRL8', 2019, 4, 6, 'VxWorks', '4GB', '38:cc:15:8b:90:5c', 'plc-cupiditate-21');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 21, 2994.23, 3491.79, 4);
+(2, 21, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 21, 1230.26, 1284.99, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 21, 3677.88, 4083.04, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(11, 21, 2871.7, 3032.4, 4);
+(5, 21, 72.42, 83.08, 4);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2019, 4, 6, 'Windows CE', '8GB', '26:ce:06:79:d1:f8', 'plc-ut-22');
+('Schneider M340', 2023, 4, 6, 'Linux', '2GB', '24:a5:20:71:58:20', 'plc-fugit-22');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(11, 22, 7294.98, 7426.94, 4);
+(2, 22, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 22, 3358.64, 3569.56, 4);
+(5, 22, 72.42, 83.08, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(11, 22, 4821.45, 5019.9, 4);
+(10, 22, 48.73, 53.45, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(7, 22, 2887.21, 2968.04, 4);
+(12, 22, 3589.77, 28083.92, 4);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2019, 4, 6, 'Linux', '4GB', 'ea:47:ad:e6:2f:2b', 'plc-molestiae-23');
+('Schneider M340', 2019, 4, 6, 'VxWorks', '2GB', '34:21:c6:a7:bc:9f', 'plc-adipisci-23');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 23, 1575.53, 1924.7, 4);
+(2, 23, 72.49, 74.41, 4);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(10, 23, 4553.13, 4800.22, 4);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 23, 2250.43, 2590.22, 4);
+(5, 23, 72.42, 83.08, 4);
 INSERT INTO endereco (logradouro, numLogradouro, cidade, estado, bairro, complemento) VALUES
-('Estação Moreira', 318, 'Câmara', 'MG', 'São Salvador', 'Bloco 1');
+('Viela Mariah Santos', 83, 'Azevedo', 'AL', 'Bernadete', 'Bloco 3');
 INSERT INTO empresa_consumidor (razao_social, segmento, cnpj, endereco_id, qtdFabrica, token) VALUES
-('Barbosa', 'Têxtil', '70.629.485/0001-62', 7, 1, 'token_empresa_5');
+('da Conceição', 'Farmacêutico', '09.873.624/0001-98', 7, 1, 'token_empresa_5');
 
 INSERT INTO parceria (empresa_consumidor_id, empresa_fabricante_id, dataParceria, qtdPlc) VALUES
-(5, 1, '2024-03-15 13:45:11', 10);
+(5, 1, '2024-05-17 04:21:15', 10);
 
 INSERT INTO fabrica_consumidor (nome, empresa_consumidor_id, endereco_id, qtdSetor) VALUES
-('Fábrica Fernandes', 5, 7, 2);
+('Fábrica Nunes de Gomes', 5, 7, 2);
 INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
-('Setor Molestias', 5, 5);
+('Setor Minus', 5, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2022, 5, 7, 'VxWorks', '4GB', 'be:e3:86:f7:45:71', 'plc-est-24');
+('Schneider M340', 2021, 5, 7, 'Linux', '2GB', 'f8:17:9a:ca:17:3f', 'plc-similique-24');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(5, 24, 1879.12, 2067.73, 5);
+(2, 24, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(11, 24, 348.93, 461.26, 5);
+(5, 24, 72.42, 83.08, 5);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(6, 24, 3006428475.37, 3463255523.6, 5);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(1, 24, 68.29, 72.84, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2022, 5, 7, 'Windows CE', '4GB', 'ac:80:f3:01:f3:ee', 'plc-quia-25');
+('Schneider M340', 2023, 5, 7, 'VxWorks', '4GB', '58:e6:fc:b6:bf:dd', 'plc-nemo-25');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 25, 1166.99, 1364.73, 5);
+(2, 25, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 25, 3987.07, 4373.06, 5);
+(5, 25, 72.42, 83.08, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 25, 3172.93, 3579.27, 5);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 25, 6760.88, 6993.31, 5);
+(6, 25, 3006428475.37, 3463255523.6, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2020, 5, 7, 'Windows CE', '2GB', '94:72:fc:15:91:0f', 'plc-iusto-26');
+('Siemens XRL8', 2019, 5, 7, 'Linux', '2GB', 'f8:11:28:e0:eb:6b', 'plc-provident-26');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(10, 26, 3895.12, 4035.01, 5);
+(2, 26, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(6, 26, 5186.29, 5216.61, 5);
+(5, 26, 72.42, 83.08, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2021, 5, 7, 'Linux', '2GB', 'd8:5f:43:b6:3c:88', 'plc-facere-27');
+('Schneider M340', 2024, 5, 7, 'VxWorks', '8GB', '98:02:43:4d:9d:d6', 'plc-eius-27');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(5, 27, 110.64, 426.28, 5);
+(2, 27, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(10, 27, 6388.48, 6579.28, 5);
+(5, 27, 72.42, 83.08, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 27, 4515.93, 4627.98, 5);
+(8, 27, 1190.38, 1362.68, 5);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(1, 27, 68.29, 72.84, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2021, 5, 7, 'VxWorks', '2GB', '40:ce:cf:c7:18:2f', 'plc-rerum-28');
+('Siemens XRL8', 2020, 5, 7, 'VxWorks', '2GB', '48:5b:4f:9b:79:47', 'plc-molestias-28');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 28, 1226.89, 1507.56, 5);
+(2, 28, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 28, 5588.21, 5675.77, 5);
+(5, 28, 72.42, 83.08, 5);
 INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
-('Setor Voluptates', 5, 5);
+('Setor Sint', 5, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2024, 5, 8, 'Linux', '4GB', 'f0:85:6c:01:35:c6', 'plc-esse-29');
+('Schneider M340', 2018, 5, 8, 'VxWorks', '2GB', '3e:b6:67:8e:82:4d', 'plc-porro-29');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(1, 29, 4950.27, 4969.09, 5);
+(2, 29, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(11, 29, 3887.44, 3934.06, 5);
+(5, 29, 72.42, 83.08, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2023, 5, 8, 'Windows CE', '4GB', 'ca:d8:1f:49:6d:36', 'plc-provident-30');
+('Siemens s7-1500', 2019, 5, 8, 'Linux', '2GB', '7e:db:d1:d2:3a:7c', 'plc-ullam-30');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 30, 2276.15, 2605.42, 5);
+(2, 30, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(6, 30, 683.32, 1128.18, 5);
+(5, 30, 72.42, 83.08, 5);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(8, 30, 1190.38, 1362.68, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2022, 5, 8, 'Windows CE', '4GB', '52:ce:ff:c8:f2:0e', 'plc-fuga-31');
+('Schneider M340', 2018, 5, 8, 'Windows CE', '8GB', '7c:7f:6e:53:a2:0b', 'plc-quia-31');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(11, 31, 1130.37, 1453.45, 5);
+(2, 31, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 31, 5197.43, 5399.58, 5);
+(5, 31, 72.42, 83.08, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(5, 31, 1595.03, 1912.97, 5);
+(10, 31, 48.73, 53.45, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2020, 5, 8, 'VxWorks', '4GB', '56:5e:0b:c8:73:e7', 'plc-cupiditate-32');
+('Schneider M340', 2021, 5, 8, 'Linux', '8GB', 'c4:c7:d2:b4:cf:5a', 'plc-molestiae-32');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 32, 5813.69, 6056.13, 5);
+(2, 32, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 32, 2929.8, 2944.59, 5);
+(5, 32, 72.42, 83.08, 5);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(1, 32, 68.29, 72.84, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2020, 5, 8, 'Linux', '4GB', '4e:10:56:10:5b:a3', 'plc-voluptates-33');
+('Siemens XRL8', 2023, 5, 8, 'Linux', '2GB', '6c:f7:3d:23:36:64', 'plc-mollitia-33');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(5, 33, 3361.27, 3496.19, 5);
+(2, 33, 72.49, 74.41, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(7, 33, 88.18, 262.72, 5);
+(5, 33, 72.42, 83.08, 5);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 33, 4192.34, 4457.55, 5);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 33, 6053.72, 6342.63, 5);
+(8, 33, 1190.38, 1362.68, 5);
 INSERT INTO endereco (logradouro, numLogradouro, cidade, estado, bairro, complemento) VALUES
-('Loteamento Agatha Pimenta', 48, 'da Paz', 'CE', 'Parque São Pedro', 'Bloco 2');
+('Feira Leão', 86, 'Cassiano', 'PA', 'Nova Pampulha', 'Bloco 1');
 INSERT INTO empresa_consumidor (razao_social, segmento, cnpj, endereco_id, qtdFabrica, token) VALUES
-('Sampaio', 'Alimentos', '82.740.165/0001-64', 8, 1, 'token_empresa_6');
+('das Neves', 'Alimentos', '45.620.873/0001-35', 8, 1, 'token_empresa_6');
 
 INSERT INTO parceria (empresa_consumidor_id, empresa_fabricante_id, dataParceria, qtdPlc) VALUES
-(6, 1, '2024-05-07 14:10:35', 10);
+(6, 1, '2023-06-09 12:15:27', 10);
 
 INSERT INTO fabrica_consumidor (nome, empresa_consumidor_id, endereco_id, qtdSetor) VALUES
-('Fábrica Cunha da Mata', 6, 8, 2);
+('Fábrica Dias', 6, 8, 2);
 INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
-('Setor Laborum', 6, 5);
+('Setor Numquam', 6, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2021, 6, 9, 'Linux', '2GB', '34:d6:b9:00:d6:0f', 'plc-nisi-34');
+('Siemens s7-1500', 2023, 6, 9, 'Windows CE', '2GB', 'ee:ff:52:55:17:3b', 'plc-eos-34');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(1, 34, 876.39, 1333.87, 6);
+(2, 34, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 34, 969.27, 1361.68, 6);
+(5, 34, 72.42, 83.08, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 34, 6319.85, 6727.72, 6);
+(12, 34, 3589.77, 28083.92, 6);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(8, 34, 1190.38, 1362.68, 6);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2024, 6, 9, 'VxWorks', '4GB', '86:83:85:40:e4:04', 'plc-numquam-35');
+('Schneider M340', 2023, 6, 9, 'Windows CE', '4GB', 'e2:5c:14:b6:12:10', 'plc-delectus-35');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(5, 35, 2848.81, 3240.42, 6);
+(2, 35, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(11, 35, 4566.0, 4705.63, 6);
+(5, 35, 72.42, 83.08, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 35, 4582.37, 4935.33, 6);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(10, 35, 7366.2, 7683.81, 6);
+(11, 35, 24605.64, 30687.03, 6);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2022, 6, 9, 'VxWorks', '2GB', '62:d0:b9:e1:67:f9', 'plc-facilis-36');
+('Siemens XRL8', 2024, 6, 9, 'Windows CE', '2GB', '4a:7f:6e:b5:b7:43', 'plc-quam-36');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(11, 36, 2004.11, 2076.56, 6);
+(2, 36, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 36, 3485.14, 3920.03, 6);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 36, 3697.43, 3772.57, 6);
+(5, 36, 72.42, 83.08, 6);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2023, 6, 9, 'Linux', '8GB', 'ae:a3:d9:b4:7e:2e', 'plc-laborum-37');
+('Schneider M340', 2024, 6, 9, 'VxWorks', '4GB', 'aa:8e:23:c6:fa:6b', 'plc-fuga-37');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(6, 37, 6662.4, 6753.91, 6);
+(2, 37, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 37, 3291.67, 3706.79, 6);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 37, 3983.82, 4149.93, 6);
+(5, 37, 72.42, 83.08, 6);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2024, 6, 9, 'Windows CE', '8GB', 'cc:db:3b:de:98:c3', 'plc-eaque-38');
+('Schneider M340', 2024, 6, 9, 'VxWorks', '2GB', '1a:2e:81:26:94:fe', 'plc-et-38');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 38, 5081.54, 5158.78, 6);
+(2, 38, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(3, 38, 3155.36, 3258.57, 6);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(4, 38, 2199.68, 2477.47, 6);
+(5, 38, 72.42, 83.08, 6);
 INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES
-('Setor Deserunt', 6, 5);
+('Setor Hic', 6, 5);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2021, 6, 10, 'VxWorks', '2GB', 'e2:49:5f:bd:2f:61', 'plc-ut-39');
+('Siemens s7-1500', 2019, 6, 10, 'VxWorks', '4GB', 'c4:20:dc:4a:e2:0c', 'plc-sapiente-39');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 39, 4160.88, 4333.38, 6);
+(2, 39, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 39, 7795.31, 8192.43, 6);
+(5, 39, 72.42, 83.08, 6);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2021, 6, 10, 'Windows CE', '2GB', '20:ef:69:c2:00:82', 'plc-cupiditate-40');
+('Siemens s7-1500', 2021, 6, 10, 'VxWorks', '2GB', '5e:96:12:94:e4:a3', 'plc-sunt-40');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(2, 40, 6443.77, 6669.51, 6);
+(2, 40, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(6, 40, 5127.73, 5138.56, 6);
+(5, 40, 72.42, 83.08, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 40, 366.34, 667.44, 6);
+(6, 40, 3006428475.37, 3463255523.6, 6);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(1, 40, 68.29, 72.84, 6);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens XRL8', 2024, 6, 10, 'Windows CE', '2GB', '22:90:67:81:f3:60', 'plc-amet-41');
+('Siemens XRL8', 2019, 6, 10, 'Windows CE', '8GB', 'd2:22:ff:7f:e7:ed', 'plc-voluptatem-41');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(6, 41, 3487.14, 3958.89, 6);
+(2, 41, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 41, 6219.47, 6672.49, 6);
+(5, 41, 72.42, 83.08, 6);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(6, 41, 3006428475.37, 3463255523.6, 6);
+INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
+(1, 41, 68.29, 72.84, 6);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Siemens s7-1500', 2019, 6, 10, 'Windows CE', '4GB', '50:09:b2:7a:b0:18', 'plc-vel-42');
+('Schneider M340', 2022, 6, 10, 'Linux', '2GB', '6a:eb:45:fc:6f:e0', 'plc-aliquam-42');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(9, 42, 7874.17, 7882.34, 6);
+(2, 42, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(12, 42, 5492.03, 5615.49, 6);
-INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(8, 42, 7949.49, 8281.82, 6);
+(5, 42, 72.42, 83.08, 6);
 INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES
-('Schneider M340', 2024, 6, 10, 'Linux', '4GB', 'd4:ff:99:f0:10:57', 'plc-eius-43');
+('Siemens s7-1500', 2019, 6, 10, 'Windows CE', '4GB', 'a0:ad:77:fd:6b:bf', 'plc-voluptate-43');
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(5, 43, 1743.35, 2198.18, 6);
+(2, 43, 72.49, 74.41, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(5, 43, 6133.28, 6160.8, 6);
+(5, 43, 72.42, 83.08, 6);
 INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES
-(1, 43, 218.21, 564.85, 6);
+(12, 43, 3589.77, 28083.92, 6);

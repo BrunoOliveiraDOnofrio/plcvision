@@ -8,7 +8,7 @@ import selectsInfos
 from datetime import datetime
 from pytz import timezone
 
-
+foraDoPadrao = []
 empresaGerandoAlertas = None
 # Configurações de conexão com o banco
 def conexao_select():
@@ -57,17 +57,21 @@ def obter_plcs_com_config():
 
     cursor = con.cursor()
     cursor.execute("""
-        SELECT plc.id,  p.empresa_consumidor_id
+        SELECT plc.id,  p.empresa_consumidor_id, fc.id as fabricaId
         FROM plc
         JOIN parceria p ON plc.parceria_id = p.id
+        JOIN setor_fabrica sf 
+        ON sf.id = plc.setor_fabrica_id
+        JOIN fabrica_consumidor fc
+        ON sf.fabrica_consumidor_id = fc.id
                    ORDER BY RAND();
     """)
     plcs = cursor.fetchall()
 
     resultado = []
-    for plc_id,  empresa_id in plcs:
+    for plc_id,  empresa_id, fabricaId in plcs:
         cursor.execute("""
-            SELECT c.id, comp.hardware, comp.tipo_dado, comp.coluna_captura, c.limite_critico, c.limite_atencao
+            SELECT c.id, comp.hardware, comp.tipo_dado, comp.unidade_dado,comp.coluna_captura, c.limite_critico, c.limite_atencao
             FROM config_plc c
             JOIN componente comp ON c.componente_id = comp.id
             WHERE c.plc_id = %s;
@@ -76,6 +80,7 @@ def obter_plcs_com_config():
         resultado.append({
             "plc_id": plc_id,
             "empresa_id": empresa_id,
+            "fabrica_id" : fabricaId,
             "configuracoes": configuracoes
         })
 
@@ -85,14 +90,16 @@ def obter_plcs_com_config():
 
 def enviar_monitoramento(plc, rodadaDeAlerta):
     global empresaGerandoAlertas
+    global foraDoPadrao 
     id_plc = plc["plc_id"]
     empresa_id = plc["empresa_id"]
+    fabrica_id = plc["fabrica_id"]
     if not empresaGerandoAlertas and rodadaDeAlerta:
         empresaGerandoAlertas = empresa_id
     alertas = 0
     dados = []
     for config in plc["configuracoes"]:
-        config_id, hardware, tipo_dado, campo, limite_critico, limite_atencao = config
+        config_id, hardware, tipo_dado, unidade_dado, campo, limite_critico, limite_atencao = config
         
         
         limite_atencao = int(limite_atencao)
@@ -102,9 +109,9 @@ def enviar_monitoramento(plc, rodadaDeAlerta):
         
         if rodadaDeAlerta and empresa_id == empresaGerandoAlertas:
             valor = random.randint(limite_atencao + 1, limite_critico + 1)
-            selectsInfos.inserirAlerta(config_id, valor, f"{hardware} {tipo_dado}", 1)
+            selectsInfos.inserirAlerta(config_id, valor, f"{hardware} {tipo_dado}", 1, tipo_dado, unidade_dado, hardware, fabrica_id, id_plc)
             alertas += 1
-            if alertas == 3:
+            if alertas == 1:
                 rodadaDeAlerta = False
         else:
             valor = simular_valor(tipo_dado, limite_critico, limite_atencao)
@@ -114,8 +121,10 @@ def enviar_monitoramento(plc, rodadaDeAlerta):
         if valor:
             if valor >= limite_critico:
            
-                fora_padrao = 2
+                fora_padrao = 3
             elif valor >= limite_atencao:
+                fora_padrao = 2
+            elif valor >= (limite_atencao * 0.8):
                 fora_padrao = 1
            
             dados.append({
@@ -145,7 +154,7 @@ def simular_monitoramento():
         rodadaDeAlerta = random.randint(0, 10) > 9
         if rodadaDeAlerta:
             print('RODADA DE ALERTAS')
-        
+        random.shuffle(plcs)
         for plc in plcs:
             enviar_monitoramento(plc, rodadaDeAlerta)
         time.sleep(1)

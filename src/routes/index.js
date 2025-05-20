@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+const monitoramentoService = require('../services/monitoramentoService')
+
 
 const path = require("path");
 
@@ -19,42 +21,61 @@ router.get("/", function (req, res) {
     res.render("index");
 });
 
-function agruparComportamentosForaPadrao(dados) {
-  const resultado = [];
-
-  for (const empresaData of dados) {
-    const empresaId = empresaData.empresa;
-    let fora1 = 0;
-    let fora2 = 0;
-
-    for (const plc of empresaData.plcs) {
-      for (const dia of plc.dados) {
-        for (const leitura of dia) {
-          if (leitura.foraPadrao === 1) fora1++;
-          else if (leitura.foraPadrao === 2) fora2++;
-        }
-      }
-    }
-
-    resultado.push({
-      empresa: empresaId,
-      foraPadrao1: fora1,
-      foraPadrao2: fora2,
-      total: fora1 + fora2
-    });
-  }
-
-  return resultado;
-}
 
 
 
-router.get('/monitoramento/empresas', (req, res) => {
+router.get('/monitoramento/empresas', async (req, res) => {
     let response  = "No data";
 
-    const dadosAgrupados = agruparComportamentosForaPadrao(dados)
+    const dadosAgrupados = monitoramentoService.agruparComportamentosForaPadrao(dados)
+    const alertas = await monitoramentoService.buscarAlertasDasUltimas24Horas(1)
+    const empresasRankeadas = monitoramentoService.rankearEmpresasCriticidade(dadosAgrupados, alertas)
+    
+    res.status(200).json(empresasRankeadas)
+})
 
-    res.status(200).json(dadosAgrupados)
+router.get('/monitoramento/empresas/:empresaId/barras', async(req, res) => {
+    const empresaId = req.params.empresaId
+
+    const dadosEmpresaFiltrada = monitoramentoService.filtrarDadosEmpresa(dados, empresaId)
+    const dadosBarrasAgrupadas = monitoramentoService.gerarDadosBarrasAgrupadas(dadosEmpresaFiltrada.plcs)
+    
+    res.json(dadosBarrasAgrupadas)
+})
+
+router.get('/monitoramento/empresas/:empresaId/foraNormal', async (req, res) => {
+    const empresaId = req.params.empresaId
+    const dadosAgrupados = monitoramentoService.agruparComportamentosForaPadrao(dados)
+     
+    const dadosAgrupadosEmpresa = dadosAgrupados.find(e => e.empresa == empresaId)
+    const alertas = await monitoramentoService.buscarAlertasDasUltimas24Horas(1)
+    dadosAgrupadosEmpresa['alertas'] = alertas.find(e => e.empresaId == empresaId)
+    res.status(200).json(dadosAgrupadosEmpresa)
+
+})
+
+router.get(`/monitoramento/empresas/:empresaId/disperssao`, (req,res) => {
+    const empresaId = req.params.empresaId
+    const dadosDispersao = monitoramentoService.gerarDadosDispersao(dados,empresaId)
+    res.status(200).json(dadosDispersao);
+})
+
+router.get('/monitoramento/empresas/:empresaId/mapa', async(req, res) => {
+    const empresaId = req.params.empresaId
+    
+    const dadosEmpresaFiltrada = monitoramentoService.filtrarDadosEmpresa(dados, empresaId)
+    
+    const dadosMapaCalor = monitoramentoService.mapaDeCalorEmpresa(dadosEmpresaFiltrada)
+    console.log(dadosMapaCalor)
+    const plcComAlertas = []
+    dadosMapaCalor.map(plc => {
+        console.log(plc)
+        const soma = plc.data.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
+        if(soma > 0){
+            plcComAlertas.push(plc)
+        }
+    })
+    res.status(200).json({dados: plcComAlertas})
 })
 
 

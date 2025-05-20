@@ -11,6 +11,10 @@ router.get('/monitoramento', (req, res) => {
 })
 
 
+router.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/tempo_real/dashboard/dashboardTempoReal.html'));
+})
+
 router.get('/plcs', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/tempo_real/plcs/plcs.html'));
 })

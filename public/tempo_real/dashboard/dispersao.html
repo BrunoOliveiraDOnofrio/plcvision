@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dispersão CPU × RAM com Regressão Global</title>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+<body>
+  <div id="graficoDispersao" style="max-width: 900px; margin: auto"></div>
+
+  <script>
+    async function carregarDadosDispersao() {
+      try {
+        const resposta = await fetch("http://localhost:3000/monitoramento/empresas/3/disperssao");
+        const dados = await resposta.json();
+
+        const series = [];
+        const todosOsPontos = [];
+
+        dados.forEach((plc) => {
+          const pontos = plc.data.map((ponto) => {
+            const p = { x: ponto.x, y: ponto.y, meta: { maquina_id: ponto.meta.maquina_id } };
+            todosOsPontos.push(p);
+            return p;
+          });
+
+          series.push({
+            name: `${plc.name}`,
+            type: "scatter",
+            data: pontos
+          });
+        });
+
+        // Cálculo da regressão linear global
+        const { m, b } = calcularRegressaoLinear(todosOsPontos);
+        const xs = todosOsPontos.map(p => p.x);
+        const minX = Math.min(...xs);
+        const maxX = Math.max(...xs);
+
+        // Gerar múltiplos pontos interpolados para a reta
+        const numPontos = 50;
+        const step = (maxX - minX) / (numPontos - 1);
+        const retaRegressaoData = [];
+        for(let i = 0; i < numPontos; i++) {
+          const x = minX + i * step;
+          const y = m * x + b;
+          retaRegressaoData.push({ x, y });
+        }
+
+        const retaRegressao = {
+          name: "Regressão Linear Global",
+          type: "line",
+          data: retaRegressaoData,
+          color: "#FF4560",
+          strokeWidth: 3
+        };
+
+        series.push(retaRegressao);
+
+        const options = {
+          chart: {
+            height: 500,
+            type: "scatter",
+            zoom: { enabled: true, type: "xy" }
+          },
+          series: series,
+          title: { text: "Dispersão CPU × RAM com Regressão Linear Global" },
+          xaxis: {
+            title: { text: "Uso de CPU (%)" },
+            tickAmount: 10,
+            min: 0,
+            max: 100
+          },
+          yaxis: {
+            title: { text: "Uso de RAM (%)" },
+            tickAmount: 10,
+            min: 0,
+            max: 100
+          },
+          tooltip: {
+            custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+              const point = w.config.series[seriesIndex].data[dataPointIndex];
+              if (!point.meta) {
+                return `<b>${w.config.series[seriesIndex].name}</b><br/>CPU: ${point.x.toFixed(2)}%<br/>RAM: ${point.y.toFixed(2)}%`;
+              }
+              return `
+                <b>${w.config.series[seriesIndex].name}</b><br/>
+                CPU: ${point.x.toFixed(2)}%<br/>
+                RAM: ${point.y.toFixed(2)}%<br/>
+                Máquina ID: ${point.meta.maquina_id}
+              `;
+            }
+          }
+        };
+
+        const chart = new ApexCharts(document.querySelector("#graficoDispersao"), options);
+        chart.render();
+      } catch (erro) {
+        console.error("Erro ao carregar os dados:", erro);
+      }
+    }
+
+    function calcularRegressaoLinear(pontos) {
+      const n = pontos.length;
+      const somaX = pontos.reduce((sum, p) => sum + p.x, 0);
+      const somaY = pontos.reduce((sum, p) => sum + p.y, 0);
+      const somaXY = pontos.reduce((sum, p) => sum + p.x * p.y, 0);
+      const somaX2 = pontos.reduce((sum, p) => sum + p.x * p.x, 0);
+
+      const mediaX = somaX / n;
+      const mediaY = somaY / n;
+
+      const m = (somaXY - n * mediaX * mediaY) / (somaX2 - n * mediaX * mediaX);
+      const b = mediaY - m * mediaX;
+
+      return { m, b };
+    }
+
+    carregarDadosDispersao();
+  </script>
+</body>
+</html>

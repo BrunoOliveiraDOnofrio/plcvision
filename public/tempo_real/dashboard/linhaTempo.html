@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Linha do Tempo - Alertas</title>
+  <style>
+    body {
+      background-color: #eaf0fe;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    .timeline-container {
+      background-color: #dbe5fe;
+      border-radius: 16px;
+      padding: 20px 30px;
+      width: 80%;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .timeline-header {
+      font-size: 18px;
+      font-weight: bold;
+      color: #001f4d;
+      margin-bottom: 25px;
+    }
+
+    .timeline-header::before {
+      content: "⏱️ ";
+      margin-right: 6px;
+    }
+
+    .timeline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background-color: #444;
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+
+    .event {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin: 0 auto;
+      z-index: 1;
+      border: 2px solid white;
+    }
+
+    .yellow {
+      background-color: yellow;
+    }
+
+    .red {
+      background-color: red;
+    }
+
+    .event-text {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #000;
+    }
+
+    .event-text span {
+      display: block;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="timeline-container">
+    <div class="timeline-header">
+      Linha do Tempo, alertas não resolvidos - <u>19/05/25</u>
+    </div>
+
+    <div class="timeline">
+      <div class="event">
+        <div class="dot yellow"></div>
+        <div class="event-text">
+          <span>13:40 Alerta atenção</span>
+          PLC 01
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="dot yellow"></div>
+        <div class="event-text">
+          <span>19:40 Alerta atenção</span>
+          PLC 110
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="dot red"></div>
+        <div class="event-text">
+          <span>20:40 Alerta Crítico</span>
+          PLC 01
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
