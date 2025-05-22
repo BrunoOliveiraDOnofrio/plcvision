@@ -2,6 +2,7 @@ const alertaModel = require("../models/alertaModel");
 // qnd ocorrer algum alerta, vai cadastar os dados e o alerta logo em seguida
 const dadosModel = require("../models/dadosModel");
 
+const moment = require('moment');
 
 const getUltimoAlerta = (req, res) => {
     const dataHora = req.body.data_hora
@@ -168,7 +169,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
         ]
     };
 
-    const urlSlack = `https://hooks.slack.com/services/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`;
+    const urlSlack = `https://hooks.slack.com/services/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`;
 
     fetch(`${urlSlack}`, {
         method: 'POST',
@@ -188,7 +189,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
 const qtdAlertaHardware = (req,res) => {
     alertaModel.qtdAlertaHardware()
         .then((dados) => {
-            res.status(200).json(dados[0]);
+            res.status(200).json(dados);
         })
         .catch((error) => {
             console.error("Erro: ", error)
@@ -202,6 +203,35 @@ const jiraAberto = async (req, res) => {
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
     const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=Suporte AND statusCategory!=Done`;
+
+    try {
+        const response = await fetch(urlApiJira, {
+            method: "GET",
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro do Jira: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        res.json({ total: data.total });
+
+    } catch (error) {
+        console.error("Erro ao buscar dados no Jira:", error.message);
+        res.status(500).json({ erro: "Erro ao buscar chamados do Jira" });
+    }
+};
+
+const jiraAbertoValidade = async (req, res) => {
+    const email = "carvalhohugo425@gmail.com";
+    const key = process.env.JIRA_KEY;
+
+    const auth = Buffer.from(`${email}:${key}`).toString("base64");
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=Suporte AND statusCategory!=Done AND created <= -3d`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -290,11 +320,72 @@ const tempoFechamento = async (req, res) => {
 
 }
 
+const alertaTraceroute = async (req, res) => {
+
+    const email = "carvalhohugo425@gmail.com";
+    const key = process.env.JIRA_KEY;
+    const auth = Buffer.from(`${email}:${key}`).toString("base64");
+
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=(created >= -7d OR resolutiondate >= -7d)&fields=created,resolutiondate&maxResults=1000`;
+
+    const response = await fetch(urlApiJira, {
+        method: "GET",
+        headers: {
+            'Authorization': `Basic ${auth}`,
+            'Accept': 'application/json'
+        }
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    const criadoPorDia = {};
+    const resolvidoPorDia = {};
+
+    const dias = Array.from({ length: 7 }, (_, i) =>
+        moment().subtract(i, 'days').format('YYYY-MM-DD')
+    ).reverse();
+
+
+    
+    // for (let alerta of data.issues) {
+    // console.log('Created:', alerta.fields.created);
+    // console.log('Resolved:', alerta.fields.resolutiondate);
+
+    // console.log("Criado formatado:", moment(alerta.fields.created).utcOffset('-03:00').format('YYYY-MM-DD'));
+    // console.log("Dias conhecidos:", dias);
+    // }
+
+    for (let alerta of data.issues) {
+        const criado = moment(alerta.fields.created).utcOffset('-03:00').format('YYYY-MM-DD');
+        criadoPorDia[criado] = (criadoPorDia[criado] || 0) + 1;
+
+        if (alerta.fields.resolutiondate) {
+            const resolvido = moment(alerta.fields.resolutiondate).utcOffset('-03:00').format('YYYY-MM-DD');
+            resolvidoPorDia[resolvido] = (resolvidoPorDia[resolvido] || 0) + 1;
+        }
+    }
+
+    const resultado = {
+        dias,
+        criados: dias.map(dia => criadoPorDia[dia] || 0),
+        resolvidos: dias.map(dia => resolvidoPorDia[dia] || 0)
+    };
+
+    // console.log("Criados por dia:", criadoPorDia);
+    // console.log("Resolvidos por dia:", resolvidoPorDia);
+    // console.log("Array dias:", dias);
+    res.json(resultado);
+
+}
+
 module.exports = {
     store,
     getUltimoAlerta,
     qtdAlertaHardware,
     jiraAberto,
+    jiraAbertoValidade,
     jiraFechadoNow,
-    tempoFechamento
+    tempoFechamento,
+    alertaTraceroute
 };

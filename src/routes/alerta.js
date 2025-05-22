@@ -20,15 +20,23 @@ router.get("/kpi1", (req,res) => {
 })
 
 router.get("/kpi2", (req,res) => {
-    alertaController.jiraFechadoNow(req,res);
+    alertaController.jiraAbertoValidade(req,res);
 })
 
 router.get("/kpi3", (req,res) => {
-    alertaController.qtdAlertaHardware(req,res);
+    alertaController.jiraFechadoNow(req,res);
 })
 
 router.get("/kpi4", (req,res) => {
+    alertaController.qtdAlertaHardware(req,res);
+})
+
+router.get("/kpi5", (req,res) => {
     alertaController.tempoFechamento(req,res);
+})
+
+router.get("/graficoTraceroute", (req, res) => {
+    alertaController.alertaTraceroute(req,res);
 })
 module.exports = router;
 

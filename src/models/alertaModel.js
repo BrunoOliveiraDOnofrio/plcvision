@@ -61,8 +61,8 @@ const qtdAlertaHardware = () => {
         WHEN tipo_valor LIKE '%REDE%' THEN 'REDE'
         WHEN tipo_valor LIKE '%Bateria%' THEN 'BATERIA'
         END AS tipo
-    FROM alerta
-    ) AS tipos_alerta GROUP BY tipo ORDER BY total DESC LIMIT 1;`
+    FROM alerta WHERE dataHora >= now() - INTERVAL 7 DAY
+    ) AS tipos_alerta GROUP BY tipo ORDER BY total DESC LIMIT 10;`
      return database.executar(sql)
 }
 

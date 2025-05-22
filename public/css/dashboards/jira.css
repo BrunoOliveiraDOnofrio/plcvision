@@ -63,7 +63,7 @@
     }
 }
 
-canvas#myChart {
+canvas#alertaComponente {
     background-color: #24284B;
     border-radius: 12px;
     width: 100% !important;
@@ -71,7 +71,7 @@ canvas#myChart {
     margin-bottom: 5%;
 }
 
-canvas#mychart-2 {
+canvas#alertaTraceroute {
     background-color: #24284B;
     border-radius: 12px;
     width: 100% !important;
@@ -91,9 +91,9 @@ canvas#mychart-2 {
         flex-direction: row;
         & .kpi {
             height: 7vw;
-            width: 20vw;
+            width: 15vw;
             & h3 {
-                font-size: 1.5vw;
+                font-size: 1.2vw;
             }
         }
     }
