@@ -16,6 +16,8 @@
     <!-- Link dos icones - boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
     <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
@@ -23,7 +25,7 @@
 <link rel="stylesheet" href="../../css/dashboards/dash_tempo_real.css">
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
+<script src="https://kit.fontawesome.com/d5ea0dfb99.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <!-- Nav Bar -->
@@ -157,13 +159,14 @@
                 </div>
                 <div class="tempo-pause">
                     <span>Tempo para trocar automaticamente: <span id="span_tempo_restante">00:22:00</span></span>
-                    <i class='bx  bx-pause-circle'></i>
+                    <i id="icon-pause" onclick="pausarPlayCarregamento()" class='bx  bx-pause-circle'></i>
+                    
                 </div>
             </div>
             <div class="card-expansive">
                 <div class="titulo">
                     <span>Clientes com estado crítico</span>
-                    <i class='bx  bx-caret-down'></i>
+                    <i onclick="recolherCard()" class='bx  bx-caret-down'></i>
                 </div>
                 <div class="clientes-content">
                     <div class="line-cliente">
@@ -180,10 +183,10 @@
                     </div>
                 </div>
             </div>
-            <div class="card-expansive">
+            <div class="card-expansive card-expansive2">
                 <div class="titulo">
                     <span>Clientes com estado crítico</span>
-                    <i class='bx  bx-caret-down'></i>
+                    <i onclick="recolherCard2()" class='bx  bx-caret-down'></i>
                 </div>
                 <div class="clientes-content">
                     <div class="line-cliente">
@@ -207,7 +210,8 @@
                 <div class="kpi">
                     <div class="evenly-divs">
                         <div class="icon-desc">
-                            <i></i>
+                            
+                            <i class="fa-solid fa-triangle-exclamation"></i>
                             <span>
                                 PLCs com alertas atrasados
                             </span>
@@ -220,7 +224,7 @@
                 <div class="kpi">
                     <div class="evenly-divs">
                         <div class="icon-desc">
-                            <i class='bx  bx-bell-ring'></i>
+                            <i class="fa-solid fa-bell"></i>
                             <span>
                                 Alertas com tempo de resolução estourado
                             </span>
@@ -233,12 +237,14 @@
             </div>
             <div class="line-mon">
                 <div class="swiper">
+                    <div class="swiper-pagination"></div>
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="title-esc">
                                 <div class="titulo">
                                     <!-- icone -->
-                                     <i></i>
+                                    <i class="fa-solid fa-bell"></i>
+                                     
                                      <span>Alerta Crítico</span>
                                 </div>
                                 <i class='bx  bx-x'></i>
@@ -248,59 +254,189 @@
                             </div>
                             <div class="tempo-button">
                                 <span>7H atrasado.</span>
-                                <button>Comunicar Equipe Via Slack</button>
+                                <button onclick="abrirModal()">Comunicar</button>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="title-esc">
+                                <div class="titulo">
+                                    <!-- icone -->
+                                    <i class="fa-solid fa-bell"></i>
+                                     
+                                     <span>Alerta Crítico</span>
+                                </div>
+                                <i class='bx  bx-x'></i>
+                            </div>
+                            <div class="desc-alerta">
+                                <span>PLC - 01: Ram Uso  89%</span>
+                            </div>
+                            <div class="tempo-button">
+                                <span>7H atrasado.</span>
+                                <button>Comunicar</button>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="title-esc">
+                                <div class="titulo">
+                                    <!-- icone -->
+                                     <i class="fa-solid fa-bell"></i>
+                                     <span>Alerta Crítico</span>
+                                </div>
+                                <i class='bx  bx-x'></i>
+                            </div>
+                            <div class="desc-alerta">
+                                <span>PLC - 01: Ram Uso  89%</span>
+                            </div>
+                            <div class="tempo-button">
+                                <span>7H atrasado.</span>
+                                <button>Comunicar</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="line-mon">
-                <div style="width: 500px;" class="chart-container">
-                    <h2><i class='bx  bx-chart-bar-rows'></i> PLC com alertas atrasados X Componente Anormal</h2>
+                <div class="sempre-em-frente">
+                <div  class="chart-container">
+                    <div class="titulo">
+                        <i class="fa-solid fa-list-ol"></i>
+                        <h2>PLC com alertas atrasados X Componente Anormal</h2>
+                    </div>
                     <canvas id="myChart"></canvas>
                 </div>
-
-
-            </div>
-            <div class="line-mon">
                 <div class="time-line-container">
-                    <div class="event">
-                        <div class="ball-desc">
-                            <div class="ball"></div>
-                            <div class="desc">
-                                <span>13:40 Alerta Atenção</span>
-                                <span>PLC 01</span>
+                    <div class="bar-line"></div>
+                    <div class="titulo">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <h2>Linha do Tempo - 19/05/25</h2>
+                    </div>
+                    <div class="events">
+                        <div class="event">
+                            <div class="ball-desc">
+                                <div class="ball"></div>
+                                <div class="desc">
+                                    <span>13:40 Alerta Atenção</span>
+                                    <span>PLC 01</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="event">
-                        <div class="ball-desc">
-                            <div class="ball"></div>
-                            <div class="desc">
-                                <span>13:40 Alerta Atenção</span>
-                                <span>PLC 01</span>
+                        <div class="event">
+                            <div class="ball-desc">
+                                <div class="ball"></div>
+                                <div class="desc">
+                                    <span>13:40 Alerta Atenção</span>
+                                    <span>PLC 01</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="event">
-                        <div class="ball-desc">
-                            <div class="ball"></div>
-                            <div class="desc">
-                                <span>13:40 Alerta Atenção</span>
-                                <span>PLC 01</span>
+                        <div class="event">
+                            <div class="ball-desc">
+                                <div class="ball"></div>
+                                <div class="desc">
+                                    <span>13:40 Alerta Atenção</span>
+                                    <span>PLC 01</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="ball-desc">
+                                <div class="ball"></div>
+                                <div class="desc">
+                                    <span>13:40 Alerta Atenção</span>
+                                    <span>PLC 01</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                </div>
+            </div>
+            <div class="line-mon">
+                
             </div>
         </div>
     </div>
+
+
+
+    <dialog  class="modal-slack-message">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Enviar mensagem</h2>
+                <span>Para o canal</span>
+                <span id="canal">#alertas</span>
+                <div class="div-mensagem-pre-montada">
+                    <span>Mensagem pré-montada</span>
+                    <i class='bx bx-check'></i>
+                    <p id="p_mensagem">
+                        PLC - 01: Ram Uso  89% <br>
+                        PLC - 02: Ram Uso  89% <br>
+                        PLC - 03: Ram Uso  89% <br>
+                        PLC - 04: Ram Uso  89% <br>
+                    </p>
+                </div>
+                <i onclick="closeModal()" class='bx bx-x'></i>
+            </div>
+            <div class="modal-body">
+                <span>Digite aqui uma mensagem complementar(opcional)</span>
+                
+                <textarea name="" id="text_message" cols="30" rows="4"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button onclick="enviarMensagem()" id="btn-enviar">Enviar</button>
+                <button onclick="closeModal()" id="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog class="modal-sucesso" id="modalSucesso">
+  <div class="modal-sucesso-content">
+    <div class="checkmark">
+      <svg viewBox="0 0 52 52">
+        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
+      </svg>
+    </div>
+    <h2>Mensagem enviada!</h2>
+    <p>Sua mensagem foi enviada com sucesso para o Slack.</p>
+    <button onclick="fecharModalSucesso()">OK</button>
+  </div>
+</dialog>
 </body>
+
+
+<script>
+     
+</script>
 
 <script src="../../js/nav_sidebar.js"></script>
 
 <script src="../../js/dashboard/criarTelaGrafico.js"></script>
 
 <script src="../../js/dashboard/graficoBarras.js"></script>
+<script src="../../js/dashboard/barraCarregamento.js"></script>
+
+<script src="../../js/dashboard/cardsexpansivos.js"></script>
+
+<script src="../../js/dashboard/abrirModalSlack.js"></script>
+
+ <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    const swiper = new Swiper('.swiper', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+        }
+      }
+      ,pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+  </script>
+
 
 </html>
