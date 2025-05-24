@@ -57,7 +57,8 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('RAM','Uso em Bytes', 'Bytes', 'ram_uso' ,'psutil.virtual_memory().used'),
 ('Bateria', 'Tempo Restante', 'minutos', 'bateria_restante', 'int(psutil.sensors_battery().secsleft / 60)'),
 ('REDE', 'Pacote Recebido', 'Unidade', 'rede_recv', 'psutil.net_io_counters().packets_recv'),
-('REDE', 'Pacote Mandado', 'Unidade', 'rede_sent', 'psutil.net_io_counters().packets_sent');
+('REDE', 'Pacote Mandado', 'Unidade', 'rede_sent', 'psutil.net_io_counters().packets_sent'),
+('REDE', 'Conexões', 'Unidade', 'rede_conexoes','len(psutil.net_connections(kind="all"))');
 
 
 
@@ -72,5 +73,6 @@ INSERT INTO config_plc (componente_id,  limite_atencao, limite_critico,  fabrica
 (12,  8000000, 9000000,  1),
 (11,  8000000, 9000000,  1),
 (4,  12, 15,  1),
-(6,  9000, 8000,  1);
+(6,  9000, 8000,  1),
+(13,  500, 600,  1);
 
