@@ -38,5 +38,10 @@ router.get("/kpi5", (req,res) => {
 router.get("/graficoTraceroute", (req, res) => {
     alertaController.alertaTraceroute(req,res);
 })
+
+router.get("/modeloComponente/:id", (req, res) => {
+    alertaController.modeloComponente(req,res);
+})
+
 module.exports = router;
 

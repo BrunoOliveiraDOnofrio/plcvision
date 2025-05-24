@@ -4,6 +4,10 @@ const router = express.Router();
 const plcController = require("../controllers/plcController");
 const configPlcController = require("../controllers/configPlcController");
 
+router.get('/modelos', (req, res) => {
+    plcController.pegarModelos(req, res);
+});
+
 router.put('/config/:id', (req, res) => {
     configPlcController.desativar(req, res);
 });

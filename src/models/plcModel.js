@@ -66,6 +66,20 @@ where par.empresa_fabricante_id = ${id}`;
     return database.executar(sql)
 }
 
+function pegarModelos(){
+    const sql = `
+        SELECT p.id, p.modelo, COUNT(*) AS total_alertas
+        FROM alerta a
+        JOIN config_plc cp ON a.config_plc_id = cp.id
+        JOIN plc p ON cp.plc_id = p.id
+        WHERE a.dataHora >= NOW() - INTERVAL 7 DAY
+        GROUP BY p.id, p.modelo
+        ORDER BY total_alertas DESC
+        LIMIT 3;
+    `;
+    return database.executar(sql);
+};
+
 module.exports = {
     get,
     getConfigsFabrica,
@@ -73,5 +87,6 @@ module.exports = {
     create,
     getConfigs,
     listarUm,
-    listarPorEmpresa
+    listarPorEmpresa,
+    pegarModelos
 };

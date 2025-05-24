@@ -1,8 +1,10 @@
+const { response } = require("express");
 const alertaModel = require("../models/alertaModel");
 // qnd ocorrer algum alerta, vai cadastar os dados e o alerta logo em seguida
 const dadosModel = require("../models/dadosModel");
 
 const moment = require('moment');
+moment.locale('pt-br');
 
 const getUltimoAlerta = (req, res) => {
     const dataHora = req.body.data_hora
@@ -202,7 +204,7 @@ const jiraAberto = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=Suporte AND statusCategory!=Done`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND statusCategory!=Done`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -231,7 +233,7 @@ const jiraAbertoValidade = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=Suporte AND statusCategory!=Done AND created <= -3d`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND statusCategory!=Done AND created <= -3d`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -260,7 +262,7 @@ const jiraFechadoNow = async (req,res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=Suporte AND statusCategory=Done AND statusCategoryChangedDate >= -1d`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND statusCategory=Done AND statusCategoryChangedDate >= -1d`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -290,7 +292,7 @@ const tempoFechamento = async (req, res) => {
     const key = process.env.JIRA_KEY;
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
 
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=Suporte AND resolution NOT IN (Declined, "Won't Do") AND statusCategory=Done&fields=created,resolutiondate`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND resolution NOT IN (Declined, "Won't Do") AND statusCategory=Done&fields=created,resolutiondate`;
 
     const response = await fetch(urlApiJira, {
         method: "GET",
@@ -326,7 +328,7 @@ const alertaTraceroute = async (req, res) => {
     const key = process.env.JIRA_KEY;
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
 
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=(created >= -7d OR resolutiondate >= -7d)&fields=created,resolutiondate&maxResults=1000`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND created >= -7d OR resolutiondate >= -7d&fields=created,resolutiondate,status&maxResults=1000`;
 
     const response = await fetch(urlApiJira, {
         method: "GET",
@@ -342,19 +344,14 @@ const alertaTraceroute = async (req, res) => {
     const criadoPorDia = {};
     const resolvidoPorDia = {};
 
-    const dias = Array.from({ length: 7 }, (_, i) =>
+    const diasDatas = Array.from({ length: 7 }, (_, i) =>
         moment().subtract(i, 'days').format('YYYY-MM-DD')
     ).reverse();
 
-
-    
-    // for (let alerta of data.issues) {
-    // console.log('Created:', alerta.fields.created);
-    // console.log('Resolved:', alerta.fields.resolutiondate);
-
-    // console.log("Criado formatado:", moment(alerta.fields.created).utcOffset('-03:00').format('YYYY-MM-DD'));
-    // console.log("Dias conhecidos:", dias);
-    // }
+   
+    const dias = Array.from({ length: 7 }, (_, i) =>
+        moment().subtract(i, 'days').format('dddd')
+    ).reverse();
 
     for (let alerta of data.issues) {
         const criado = moment(alerta.fields.created).utcOffset('-03:00').format('YYYY-MM-DD');
@@ -367,18 +364,32 @@ const alertaTraceroute = async (req, res) => {
     }
 
     const resultado = {
-        dias,
-        criados: dias.map(dia => criadoPorDia[dia] || 0),
-        resolvidos: dias.map(dia => resolvidoPorDia[dia] || 0)
+        dias, // Agora retorna os nomes dos dias da semana
+        criados: diasDatas.map(dia => criadoPorDia[dia] || 0),
+        resolvidos: diasDatas.map(dia => resolvidoPorDia[dia] || 0)
     };
 
-    // console.log("Criados por dia:", criadoPorDia);
-    // console.log("Resolvidos por dia:", resolvidoPorDia);
-    // console.log("Array dias:", dias);
+    console.log("Criados por dia:", criadoPorDia);
+    console.log("Resolvidos por dia:", resolvidoPorDia);
+    console.log("Array dias:", dias);
     res.json(resultado);
 
 }
 
+const pegarModelos = (req, res) => {
+    alertaModel.pegarModelos().then(response => {
+        console.log("banco:", response);
+        res.json(response);
+    })
+}
+
+const modeloComponente = (req, res) => {
+    const id_plc = req.params.id;
+    alertaModel.modeloComponente(id_plc).then(response => {
+        console.log("banco:", response);
+        res.json(response);
+    })
+}
 module.exports = {
     store,
     getUltimoAlerta,
@@ -387,5 +398,7 @@ module.exports = {
     jiraAbertoValidade,
     jiraFechadoNow,
     tempoFechamento,
-    alertaTraceroute
+    alertaTraceroute,
+    pegarModelos,
+    modeloComponente
 };

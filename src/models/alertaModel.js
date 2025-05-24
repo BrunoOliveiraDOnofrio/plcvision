@@ -52,18 +52,37 @@ const nomeSetor = (plc_id) => {
 }
 
 const qtdAlertaHardware = () => {
+    const sql = `SELECT p.modelo, COUNT(a.id) AS total_alertas
+        FROM alerta a
+        JOIN config_plc cp ON a.config_plc_id = cp.id
+        JOIN plc p ON cp.plc_id = p.id WHERE dataHora >= now() - INTERVAL 7 DAY
+        GROUP BY p.modelo
+        ORDER BY total_alertas DESC
+        LIMIT 1;`
+            return database.executar(sql)
+        }
+
+const modeloComponente = (id_plc) => {
     const sql = `SELECT tipo, COUNT(*) AS total
-    FROM (
-    SELECT 
-        CASE 
-        WHEN tipo_valor LIKE '%CPU%' THEN 'CPU'
-        WHEN tipo_valor LIKE '%RAM%' THEN 'RAM'
-        WHEN tipo_valor LIKE '%REDE%' THEN 'REDE'
-        WHEN tipo_valor LIKE '%Bateria%' THEN 'BATERIA'
-        END AS tipo
-    FROM alerta WHERE dataHora >= now() - INTERVAL 7 DAY
-    ) AS tipos_alerta GROUP BY tipo ORDER BY total DESC LIMIT 10;`
-     return database.executar(sql)
+        FROM (
+        SELECT 
+            CASE 
+            WHEN a.tipo_valor LIKE '%CPU%' THEN 'CPU'
+            WHEN a.tipo_valor LIKE '%RAM%' THEN 'RAM'
+            WHEN a.tipo_valor LIKE '%REDE%' THEN 'REDE'
+            WHEN a.tipo_valor LIKE '%Bateria%' THEN 'BATERIA'
+            END AS tipo
+        FROM alerta a
+        JOIN config_plc cp ON a.config_plc_id = cp.id
+        JOIN plc p ON cp.plc_id = p.id
+        WHERE a.dataHora >= NOW() - INTERVAL 7 DAY
+            AND p.id = ${id_plc} 
+        ) AS tipos_alerta
+        GROUP BY tipo
+        ORDER BY total DESC
+        LIMIT 3;`
+
+        return database.executar(sql);
 }
 
 module.exports = {
@@ -74,5 +93,6 @@ module.exports = {
     nomeSetor,
     getAlertasNasUltimas24Horas,
     getAlertasNasUltimas24Horas,
-    qtdAlertaHardware
+    qtdAlertaHardware,
+    modeloComponente
 };

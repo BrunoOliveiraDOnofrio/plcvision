@@ -170,6 +170,13 @@ const getByMac = (req, res) => {
     })
 }
 
+const pegarModelos = (req, res) => {
+    plcModel.pegarModelos().then(response => {
+        console.log("banco:", response);
+        res.json(response);
+    })
+}
+
 module.exports = {
     get,
     getByMac,
@@ -177,5 +184,6 @@ module.exports = {
     getConfigs,
     listarUm,
     listarPorEmpresa,
-    getConfigsFabrica
+    getConfigsFabrica,
+    pegarModelos
 };
