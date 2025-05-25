@@ -90,7 +90,7 @@
     display: flex;
     flex-direction: column;
     background-color: white;
-    border: solid pink;
+    /* border: solid pink; */
     height: fit-content;
     text-align: center;
     align-content: center;
@@ -139,6 +139,155 @@
     flex-direction: column;
     height: fit-content;
     width: 88vw; 
+    margin-top: 20px;  
+}
+
+}
+
+@media only screen and (min-width:702px) {
+
+.div-select {
+    width: 90vw;
+    margin-bottom: 15px;
+    margin-top: 15px; 
+    display: flex; 
+    justify-content: flex-start;
+
+    & select {
+        font-family: 'Inter';
+        color: rgb(62, 62, 62);
+        border: none;
+        border-radius: 5px;
+        width: 19vw;
+        height: 5vh;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+        
+    } & select option {
+        font-family: 'Inter';
+        font-size: 2vw;
+        width: 10vw;
+    }
+} 
+
+.row1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.container-top-left {
+    /* border: solid purple;  */
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 40vw;
+}
+
+.top-row, .bottom-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.box1, .box2, .box3, .box4 {
+    /* border: solid greenyellow; */
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    height: 15vh;
+    width: 19vw;
+    font-family: 'Inter';
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    & h1 {
+        font-size: 1.5vw;
+        padding: 5px;
+    }
+    
+}
+
+.container-top-right, .container-bottom-left, .container-bottom-right {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    /* border: solid pink; */
+    height: fit-content;
+    width: 48vw;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    & h1 {
+        font-size: 1.8vw;
+        padding: 5px;
+    }
+
+}
+
+.div-graphs {
+    display: flex;
+    flex-direction: row;
+    height: 40vh;
+    width: 47vw; 
+    margin-top: 5px;  
+    justify-content: space-between;
+}
+
+.box-left, .box-right {
+    display: flex;
+    flex-direction: row;
+    width: 20vw;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter';
+    font-size: 4vw;
+}
+
+
+.row2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.container-bottom-left, .container-bottom-right {
+    width: 40vw;
+    height: 45vh;
+}
+
+.container-bottom-right {
+    width: 48vw;
+}
+
+.box-defeitos {
+    display: flex;
+    flex-direction: column;
+    width: 37vw;
+}
+
+.box-modelos {
+    display: flex;
+    flex-direction: column;
+    width: 37vw;
+    height: 40vh;
+}
+
+.div-graph {
+    display: flex;
+    flex-direction: column;
+    height: 40vh;
+    width: 40vw;  
     margin-top: 20px;  
 }
 
