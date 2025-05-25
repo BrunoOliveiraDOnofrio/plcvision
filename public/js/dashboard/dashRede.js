@@ -1,45 +1,106 @@
 function calcularRegressaoLinear(pontosDeDados) {
-    const n = pontosDeDados.length
+    const n = pontosDeDados.length;
 
-    var somaX= 0
-    var somaY= 0
-    var somaXY= 0
-    var somaXQuadrado= 0
+    if (n < 2) { // Modificado para n < 2, pois correlação e regressão precisam de pelo menos 2 pontos
+        console.warn("São necessários pelo menos 2 pontos para calcular regressão/correlação.");
+        return { m: 0, b: 0, r: NaN }; // Retorna NaN para r
+    }
+
+    var somaX = 0;
+    var somaY = 0;
+    var somaXY = 0;
+    var somaXQuadrado = 0;
+    var somaYQuadrado = 0; // Adicionado para 'r'
 
     for (var i = 0; i < n; i++) {
-        const pontoAtual= pontosDeDados[i]
-        const x= pontoAtual[0]
-        const y = pontoAtual[1]
-        somaX += x
-        somaY += y
-        somaXY += x * y
-        somaXQuadrado += x * x
+        const pontoAtual = pontosDeDados[i];
+        const x = pontoAtual[0];
+        const y = pontoAtual[1];
+        somaX += x;
+        somaY += y;
+        somaXY += x * y;
+        somaXQuadrado += x * x;
+        somaYQuadrado += y * y; // Adicionado para 'r'
     }
 
-    // fórmula do numerador e do denominador para calcular a inclinação (m)
-    const numerador = n* somaXY - somaX * somaY
-    const denominador = n* somaXQuadrado- somaX * somaX
+    // Numerador é o mesmo para 'm' e 'r'
+    const numerador = n * somaXY - somaX * somaY;
+    // Denominador para 'm'
+    const denominadorM = n * somaXQuadrado - somaX * somaX;
 
-    // calcula(m) inclinação
-    var m
-    if (denominador == 0) { // eu adicionei so p evitar divisão por 0 mas acho q nem precisa
-        m = 0
+    var m;
+    if (denominadorM == 0) {
+        m = 0;
     } else {
-        m = numerador / denominador;
+        m = numerador / denominadorM;
     }
 
-    // calcula o intercepto de y
-    const b = (somaY - m * somaX) / n
+    const b = (somaY - m * somaX) / n;
 
-    return { m: m, b: b }
+    // --- Cálculo de 'r' (Coeficiente de Correlação) com if/else ---
+    var r;
+    const denominadorParteY = n * somaYQuadrado - somaY * somaY;
+    const produtoDenominadoresR = denominadorM * denominadorParteY;
+
+    if (produtoDenominadoresR <= 0) {
+        // Se não há variação em X ou Y (denominadorM ou denominadorParteY são 0),
+        // ou se o produto é negativo (o que não deveria acontecer com somas de quadrados
+        // a menos que haja um problema com os dados ou n seja muito pequeno),
+        // a correlação linear é geralmente considerada 0 ou indefinida.
+        // Se um dos eixos não tem variação, a correlação linear é 0.
+        if (denominadorM === 0 || denominadorParteY === 0) {
+            r = 0;
+        } else if (numerador === 0) { // Se produtoDenominadoresR < 0 e numerador é 0
+            r = 0;
+        } else {
+            // Este caso (produto < 0 e os termos não são zero) é anômalo para dados reais.
+            // Poderia ser um r = 1 ou -1 se os dados fossem perfeitamente colineares e algo deu errado,
+            // mas NaN é mais seguro para indicar um problema.
+            // No entanto, para manter simples e retornar um número:
+            r = 0; // Ou NaN para indicar que algo estranho aconteceu
+        }
+    } else {
+        // Math.sqrt() é ESSENCIAL aqui e é a forma simples de calcular a raiz quadrada.
+        const denominadorR = Math.sqrt(produtoDenominadoresR);
+
+        if (denominadorR === 0) {
+            // Este caso é raro se produtoDenominadoresR > 0, mas por segurança.
+            // Se o numerador também for 0, r = 0.
+            // Se o numerador não for 0, indica correlação perfeita (+1 ou -1).
+            if (numerador === 0) {
+                r = 0;
+            } else if (numerador > 0) {
+                r = 1;
+            } else { // numerador < 0
+                r = -1;
+            }
+        } else {
+            r = numerador / denominadorR;
+        }
+    }
+
+    // Garante que 'r' esteja estritamente entre -1 e 1 e trata NaN
+    if (isNaN(r)) {
+        r = 0; // Define como 0 se 'r' se tornou NaN
+    }
+
+    if (r > 1) {
+        r = 1;
+    } else if (r < -1) {
+        r = -1;
+    }
+    // --- Fim do cálculo de 'r' ---
+
+    return { m: m, b: b, r: r };
 }
 
 function criarGrafico() {
     const elementoGraficoBarra = document.getElementById('graficoBarra')
     const elementoGraficoLinha = document.getElementById('graficoLinha')
+    const kpiCorrelacao = document.getElementById('valorCor')
         const labels = ['0-50', '51-100', '101-150', '151-200', '201-250', '251-300', '301-350', '351-400', '401-450', '451-500', '501-550', '551-600', '601-650']
         // aqui é onde eu vou ter que colocar os dados
-        const valoresYReais = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.83, 0.84, 1, 1.2, 1.3, 1.4]
+        const valoresYReais = [1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.83, 1.84, 2, 3.2, 4.3, 5.4]
         const valoresX = [25, 75.5, 125.5, 175.5, 225.5, 275.5, 325.5, 375.5, 425.5, 475.5, 525.5, 575.5, 625.5]
 
         const pontosDeDados = [];
@@ -48,8 +109,11 @@ function criarGrafico() {
         }
 
         const resultadoDaRegressao = calcularRegressaoLinear(pontosDeDados)
+        const r = resultadoDaRegressao.r
         const m = resultadoDaRegressao.m
         const b = resultadoDaRegressao.b;
+        
+        kpiCorrelacao.innerHTML = r.toFixed([3]) * 100 + "%"
         // console.log(`y = ${m.toFixed(4)}x + ${b.toFixed(4)}`)
         // equação da regressão
 
@@ -57,8 +121,11 @@ function criarGrafico() {
         //         // passa pelos x para calcular o y(y = mx + b)
         for (var i = 0; i < valoresX.length; i++) {
             const x = valoresX[i];
+            if(valoresX >= 2){
+                registroPerdas++
+            }
             const yEsperado = (m * x) + b;
-            // Adiciona o valor Yesperado calculado à lista.
+            // Adiciona o valor Yesperado calculado p lista.
             valoresYRegressao[i] = yEsperado;
         }
         console.log("Criando gráfico de barras...")
@@ -83,18 +150,42 @@ function criarGrafico() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: {
+                scales: { 
                     y: {
                         beginAtZero: true,
+                        suggestedMax: 3,
                         title: { display: true, text: 'Porcentagem de perda', color: '#000', font: { size: 10 } }
                     },
                     x: {
                         title: { display: true, text: 'Quantidade de conexões abertas', color: '#000', font: { size: 14 } }
                     }
-                },
+                }, 
+
                 plugins: {
-                    legend: { position: 'top' }
-                }
+                    annotation: { 
+                        annotations: {
+                            linhaLimite: {
+                                type: 'line',
+                                yMin: 2.0,
+                                yMax: 2.0,
+                                borderColor: 'rgb(250, 0, 0)',
+                                borderWidth: 2,
+                                label: {
+                                    enabled: true,
+                                    content: 'Limite aceitável',
+                                    position: 'end',
+                                    backgroundColor: 'rgba(250, 0, 0)',
+                                    color: 'white',
+                                    font: {
+                                        size: 10,
+                                        weight: 'bold'
+                                    },
+                                    yAdjust: -10
+                                }
+                            }
+                        }
+                    }
+                } // <-- FIM DA SEÇÃO DE PLUGINS
             }
         });
         console.log("Gráfico de barras criado.");
