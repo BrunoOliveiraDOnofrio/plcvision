@@ -1,10 +1,13 @@
 const { response } = require("express");
 const alertaModel = require("../models/alertaModel");
-// qnd ocorrer algum alerta, vai cadastar os dados e o alerta logo em seguida
+
 const dadosModel = require("../models/dadosModel");
 
 const moment = require('moment');
 moment.locale('pt-br');
+
+
+
 
 const getUltimoAlerta = (req, res) => {
     const dataHora = req.body.data_hora
@@ -47,14 +50,16 @@ const store = (req,res) => {
                 valor: req.body.valor || 0,
                 nivel: req.body.nivel || 1,
                 fabrica_id: req.body.fabrica_id,
-                plc_id: req.body.plc_id
+                plc_id: req.body.plc_id,
+                config_plc_id: req.body.config_plc_id,
             };
             console.log(alertaInfo)
-            console.log("OLHA A BUCETA DO OBJETO ZUADO JSON QUE VC TA MANDANDO SEU LIXO")
-            // aqui voces vao chamar o jira, e o slack
-            await openJiraTaskSendSlackNotification(alertaInfo);
             
-            alertaModel.create(req.body).then(response => {
+            // aqui voces vao chamar o jira, e o slack
+            let url = await openJiraTaskSendSlackNotification(alertaInfo);
+            req.body.link_chamado = url
+            alertaInfo.link_chamado = url
+            alertaModel.create(alertaInfo).then(response => {
                 console.log(response)
                 res.status(200).json({
                     message: "Alerta Inserido",
@@ -107,7 +112,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
         const dataJira = {
       fields: {
         project: {
-          key: "SUP"
+          key: "SUP1"
         },
         summary: titulo,
         description: {
@@ -142,7 +147,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
         body: JSON.stringify(dataJira)
     }).then(response => response.json().then(response => {
         console.log(response, "AQUI ESTA A RESPOSTA EM JSON");
-        url = response.key;
+        url = response.self;
     })
     .catch(e => {
         console.log(e);
@@ -186,6 +191,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
     }).catch(e => {
         console.log(e);
     });
+    return url
 };
 
 const qtdAlertaHardware = (req,res) => {

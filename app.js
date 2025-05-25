@@ -24,7 +24,7 @@ const plcRegister = require('./src/routes/plc_register')
 const consumidorRouter = require('./src/routes/consumidor')
 const alertaRouter = require('./src/routes/alerta')
 const componenteRouter = require('./src/routes/componente')
-
+const jiraRouter = require('./src/routes/jira')
 const admRouter = require("./src/routes/adm");
 const analistaRouter = require("./src/routes/analista");
 const tempoReal = require("./src/routes/tempoReal");
@@ -49,7 +49,7 @@ app.use("/tempo_real", tempoReal);
 app.use("/consumidor", consumidorRouter)
 app.use("/alerta", alertaRouter)
 app.use("/componente", componenteRouter)
-
+app.use("/jira", jiraRouter)
 app.use("/setor",setorRegister)
 
 app.listen(PORTA_APP, function () {

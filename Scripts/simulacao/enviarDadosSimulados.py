@@ -151,7 +151,7 @@ def simular_monitoramento():
     plcs = obter_plcs_com_config()
     while True:
         empresaGerandoAlertas =None
-        rodadaDeAlerta = random.randint(0, 10) > 9
+        rodadaDeAlerta = random.randint(0, 10) > 3
         if rodadaDeAlerta:
             print('RODADA DE ALERTAS')
         random.shuffle(plcs)

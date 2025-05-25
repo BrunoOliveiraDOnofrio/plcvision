@@ -130,7 +130,7 @@ CREATE TABLE alerta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     criticidade TINYINT,
     descricao VARCHAR(255),
-    link_chamado VARCHAR(45),
+    link_chamado VARCHAR(500),
     dataHora DATETIME,
     status VARCHAR(45),
     acaoTomada VARCHAR(45),

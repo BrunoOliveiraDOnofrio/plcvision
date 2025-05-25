@@ -27,7 +27,7 @@ const getUltimoAlerta = (dataHora, plcId) => {
 }
 
 const create = (dados) =>{
-    const sql = `INSERT INTO alerta (criticidade, dataHora, status, valor_capturado, tipo_valor, config_plc_id) VALUES ('${dados.criticidade}', '${dados.dataHora}', 'Aberto', ${dados.valor_capturado}, '${dados.tipo_valor}', ${dados.config_plc_id})`;
+    const sql = `INSERT INTO alerta (criticidade, link_chamado, dataHora, status, valor_capturado, tipo_valor, config_plc_id) VALUES ('${dados.nivel}', '${dados.link_chamado}', now() , 'Aberto', ${dados.valor}, '${dados.tipoDado}', ${dados.config_plc_id})`;
     console.log(sql)
     return database.executar(sql)
 }
