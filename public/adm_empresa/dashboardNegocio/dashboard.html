@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento</title>
+    <!-- Fonte google  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/styleDashNegocio.css">
+    <!-- Link dos icones - boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="../../js/dashboard/dashboardNegocio.js"></script>
+
+</head>
+<body>
+    <!-- Nav Bar -->
+     <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     </header>
+
+     <!-- Side bar  -->
+
+     <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+                
+               
+                <li>
+                    <a href="./dashboard">
+                        <i class='bx bx-timer'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./alertas">
+                        <i class='bx bxs-bell-ring' ></i>
+                    </a>
+                </li>
+               
+               
+                <li>
+                    <a href="./plcs">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit' ></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+     </nav>
+
+     
+     <div class="main">
+
+         <div class="div-select">
+             <div class="box-select">
+                 <select name="slt_empresa" id="slt_empresa" class="slt_empresa">
+                     <option value="#">Selecione uma Empresa</option>
+                     <option value="1">Casas Bahia</option>
+                     <option value="2">Volkswagen</option>
+                     <option value="3">Motorola</option>
+                     <option value="4">Nestlé</option>
+                 </select>   
+             </div>
+         </div>
+        <div class="container-main">
+            <div class="container-top-left">
+                <div class="container-kpis">
+                    <div class="top-row">
+                        <div class="box1">
+                            <span>Empresa <b>MAIS</b> Afetada <br>no Mês:</span>
+                            <h1>Casa's Bahia</h1>
+                        </div>
+                        <div class="box2">
+                            <span>Mês com <b>MAIOR</b> Taxa <br>de Defeitos:</span>
+                            <h1>ABRIL</h1>
+                        </div>
+                    </div>
+                    <div class="bottom-row">
+                        <div class="box3">
+                            <span>Modelo com <b>MAIOR</b> Taxa de Defeitos no Mês:</span>
+                            <h1>SISMATIC S5</h1>
+                        </div>
+                        <div class="box4">
+                            <span>Modelo <b>MAIS</b> Vendido no Mês:</span>
+                            <h1>SISMATIC S7-1500</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-top-right">
+                <div class="container-painel">
+                    <div class="box-painel">
+                        <div class="div-title">
+                            <div class="graph-title">
+                                <h1>Painel de Pedidos no Mês:</h1>
+                            </div>
+                        </div>
+                        <div class="div-graphs">
+                            <div class="box-left" id="chart-meta">
+                            </div>
+                            <div class="box-right" id="chart-cancel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-bottom-left">
+                <div class="container-defeito">
+                    <div class="box-defeito">
+                        <div class="div-title">
+                            <div class="graph-title">
+                                <h1>Taxa de Defeitos dos PLCs por Mês:</h1>
+                            </div>
+                        </div>
+                        <div class="div-graph" id="chart-defeitos"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-bottom-right">
+                <div class="container-modelos">
+                    <div class="box-modelos">
+                        <div class="div-title">
+                            <div class="graph-title">
+                                <h1>Taxa de Defeitos por Modelo no Mês:</h1>
+                            </div>
+                        </div>
+                        <div class="div-graph" id="chart-modelos"></div>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+     </div>
+        
+    </div>
+</body>
+
+<!-- <script src="../../js/nav_sidebar.js"></script> -->
+<script src="../../js/dashboard/grafico.js"></script>
+
+</html>
