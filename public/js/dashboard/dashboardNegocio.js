@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function()
         }],
           chart: {
           type: 'bar',
-          height: 350
+          height: 280
         },
         plotOptions: {
           bar: {
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
             data: [15, 10, 7, 23, 14]
         }],
           chart: {
-          height: 300,
+          height: 280,
           type: 'line',
           zoom: {
             enabled: false

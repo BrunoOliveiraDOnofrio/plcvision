@@ -183,13 +183,16 @@
     flex-direction: column;
     height: fit-content;
     width: 40vw;
+    height: 44.5vh;
+    justify-content: flex-end;
 }
 
 .top-row, .bottom-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 5px;
+    /* border: solid; */
+
 }
 
 .box1, .box2, .box3, .box4 {
@@ -197,13 +200,13 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    height: 15vh;
-    width: 19vw;
+    height: 17vh;
+    width: 19.5vw;
     font-family: 'Inter';
     text-align: center;
-    align-content: center;
+    /* align-content: center; */
     justify-content: center;
-    margin-bottom: 15px;
+    margin-top: 15px;
     border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
@@ -241,7 +244,7 @@
     height: 40vh;
     width: 47vw; 
     margin-top: 5px;  
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .box-left, .box-right {
@@ -283,12 +286,17 @@
     height: 40vh;
 }
 
+.div-title {
+    height: 1vh;
+    margin-bottom: 25px;
+}
+
 .div-graph {
     display: flex;
     flex-direction: column;
     height: 40vh;
     width: 40vw;  
-    margin-top: 20px;  
+    justify-content: center;
 }
 
 }
