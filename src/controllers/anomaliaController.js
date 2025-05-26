@@ -1,0 +1,107 @@
+const anomaliaModel = require("../models/anomaliaModel");
+const { analisarProcessos } = require('../utils/analisePreditiva');
+
+const listarPlcsPorFabricante = (req, res) => {
+    const fabricanteId = req.params.id;
+    anomaliaModel.listarPlcsPorFabricante(fabricanteId)
+        .then(result => {
+            result.forEach(plc => {
+                plc.ids_alertas_do_plc = plc.ids_alertas_do_plc
+                    ? plc.ids_alertas_do_plc.split(',').map(Number)
+                    : [];
+            });
+            res.status(200).json(result);
+        })
+        .catch(error => {
+            console.error("ERRO AO BUSCAR PLCs:", error);
+            res.status(500).json({ error: "Erro ao buscar PLCs", details: error });
+        });
+};
+
+const listarEmpresasConsumidoras = (req, res) => {
+    const fabricanteId = req.params.id;
+    anomaliaModel.listarEmpresasConsumidoras(fabricanteId)
+        .then(result => res.status(200).json(result))
+        .catch(error => {
+            console.error("ERRO AO BUSCAR EMPRESAS CONSUMIDORAS:", error);
+            res.status(500).json({ error: "Erro ao buscar empresas consumidoras", details: error });
+        });
+};
+
+const listarFabricaSetores = (req, res) => {
+    const empresaConsumidorId = req.params.id;
+    anomaliaModel.listarFabricaSetores(empresaConsumidorId)
+        .then(result => res.status(200).json(result))
+        .catch(error => {
+            console.error("ERRO AO BUSCAR FÁBRICAS/SETORES:", error);
+            res.status(500).json({ error: "Erro ao buscar fábricas/setores", details: error });
+        });
+};
+
+const listarPlcsPorFabrica = (req, res) => {
+    const fabricaId = req.params.id;
+    anomaliaModel.listarPlcsPorFabrica(fabricaId)
+        .then(result => res.status(200).json(result))
+        .catch(error => {
+            console.error("ERRO AO BUSCAR PLCs DA FÁBRICA:", error);
+            res.status(500).json({ error: "Erro ao buscar PLCs da fábrica", details: error });
+        });
+};
+
+const setoresProcessosPorPlcFabrica = async (req, res) => {
+    const { fabricaId, plcId } = req.params;
+    try {
+        const setores = await anomaliaModel.setoresPorPlcFabrica(plcId, fabricaId);
+        const processos = await anomaliaModel.processosPreditivosPorPlcFabrica(plcId, fabricaId);
+        res.json({ setores, processos });
+    } catch (error) {
+        console.error("ERRO AO BUSCAR SETORES/PROCESSOS DA FÁBRICA:", error);
+        res.status(500).json({ error: "Erro ao buscar setores/processos da fábrica", details: error });
+    }
+};
+
+const analisePreditivaPorSetores = async (req, res) => {
+    const setores = req.body.setores || [];
+    const { dataInicial, dataFinal } = req.body;
+    try {
+        const analise = await analisarProcessos({ setores, dataInicial, dataFinal });
+        res.json({ processos: analise || [] });
+    } catch (error) {
+        res.status(500).json({ error: "Erro na análise preditiva", details: error.message });
+    }
+};
+
+const setoresProcessosPorPlc = async (req, res) => {
+    const plcId = req.params.id;
+    try {
+        const setores = await anomaliaModel.setoresPorPlc(plcId);
+        // Simulação: processos preditivos podem vir do S3 ou outro model
+        const processos = await anomaliaModel.processosPreditivosPorPlc(plcId);
+        res.json({ setores, processos });
+    } catch (error) {
+        console.error("ERRO AO BUSCAR SETORES/PROCESSOS:", error);
+        res.status(500).json({ error: "Erro ao buscar setores/processos", details: error });
+    }
+};
+
+const setoresPorPlc = async (req, res) => {
+    const plcId = req.params.id;
+    try {
+        const setores = await anomaliaModel.setoresPorPlc(plcId);
+        res.json(setores);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao buscar setores do PLC", details: error });
+    }
+};
+
+const setoresPorPlcFabrica = async (req, res) => {
+    const { fabricaId, plcId } = req.params;
+    try {
+        const setores = await anomaliaModel.setoresPorPlcFabrica(plcId, fabricaId);
+        res.json(setores);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao buscar setores do PLC na fábrica", details: error });
+    }
+};
+
+module.exports = { listarPlcsPorFabricante, listarEmpresasConsumidoras, listarFabricaSetores, listarPlcsPorFabrica, analisePreditivaPorSetores, setoresProcessosPorPlcFabrica, setoresProcessosPorPlc, setoresPorPlc, setoresPorPlcFabrica};

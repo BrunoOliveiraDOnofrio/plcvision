@@ -15,6 +15,8 @@ WHERE fc.empresa_consumidor_id = ${empresaId};`;
     return database.executar(sql)
 }
 
+
+
 function get(empresaId){
     const sql = `SELECT plc.id, plc.modelo, plc.ano, plc.capacidade_ram, plc.hostname, plc.endereco_mac FROM plc
 JOIN setor_fabrica sf

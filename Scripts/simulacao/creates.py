@@ -34,6 +34,30 @@ limites_gerados = {
 
 script = ""
 
+SETORES_INDUSTRIAIS = [
+    "Logística",
+    "Linha de Montagem",
+    "Pintura Industrial",
+    "Controle de Qualidade",
+    "Estamparia",
+    "Usinagem",
+    "Embalagem",
+    "Armazenamento",
+    "Expedição",
+    "Manutenção",
+    "Injeção Plástica",
+    "Solda Robotizada",
+    "Tratamento Térmico",
+    "Prensagem",
+    "Fundição",
+    "Galvanoplastia",
+    "Corte e Dobra",
+    "Ferramentaria",
+    "Laboratório",
+    "Refrigeração",
+    "Caldeiraria"
+]
+
 for _ in range(4):  # 4 empresas consumidoras
     logradouro = faker.street_name()
     numero = faker.building_number()
@@ -56,7 +80,7 @@ for _ in range(4):  # 4 empresas consumidoras
     script += f"INSERT INTO fabrica_consumidor (nome, empresa_consumidor_id, endereco_id, qtdSetor) VALUES\n('{nome_fabrica}', {empresa_consumidor_id}, {endereco_id}, 2);\n"
 
     for i in range(2):
-        nome_setor = f"Setor {faker.word().capitalize()}"
+        nome_setor = random.choice(SETORES_INDUSTRIAIS)
         script += f"INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES\n('{nome_setor}', {fabrica_id}, 5);\n"
 
         for _ in range(5):
@@ -66,7 +90,14 @@ for _ in range(4):  # 4 empresas consumidoras
             ram = faker.random_element(elements=('2GB', '4GB', '8GB'))
             mac = faker.mac_address()
             hostname = f"plc-{faker.word()}-{plc_id:02d}"
-            script += f"INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES\n('{modelo}', {ano}, {parceria_id}, {setor_id}, '{so}', '{ram}', '{mac}', '{hostname}');\n"
+            num_plc = random.randint(1, 15)
+            if modelo == 'Siemens s7-1500':
+                lote = "Siemens - 001"
+            elif modelo == 'Schneider M340':
+                lote = "Schneider - 777"
+            elif modelo == 'Siemens XRL8':
+                lote = "Siemens - 013"
+            script += f"INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname, lote) VALUES\n('{modelo}', {ano}, {parceria_id}, {setor_id}, '{so}', '{ram}', '{mac}', 'PLC_{nome_setor}_{num_plc}', '{lote}');\n"
 
 
 

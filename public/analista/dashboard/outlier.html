@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório</title>
+    <!-- Fonte google  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/dashboards/monitoramento_tempo_real.css">
+    <link rel="stylesheet" href="../../css/dashboards/outlier.css">
+    <!-- Link dos icones - boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Link do Papa Parse para tranformar csv em json -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body>
+    <!-- Nav Bar -->
+    <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side bar  -->
+    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+
+                <li>
+                    <a href=".././dashboard">
+                        <i class='bx bx-timer'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href=".././alertas">
+                        <i class='bx bxs-bell-ring'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href=".././plcs">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main">
+        <div class="content">
+            <h1 class="dashboard-title">Processos</h1>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="empresa">Empresa</label>
+                    <select id="empresa" class="filter-select">
+                        <option value="">Todas as empresas</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="fabrica">Fábrica</label>
+                    <select id="fabrica" class="filter-select">
+                        <option value="">Todas as fábricas</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="data-inicial">Data Inicial</label>
+                    <input type="date" id="data-inicial" class="filter-select">
+                </div>
+                <div class="filter-group">
+                    <label for="data-final">Data Final</label>
+                    <input type="date" id="data-final" class="filter-select">
+                </div>
+                <div class="filter-group" style="align-self: flex-end;">
+                    <button id="btn-aplicar-filtros" class="filter-select" style="padding:8px 18px;">Aplicar Filtros
+                    </button>
+                </div>
+            </div>
+
+            <table id="tabelaAnomalias">
+                <thead>
+                    <tr>
+                        <th>Modelo</th>
+                        <th>Quantidade de Alerta(s) Relacionado(s)</th>
+                        <th>Detalhe</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoDaTabela">
+
+                </tbody>
+            </table>
+
+            <div id="janelaDetalhes" style="display: none;">
+                <div id="conteudoDetalhes">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/nav_sidebar.js"></script>
+</body>
+
+</html>
+
+<!-- ...seu HTML acima... -->
+<script>
+    let SIMULACOES_S3 = [];
+    let DADOS_EMPRESAS_CONSUMIDORAS = [];
+
+    // Carrega simulações do S3 ao abrir a página
+    buscarJsonS3();
+
+    // Carregar empresas consumidoras no filtro ao abrir a página
+    document.addEventListener('DOMContentLoaded', async () => {
+        const fabricanteId = sessionStorage.getItem('EMPRESA_ID');
+        if (!fabricanteId) return mostrarMsg('EMPRESA_ID não encontrado. Faça login.');
+        await carregarEmpresasFiltro(fabricanteId);
+        await carregarEmpresasConsumidoras(fabricanteId); // Carrega tabela inicial
+    });
+
+    // Busca o JSON do S3 (simulações/processos)
+    async function buscarJsonS3() {
+        try {
+            const resp = await fetch('http://localhost:3000/api/s3json');
+            if (!resp.ok) throw new Error('Erro ao buscar JSON do S3');
+            SIMULACOES_S3 = await resp.json();
+            console.log('Simulações carregadas do S3:', SIMULACOES_S3);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    // Busca empresas consumidoras do fabricante logado
+    async function carregarEmpresasConsumidoras(fabricanteId) {
+        try {
+            const resp = await fetch(`http://localhost:3000/api/fabricante/${fabricanteId}/empresas_consumidoras`);
+            if (!resp.ok) throw new Error('Erro ao buscar empresas consumidoras');
+            const empresas = await resp.json();
+            DADOS_EMPRESAS_CONSUMIDORAS = empresas;
+            renderizarTabelaEmpresas(empresas);
+        } catch (e) {
+            mostrarMsg('Erro ao carregar empresas: ' + e.message);
+        }
+    }
+
+    // Carrega empresas consumidoras no filtro
+    async function carregarEmpresasFiltro(fabricanteId) {
+        try {
+            const resp = await fetch(`http://localhost:3000/api/fabricante/${fabricanteId}/empresas_consumidoras`);
+            const empresas = await resp.json();
+            const selectEmpresa = document.getElementById('empresa');
+            selectEmpresa.innerHTML = `<option value="">Todas as empresas</option>` +
+                empresas.map(e => `<option value="${e.id}">${e.razao_social}</option>`).join('');
+            // Atualiza fábricas ao trocar empresa
+            selectEmpresa.onchange = () => carregarFabricaFiltro(selectEmpresa.value);
+            // Carrega fábricas iniciais (todas)
+            carregarFabricaFiltro('');
+        } catch (e) {
+            mostrarMsg('Erro ao carregar empresas para filtro: ' + e.message);
+        }
+    }
+
+    // Carrega fábricas no filtro conforme empresa selecionada
+    async function carregarFabricaFiltro(empresaConsumidorId) {
+        const selectFabrica = document.getElementById('fabrica');
+        if (!empresaConsumidorId) {
+            selectFabrica.innerHTML = `<option value="">Todas as fábricas</option>`;
+            return;
+        }
+        try {
+            const resp = await fetch(`http://localhost:3000/api/empresa_consumidora/${empresaConsumidorId}/fabrica_setores`);
+            const dados = await resp.json();
+            // Agrupa fábricas únicas
+            const fabricasUnicas = [];
+            const nomesFabricas = new Set();
+            dados.forEach(item => {
+                if (!nomesFabricas.has(item.fabrica_id)) {
+                    fabricasUnicas.push({ id: item.fabrica_id, nome: item.fabrica_nome });
+                    nomesFabricas.add(item.fabrica_id);
+                }
+            });
+            selectFabrica.innerHTML = `<option value="">Todas as fábricas</option>` +
+                fabricasUnicas.map(f => `<option value="${f.id}">${f.nome}</option>`).join('');
+        } catch (e) {
+            selectFabrica.innerHTML = `<option value="">Todas as fábricas</option>`;
+        }
+    }
+
+    // Função para alternar detalhes (expandir/minimizar)
+    async function alternarDetalhesEmpresa(empresaConsumidorId, idLinha, idBotao) {
+        const linha = document.getElementById(idLinha);
+        const botao = document.getElementById(idBotao);
+
+        if (linha.style.display === 'table-row') {
+            // Minimizar
+            linha.style.display = 'none';
+            botao.textContent = 'Detalhes';
+        } else {
+            // Expandir
+            linha.style.display = 'table-row';
+            botao.textContent = 'Fechar';
+            linha.querySelector('td').innerHTML = 'Buscando detalhes...';
+
+            // Filtros globais
+            const { fabricaId, dataInicial, dataFinal } = window.FILTROS_ATUAIS || {};
+
+            // Busca fábricas e setores do backend
+            let dados = [];
+            try {
+                const resp = await fetch(`http://localhost:3000/api/empresa_consumidora/${empresaConsumidorId}/fabrica_setores`);
+                dados = await resp.json();
+            } catch (e) {
+                linha.querySelector('td').innerHTML = 'Erro ao buscar detalhes: ' + e.message;
+                return;
+            }
+
+            // Filtro de fábrica
+            if (fabricaId) {
+                dados = dados.filter(item => item.fabrica_id == fabricaId);
+            }
+
+            // Filtro de período (aplicado nos alertas do S3)
+            let simulacoesEmpresa = SIMULACOES_S3.filter(sim => sim.empresa_consumidor_id == empresaConsumidorId);
+            if (dataInicial) {
+                simulacoesEmpresa = simulacoesEmpresa.filter(sim => new Date(sim.dataHora) >= new Date(dataInicial));
+            }
+            if (dataFinal) {
+                // Para incluir o dia final inteiro, ajuste para o final do dia ou compare apenas a parte da data
+                let dFinal = new Date(dataFinal);
+                dFinal.setHours(23, 59, 59, 999); // Considera até o fim do dia final
+                simulacoesEmpresa = simulacoesEmpresa.filter(sim => new Date(sim.dataHora) <= dFinal);
+            }
+
+            // Agrupa setores por quantidade de alertas
+            let htmlSetores = '<ul>';
+            dados.forEach(item => {
+                htmlSetores += `<li>Fábrica: <b>${item.fabrica_nome}</b> | Setor: <b>${item.setor_nome}</b> | Alertas: <b>${item.quantidade_alertas}</b></li>`;
+            });
+            htmlSetores += '</ul>';
+
+            // Análise preditiva simples: processos mais frequentes nas simulações S3 desse cliente
+            const contagemProcessos = {};
+            simulacoesEmpresa.forEach(sim => {
+                (sim.processos || []).forEach(proc => {
+                    contagemProcessos[proc.nome] = (contagemProcessos[proc.nome] || 0) + 1;
+                });
+            });
+            let htmlAnalise = '<ul>';
+            Object.entries(contagemProcessos)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .forEach(([nome, qtd]) => {
+                    htmlAnalise += `<li><b>${nome}</b>: ${qtd} ocorrência(s) em simulações</li>`;
+                });
+            htmlAnalise += '</ul>';
+
+            linha.querySelector('td').innerHTML = `
+        <div>
+            <h4>Setores com mais alertas</h4>
+            ${htmlSetores}
+            <h4>Análise preditiva (processos mais frequentes nos alertas simulados)</h4>
+            ${htmlAnalise}
+        </div>
+        `;
+        }
+    }
+
+    // Ao clicar em aplicar filtros
+    document.getElementById('btn-aplicar-filtros').onclick = async function () {
+        const fabricanteId = sessionStorage.getItem('EMPRESA_ID');
+        const empresaId = document.getElementById('empresa').value;
+        const fabricaId = document.getElementById('fabrica').value;
+
+        let modelos = [];
+        try {
+            let url;
+            if (fabricaId) {
+                // Busca modelos só da fábrica selecionada
+                url = `http://localhost:3000/api/fabrica/${fabricaId}/plcs`;
+            } else {
+                // Busca modelos de todas as empresas consumidoras da fabricante (com filtro de empresa se houver)
+                url = `http://localhost:3000/api/fabricante/${fabricanteId}/plcs?empresaId=${empresaId || ''}`;
+            }
+            const resp = await fetch(url);
+            modelos = await resp.json();
+        } catch (e) {
+            mostrarMsg('Erro ao buscar modelos: ' + e.message);
+            return;
+        }
+        renderizarTabelaModelos(modelos);
+
+        // Salva filtros globais
+        window.FILTROS_ATUAIS = { empresaId, fabricaId };
+    };
+
+    // Função auxiliar para mostrar mensagem na tabela principal
+    function mostrarMsg(msg) {
+        const corpo = document.getElementById('corpoDaTabela');
+        if (corpo) corpo.innerHTML = `<tr><td colspan="3">${msg}</td></tr>`;
+    }
+
+    // Torna as funções globais para uso no HTML inline
+    window.alternarDetalhesEmpresa = alternarDetalhesEmpresa;
+
+    async function detalharModelo(plcId, modelo, idLinha, idBotao) {
+        const linha = document.getElementById(idLinha);
+        const botao = document.getElementById(idBotao);
+        const { fabricaId, dataInicial, dataFinal } = window.FILTROS_ATUAIS || {};
+
+        if (linha.style.display === 'table-row') {
+            linha.style.display = 'none';
+            botao.textContent = 'Detalhes';
+        } else {
+            linha.style.display = 'table-row';
+            botao.textContent = 'Fechar';
+            linha.querySelector('td').innerHTML = 'Buscando detalhes...';
+
+            // Busca setores desse modelo (exemplo)
+            let setores = [];
+            try {
+                let url;
+                if (fabricaId) {
+                    url = `http://localhost:3000/api/fabrica/${fabricaId}/plc/${plcId}/setores`;
+                } else {
+                    url = `http://localhost:3000/api/plc/${plcId}/setores`;
+                }
+                const resp = await fetch(url);
+                setores = await resp.json();
+            } catch (e) {
+                linha.querySelector('td').innerHTML = 'Erro ao buscar setores: ' + e.message;
+                return;
+            }
+
+            // Extrai nomes dos setores
+            const nomesSetores = setores.map(s => s.setor_nome);
+
+            // Use o SIMULACOES_S3 já carregado
+            const { dataInicial, dataFinal } = window.FILTROS_ATUAIS || {};
+            const processos = analisePreditivaSimples(
+                SIMULACOES_S3,
+                [], // <-- sem filtro de setor
+                dataInicial,
+                dataFinal
+            );
+
+            // Monta HTML dos setores e análise preditiva
+            let htmlSetores = '<ul>';
+            setores.forEach(s => {
+                htmlSetores += `<li>Setor: <b>${s.setor_nome}</b> | Alertas: <b>${s.quantidade_alertas}</b></li>`;
+            });
+            htmlSetores += '</ul>';
+
+            let htmlAnalise = '<ul>';
+            if (processos && processos.length > 0) {
+                processos.forEach(proc => {
+                    htmlAnalise += `<li><b>${proc.nome}</b>: score ${proc.score}</li>`;
+                });
+            } else {
+                htmlAnalise += '<li>Nenhum processo crítico encontrado para este filtro.</li>';
+            }
+            htmlAnalise += '</ul>';
+
+            linha.querySelector('td').innerHTML = `
+    <div>
+        <h4>Setores mais críticos</h4>
+        ${htmlSetores}
+        <h4>Análise preditiva (processos mais críticos)</h4>
+        ${htmlAnalise}
+    </div>
+`;
+        }
+    }
+    window.detalharModelo = detalharModelo;
+
+    function renderizarTabelaEmpresas(empresas) {
+        const corpo = document.getElementById('corpoDaTabela');
+        corpo.innerHTML = empresas.length
+            ? empresas.map((e, i) => `
+            <tr class="linha-principal">
+                <td>${e.razao_social}</td>
+                <td>${e.quantidade_alertas}</td>
+                <td>
+                    <button id="btn-detalhes-${i}" onclick="alternarDetalhesEmpresa(${e.id}, 'detalhes-empresa-${i}', 'btn-detalhes-${i}')">
+                        Detalhes
+                    </button>
+                </td>
+            </tr>
+            <tr id="detalhes-empresa-${i}" class="linha-detalhes" style="display: none;">
+                <td colspan="3">Carregando detalhes...</td>
+            </tr>
+        `).join('')
+            : `<tr><td colspan="3">Nenhuma empresa consumidora encontrada.</td></tr>`;
+    }
+
+    function renderizarTabelaModelos(modelos) {
+        const corpo = document.getElementById('corpoDaTabela');
+        corpo.innerHTML = modelos.length
+            ? modelos.map((m, i) => `
+            <tr class="linha-principal">
+                <td>${m.modelo}</td>
+                <td>${m.quantidade_alertas}</td>
+                <td>
+                    <button id="btn-detalhes-${i}" onclick="detalharModelo(${m.id}, '${m.modelo}', 'detalhes-modelo-${i}', 'btn-detalhes-${i}')">
+                        Detalhes
+                    </button>
+                </td>
+            </tr>
+            <tr id="detalhes-modelo-${i}" class="linha-detalhes" style="display: none;">
+                <td colspan="3">Carregando detalhes...</td>
+            </tr>
+        `).join('')
+            : `<tr><td colspan="3">Nenhum modelo encontrado.</td></tr>`;
+    }
+
+    // Função de "análise preditiva" simulada baseada em regras e pesos
+    function analisePreditivaSimples(simulacoes, setoresFiltro = [], dataInicial, dataFinal) {
+        // Pesos simulados para todos os processos possíveis
+        const pesosProcessos = {
+            // Logística
+            "Movimentacao_Materiais": 2,
+            "Controle_Estoque": 3,
+            "Separacao_Pedidos": 4,
+            "Entrada_Mercadorias": 2,
+            "Expedicao_Produtos": 3,
+            // Linha de Montagem
+            "Montagem_Componentes": 4,
+            "Teste_Qualidade": 3,
+            "Ajuste_Automatico": 2,
+            "Controle_Velocidade": 2,
+            "Medicao_Precisao": 2,
+            // Pintura Industrial
+            "Preparacao_Superficie": 2,
+            "Aplicacao_Primer": 2,
+            "Pintura_Base": 3,
+            "Secagem_Controlada": 3,
+            "Acabamento_Final": 2,
+            // Controle de Qualidade
+            "Inspecao_Visual": 3,
+            "Teste_Dimensional": 3,
+            "Analise_Materiais": 2,
+            "Verificacao_Defeitos": 4,
+            "Controle_Parametros": 2,
+            // Estamparia
+            "Corte_Chapas": 2,
+            "Conformacao_Metal": 3,
+            "Dobra_Automatica": 2,
+            "Perfuracao_Precisao": 2,
+            "Acabamento_Pecas": 2,
+            // Usinagem
+            "Torneamento_CNC": 3,
+            "Fresagem_Automatica": 3,
+            "Retifica_Precisao": 2,
+            "Furacao_Controle": 2,
+            "Medicao_3D": 2,
+            // Embalagem
+            "Selagem_Automatica": 2,
+            "Rotulagem_Produtos": 2,
+            "Encaixotamento": 2,
+            "Paletizacao": 2,
+            "Conferencia_Final": 3,
+            // Armazenamento
+            "Controle_Temperatura": 3,
+            "Gestao_Estoque": 3,
+            "Separacao_Itens": 2,
+            "Organizacao_Espacial": 2,
+            "Inventario_Automatico": 2,
+            // Expedição
+            "Conferencia_Cargas": 3,
+            "Etiquetagem": 2,
+            "Rastreamento_Produtos": 3,
+            "Controle_Saida": 3,
+            // Manutenção
+            "Manutencao_Preventiva": 4,
+            "Diagnostico_Falhas": 4,
+            "Calibracao_Equipamentos": 3,
+            "Monitoramento_Sensores": 3,
+            // Injeção Plástica
+            "Injecao_Materiais": 3,
+            "Controle_Pressao": 3,
+            "Resfriamento_Pecas": 2,
+            "Extracao_Automatica": 2,
+            "Controle_Qualidade": 3,
+            // Solda Robotizada
+            "Solda_Ponto": 3,
+            "Solda_MIG": 3,
+            "Solda_TIG": 3,
+            "Inspecao_Cordao": 3,
+            // Tratamento Térmico
+            "Aquecimento_Controlado": 3,
+            "Resfriamento_Gradual": 2,
+            "Tempera_Metais": 3,
+            "Revenimento": 2,
+            "Normalizacao": 2,
+            // Prensagem
+            "Prensagem_Hidraulica": 3,
+            "Estampagem_Precisao": 3,
+            "Controle_Pressao": 3,
+            "Medicao_Forca": 2,
+            // Fundição
+            "Fusao_Metais": 3,
+            "Vazamento_Controlado": 3,
+            "Desmoldagem": 2,
+            "Acabamento_Fundicao": 2,
+            // Galvanoplastia
+            "Banho_Quimico": 2,
+            "Eletrodeposicao": 2,
+            "Controle_pH": 2,
+            "Lavagem_Tecnica": 2,
+            // Corte e Dobra
+            "Corte_Laser": 3,
+            "Dobra_CNC": 3,
+            "Acabamento_Bordas": 2,
+            "Controle_Dimensional": 2,
+            // Ferramentaria
+            "Fabricacao_Moldes": 3,
+            "Usinagem_Ferramentas": 3,
+            "Afiacao_Precisao": 2,
+            "Manutencao_Ferramental": 3,
+            "Controle_Desgaste": 2,
+            // Laboratório
+            "Teste_Resistencia": 3,
+            "Calibracao_Instrumentos": 3,
+            // Refrigeração
+            "Monitoramento_Umidade": 2,
+            "Manutencao_Sistemas": 3,
+            "Regulagem_Automatica": 2,
+            "Eficiencia_Energetica": 2,
+            // Caldeiraria
+            "Fabricacao_Caldeiras": 3,
+            "Soldagem_Industrial": 3,
+            "Conformacao_Chapas": 2,
+            "Montagem_Estrutural": 2,
+            "Teste_Pressao": 3
+        };
+
+        // Filtra por setor e datas se necessário
+        let filtrado = simulacoes;
+        if (setoresFiltro.length > 0) {
+            filtrado = filtrado.filter(sim =>
+                setoresFiltro.some(filtro =>
+                    sim.setor && sim.setor.toLowerCase().includes(filtro.toLowerCase())
+                )
+            );
+        }
+        if (dataInicial) {
+            filtrado = filtrado.filter(sim => sim.dataHora >= dataInicial);
+        }
+        if (dataFinal) {
+            filtrado = filtrado.filter(sim => sim.dataHora <= dataFinal);
+        }
+
+        // Conta e soma pesos dos processos
+        const scoreProcessos = {};
+        filtrado.forEach(sim => {
+            (sim.processos || []).forEach(proc => {
+                const peso = pesosProcessos[proc.nome] || 1; // Peso padrão = 1
+                scoreProcessos[proc.nome] = (scoreProcessos[proc.nome] || 0) + peso;
+            });
+        });
+
+        // Ordena por maior score (simulando "probabilidade" de ser causa raiz)
+        return Object.entries(scoreProcessos)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 3)
+            .map(([nome, score]) => ({ nome, score }));
+    }
+</script>

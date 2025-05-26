@@ -1,0 +1,24 @@
+services:
+  site:
+    image: joaopassis/site:1.0
+    ports:
+      - "3000:3000"
+    networks:
+      - rede-compose
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: urubu100
+      DB_DATABASE: plcvision
+  db:
+    image: joaopassis/db:1.0
+    ports:
+      - "3307:3306"
+    networks:
+      - rede-compose
+networks:
+  rede-compose:
+    driver: bridge

@@ -24,12 +24,14 @@ const plcRegister = require('./src/routes/plc_register')
 const consumidorRouter = require('./src/routes/consumidor')
 const alertaRouter = require('./src/routes/alerta')
 const componenteRouter = require('./src/routes/componente')
+const anomaliaRoutes = require('./src/routes/anomalia')
 const jiraRouter = require('./src/routes/jira')
 const admRouter = require("./src/routes/adm");
 const analistaRouter = require("./src/routes/analista");
 const tempoReal = require("./src/routes/tempoReal");
 
 const setorRegister = require("./src/routes/setor_register");
+const s3Routes = require('./src/routes/s3');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -49,6 +51,8 @@ app.use("/tempo_real", tempoReal);
 app.use("/consumidor", consumidorRouter)
 app.use("/alerta", alertaRouter)
 app.use("/componente", componenteRouter)
+app.use(anomaliaRoutes);
+app.use(s3Routes);
 app.use("/jira", jiraRouter)
 app.use("/setor",setorRegister)
 

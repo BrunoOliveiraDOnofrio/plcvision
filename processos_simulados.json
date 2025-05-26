@@ -1,0 +1,128 @@
+[
+    {
+        "id_alerta": 1,
+        "dataHora": "2025-05-24 22:37:56",
+        "setor": "Linha de Montagem SBC",
+        "processos": []
+    },
+    {
+        "id_alerta": 5,
+        "dataHora": "2025-05-25 22:32:56",
+        "setor": "Linha de Montagem SBC",
+        "processos": []
+    },
+    {
+        "id_alerta": 2,
+        "dataHora": "2025-05-25 00:37:56",
+        "setor": "Linha de Montagem SBC",
+        "processos": []
+    },
+    {
+        "id_alerta": 3,
+        "dataHora": "2025-05-23 22:37:56",
+        "setor": "Linha de Montagem SBC",
+        "processos": []
+    },
+    {
+        "id_alerta": 4,
+        "dataHora": "2025-05-25 02:37:56",
+        "setor": "Linha de Montagem SBC",
+        "processos": []
+    },
+    {
+        "id_alerta": 6,
+        "dataHora": "2025-05-25 03:37:56",
+        "setor": "Pintura Industrial SBC",
+        "processos": []
+    },
+    {
+        "id_alerta": 7,
+        "dataHora": "2025-05-22 22:37:56",
+        "setor": "Pintura Industrial SBC",
+        "processos": []
+    },
+    {
+        "id_alerta": 8,
+        "dataHora": "2025-05-25 04:37:56",
+        "setor": "Usinagem SBC",
+        "processos": []
+    },
+    {
+        "id_alerta": 9,
+        "dataHora": "2025-05-21 22:37:56",
+        "setor": "Usinagem SBC",
+        "processos": []
+    },
+    {
+        "id_alerta": 10,
+        "dataHora": "2025-05-20 22:37:56",
+        "setor": "Logística Taubaté",
+        "processos": []
+    },
+    {
+        "id_alerta": 11,
+        "dataHora": "2025-05-25 05:37:56",
+        "setor": "Logística Taubaté",
+        "processos": []
+    },
+    {
+        "id_alerta": 12,
+        "dataHora": "2025-05-25 06:37:56",
+        "setor": "Controle Qualidade Taubaté",
+        "processos": []
+    },
+    {
+        "id_alerta": 13,
+        "dataHora": "2025-05-19 22:37:56",
+        "setor": "Controle Qualidade Taubaté",
+        "processos": []
+    },
+    {
+        "id_alerta": 15,
+        "dataHora": "2025-05-18 22:37:56",
+        "setor": "Estamparia SJP",
+        "processos": []
+    },
+    {
+        "id_alerta": 14,
+        "dataHora": "2025-05-25 07:37:56",
+        "setor": "Estamparia SJP",
+        "processos": []
+    },
+    {
+        "id_alerta": 16,
+        "dataHora": "2025-05-25 08:37:56",
+        "setor": "Manutenção SJP",
+        "processos": []
+    },
+    {
+        "id_alerta": 17,
+        "dataHora": "2025-05-17 22:37:56",
+        "setor": "Manutenção SJP",
+        "processos": []
+    },
+    {
+        "id_alerta": 21,
+        "dataHora": "2025-05-23 22:37:56",
+        "setor": "Embalagem Chocolates",
+        "processos": []
+    },
+    {
+        "id_alerta": 23,
+        "dataHora": "2025-05-24 22:37:56",
+        "setor": "Embalagem Chocolates",
+        "processos": []
+    },
+    {
+        "id_alerta": 24,
+        "dataHora": "2025-05-24 22:37:56",
+        "setor": "Embalagem Chocolates",
+        "processos": []
+    },
+    {
+        "id_alerta": 25,
+        "dataHora": "2025-05-21 22:37:56",
+        "setor": "Fundição MSA",
+        "processos": []
+    }
+]
