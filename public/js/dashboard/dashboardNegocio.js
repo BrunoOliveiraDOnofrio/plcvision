@@ -1,5 +1,4 @@
 // Gráfico de Meta
-
 document.addEventListener("DOMContentLoaded", function() {
     let metaTotal = 100;
     let qtdAtingida = 74;
