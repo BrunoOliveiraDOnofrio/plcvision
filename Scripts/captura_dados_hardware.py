@@ -148,7 +148,7 @@ def coletar_dados():
         contador = 0
         
         informacoes_componentes = coletar_informacoes_componentes()
-        while contador <= 1000:
+        while contador <= 10:
             #limpar_tela()
             
             print('Coletando Dados...')
@@ -246,7 +246,7 @@ def coletar_dados():
 
             sendToWdv.enviar(colunas_wdv,valores_inserir,campos_wdv , config_ids_wdv,id_plc, empresa_id, foraDoPadrao)
             
-            if contador == 100:
+            if contador == 10:
                 with     open(f"Scripts/csvs/{nome_csv}.csv", 'w', newline='') as arquivo_csv:
                     escritor = csv.writer(arquivo_csv)
                     for linha in conteudo_csv:

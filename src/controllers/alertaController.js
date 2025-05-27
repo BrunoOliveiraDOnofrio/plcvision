@@ -43,6 +43,7 @@ const store = (req,res) => {
             })
         }else{
             // dados_alerta
+
             const alertaInfo = {
                 hardware: req.body.hardware || "Não especificado",
                 tipoDado: req.body.tipo_dado || "Não especificado",
@@ -53,6 +54,10 @@ const store = (req,res) => {
                 plc_id: req.body.plc_id,
                 config_plc_id: req.body.config_plc_id,
             };
+
+            if(req.body.dataCriacao){
+                alertaInfo.dataCriacao = req.body.dataCriacao;
+            }
             console.log(alertaInfo)
             
             // aqui voces vao chamar o jira, e o slack
@@ -80,13 +85,13 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
             
     const email = "carvalhohugo425@gmail.com";
     const key = process.env.JIRA_KEY;
-    const urlApiJira = 'https://carvalhohugo425.atlassian.net/rest/api/3/issue';
+    const urlApiJira = 'https://carvalhohugo425.atlassian.net/rest/api/3/issue'
     
     // Título dinâmico com base nas informações do alerta
     const nivelAlerta = alertaInfo.nivel === 1 ? "Crítico" : "Atenção";
     if(alertaInfo.hardware == undefined || alertaInfo.hardware == null || alertaInfo.hardware == '' || alertaInfo.valor == 0 || alertaInfo.valor == undefined || alertaInfo.valor == null){
       console.log("SAIA");
-      console.log('CAIU NA VALIDAÇÃO FEZ O L BEM GRANDÃO AIIIIII')
+      
       return;
     }
 
@@ -106,14 +111,18 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
     
     Localização : Fábrica "${nomeFabrica}" | Setor "${nomeSetor}"
 
+    PLC: ${alertaInfo.plc_id}
+
     Este alerta foi gerado automaticamente pelo sistema de monitoramento.
     `;
     
         const dataJira = {
       fields: {
         project: {
-          key: "SUP1"
+          key: "SPOP2"
         },
+        customfield_10092: alertaInfo.dataCriacao, // Data de vencimento do alerta
+        
         summary: titulo,
         description: {
           type: "doc",
@@ -176,7 +185,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
         ]
     };
 
-    const urlSlack = `https://hooks.slack.com/services/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`;
+    const urlSlack = `https://hooks.slack.com/services/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`;
 
     fetch(`${urlSlack}`, {
         method: 'POST',

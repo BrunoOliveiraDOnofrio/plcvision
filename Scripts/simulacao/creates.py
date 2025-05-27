@@ -16,6 +16,7 @@ fabrica_id = 3
 setor_id = 3
 plc_id = 4
 
+
 limites_gerados = {
   1: (68.29, 72.84),        # CPU Temperatura (°C)
   2: (72.49, 74.41),        # CPU Uso (%)
@@ -58,7 +59,31 @@ SETORES_INDUSTRIAIS = [
     "Caldeiraria"
 ]
 
-for _ in range(4):  # 4 empresas consumidoras
+SETORES_INDUSTRIAIS = [
+    "Logística",
+    "Linha de Montagem",
+    "Pintura Industrial",
+    "Controle de Qualidade",
+    "Estamparia",
+    "Usinagem",
+    "Embalagem",
+    "Armazenamento",
+    "Expedição",
+    "Manutenção",
+    "Injeção Plástica",
+    "Solda Robotizada",
+    "Tratamento Térmico",
+    "Prensagem",
+    "Fundição",
+    "Galvanoplastia",
+    "Corte e Dobra",
+    "Ferramentaria",
+    "Laboratório",
+    "Refrigeração",
+    "Caldeiraria"
+]
+
+for _ in range(2):  # 4 empresas consumidoras
     logradouro = faker.street_name()
     numero = faker.building_number()
     cidade = faker.city()
