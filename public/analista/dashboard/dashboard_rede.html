@@ -22,6 +22,121 @@
 </head>
 
 <body>
+    <!-- Nav Bar -->
+    <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side bar  -->
+    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+             
+                <li>
+                    <a href=".././dashboard">
+                        <i class='bx bx-timer'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href=".././alertas">
+                        <i class='bx bxs-bell-ring'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href=".././plcs">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="mainRede">
         <div class="metade">
             <div class="KPIs">
@@ -40,6 +155,9 @@
             </div>
             <div class="graficoRede">
                 <canvas id="graficoLinha"></canvas>
+            </div>
+            <div class="graficoRede">
+                <canvas id="graficoBarra2"></canvas>
             </div>
         </div>
         <div class="metade">
@@ -63,10 +181,13 @@
                         
                 </canvas>
             </div>
+            <div class="graficoRede">
+                <canvas id="graficoBarra2">
+                </canvas>
+            </div>
+            
         </div>
-        <div id="divListagem">
-
-        </div>
+        
     </div>
         
         <script src="../../js/nav_sidebar.js"></script>

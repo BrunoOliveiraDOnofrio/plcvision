@@ -15,6 +15,10 @@ router.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/analista/dashboard/dashboard_analise.html'));
 })
 
+router.get('/dashboardComponente', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/analista/dashboard/dashboard_rede.html'));
+})
+
 router.get('/plcs', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/analista/plcs/plcs.html'),  {
         headers: {
