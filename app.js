@@ -18,6 +18,7 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 const usuarioRouter = require("./src/routes/usuario");
 const fabricanteRouter = require('./src/routes/fabricante')
+const dashComponenteRouter = require('./src/routes/RotadashComponente')
 const plcRouter = require('./src/routes/plc')
 const fabricaRouter = require('./src/routes/fabrica')
 const plcRegister = require('./src/routes/plc_register')
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/", indexRouter);
+app.use("/dashComponente", dashComponenteRouter)
 app.use("/usuario", usuarioRouter);
 app.use("/fabricante", fabricanteRouter)
 app.use("/plc",plcRouter)
