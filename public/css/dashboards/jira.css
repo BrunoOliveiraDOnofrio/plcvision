@@ -99,6 +99,7 @@ canvas#alertaTraceroute {
 
     .painel {
         padding: 0 11px;
+        width: 100%;
     }
 
     .kpis{

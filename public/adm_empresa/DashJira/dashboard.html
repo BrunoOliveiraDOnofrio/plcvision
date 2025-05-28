@@ -307,8 +307,8 @@
 
     let chartAlertaComponente = null;
 
-    function gerarGraficoAlertaComponente(id) {
-            fetch(`/alerta/modeloComponente/${id}`)
+    function gerarGraficoAlertaComponente(modelo) {
+            fetch(`/alerta/modeloComponente/${modelo}`)
                 .then(response => response.json())
                 .then(dados => {
                     console.log(dados)
@@ -448,17 +448,17 @@
         let htmlString = "<option disabled selected>Selecione um Modelo</option>";
         
         dados.forEach((modelo) => {
-            htmlString += `<option value="${modelo.id}">${modelo.modelo}</option>`;
+            htmlString += `<option value="${modelo.modelo}">${modelo.modelo}</option>`;
         });
         
     bodyOptionModelo.innerHTML = htmlString;
 
         if (dados.length > 0) {
-            const primeiroId = dados[0].id;
-            gerarGraficoAlertaComponente(primeiroId);
+            const modeloId = dados[0].modelo;
+            gerarGraficoAlertaComponente(modeloId);
 
 
-            bodyOptionModelo.value = primeiroId;
+            bodyOptionModelo.value = modeloId;
         }
     }
 

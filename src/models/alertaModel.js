@@ -65,25 +65,25 @@ const qtdAlertaHardware = () => {
             return database.executar(sql)
         }
 
-const modeloComponente = (id_plc) => {
-    const sql = `SELECT tipo, COUNT(*) AS total
-        FROM (
-        SELECT 
-            CASE 
+const modeloComponente = (modelo) => {
+    const sql = `SELECT 
+        p.modelo,
+        CASE
             WHEN a.tipo_valor LIKE '%CPU%' THEN 'CPU'
             WHEN a.tipo_valor LIKE '%RAM%' THEN 'RAM'
             WHEN a.tipo_valor LIKE '%REDE%' THEN 'REDE'
             WHEN a.tipo_valor LIKE '%Bateria%' THEN 'BATERIA'
-            END AS tipo
-        FROM alerta a
-        JOIN config_plc cp ON a.config_plc_id = cp.id
-        JOIN plc p ON cp.plc_id = p.id
-        WHERE a.dataHora >= NOW() - INTERVAL 7 DAY
-            AND p.id = ${id_plc} 
-        ) AS tipos_alerta
-        GROUP BY tipo
-        ORDER BY total DESC
-        LIMIT 3;`
+        END AS tipo,
+        COUNT(*) AS total
+    FROM alerta a
+    JOIN config_plc cp ON a.config_plc_id = cp.id
+    JOIN plc p ON cp.plc_id = p.id
+    WHERE a.dataHora >= NOW() - INTERVAL 7 DAY
+    AND p.modelo = "${modelo}"
+    GROUP BY p.modelo, tipo
+    HAVING tipo IS NOT NULL
+    ORDER BY total DESC
+    LIMIT 3;`
 
         return database.executar(sql);
 }

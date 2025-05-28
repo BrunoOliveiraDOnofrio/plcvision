@@ -39,7 +39,7 @@ router.get("/graficoTraceroute", (req, res) => {
     alertaController.alertaTraceroute(req,res);
 })
 
-router.get("/modeloComponente/:id", (req, res) => {
+router.get("/modeloComponente/:modelo", (req, res) => {
     alertaController.modeloComponente(req,res);
 })
 

@@ -404,8 +404,8 @@ const pegarModelos = (req, res) => {
 }
 
 const modeloComponente = (req, res) => {
-    const id_plc = req.params.id;
-    alertaModel.modeloComponente(id_plc).then(response => {
+    const modelo = req.params.modelo;
+    alertaModel.modeloComponente(modelo).then(response => {
         console.log("banco:", response);
         res.json(response);
     })
