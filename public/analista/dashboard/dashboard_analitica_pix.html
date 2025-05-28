@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../css/nav_side_bar.css">
+    <link rel="stylesheet" href="../../css/style_dash_pix_analitica.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- <script src="../../js/nav_sidebar.js"></script> -->
+    <link rel="shortcut icon" href="../../assets/imgs/logo-aba_white.png">
+    <title>PLCVision - Cadastro Usuários</title>
+</head>
+
+<body>
+
+    <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Alertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span>Sair</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side bar  -->
+
+    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+                <li>
+                    <a href="./consumidores">
+                        <i class='bx bx-group'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./alertas">
+                        <i class='bx bxs-bell-ring' ></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./fabricas">
+                        <i class='bx bxs-factory'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./setores">
+                <i class='bx bx-category-alt'></i>
+                        
+                    </a>
+                </li>
+                <li>
+                    <a href="./usuarios">
+                        <i class='bx bxs-user'></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="./plcs">
+                        <i class='bx bx-desktop'></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-exit' ></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+     </nav>
+
+     <!-- Início da dashboard -->
+
+     <div class="main">
+        <div class="content">
+            <div class="title">
+                <h1>Dashboard Analítica - Sobrecarga de PLCs e o PIX </h1>
+            </div>
+                <div class="box-kpis">
+                    <div class="box-kpi">
+                        <span>111</span>
+                    </div>
+                    <div class="box-kpi">
+                        <span>111</span>
+                    </div>
+                    <div class="box-kpi">
+                        <span>111</span>
+                    </div>
+                </div>
+                <div class="box-graphics">
+                    <div class="dash-title">CPU e RAM em Relação ao PIX</div>
+                    <div class="box-line-graphic">
+                        <div class="line-graphic">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="box-linear-graphics">
+                        <div class="linear-cpu">
+                            <!-- <img class="img-regressao-ram" src="../../assets/imgs/dash-analitica/regressao-ram-pix.png" alt=""> -->
+                        </div>
+                        <div class="linear-ram"></div>
+                    </div>
+                </div>
+        </div>
+     </div>
+
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      datasets: [{
+        label: '# of Votes',
+        data: [21.77, 22.66, 22.69, 23.31, 23.34, 23.43, 23.46, 23.48, 23.96, 24.11, 24.15, 24.30],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+ 
