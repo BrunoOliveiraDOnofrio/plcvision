@@ -1,5 +1,7 @@
 var datayC = [];
 var dataxC = [];
+var pontosDePerda = 0;
+var myChartBarra2 = null; // Para o gráfico que será atualizado dinamicamente
 
 function calcularRegressaoLinear(pontosDeDados) {
     const n = pontosDeDados.length;
@@ -45,9 +47,9 @@ function calcularRegressaoLinear(pontosDeDados) {
     const produtoDenominadoresR = denominadorM * denominadorParteY;
 
     if (produtoDenominadoresR <= 0) {
-        if (denominadorM === 0 || denominadorParteY === 0) {
+        if (denominadorM == 0 || denominadorParteY == 0) {
             r = 0;
-        } else if (numerador === 0) {
+        } else if (numerador == 0) {
             r = 0;
         } else {
             r = 0;
@@ -55,12 +57,12 @@ function calcularRegressaoLinear(pontosDeDados) {
     } else {
         const denominadorR = Math.sqrt(produtoDenominadoresR);
 
-        if (denominadorR === 0) {
-            if (numerador === 0) {
+        if (denominadorR == 0) {
+            if (numerador == 0) {
                 r = 0;
             } else if (numerador > 0) {
                 r = 1;
-            } else { // numerador < 0
+            } else { 
                 r = -1;
             }
         } else {
@@ -81,14 +83,23 @@ function calcularRegressaoLinear(pontosDeDados) {
     return { m: m, b: b, r: r };
 }
 
-function criarGrafico() {
+function criarGraficosEstaticos() {
     const GraficoBarra = document.getElementById('graficoBarra')
     const GraficoLinha = document.getElementById('graficoLinha')
-    const GraficoBarra2 = document.getElementById('graficoBarra2')
+    const GraficoBarra3 = document.getElementById('graficoBarra3')
     const kpiCorrelacao = document.getElementById('valorCor')
+    const KPIPontosDePerda = document.getElementById('KPIPontosDePerda')
     const labels = ['1-50', '51-100', '101-150', '151-200', '201-250', '251-300', '301-350', '351-400', '401-450', '451-500', '501-550', '551-600', '601-650']
     const valoresYReais = [1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.83, 1.84, 2, 3.2, 4.3, 5.4]
     const valoresX = [24.5, 75.5, 125.5, 175.5, 225.5, 275.5, 325.5, 375.5, 425.5, 475.5, 525.5, 575.5, 625.5]
+
+    for(var i = 0; i < valoresYReais.length; i++){
+        if (valoresYReais[i] >= 2.0){
+            pontosDePerda++
+        }
+    }
+
+    KPIPontosDePerda.innerHTML = pontosDePerda
 
     const pontosDeDados = [];
     for (var i = 0; i < valoresX.length; i++) {
@@ -105,9 +116,10 @@ function criarGrafico() {
     const valoresYRegressao = [];
     for (var i = 0; i < valoresX.length; i++) {
         const x = valoresX[i];
-        if (valoresX >= 2) {
-            registroPerdas++
-        }
+        //
+        // if (valoresX >= 2) {
+        //     registroPerdas++
+        // }
         const yEsperado = (m * x) + b;
         valoresYRegressao[i] = yEsperado;
     }
@@ -178,7 +190,7 @@ function criarGrafico() {
         data: {
             labels: ['7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
             datasets: [{
-                label: 'Uso de CPU %    ',
+                label: 'Uso de CPU %',
                 data: [],
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -200,15 +212,17 @@ function criarGrafico() {
             }
         }
     });
-    new Chart(GraficoBarra2, {
+
+    console.log("Criando GraficoBarra3 com dados estáticos...");
+    new Chart(GraficoBarra3, {
         type: 'bar',
         data: {
             labels: ['7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
             datasets: [{
-                label: 'Alertas por horário',
+                label: 'Alertas por horário (Estático)',
                 data: [1, 2, 3, 4, 5, 18, 26, 20, 21, 12, 11, 10, 9],
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
                 fill: true
             }]
@@ -226,7 +240,8 @@ function criarGrafico() {
                 }
             }
         }
-    })
+    });
+    console.log("GraficoBarra3 criado com dados estáticos.");
 }
 
 function obterAlertasPorHorario(data, modelo) {
@@ -238,30 +253,45 @@ function obterAlertasPorHorario(data, modelo) {
     })
         .then(res => res.json())
         .then(a => {
-           
             datayC = [];
             dataxC = [];
-            for (let i = 0; i < a.length; i++) { 
-                datayC.push(a[i].Quantidade_Alertas); 
+            for (let i = 0; i < a.length; i++) {
+                datayC.push(a[i].Quantidade_Alertas);
                 dataxC.push(`${a[i].Hora}:00`);
             }
-            criarGraficoBarra3();
+            criarOuAtualizarGraficoBarra2Dinamico();
         })
         .catch(error => {
             console.error("Erro ao obter alertas por horário:", error);
         });
 }
 
-function criarGraficoBarra3() {
-    const GraficoBarra3 = document.getElementById('graficoBarra3')
-    console.log("Criando gráfico de barras 3 com dados dinâmicos...");
-    new Chart(GraficoBarra3, {
+function obterMaiorHorario(data, modelo) {
+    fetch(`/dashComponente/obterMaiorHorario/${data}/${modelo}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(res => res.json())
+        .then(a => {
+            const maiorUso = document.getElementById('maiorUso')
+            maiorUso.innerHTML = a[0].Hora
+        })
+        .catch(error => {
+            console.error("MAIOR HORARIO ERRO:", error);
+        });
+}
+
+function criarOuAtualizarGraficoBarra2Dinamico() {
+    const GraficoBarra2Canvas = document.getElementById('graficoBarra2');
+    myChartBarra2 = new Chart(GraficoBarra2Canvas, {
         type: 'bar',
         data: {
             labels: dataxC,
             datasets: [{
                 label: 'Alertas por horário',
-                data: datayC, 
+                data: datayC,
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,
@@ -281,11 +311,11 @@ function criarGraficoBarra3() {
                 }
             }
         }
-    })
-    console.log("Gráfico de barras 3 criado.");
+    });
 }
 
 window.onload = function () {
-    criarGrafico();
+    criarGraficosEstaticos();
     obterAlertasPorHorario('2025-05-27', '001');
+    obterMaiorHorario('2025-05-27','001');
 };

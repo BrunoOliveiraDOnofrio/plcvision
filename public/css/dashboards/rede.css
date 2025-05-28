@@ -1,3 +1,4 @@
+/* Seu CSS existente */
 * {
     margin: 0;
     padding: 0;
@@ -7,10 +8,29 @@
 .mainRede {
     padding-top: 70px;
     display: flex;
-    flex-direction: column; /* Mobile: uma embaixo da outra */
+    flex-direction: column; /* mainRede continua como coluna para empilhar itens */
     width: 100%;
     height: auto;
 }
+
+/* Novo estilo para o container de filtros, se desejar estilizar */
+.filtro-area {
+    width: 50%;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+/* Novo container para as metades */
+.content-wrapper {
+    display: flex; /* Permite que as metades fiquem lado a lado */
+    flex-direction: column; /* Por padrão, em mobile, metades ficam em coluna */
+    width: 100%;
+    height: auto;
+}
+
 
 .metade {
     padding-top: 10px;
@@ -64,18 +84,24 @@
     align-items: center;
 }
 
-@media only screen and (min-width:768px ) and  (min-height: 720px) {
-    .mainRede{
+@media only screen and (min-width:768px ) and (min-height: 720px) {
+    .mainRede {
         padding-left: 70px;
     }
-    
+
 }
+
 @media only screen and (min-width: 1200px) {
     .mainRede {
-        flex-direction: row;
+        flex-direction: column; /* Continua como coluna para empilhar filtro e conteúdo */
         padding-top: 70px;
-        padding-left: 70px ;
-        height: 100vh;
+        padding-left: 70px;
+        height: 100vh; /* Ajuste se necessário para o layout */
+    }
+
+    .content-wrapper {
+        flex-direction: row; /* Metades ficam lado a lado em telas maiores */
+        flex-grow: 1; /* Permite que ele ocupe o espaço restante */
     }
 
     .metade {
@@ -98,11 +124,16 @@
     }
 }
 
-@media only screen and (min-width: 760px ) and  (min-height: 1024) {
+@media only screen and (min-width: 760px ) and (min-height: 1024px) { /* Corrigido: 1024 é um height, não width */
     .mainRede {
-        flex-direction: row; /* Desktop: uma do lado da outra */
+        flex-direction: column; /* Continua como coluna */
         padding-top: 70px;
         height: 100vh;
+    }
+
+    .content-wrapper {
+        flex-direction: row; /* Metades ficam lado a lado */
+        flex-grow: 1;
     }
 
     .metade {
@@ -124,8 +155,8 @@
     }
 }
 
-@media only screen and (width: 1024px ) and  (height: 600px) {
-    .mainRede{
+@media only screen and (width: 1024px ) and (height: 600px) {
+    .mainRede {
         padding-left: 70px;
     }
 }
