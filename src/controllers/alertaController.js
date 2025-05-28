@@ -61,9 +61,11 @@ const store = (req,res) => {
             console.log(alertaInfo)
             
             // aqui voces vao chamar o jira, e o slack
-            let url = await openJiraTaskSendSlackNotification(alertaInfo);
+            let {url, descricao} = await openJiraTaskSendSlackNotification(alertaInfo);
             req.body.link_chamado = url
             alertaInfo.link_chamado = url
+            alertaInfo.descricao = descricao;
+            
             alertaModel.create(alertaInfo).then(response => {
                 console.log(response)
                 res.status(200).json({
@@ -97,6 +99,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
 
     const resultado = await alertaModel.nomeFabrica(alertaInfo.fabrica_id);
     const nomeFabrica = resultado[0].nome
+    const nomeEmpresa = resultado[0].razao_social
 
     const resultado2 = await alertaModel.nomeSetor(alertaInfo.plc_id);
     const nomeSetor = resultado2[0].nome
@@ -108,6 +111,8 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
     Foi detectado um alerta de ${nivelAlerta} para ${alertaInfo.hardware} ${alertaInfo.tipoDado}.
     
     Valor atual: ${alertaInfo.valor} ${alertaInfo.unidadeDado}
+
+    Empresa: ${nomeEmpresa}
     
     Localização : Fábrica "${nomeFabrica}" | Setor "${nomeSetor}"
 
@@ -119,7 +124,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
         const dataJira = {
       fields: {
         project: {
-          key: "SPOP2"
+          key: "SPOP3"
         },
         customfield_10092: alertaInfo.dataCriacao, // Data de vencimento do alerta
         
@@ -200,7 +205,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
     }).catch(e => {
         console.log(e);
     });
-    return url
+    return {url, descricao}
 };
 
 const qtdAlertaHardware = (req,res) => {

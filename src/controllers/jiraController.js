@@ -8,7 +8,8 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const atualizarIssues = async (issuesKeys) => {
+
+const excluirIssues = async (issuesKeys) => {
     
 
     const idAndamento = 11
@@ -17,22 +18,22 @@ const atualizarIssues = async (issuesKeys) => {
     try{
         
         await Promise.all(issuesKeys.map(async (issueKey, index) => {
-            const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/issue/${issueKey}/transitions`
+            const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/issue/${issueKey}`
             console.log(index)
             let idTransition = 41
             const response = await fetch(endpoint, {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'Authorization': `Basic ${Buffer.from(`${email}:${key}`).toString('base64')}`,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     
                 },
-                body: JSON.stringify({
-                    transition: {
-                        id: idTransition
-                    }
-                })
+                // body: JSON.stringify({
+                //     transition: {
+                //         id: idTransition
+                //     }
+                // })
             });
             // atualizados++;
             
@@ -50,9 +51,60 @@ const atualizarIssues = async (issuesKeys) => {
 }
 }
 
+const atualizarIssues = async (issuesKeys) => {
+    
+
+    const idAndamento = 11
+    const idConcluido = 61
+    let atualizados =  0;
+    try{
+        
+        await Promise.all(issuesKeys.map(async (issueKey, index) => {
+            const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/issue/${issueKey}/transitions`
+            console.log(index)
+            let idTransition
+
+            if((index >= 0 && index <= 7) || (index >=  29 && index <= 31) ){
+                idTransition = idAndamento;
+            }else if ((index >= 8 && index <= 17) || (index >= 32 && index <= 39)){
+                idTransition = idConcluido;
+            }
+            if(idTransition){
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Basic ${Buffer.from(`${email}:${key}`).toString('base64')}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    
+                },
+                body: JSON.stringify({
+                    transition: {
+                        id: idTransition
+                    }
+                })
+            });
+            
+            // atualizados++;
+            
+            if (response.ok) {
+                console.log(`Issue ${issueKey} atualizada com sucesso.`);
+            } else {
+                console.error(`Erro ao atualizar a issue ${issueKey}:`, response.statusText);
+            }
+            }
+            await sleep(1000);
+
+    }))
+    return atualizados;
+} catch (error) {
+    console.error('Erro ao atualizar issues:', error);
+}
+}
+
 
 const getIssuesDoProjeto = async (req, res) => {
-    const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=SPOP2&maxResults=30`
+    const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=SPOP3&maxResults=50`
     try{
     const response = await fetch(endpoint, {
         method: 'GET',

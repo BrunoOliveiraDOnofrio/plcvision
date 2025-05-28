@@ -15,6 +15,8 @@ import os
 horariosComAlertasEConfig = []
 plcs_csvs_gerados = []
 
+qtdAlertasGerados = 0
+
 def gerar_csv_plc(plc_id, config_id, data_base):
     """
     Gera um CSV com 1200 registros (50 por hora, 24 horas) para o PLC informado.
@@ -141,11 +143,11 @@ def simular_valor(tipo_dado, limite_critico, limite_atencao):
     else:
         return random.randint(1, 100)
 
-def obter_plcs_com_config():
+def obter_plcs_com_config(id):
     con = conexao_select()
 
     cursor = con.cursor()
-    cursor.execute("""
+    cursor.execute(f"""
         SELECT plc.id,  p.empresa_consumidor_id, fc.id as fabricaId
         FROM plc
         JOIN parceria p ON plc.parceria_id = p.id
@@ -153,9 +155,11 @@ def obter_plcs_com_config():
         ON sf.id = plc.setor_fabrica_id
         JOIN fabrica_consumidor fc
         ON sf.fabrica_consumidor_id = fc.id
+        WHERE fc.empresa_consumidor_id = {id}
                    ORDER BY RAND();
     """)
     plcs = cursor.fetchall()
+    print(plcs)
 
     resultado = []
     for plc_id,  empresa_id, fabricaId in plcs:
@@ -177,28 +181,34 @@ def obter_plcs_com_config():
     con.close()
     return resultado
 
-def enviar_monitoramento(plc, rodadaDeAlerta, horario, horarioMysql):
+def enviar_monitoramento(plc, rodadaDeAlerta, horario, horarioMysql, maxAlertas):
     global empresaGerandoAlertas
     global foraDoPadrao 
+    global qtdAlertasGerados 
     id_plc = plc["plc_id"]
     empresa_id = plc["empresa_id"]
     fabrica_id = plc["fabrica_id"]
-    if not empresaGerandoAlertas and rodadaDeAlerta:
-        empresaGerandoAlertas = empresa_id
+    
     alertas = 0
     dados = []
     for config in plc["configuracoes"]:
         config_id, hardware, tipo_dado, unidade_dado, campo, limite_critico, limite_atencao = config
         
-        
+        print("entrou em uma configuração")
         limite_atencao = int(limite_atencao)
         limite_critico = int(limite_critico)
 
         valor = None
+        print(qtdAlertasGerados)
+        print("verificando se é para gerar alerta")
+        if qtdAlertasGerados >= maxAlertas:
+            print("saindo do for")
+            break
         
         if True:
             valor = random.randint(limite_atencao + 1, limite_critico + 1)
             selectsInfos.inserirAlertaSimulado(horarioMysql,horario ,config_id, valor, f"{hardware} {tipo_dado}", 1, tipo_dado, unidade_dado, hardware, fabrica_id, id_plc)
+            print("inseriu um novo alerta")
             horariosComAlertasEConfig.append({
                 "horario" : horarioMysql,
                 "config_id": config_id,
@@ -208,29 +218,45 @@ def enviar_monitoramento(plc, rodadaDeAlerta, horario, horarioMysql):
                 "limite_atencao": limite_atencao,
             })
             alertas += 1
+            qtdAlertasGerados += 1
+            print("somou")
             if alertas == 1:
                 rodadaDeAlerta = False
         else:
             valor = simular_valor(tipo_dado, limite_critico, limite_atencao)
+    print(qtdAlertasGerados)
+    print("saindo da funcao")
+    if qtdAlertasGerados >= maxAlertas:
+        print(f"Máximo de alertas global ({maxAlertas}) atingido para a empresa {empresa_id}.")
+        return 
+    
 
         
         
 
 def simular_monitoramento():
     global empresaGerandoAlertas
-    plcs = obter_plcs_com_config()
-    horarios = gerar_datetimes_atrasados(100, 8)
-    for i, plc in enumerate(plcs) :
-        enviar_monitoramento(plc, True, horarios[i].strftime("%Y-%m-%dT%H:%M:%S.000+0000"),horarios[i].strftime("%Y-%m-%d %H:%M:%S"))
-        # gerar_csv_plc(plc["plc_id"], plc["configuracoes"], horarios[i])
-        # horariosComAlertasEConfig.clear()
+    global qtdAlertasGerados
+    for i in range(2):
+        qtdAlertasGerados = 0
+        plcs = obter_plcs_com_config(i+1)
+        if i == 0:
+            maxAlertas = 40
+        else:
+            maxAlertas = 12
+        horarios = gerar_datetimes_atrasados(100, 8)
+        for i, plc in enumerate(plcs) :
+            print("chamando enviar monitoramento")
+            enviar_monitoramento(plc, True, horarios[i].strftime("%Y-%m-%dT%H:%M:%S.000+0000"),horarios[i].strftime("%Y-%m-%d %H:%M:%S"),maxAlertas )
+            if qtdAlertasGerados >= maxAlertas:
+                print(f"Máximo de alertas global ({maxAlertas}) atingido para a empresa .")
+                
+                break
+            # gerar_csv_plc(plc["plc_id"], plc["configuracoes"], horarios[i])
+            # horariosComAlertasEConfig.clear()
         
     
 
 if __name__ == "__main__":
     simular_monitoramento()
 
-horarios = gerar_datetimes_atrasados(100, 8)
-
-for horario in horarios:
-    print(horario.strftime("%Y-%m-%dT%H:%M:%S.000+0000"))

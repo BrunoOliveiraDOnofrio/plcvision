@@ -130,7 +130,7 @@ CREATE TABLE config_plc (
 CREATE TABLE alerta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     criticidade TINYINT,
-    descricao VARCHAR(255),
+    descricao TEXT,
     link_chamado VARCHAR(500),
     dataHora DATETIME,
     status VARCHAR(45),

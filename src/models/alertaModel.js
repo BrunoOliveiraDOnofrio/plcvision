@@ -27,7 +27,7 @@ const getUltimoAlerta = (dataHora, plcId) => {
 }
 
 const create = (dados) =>{
-    const sql = `INSERT INTO alerta (criticidade, link_chamado, dataHora, status, valor_capturado, tipo_valor, config_plc_id) VALUES ('${dados.nivel}', '${dados.link_chamado}', now() , 'Aberto', ${dados.valor}, '${dados.tipoDado}', ${dados.config_plc_id})`;
+    const sql = `INSERT INTO alerta (criticidade, descricao, link_chamado, dataHora, status, valor_capturado, tipo_valor, config_plc_id) VALUES ('${dados.nivel}', '${dados.descricao}','${dados.link_chamado}', now() , 'Aberto', ${dados.valor}, '${dados.tipoDado}', ${dados.config_plc_id})`;
     console.log(sql)
     return database.executar(sql)
 }
@@ -41,7 +41,10 @@ dataHora BETWEEN date_sub(now(), interval 20 second) AND now();`
 }
 
 const nomeFabrica = (fabrica_id) =>{
-    const sql = `SELECT nome FROM fabrica_consumidor WHERE id = ${fabrica_id};`
+    const sql = `SELECT razao_social, nome FROM fabrica_consumidor as fc 
+    JOIN empresa_consumidor ec
+    ON ec.id = fc.empresa_consumidor_id
+     WHERE fc.id = ${fabrica_id};`
     return database.executar(sql)
 }
 
