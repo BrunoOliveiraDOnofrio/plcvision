@@ -208,73 +208,167 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Gráfico % de Defeito por Modelo
 document.addEventListener("DOMContentLoaded", function() {
+    const chartModelosContainer = document.querySelector("#chart-modelos");
+    let chartModelosInstance = null;
 
-    var optionsModelos = {
-          series: [{
-          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5]
+    const optionsModelosMobile = {
+        series: [{
+            data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5]
         }],
-          chart: {
-          type: 'bar',
-          height: 500
+        chart: {
+            type: 'bar',
+            height: 500 
+        },
+        plotOptions: {
+            bar: {
+                barHeight: '100%',
+                distributed: true,
+                horizontal: true,
+                dataLabels: {
+                    position: 'bottom'
+                },
+            }
+        },
+        colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+            '#f48024', '#69d2e7'
+        ],
+        dataLabels: {
+            enabled: true,
+            textAnchor: 'start',
+            style: {
+                colors: ['#fff']
+            },
+            formatter: function(val, opt) {
+                return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val + "%"
+            },
+            offsetX: 0,
+            dropShadow: {
+                enabled: true
+            }
+        },
+        stroke: {
+            width: 1,
+            colors: ['#fff']
+        },
+        xaxis: {
+            categories: ['LOGO!', 'SISMATIC S7-200', 'SISMATIC S7-400', 'SISMATIC S7-1200', 'SISMATIC S7-1500', 'SISMATIC ET 200SP', 'SISMATIC ET 200MP', 'SISMATIC S5', 'SISMATIC S7-1500T', 'SISMATIC S7-1500F', 'SISMATIC S7-300F'],
+        },
+        yaxis: {
+            labels: {
+                show: false
+            }
+        },
+        legend: {
+            show: false
+        },
+        tooltip: {
+            theme: 'dark',
+            x: {
+                show: false
+            },
+            y: {
+                title: {
+                    formatter: function() {
+                        return ''
+                    }
+                }
+            }
+        }
+    };
+
+
+    const optionsDesktop = {
+        series: [{
+            name: 'Taxa de Defeito', 
+            data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5]
+        }],
+        chart: {
+            height: 300,
+            type: 'bar',
         },
         plotOptions: {
           bar: {
-            barHeight: '100%',
-            distributed: true,
-            horizontal: true,
+            borderRadius: 10,
             dataLabels: {
-              position: 'bottom'
+              position: 'top',
             },
           }
         },
-        colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-          '#f48024', '#69d2e7'
-        ],
         dataLabels: {
           enabled: true,
-          textAnchor: 'start',
+          formatter: function (val) {
+            return val + "%";
+          },
+          offsetY: -20,
           style: {
-            colors: ['#fff']
-          },
-          formatter: function (val, opt) {
-            return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val + "%"
-          },
-          offsetX: 0,
-          dropShadow: {
-            enabled: true
+            fontSize: '15px !important',
+            colors: ["#304758"]
           }
-        },
-        stroke: {
-          width: 1,
-          colors: ['#fff']
         },
         xaxis: {
           categories: ['LOGO!', 'SISMATIC S7-200', 'SISMATIC S7-400', 'SISMATIC S7-1200', 'SISMATIC S7-1500', 'SISMATIC ET 200SP', 'SISMATIC ET 200MP', 'SISMATIC S5', 'SISMATIC S7-1500T', 'SISMATIC S7-1500F', 'SISMATIC S7-300F'],
-        },
-        yaxis: {
-          labels: {
-            show: false
-          }
-        },
-        legend: {
-          show: false
-        },
-        tooltip: {
-          theme: 'dark',
-          x: {
+          position: 'bottom',
+          axisBorder: {
             show: false
           },
-          y: {
-            title: {
-              formatter: function () {
-                return ''
+          axisTicks: {
+            show: false
+          },
+          labels: {
+                style: {
+                    fontSize: '12px !important', 
+                    fontFamily: 'Inter'
+                }
+            },
+          crosshairs: {
+            fill: {
+              type: 'gradient',
+              gradient: {
+                colorFrom: '#D8E3F0',
+                colorTo: '#BED1E6',
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
               }
+            }
+          },
+          tooltip: {
+            enabled: true,
+          }
+        },
+        yaxis: {
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            formatter: function (val) {
+              return val + "%";
             }
           }
         }
         };
 
-        var chartModelos = new ApexCharts(document.querySelector("#chart-modelos"), optionsModelos);
-        chartModelos.render();
+    function updateChart() {
+        if (!chartModelosContainer) return;
 
+        const isDesktop = window.matchMedia("(min-width: 702px)").matches;
+        const currentOptions = isDesktop ? optionsDesktop : optionsModelosMobile;
+
+        if (chartModelosInstance) {
+            chartModelosInstance.destroy();
+        }
+        
+        chartModelosContainer.innerHTML = ''; 
+
+        chartModelosInstance = new ApexCharts(chartModelosContainer, currentOptions);
+        chartModelosInstance.render();
+    }
+
+    updateChart();
+
+    window.matchMedia("(min-width: 702px)").addEventListener('change', updateChart);
 });
