@@ -1,3 +1,5 @@
+var datayC = [];
+var dataxC = [];
 function calcularRegressaoLinear(pontosDeDados) {
     const n = pontosDeDados.length;
 
@@ -83,6 +85,7 @@ function criarGrafico() {
     const GraficoBarra = document.getElementById('graficoBarra')
     const GraficoLinha = document.getElementById('graficoLinha')
     const GraficoBarra2 = document.getElementById('graficoBarra2')
+    const GraficoBarra3 = document.getElementById('graficoBarra3')
     const kpiCorrelacao = document.getElementById('valorCor')
         const labels = ['1-50', '51-100', '101-150', '151-200', '201-250', '251-300', '301-350', '351-400', '401-450', '451-500', '501-550', '551-600', '601-650']
         // aqui é onde eu vou ter que colocar os dados
@@ -229,8 +232,52 @@ function criarGrafico() {
                     }
                 }
             }
+        }),
+        new Chart(GraficoBarra3, {
+            type: 'bar',
+            data: {
+                labels: ['7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
+                datasets: [{
+                    label: 'Alertas por horário',
+                    data: [1,2,3,4,5,18,26,20,21,12,11,10,9],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Quantidade de alertas', color: '#000', font: { size: 12 } }
+                    },
+                    x: {
+                        title: { display: true, text: 'Horário', color: '#000', font: { size: 14 } }
+                    }
+                }
+            }
         })
     }
+
+    function obterAlertasPorHorario(data, modelo){
+        fetch(`/dashComponente/obterAlertasPorHorario/${data}/${modelo}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(a => {
+            for(i = 0; i >= res.length; i++){
+               datayC.push[a[0].Quantidade_Alertas]
+               dataxC.push[a[0].Hora]
+            }
+        })
+    }
+    obterAlertasPorHorario('2025-05-27', '001')
 window.onload = function() {
     criarGrafico();
 };
