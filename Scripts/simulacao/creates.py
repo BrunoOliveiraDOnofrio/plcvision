@@ -9,12 +9,17 @@ fabricante_id = 1
 componentes_ids = list(range(1, 13))
 componentes_possiveis = [id for id in componentes_ids if id not in (3, 4) and id not in (2, 5)]
 
-empresa_consumidor_id = 3
+empresa_consumidor_id = 1
 endereco_id = 5
-parceria_id = 3
-fabrica_id = 3
-setor_id = 3
-plc_id = 4
+parceria_id = 1
+fabrica_id = 1
+setor_id = 1
+plc_id = 1
+
+razoes_socias = [
+    'Volkswagen do Brasil Indústria de Veículos Ltda',
+    'Lenovo Tecnologia Ltda',
+]
 
 
 limites_gerados = {
@@ -83,7 +88,7 @@ SETORES_INDUSTRIAIS = [
     "Caldeiraria"
 ]
 
-for _ in range(2):  # 4 empresas consumidoras
+for _ in range(2):  # 2 empresas consumidoras
     logradouro = faker.street_name()
     numero = faker.building_number()
     cidade = faker.city()
@@ -92,7 +97,7 @@ for _ in range(2):  # 4 empresas consumidoras
     complemento = f"Bloco {random.randint(1,3)}"
     script += f"INSERT INTO endereco (logradouro, numLogradouro, cidade, estado, bairro, complemento) VALUES\n('{logradouro}', {numero}, '{cidade}', '{estado}', '{bairro}', '{complemento}');\n"
 
-    razao_social = faker.last_name()
+    razao_social = razoes_socias[_]
     segmento = faker.random_element(elements=('Têxtil', 'Alimentos', 'Farmacêutico'))
     cnpj = faker.cnpj()
     token = f"token_empresa_{empresa_consumidor_id}"

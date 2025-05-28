@@ -51,7 +51,7 @@ CREATE TABLE usuario (
 
 CREATE TABLE empresa_consumidor (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    razao_social VARCHAR(45),
+    razao_social VARCHAR(120),
     segmento VARCHAR(45),
     cnpj VARCHAR(30),
     endereco_id INT,
@@ -98,6 +98,7 @@ CREATE TABLE plc (
     capacidade_ram VARCHAR(45),
     endereco_mac VARCHAR(45),
     hostname VARCHAR(45),
+    lote VARCHAR(90),
     FOREIGN KEY (parceria_id) REFERENCES parceria(id),
     FOREIGN KEY (setor_fabrica_id) REFERENCES setor_fabrica(id)
 );
