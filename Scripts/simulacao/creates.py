@@ -7,7 +7,7 @@ faker = Faker('pt_BR')
 # IDs iniciais
 fabricante_id = 1
 componentes_ids = list(range(1, 13))
-componentes_possiveis = [id for id in componentes_ids if id not in (3, 4) and id not in (2, 5)]
+componentes_possiveis = [id for id in componentes_ids if id not in (3, 4) and id not in (2, 5, 11,12,13,14,15)]
 
 empresa_consumidor_id = 1
 endereco_id = 5
@@ -35,6 +35,9 @@ limites_gerados = {
   10: (48.73, 53.45),       # Bateria Tempo Restante (minutos)
   11: (24605.64, 30687.03), # REDE Pacote Recebido
   12: (3589.77, 28083.92),  # REDE Pacote Mandado
+  13: (900000, 1000000),  # REDE Pacote erros recebido
+  14: (900000, 1000000),  # REDE Pacote erros enviado
+  15: (500, 600) # Rede conexões abertas
 }
 
 
@@ -113,7 +116,7 @@ for _ in range(2):  # 2 empresas consumidoras
         nome_setor = random.choice(SETORES_INDUSTRIAIS)
         script += f"INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES\n('{nome_setor}', {fabrica_id}, 5);\n"
 
-        for _ in range(5):
+        for _ in range(10):
             modelo = faker.random_element(elements=('Siemens s7-1500', 'Schneider M340', 'Siemens XRL8'))
             ano = random.randint(2018, 2024)
             so = faker.random_element(elements=('Linux', 'Windows CE', 'VxWorks'))
@@ -131,7 +134,7 @@ for _ in range(2):  # 2 empresas consumidoras
 
 
 
-            for componente_id in [2, 5]:
+            for componente_id in [2, 5,11,12,13,14,15]:
                 limite_atencao, limite_critico = limites_gerados[componente_id]
                 script += f"INSERT INTO config_plc (componente_id, plc_id, limite_atencao, limite_critico, fabrica_consumidor_id) VALUES\n({componente_id}, {plc_id}, {limite_atencao}, {limite_critico}, {fabrica_id});\n"
             outros_componentes = random.sample(componentes_possiveis, k=random.randint(0, 2))

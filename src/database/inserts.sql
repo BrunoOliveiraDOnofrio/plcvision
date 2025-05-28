@@ -58,6 +58,8 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('Bateria', 'Tempo Restante', 'minutos', 'bateria_restante', 'int(psutil.sensors_battery().secsleft / 60)'),
 ('REDE', 'Pacote Recebido', 'Unidade', 'rede_recv', 'psutil.net_io_counters().packets_recv'),
 ('REDE', 'Pacote Mandado', 'Unidade', 'rede_sent', 'psutil.net_io_counters().packets_sent'),
+('REDE','Erros recebido', 'Unidade', 'erro_recv', 'psutil.net_io_counters(pernic=False, nowrap=True).dropout'),
+('REDE', 'Erros mandado', 'Unidade', 'erro_sent', 'psutil.net_io_counters(pernic=False, nowrap=True).dropin'),
 ('REDE', 'Conexões', 'Unidade', 'rede_conexoes','len(psutil.net_connections(kind="all"))');
 
 
