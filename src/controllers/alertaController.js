@@ -170,7 +170,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
         console.log(e);
     });
     // essa é a URL para abrir o card no jira, utilizeio o json que é a url para pegar a chave key
-    url_alerta_jira = `https://carvalhohugo425.atlassian.net/jira/servicedesk/projects/SUP/boards/3?selectedIssue=${url}`
+    url_alerta_jira = `https://carvalhohugo425.atlassian.net/jira/servicedesk/projects/SPOP3/boards/3?selectedIssue=${url}`
 
     const color = alertaInfo.nivel === 1 ? "#D00000" : "#FFA500"; // Vermelho para crítico, laranja para atenção
     
@@ -352,7 +352,7 @@ const jiraAberto = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND statusCategory!=Done`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory!=Done`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -381,7 +381,7 @@ const jiraAbertoValidade = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND statusCategory!=Done AND created <= -3d`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory!=Done AND created <= -3d`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -410,7 +410,7 @@ const jiraFechadoNow = async (req,res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND statusCategory=Done AND statusCategoryChangedDate >= -1d`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory=Done AND statusCategoryChangedDate >= -1d`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -435,40 +435,66 @@ const jiraFechadoNow = async (req,res) => {
 };
 
 const tempoFechamento = async (req, res) => {
-
+  
     const email = "carvalhohugo425@gmail.com";
     const key = process.env.JIRA_KEY;
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
 
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND resolution NOT IN (Declined, "Won't Do") AND statusCategory=Done&fields=created,resolutiondate`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory=Done&fields=customfield_10092,created,resolutiondate&expand=changelog&maxResults=1000`;
 
     const response = await fetch(urlApiJira, {
-        method: "GET",
-        headers: {
-            'Authorization': `Basic ${auth}`,
-            'Accept': 'application/json'
-        }
+      method: "GET",
+      headers: {
+        'Authorization': `Basic ${auth}`,
+        'Accept': 'application/json'
+      }
     });
 
     const data = await response.json();
 
-    const temposResolucao = data.issues.filter(issue =>
-        issue.fields.created && issue.fields.resolutiondate
-    );
+    const issuesComDatas = data.issues.filter(issue => issue.fields.created && issue.changelog && issue.changelog.histories);
 
-    let totalMs = 0; 
-
-    for (let i = 0; i < temposResolucao.length; i++) {
-        const criado = Date.parse(temposResolucao[i].fields.created);
-        const resolvido = Date.parse(temposResolucao[i].fields.resolutiondate);
-        totalMs += (resolvido - criado); 
+    if (issuesComDatas.length === 0) {
+      return res.json({ mediaHoras: 0, totalChamados: 0 });
     }
 
-    const mediaHoras = ((totalMs / temposResolucao.length) / 1000 / 60 / 60).toFixed(2);
+    const temposEmMs = [];
 
-    res.json({ mediaHoras });
+    for (const issue of issuesComDatas) {
+      const criado = new Date(issue.fields.created);
 
-}
+      // Procurar no changelog o momento que o status virou "Done"
+      // os alertas n tem resolutionDate, então eu pego o log do momento que o alerta virou Done
+      let dataDone = null;
+      for (const history of issue.changelog.histories) {
+        for (const item of history.items) {
+          if (item.field === "status" && item.toString === "Done") {
+            dataDone = new Date(history.created);
+            break;
+          }
+        }
+        if (dataDone) break;
+      }
+
+      if (dataDone && dataDone > criado) {
+        temposEmMs.push(dataDone - criado);
+      }
+    }
+
+    if (temposEmMs.length === 0) {
+      return res.json({ mediaHoras: 0, totalChamados: 0 });
+    }
+
+    const totalMs = temposEmMs.reduce((acc, cur) => acc + cur, 0);
+
+
+    const mediaHoras = (totalMs / temposEmMs.length / 1000 / 60 / 60).toFixed(2);
+
+    res.json({
+      mediaHoras,
+      totalChamados: temposEmMs.length
+    });
+};
 
 const alertaTraceroute = async (req, res) => {
 
@@ -476,7 +502,7 @@ const alertaTraceroute = async (req, res) => {
     const key = process.env.JIRA_KEY;
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
 
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Equipe de Suporte Siemens" AND created >= -7d OR resolutiondate >= -7d&fields=created,resolutiondate,status&maxResults=1000`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND created >= -7d OR resolutiondate >= -7d&fields=created,resolutiondate,status&maxResults=1000`;
 
     const response = await fetch(urlApiJira, {
         method: "GET",

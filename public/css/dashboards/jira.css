@@ -38,8 +38,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        box-shadow: 1px 6px 12px 9px rgba(0, 0, 0, 0.61);
-        -webkit-box-shadow: 1px 6px 12px 9px rgba(0, 0, 0, 0.61);
+        box-shadow: 1px 5px 6px 8px rgba(0, 0, 0, 0.2);
         -moz-box-shadow: 1px 6px 12px 9px rgba(0,0,0,0.61);
         border-radius: 12px;
         height: 20vw;
@@ -126,7 +125,8 @@ canvas#alertaTraceroute {
         }
         & .HAHAHA{
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
+            gap: 10px;
             align-items: center;
             & h6{
                 font-size: 0.8em;
