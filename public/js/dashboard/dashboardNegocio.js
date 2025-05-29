@@ -152,9 +152,28 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
+    function carregarKPI3(){
+        const kpi3 = document.getElementById("modelo-defeito");
+        console.log(kpi3)
+        fetch(`/adm/dashNegocio/modeloMaisAfetado/${sessionStorage.getItem('EMPRESA_ID')}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((dados) => {
+                console.log("Modelo mais afetado:", dados);
+                kpi3.innerHTML = dados[0].modelo.toUpperCase();
+            })
+            .catch((error) => {
+                console.log("Erro:", error);
+                kpi3.innerHTML = "baguete";
+            });
+    }
+
+
 
 carregarKPI1()
 carregarKPI2()
+carregarKPI3()
 
 });
 
