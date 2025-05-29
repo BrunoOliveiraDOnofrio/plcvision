@@ -1,4 +1,4 @@
-/* Seu CSS existente */
+/* Seu CSS existente - mantendo o que já funciona */
 * {
     margin: 0;
     padding: 0;
@@ -8,155 +8,176 @@
 .mainRede {
     padding-top: 70px;
     display: flex;
-    flex-direction: column; /* mainRede continua como coluna para empilhar itens */
+    flex-direction: column;
     width: 100%;
     height: auto;
+    padding-left: 0; /* Inicia sem padding para mobile */
 }
 
-/* Novo estilo para o container de filtros, se desejar estilizar */
+/* Container de filtros - modificado para mobile first */
 .filtro-area {
-    width: 50%;
-    padding: 5px;
-    text-align: center;
+    width: 100%;
+    padding: 10px;
     display: flex;
-    flex-direction: row;
-    
+    flex-direction: column; /* Por padrão, coluna em mobile */
+    gap: 10px;
+    align-items: center;
 }
 
-/* Novo container para as metades */
+.divFiltro {
+    width: 100%;
+    padding: 5px 10px;
+}
+
+.divFiltro select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Content wrapper mantém o mesmo */
 .content-wrapper {
-    display: flex; /* Permite que as metades fiquem lado a lado */
-    flex-direction: column; /* Por padrão, em mobile, metades ficam em coluna */
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: auto;
 }
 
+/* Restante do seu CSS existente... */
 
-.metade {
-    padding-top: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 100%;
-    background-color: #D9D9D9;
-}
-
-/* Estilo padrão para KPIs (mobile first) */
-.KPIs {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 15px;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-}
-
-.kpi {
-    flex: 1;
-    max-width: 120px;
-    min-width: 80px;
-    background-color: rgb(255, 255, 255);
-    max-height: 90px;
-    min-height: 50px;
-    border-radius: 5%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.kpi .titulo {
-    font-size: medium;
-}
-
-.kpi .valor {
-    font-size: x-large;
-}
-
-.graficoRede {
-    width: 100%;
-    margin-top: 40px;
-    background-color: #FFFFFF;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-@media only screen and (min-width:768px ) and (min-height: 720px) {
-    .mainRede {
-        padding-left: 70px;
+/* Media queries para telas maiores */
+@media only screen and (min-width: 768px) {
+    .filtro-area {
+        flex-direction: row; /* Filtros em linha em telas maiores */
+        justify-content: center;
+        flex-wrap: wrap; /* Permite quebra de linha se necessário */
     }
-
+    
+    .divFiltro {
+        width: auto;
+        min-width: 200px;
+        flex: 1;
+        max-width: 300px;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
     .mainRede {
-        flex-direction: column; /* Continua como coluna para empilhar filtro e conteúdo */
-        padding-top: 70px;
         padding-left: 70px;
-        height: 100vh; /* Ajuste se necessário para o layout */
     }
-
+    
     .content-wrapper {
-        flex-direction: row; /* Metades ficam lado a lado em telas maiores */
-        flex-grow: 1; /* Permite que ele ocupe o espaço restante */
+        flex-direction: row;
+        padding-left: 7px;
     }
 
+    
+    
     .metade {
         width: 50%;
-        padding-right: 10px;
     }
+}
 
+/* Ajustes específicos para tablets em modo retrato */
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .mainRede {
+        padding-left: 77px;
+    }
+    .filtro-area {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+ .divFiltro {
+        width: 45%;
+    }
+}
+
+/* Estilo para KPIs - Mobile First */
+.KPIs {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebra de linha */
+    gap: 10px;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
+}
+
+.kpi {
+    flex: 1 1 100px;
+    min-width: 100px;
+    max-width: 150px;
+    background-color: rgb(255, 255, 255);
+    height: 90px;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.kpi .titulo {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.kpi .valor {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Media Queries para telas maiores */
+@media only screen and (min-width: 480px) {
     .kpi {
-        max-width: 120px;
-        min-width: 60px;
-        height: 70px;
+        flex: 1 1 120px;
+        height: 100px;
     }
-
+    
     .kpi .titulo {
-        font-size: 15px;
+        font-size: 13px;
     }
-
+    
     .kpi .valor {
         font-size: 20px;
     }
 }
 
-@media only screen and (min-width: 760px ) and (min-height: 1024px) { /* Corrigido: 1024 é um height, não width */
-    .mainRede {
-        flex-direction: column; /* Continua como coluna */
-        padding-top: 70px;
-        height: 100vh;
+@media only screen and (min-width: 768px) {
+    .KPIs {
+        flex-wrap: nowrap; /* Mantém em uma linha */
+        gap: 15px;
     }
-
-    .content-wrapper {
-        flex-direction: row; /* Metades ficam lado a lado */
-        flex-grow: 1;
-    }
-
-    .metade {
-        width: 50%;
-    }
-
+    
     .kpi {
-        max-width: 120px;
-        min-width: 60px;
-        height: 70px;
+        flex: 1;
+        max-width: none;
+        height: 110px;
     }
-
+    
     .kpi .titulo {
-        font-size: smaller;
+        font-size: 14px;
     }
-
+    
     .kpi .valor {
-        font-size: medium;
+        font-size: 22px;
     }
 }
 
-@media only screen and (width: 1024px ) and (height: 600px) {
-    .mainRede {
-        padding-left: 70px;
+@media only screen and (min-width: 1200px) {
+    .kpi {
+        height: 120px;
+    }
+    
+    .kpi .titulo {
+        font-size: 15px;
+    }
+    
+    .kpi .valor {
+        font-size: 24px;
     }
 }
