@@ -53,6 +53,7 @@ const store = (req,res) => {
                 fabrica_id: req.body.fabrica_id,
                 plc_id: req.body.plc_id,
                 config_plc_id: req.body.config_plc_id,
+                dataHora: req.body.dataHora
             };
 
             if(req.body.dataCriacao){
@@ -61,7 +62,7 @@ const store = (req,res) => {
             console.log(alertaInfo)
             
             // aqui voces vao chamar o jira, e o slack
-            let {url, descricao} = await openJiraTaskSendSlackNotification(alertaInfo);
+            let {url, descricao} = await openJiraTaskSendSlackNotificationFake(alertaInfo);
             req.body.link_chamado = url
             alertaInfo.link_chamado = url
             alertaInfo.descricao = descricao;
@@ -205,6 +206,133 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
     }).catch(e => {
         console.log(e);
     });
+    return {url, descricao}
+};
+
+
+const openJiraTaskSendSlackNotificationFake = async (alertaInfo) => {
+    require("dotenv").config({path: '../../.env'});
+            
+    const email = "carvalhohugo425@gmail.com";
+    const key = process.env.JIRA_KEY;
+    const urlApiJira = 'https://carvalhohugo425.atlassian.net/rest/api/3/issue'
+    
+    // Título dinâmico com base nas informações do alerta
+    const nivelAlerta = alertaInfo.nivel === 1 ? "Crítico" : "Atenção";
+    if(alertaInfo.hardware == undefined || alertaInfo.hardware == null || alertaInfo.hardware == '' || alertaInfo.valor == 0 || alertaInfo.valor == undefined || alertaInfo.valor == null){
+      console.log("SAIA");
+      
+      return;
+    }
+
+    const resultado = await alertaModel.nomeFabrica(alertaInfo.fabrica_id);
+    const nomeFabrica = resultado[0].nome
+    const nomeEmpresa = resultado[0].razao_social
+
+    const resultado2 = await alertaModel.nomeSetor(alertaInfo.plc_id);
+    const nomeSetor = resultado2[0].nome
+
+    const titulo = `Alerta ${nivelAlerta}: ${alertaInfo.hardware} ${alertaInfo.tipoDado} (${alertaInfo.valor}${alertaInfo.unidadeDado}) Nome da Fábrica: ${nomeFabrica}`;
+
+    // Descrição com detalhes do alerta
+    const descricao = `
+    Foi detectado um alerta de ${nivelAlerta} para ${alertaInfo.hardware} ${alertaInfo.tipoDado}.
+    
+    Valor atual: ${alertaInfo.valor} ${alertaInfo.unidadeDado}
+
+    Empresa: ${nomeEmpresa}
+    
+    Localização : Fábrica "${nomeFabrica}" | Setor "${nomeSetor}"
+
+    PLC: ${alertaInfo.plc_id}
+
+    Este alerta foi gerado automaticamente pelo sistema de monitoramento.
+    `;
+    
+    //     const dataJira = {
+    //   fields: {
+    //     project: {
+    //       key: "SPOP3"
+    //     },
+    //     customfield_10092: alertaInfo.dataCriacao, // Data de vencimento do alerta
+        
+    //     summary: titulo,
+    //     description: {
+    //       type: "doc",
+    //       version: 1,
+    //       content: [
+    //         {
+    //           type: "paragraph",
+    //           content: [
+    //             {
+    //               type: "text",
+    //               text: descricao
+    //             }
+    //           ]
+    //         }
+    //       ]
+    //     },
+    //     issuetype: {
+    //       name: "Task"
+    //     }
+    //   }
+    // };
+    
+    let url = 'https://carvalhohugo425.atlassian.net/rest/api/3/issue/11313';
+    // await fetch(`${urlApiJira}`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Authorization': `Basic ${Buffer.from(`${email}:${key}`).toString('base64')}`,
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(dataJira)
+    // }).then(response => response.json().then(response => {
+    //     console.log(response, "AQUI ESTA A RESPOSTA EM JSON");
+    //     url = response.self;
+    // })
+    // .catch(e => {
+    //     console.log(e);
+    // })).catch(e => {
+    //     console.log(e);
+    // });
+    // essa é a URL para abrir o card no jira, utilizeio o json que é a url para pegar a chave key
+    url_alerta_jira = `https://carvalhohugo425.atlassian.net/jira/servicedesk/projects/SUP/boards/3?selectedIssue=${url}`
+
+    const color = alertaInfo.nivel === 1 ? "#D00000" : "#FFA500"; // Vermelho para crítico, laranja para atenção
+    
+    // const dataSlack = {
+    //     attachments:[
+    //         {
+    //             fallback:"Novo chamado aberto" + [nivelAlerta] +": <" + url_alerta_jira + "|Ir para o JIRA>",
+    //             pretext:"Novo chamado aberto" + [nivelAlerta] +": <" + url_alerta_jira + "|Ir para o JIRA>",
+    //             color: color,
+    //             fields:[
+    //                 {
+    //                     title:titulo,
+    //                     value:"Valor: "+ alertaInfo.valor +" "+ alertaInfo.unidadeDado,
+    //                     short:false
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // };
+
+    const urlSlack = `https://hooks.slack.com/services/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`;
+
+    // fetch(`${urlSlack}`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(dataSlack)
+    // }).then(response => {
+    //     console.log(response);
+    //     console.log("A RESPOSTA DO SLACK TA BEM AQUI JOVEM");
+    // }).catch(e => {
+    //     console.log(e);
+    // });
     return {url, descricao}
 };
 

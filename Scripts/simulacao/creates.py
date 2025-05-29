@@ -117,20 +117,26 @@ for _ in range(2):  # 2 empresas consumidoras
         script += f"INSERT INTO setor_fabrica (nome, fabrica_consumidor_id, qtdPlc) VALUES\n('{nome_setor}', {fabrica_id}, 5);\n"
 
         for _ in range(10):
-            modelo = faker.random_element(elements=('Siemens s7-1500', 'Schneider M340', 'Siemens XRL8'))
+            modelo = faker.random_element(elements=(
+                    'LOGO!',
+                    'S7-200 SMART',
+                    'S7-1200',
+                    'ET 200SP',
+                    'S7-1500',
+                    'S7-1200 F',
+                    'S7-1500 PN',
+                    'S7-1500 T',
+                    'S7-1500 R/H',
+                    'S7-400H',
+                  ))
             ano = random.randint(2018, 2024)
             so = faker.random_element(elements=('Linux', 'Windows CE', 'VxWorks'))
             ram = faker.random_element(elements=('2GB', '4GB', '8GB'))
             mac = faker.mac_address()
             hostname = f"plc-{faker.word()}-{plc_id:02d}"
             num_plc = random.randint(1, 15)
-            if modelo == 'Siemens s7-1500':
-                lote = "Siemens - 001"
-            elif modelo == 'Schneider M340':
-                lote = "Schneider - 777"
-            elif modelo == 'Siemens XRL8':
-                lote = "Siemens - 013"
-            script += f"INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname, lote) VALUES\n('{modelo}', {ano}, {parceria_id}, {setor_id}, '{so}', '{ram}', '{mac}', 'PLC_{nome_setor}_{num_plc}', '{lote}');\n"
+         
+            script += f"INSERT INTO plc (modelo, ano, parceria_id, setor_fabrica_id, sistema_operacional, capacidade_ram, endereco_mac, hostname) VALUES\n('{modelo}', {ano}, {parceria_id}, {setor_id}, '{so}', '{ram}', '{mac}', 'PLC_{nome_setor}_{num_plc}');\n"
 
 
 

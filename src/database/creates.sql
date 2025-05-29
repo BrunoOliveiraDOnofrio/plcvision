@@ -98,7 +98,7 @@ CREATE TABLE plc (
     capacidade_ram VARCHAR(45),
     endereco_mac VARCHAR(45),
     hostname VARCHAR(45),
-    lote VARCHAR(90),
+    
     FOREIGN KEY (parceria_id) REFERENCES parceria(id),
     FOREIGN KEY (setor_fabrica_id) REFERENCES setor_fabrica(id)
 );

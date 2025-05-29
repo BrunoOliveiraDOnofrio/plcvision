@@ -208,8 +208,8 @@ def enviar_monitoramento(plc, rodadaDeAlerta, horario, horarioMysql, maxAlertas)
         
         if True:
             valor = random.randint(limite_atencao + 1, limite_critico + 1)
-            # selectsInfos.inserirAlertaSimulado(horarioMysql,horario ,config_id, valor, f"{hardware} {tipo_dado}", 1, tipo_dado, unidade_dado, hardware, fabrica_id, id_plc)
-            # print("inseriu um novo alerta")
+            selectsInfos.inserirAlertaSimulado(horarioMysql,horario ,config_id, valor, f"{hardware} {tipo_dado}", 1, tipo_dado, unidade_dado, hardware, fabrica_id, id_plc)
+            print("inseriu um novo alerta")
             horariosComAlertasEConfig.append({
                 "horario" : horarioMysql,
                 "config_id": config_id,
@@ -253,7 +253,7 @@ def simular_monitoramento():
                 print(f"Máximo de alertas global ({maxAlertas}) atingido para a empresa .")
                 
                 break
-            gerar_csv_plc(plc["plc_id"], plc["configuracoes"], horarios[i])
+            # gerar_csv_plc(plc["plc_id"], plc["configuracoes"], horarios[i])
             horariosComAlertasEConfig.clear()
         
     
