@@ -1,25 +1,30 @@
-/* Seu CSS existente - mantendo o que já funciona */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+.graficoRede {
+    width: calc(100% - 20px);
+    background-color: #FFFFFF;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 .mainRede {
     padding-top: 70px;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: auto;
-    padding-left: 0; /* Inicia sem padding para mobile */
+    padding-left: 0; 
 }
 
-/* Container de filtros - modificado para mobile first */
 .filtro-area {
     width: 100%;
     padding: 10px;
     display: flex;
-    flex-direction: column; /* Por padrão, coluna em mobile */
+    flex-direction: column;
     gap: 10px;
     align-items: center;
 }
@@ -37,7 +42,6 @@
     font-size: 14px;
 }
 
-/* Content wrapper mantém o mesmo */
 .content-wrapper {
     display: flex;
     flex-direction: column;
@@ -45,14 +49,12 @@
     height: auto;
 }
 
-/* Restante do seu CSS existente... */
 
-/* Media queries para telas maiores */
 @media only screen and (min-width: 768px) {
     .filtro-area {
-        flex-direction: row; /* Filtros em linha em telas maiores */
+        flex-direction: row;
         justify-content: center;
-        flex-wrap: wrap; /* Permite quebra de linha se necessário */
+        flex-wrap: wrap;
     }
     
     .divFiltro {
@@ -80,7 +82,6 @@
     }
 }
 
-/* Ajustes específicos para tablets em modo retrato */
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .mainRede {
         padding-left: 77px;
@@ -94,10 +95,9 @@
     }
 }
 
-/* Estilo para KPIs - Mobile First */
 .KPIs {
     display: flex;
-    flex-wrap: wrap; /* Permite quebra de linha */
+    flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
     padding: 10px;
@@ -131,7 +131,6 @@
     font-weight: bold;
 }
 
-/* Media Queries para telas maiores */
 @media only screen and (min-width: 480px) {
     .kpi {
         flex: 1 1 120px;
@@ -149,7 +148,7 @@
 
 @media only screen and (min-width: 768px) {
     .KPIs {
-        flex-wrap: nowrap; /* Mantém em uma linha */
+        flex-wrap: nowrap; 
         gap: 15px;
     }
     
