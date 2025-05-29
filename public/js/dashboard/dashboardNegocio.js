@@ -1,5 +1,3 @@
-// Empresa mais afetada
-
 // Gráfico de Meta
 document.addEventListener("DOMContentLoaded", function() {
     let metaTotal = 100;
@@ -95,6 +93,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Se precisar atualizar dinamicamente:
     // window.meuDonutProgresso = chartDonutProgresso;
 
+
+
+
+    // Empresa mais afetada
     function carregarKPI1(){
         const kpi1 = document.getElementById("empresa-afetada");
         console.log(kpi1)
@@ -104,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then((dados) => {
                 console.log("Empresa mais Afetada:", dados);
-                kpi1.innerHTML = dados[0].razao_social.split(' ')[0];
+                kpi1.innerHTML = dados[0].razao_social.split(' ')[0].toUpperCase();
             })
             .catch((error) => {
                 console.log("Erro:", error);
@@ -112,7 +114,47 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     }
 
+
+
+
+    // Mês com maior taxa de defeitos
+    function carregarKPI2(){
+        const kpi2 = document.getElementById("mes-afetado");
+        console.log(kpi2)
+        fetch(`/adm/dashNegocio/mesMaisAfetado/${sessionStorage.getItem('ALERTA_ID')}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((dados) => {
+                console.log("Mês com maior taxa de defeitos:", dados);
+                
+                const month = {
+                "01": "Janeiro",
+                "02": "Fevereiro",
+                "03": "Março",
+                "04": "Abril",
+                "05": "Maio",
+                "06": "Junho",
+                "07": "Julho",
+                "08": "Agosto",
+                "09": "Setembro",
+                "10": "Outubro",
+                "11": "Novembro",
+                "12": "Dezembro"
+               }
+                
+                kpi2.innerHTML = month[dados[0].dataHoraMod].toUpperCase();
+            })
+            .catch((error) => {
+                console.log("Erro:", error);
+                kpi2.innerHTML = "baguete";
+            });
+    }
+
+
+
 carregarKPI1()
+carregarKPI2()
 
 });
 

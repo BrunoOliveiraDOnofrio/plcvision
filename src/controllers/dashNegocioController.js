@@ -19,6 +19,28 @@ function empresaMaisAfetada(req,res){
     })
 }
 
+
+function mesMaisAfetado(req,res){
+    
+    var empresaId = req.params.empresaId
+
+    dashNegocioModel
+    .getMesMaisAfetado(empresaId).
+    then(function(nomeMes){
+        console.log(nomeMes)
+        if(nomeMes.length > 0){
+            res.status(200).json(nomeMes)
+        }else{
+            res.status(204).send('Não foi possível encontrar o mês!')
+        }
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage)
+        console.log(erro)
+    })
+}
+
+
 module.exports = {
-    empresaMaisAfetada
+    empresaMaisAfetada,
+    mesMaisAfetado
 }

@@ -94,4 +94,8 @@ router.get('/dashNegocio/empresaMaisAfetada/:empresaId', (req, res) => {
     dashNegocioController.empresaMaisAfetada(req,res);
 })
 
+router.get('/dashNegocio/mesMaisAfetado/:alertaId', (req, res) => {
+    dashNegocioController.mesMaisAfetado(req,res);
+})
+
 module.exports = router;
