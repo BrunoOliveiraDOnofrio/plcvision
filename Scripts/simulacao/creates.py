@@ -67,30 +67,6 @@ SETORES_INDUSTRIAIS = [
     "Caldeiraria"
 ]
 
-SETORES_INDUSTRIAIS = [
-    "Logística",
-    "Linha de Montagem",
-    "Pintura Industrial",
-    "Controle de Qualidade",
-    "Estamparia",
-    "Usinagem",
-    "Embalagem",
-    "Armazenamento",
-    "Expedição",
-    "Manutenção",
-    "Injeção Plástica",
-    "Solda Robotizada",
-    "Tratamento Térmico",
-    "Prensagem",
-    "Fundição",
-    "Galvanoplastia",
-    "Corte e Dobra",
-    "Ferramentaria",
-    "Laboratório",
-    "Refrigeração",
-    "Caldeiraria"
-]
-
 for _ in range(2):  # 2 empresas consumidoras
     logradouro = faker.street_name()
     numero = faker.building_number()

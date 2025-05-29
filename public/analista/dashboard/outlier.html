@@ -272,7 +272,7 @@
         }
         // Se tem só empresa selecionada, busca PLCs da empresa
         else if (empresaId) {
-            const response = await fetch(`/api/fabricante/${fabricanteId}/plcs?empresaId=${empresaId}`);
+            const response = await fetch(`/api/empresa_consumidora/${empresaId}/fabricante/${fabricanteId}/modelosPorEmpresa`);
             const plcs = await response.json();
             mostrarPlcs(plcs);
         }
@@ -315,20 +315,20 @@
                 plc.quantidade_alertas > 5 ? 'Atenção' : 'Normal';
 
             tabela.innerHTML += `
-                    <tr>
-                        <td>${plc.modelo}</td>
-                        <td>${plc.quantidade_alertas}</td>
-                        <td>${status}</td>
-                        <td>
-                            <button onclick="verDetalhesPlc(${plc.id}, '${plc.modelo}', ${index})">
-                                Detalhes
-                            </button>
-                        </td>
-                    </tr>
-                    <tr id="detalhes-${index}" style="display: none;">
-                        <td colspan="4">Carregando...</td>
-                    </tr>
-                `;
+            <tr>
+                <td>${plc.modelo}</td>
+                <td>${plc.quantidade_alertas}</td>
+                <td>${status}</td>
+                <td>
+                    <button onclick="verDetalhesPorModelo('${plc.modelo}', ${index})">
+                        Detalhes
+                    </button>
+                </td>
+            </tr>
+            <tr id="detalhes-${index}" style="display: none;">
+                <td colspan="4">Carregando...</td>
+            </tr>
+        `;
         });
     }
 
@@ -415,4 +415,72 @@
             }
         });
     }
+
+    // Add new function to show model details
+    async function verDetalhesPorModelo(modelo, index) {
+        const linha = document.getElementById(`detalhes-${index}`);
+        const empresaId = document.getElementById('empresa').value;
+
+        if (linha.style.display === 'table-row') {
+            linha.style.display = 'none';
+            return;
+        }
+
+        linha.style.display = 'table-row';
+        linha.querySelector('td').innerHTML = 'Carregando...';
+
+        try {
+            const response = await fetch(`/api/empresa_consumidora/${empresaId}/modelo/${encodeURIComponent(modelo)}/fabricas`);
+            const fabricas = await response.json();
+
+            let html = `<h4>Fábricas com o modelo "${modelo}":</h4><ul>`;
+            
+            if (fabricas.length === 0) {
+                html += '<li>Nenhuma fábrica encontrada</li>';
+            } else {
+                fabricas.forEach(fabrica => {
+                    html += `<li><b>${fabrica.fabrica_nome}</b>: ${fabrica.quantidade_alertas} alertas</li>`;
+                });
+            }
+            html += '</ul>';
+
+            // Add chart
+            const graficoId = `grafico-${index}-${Date.now()}`;
+            html += `<div style="width: 400px; height: 200px; margin: 20px auto;">
+                <canvas id="${graficoId}"></canvas>
+            </div>`;
+
+            linha.querySelector('td').innerHTML = html;
+
+            // Create chart
+            setTimeout(() => {
+                const ctx = document.getElementById(graficoId).getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: fabricas.map(f => f.fabrica_nome),
+                        datasets: [{
+                            label: 'Alertas por Fábrica',
+                            data: fabricas.map(f => f.quantidade_alertas),
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }, 100);
+
+        } catch (erro) {
+            linha.querySelector('td').innerHTML = 'Erro ao carregar detalhes';
+            console.error(erro);
+        }
+    }
+    window.verDetalhesPorModelo = verDetalhesPorModelo;
 </script>

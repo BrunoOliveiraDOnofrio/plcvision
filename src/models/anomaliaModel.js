@@ -12,10 +12,9 @@ const listarPlcsPorFabricante = (fabricanteId) => {
     return database.executar(sql);
 };
 
-const listarPlcsPorEmpresa = (fabricanteId, empresaId) => {
+const listarModeloPorEmpresa = (empresaId, fabricanteId) => {
     const sql = `
         SELECT 
-            p.id,
             p.modelo,
             COUNT(DISTINCT a.id) as quantidade_alertas
         FROM plc p
@@ -24,7 +23,7 @@ const listarPlcsPorEmpresa = (fabricanteId, empresaId) => {
         LEFT JOIN alerta a ON a.config_plc_id = cp.id
         WHERE pa.empresa_fabricante_id = ${fabricanteId}
         AND pa.empresa_consumidor_id = ${empresaId}
-        GROUP BY p.id, p.modelo
+        GROUP BY p.modelo
         ORDER BY quantidade_alertas DESC;
     `;
     
@@ -146,14 +145,34 @@ const setoresPorModelo = (modelo) => {
     return database.executar(sql);
 };
 
+const listarFabricasPorModelo = (empresaId, modelo) => {
+    const sql = `
+        SELECT 
+            fc.nome AS fabrica_nome,
+            COUNT(DISTINCT a.id) as quantidade_alertas
+        FROM plc p
+        JOIN setor_fabrica sf ON p.setor_fabrica_id = sf.id
+        JOIN fabrica_consumidor fc ON sf.fabrica_consumidor_id = fc.id
+        LEFT JOIN config_plc cp ON cp.plc_id = p.id
+        LEFT JOIN alerta a ON a.config_plc_id = cp.id
+        WHERE fc.empresa_consumidor_id = ${empresaId}
+        AND p.modelo = '${modelo}'
+        GROUP BY fc.id, fc.nome
+        ORDER BY quantidade_alertas DESC;
+    `;
+    
+    return database.executar(sql);
+};
+
 module.exports = { 
     listarPlcsPorFabricante,
-    listarPlcsPorEmpresa,
+    listarModeloPorEmpresa,
     listarEmpresasConsumidoras, 
     listarFabricaSetores, 
     listarPlcsPorFabrica, 
     setoresPorPlc, 
     setoresPorPlcFabrica, 
     listarFabricasMaisAlertas,
-    setoresPorModelo
+    setoresPorModelo,
+    listarFabricasPorModelo
 };

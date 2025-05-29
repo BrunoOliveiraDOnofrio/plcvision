@@ -1,7 +1,29 @@
 [
     {
         "id_alerta": 1,
-        "dataHora": "2025-05-27 22:44:54",
+        "dataHora": "2025-05-28 16:03:21",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 1,
+        "fabrica_id": 1,
+        "plc_id": 1,
+        "modelo_plc": "Siemens S7-1500",
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 44.3,
+                "ram": 14.8
+            },
+            {
+                "nome": "Teste_Qualidade",
+                "cpu": 18.1,
+                "ram": 43.9
+            }
+        ]
+    },
+    {
+        "id_alerta": 5,
+        "dataHora": "2025-05-29 15:58:21",
         "setor": "Linha de Montagem",
         "empresa_consumidor_id": 1,
         "fabrica_id": 1,
@@ -11,46 +33,29 @@
         "processos": [
             {
                 "nome": "Controle_Velocidade",
-                "cpu": 42.2,
-                "ram": 11.0
+                "cpu": 44.0,
+                "ram": 21.7
             },
             {
                 "nome": "Teste_Qualidade",
-                "cpu": 24.1,
-                "ram": 36.9
+                "cpu": 40.8,
+                "ram": 45.0
             },
             {
                 "nome": "Montagem_Componentes",
-                "cpu": 12.9,
-                "ram": 40.0
-            }
-        ]
-    },
-    {
-        "id_alerta": 5,
-        "dataHora": "2025-05-28 22:39:54",
-        "setor": "Linha de Montagem",
-        "empresa_consumidor_id": 1,
-        "fabrica_id": 1,
-        "plc_id": 1,
-        "modelo_plc": "Siemens S7-1500",
-        "tipo_alerta_valor": "cpu_percent",
-        "processos": [
-            {
-                "nome": "Montagem_Componentes",
-                "cpu": 38.1,
-                "ram": 45.8
+                "cpu": 58.0,
+                "ram": 49.3
             },
             {
-                "nome": "Teste_Qualidade",
-                "cpu": 50.2,
-                "ram": 49.0
+                "nome": "Medicao_Precisao",
+                "cpu": 53.6,
+                "ram": 39.9
             }
         ]
     },
     {
         "id_alerta": 2,
-        "dataHora": "2025-05-28 00:44:54",
+        "dataHora": "2025-05-28 18:03:21",
         "setor": "Linha de Montagem",
         "empresa_consumidor_id": 1,
         "fabrica_id": 1,
@@ -59,30 +64,20 @@
         "tipo_alerta_valor": "ram_percent",
         "processos": [
             {
-                "nome": "Controle_Velocidade",
-                "cpu": 48.3,
-                "ram": 22.3
-            },
-            {
-                "nome": "Teste_Qualidade",
-                "cpu": 35.0,
-                "ram": 14.4
+                "nome": "Ajuste_Automatico",
+                "cpu": 21.7,
+                "ram": 25.0
             },
             {
                 "nome": "Montagem_Componentes",
-                "cpu": 18.8,
-                "ram": 32.5
-            },
-            {
-                "nome": "Ajuste_Automatico",
-                "cpu": 48.7,
-                "ram": 15.7
+                "cpu": 39.4,
+                "ram": 5.2
             }
         ]
     },
     {
         "id_alerta": 3,
-        "dataHora": "2025-05-26 22:44:54",
+        "dataHora": "2025-05-27 16:03:21",
         "setor": "Linha de Montagem",
         "empresa_consumidor_id": 1,
         "fabrica_id": 1,
@@ -91,25 +86,20 @@
         "tipo_alerta_valor": "cpu_temperatura",
         "processos": [
             {
-                "nome": "Medicao_Precisao",
-                "cpu": 29.6,
-                "ram": 14.6
+                "nome": "Teste_Qualidade",
+                "cpu": 8.4,
+                "ram": 30.8
             },
             {
-                "nome": "Montagem_Componentes",
-                "cpu": 50.0,
-                "ram": 13.2
-            },
-            {
-                "nome": "Ajuste_Automatico",
-                "cpu": 59.7,
-                "ram": 26.0
+                "nome": "Controle_Velocidade",
+                "cpu": 41.9,
+                "ram": 11.6
             }
         ]
     },
     {
         "id_alerta": 4,
-        "dataHora": "2025-05-28 02:44:54",
+        "dataHora": "2025-05-28 20:03:21",
         "setor": "Linha de Montagem",
         "empresa_consumidor_id": 1,
         "fabrica_id": 1,
@@ -118,30 +108,35 @@
         "tipo_alerta_valor": "ram_livre",
         "processos": [
             {
-                "nome": "Teste_Qualidade",
-                "cpu": 14.9,
-                "ram": 39.8
-            },
-            {
                 "nome": "Ajuste_Automatico",
-                "cpu": 18.3,
-                "ram": 47.3
+                "cpu": 39.1,
+                "ram": 7.5
             },
             {
-                "nome": "Montagem_Componentes",
-                "cpu": 49.1,
-                "ram": 23.0
+                "nome": "Controle_Velocidade",
+                "cpu": 17.5,
+                "ram": 13.1
             },
             {
                 "nome": "Medicao_Precisao",
-                "cpu": 58.2,
-                "ram": 3.1
+                "cpu": 48.5,
+                "ram": 23.5
+            },
+            {
+                "nome": "Teste_Qualidade",
+                "cpu": 22.9,
+                "ram": 18.2
+            },
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 25.9,
+                "ram": 3.5
             }
         ]
     },
     {
         "id_alerta": 6,
-        "dataHora": "2025-05-28 03:44:54",
+        "dataHora": "2025-05-28 21:03:21",
         "setor": "Pintura Industrial",
         "empresa_consumidor_id": 1,
         "fabrica_id": 1,
@@ -151,29 +146,29 @@
         "processos": [
             {
                 "nome": "Secagem_Controlada",
-                "cpu": 48.8,
-                "ram": 13.5
-            },
-            {
-                "nome": "Pintura_Base",
-                "cpu": 45.0,
-                "ram": 4.1
+                "cpu": 23.6,
+                "ram": 32.0
             },
             {
                 "nome": "Aplicacao_Primer",
-                "cpu": 34.2,
-                "ram": 7.0
+                "cpu": 57.9,
+                "ram": 5.2
             },
             {
                 "nome": "Acabamento_Final",
-                "cpu": 48.0,
-                "ram": 26.7
+                "cpu": 23.7,
+                "ram": 23.4
+            },
+            {
+                "nome": "Preparacao_Superficie",
+                "cpu": 56.8,
+                "ram": 48.0
             }
         ]
     },
     {
         "id_alerta": 7,
-        "dataHora": "2025-05-25 22:44:54",
+        "dataHora": "2025-05-26 16:03:21",
         "setor": "Pintura Industrial",
         "empresa_consumidor_id": 1,
         "fabrica_id": 1,
@@ -182,35 +177,30 @@
         "tipo_alerta_valor": "cpu_freq",
         "processos": [
             {
-                "nome": "Preparacao_Superficie",
-                "cpu": 53.9,
-                "ram": 44.1
+                "nome": "Pintura_Base",
+                "cpu": 19.2,
+                "ram": 46.3
             },
             {
                 "nome": "Acabamento_Final",
-                "cpu": 57.0,
-                "ram": 42.9
-            },
-            {
-                "nome": "Aplicacao_Primer",
-                "cpu": 27.3,
-                "ram": 7.8
+                "cpu": 26.9,
+                "ram": 46.5
             },
             {
                 "nome": "Secagem_Controlada",
-                "cpu": 26.9,
-                "ram": 15.5
+                "cpu": 7.3,
+                "ram": 13.6
             },
             {
-                "nome": "Pintura_Base",
-                "cpu": 33.0,
-                "ram": 34.6
+                "nome": "Aplicacao_Primer",
+                "cpu": 46.2,
+                "ram": 4.8
             }
         ]
     },
     {
         "id_alerta": 8,
-        "dataHora": "2025-05-28 04:44:54",
+        "dataHora": "2025-05-28 22:03:21",
         "setor": "Usinagem",
         "empresa_consumidor_id": 1,
         "fabrica_id": 1,
@@ -219,25 +209,20 @@
         "tipo_alerta_valor": "ram_percent",
         "processos": [
             {
-                "nome": "Torneamento_CNC",
-                "cpu": 47.0,
-                "ram": 5.8
-            },
-            {
                 "nome": "Medicao_3D",
-                "cpu": 22.3,
-                "ram": 8.2
+                "cpu": 55.0,
+                "ram": 19.4
             },
             {
-                "nome": "Retifica_Precisao",
-                "cpu": 8.2,
-                "ram": 22.7
+                "nome": "Fresagem_Automatica",
+                "cpu": 11.6,
+                "ram": 10.6
             }
         ]
     },
     {
         "id_alerta": 9,
-        "dataHora": "2025-05-24 22:44:54",
+        "dataHora": "2025-05-25 16:03:21",
         "setor": "Usinagem",
         "empresa_consumidor_id": 1,
         "fabrica_id": 1,
@@ -246,35 +231,20 @@
         "tipo_alerta_valor": "ram_uso",
         "processos": [
             {
-                "nome": "Fresagem_Automatica",
-                "cpu": 15.9,
-                "ram": 19.2
-            },
-            {
                 "nome": "Furacao_Controle",
-                "cpu": 56.3,
-                "ram": 39.1
+                "cpu": 37.4,
+                "ram": 42.0
             },
             {
                 "nome": "Retifica_Precisao",
-                "cpu": 12.4,
-                "ram": 21.9
-            },
-            {
-                "nome": "Medicao_3D",
-                "cpu": 55.7,
-                "ram": 17.2
-            },
-            {
-                "nome": "Torneamento_CNC",
-                "cpu": 52.2,
-                "ram": 20.9
+                "cpu": 20.7,
+                "ram": 43.5
             }
         ]
     },
     {
         "id_alerta": 10,
-        "dataHora": "2025-05-23 22:44:54",
+        "dataHora": "2025-05-24 16:03:21",
         "setor": "Logística",
         "empresa_consumidor_id": 1,
         "fabrica_id": 2,
@@ -283,25 +253,20 @@
         "tipo_alerta_valor": "rede_recv",
         "processos": [
             {
-                "nome": "Expedicao_Produtos",
-                "cpu": 48.1,
-                "ram": 9.9
-            },
-            {
                 "nome": "Movimentacao_Materiais",
-                "cpu": 57.1,
-                "ram": 10.2
+                "cpu": 10.8,
+                "ram": 33.0
             },
             {
                 "nome": "Separacao_Pedidos",
-                "cpu": 21.6,
-                "ram": 29.0
+                "cpu": 18.6,
+                "ram": 7.5
             }
         ]
     },
     {
         "id_alerta": 11,
-        "dataHora": "2025-05-28 05:44:54",
+        "dataHora": "2025-05-28 23:03:21",
         "setor": "Logística",
         "empresa_consumidor_id": 1,
         "fabrica_id": 2,
@@ -310,35 +275,20 @@
         "tipo_alerta_valor": "rede_sent",
         "processos": [
             {
-                "nome": "Separacao_Pedidos",
-                "cpu": 16.7,
-                "ram": 6.8
-            },
-            {
-                "nome": "Controle_Estoque",
-                "cpu": 50.9,
-                "ram": 33.6
-            },
-            {
                 "nome": "Movimentacao_Materiais",
-                "cpu": 37.3,
-                "ram": 21.4
+                "cpu": 18.2,
+                "ram": 9.1
             },
             {
-                "nome": "Entrada_Mercadorias",
-                "cpu": 23.6,
-                "ram": 10.0
-            },
-            {
-                "nome": "Expedicao_Produtos",
-                "cpu": 19.7,
-                "ram": 2.8
+                "nome": "Separacao_Pedidos",
+                "cpu": 29.3,
+                "ram": 2.7
             }
         ]
     },
     {
         "id_alerta": 12,
-        "dataHora": "2025-05-28 06:44:54",
+        "dataHora": "2025-05-29 00:03:21",
         "setor": "Controle de Qualidade",
         "empresa_consumidor_id": 1,
         "fabrica_id": 2,
@@ -347,25 +297,35 @@
         "tipo_alerta_valor": "cpu_percent",
         "processos": [
             {
-                "nome": "Inspecao_Visual",
-                "cpu": 20.4,
-                "ram": 10.3
+                "nome": "Analise_Materiais",
+                "cpu": 53.8,
+                "ram": 24.4
             },
             {
-                "nome": "Analise_Materiais",
-                "cpu": 34.1,
-                "ram": 43.2
+                "nome": "Verificacao_Defeitos",
+                "cpu": 46.7,
+                "ram": 5.4
+            },
+            {
+                "nome": "Inspecao_Visual",
+                "cpu": 33.5,
+                "ram": 20.9
+            },
+            {
+                "nome": "Teste_Dimensional",
+                "cpu": 29.6,
+                "ram": 47.4
             },
             {
                 "nome": "Controle_Parametros",
-                "cpu": 47.1,
-                "ram": 17.3
+                "cpu": 48.9,
+                "ram": 39.7
             }
         ]
     },
     {
         "id_alerta": 13,
-        "dataHora": "2025-05-22 22:44:54",
+        "dataHora": "2025-05-23 16:03:21",
         "setor": "Controle de Qualidade",
         "empresa_consumidor_id": 1,
         "fabrica_id": 2,
@@ -374,30 +334,35 @@
         "tipo_alerta_valor": "ram_percent",
         "processos": [
             {
-                "nome": "Teste_Dimensional",
-                "cpu": 42.7,
-                "ram": 24.2
+                "nome": "Verificacao_Defeitos",
+                "cpu": 33.0,
+                "ram": 11.4
             },
             {
                 "nome": "Inspecao_Visual",
-                "cpu": 37.9,
+                "cpu": 9.5,
                 "ram": 3.9
             },
             {
-                "nome": "Analise_Materiais",
-                "cpu": 35.7,
-                "ram": 37.5
+                "nome": "Controle_Parametros",
+                "cpu": 36.1,
+                "ram": 12.7
             },
             {
-                "nome": "Controle_Parametros",
-                "cpu": 34.4,
-                "ram": 26.1
+                "nome": "Teste_Dimensional",
+                "cpu": 51.0,
+                "ram": 24.9
+            },
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 27.1,
+                "ram": 22.0
             }
         ]
     },
     {
         "id_alerta": 14,
-        "dataHora": "2025-05-28 07:44:54",
+        "dataHora": "2025-05-29 01:03:21",
         "setor": "Estamparia",
         "empresa_consumidor_id": 1,
         "fabrica_id": 3,
@@ -406,25 +371,20 @@
         "tipo_alerta_valor": "cpu_atividade_dias",
         "processos": [
             {
-                "nome": "Acabamento_Pecas",
-                "cpu": 22.9,
-                "ram": 30.8
-            },
-            {
                 "nome": "Dobra_Automatica",
-                "cpu": 12.0,
-                "ram": 3.8
+                "cpu": 35.7,
+                "ram": 9.5
             },
             {
-                "nome": "Corte_Chapas",
-                "cpu": 17.9,
-                "ram": 25.0
+                "nome": "Acabamento_Pecas",
+                "cpu": 44.0,
+                "ram": 41.8
             }
         ]
     },
     {
         "id_alerta": 15,
-        "dataHora": "2025-05-21 22:44:54",
+        "dataHora": "2025-05-22 16:03:21",
         "setor": "Estamparia",
         "empresa_consumidor_id": 1,
         "fabrica_id": 3,
@@ -433,30 +393,25 @@
         "tipo_alerta_valor": "cpu_ociosidade_dias",
         "processos": [
             {
-                "nome": "Acabamento_Pecas",
-                "cpu": 26.5,
-                "ram": 39.2
+                "nome": "Conformacao_Metal",
+                "cpu": 52.0,
+                "ram": 33.0
             },
             {
-                "nome": "Conformacao_Metal",
-                "cpu": 14.2,
-                "ram": 36.7
+                "nome": "Perfuracao_Precisao",
+                "cpu": 28.2,
+                "ram": 34.5
             },
             {
                 "nome": "Dobra_Automatica",
-                "cpu": 48.4,
-                "ram": 15.1
-            },
-            {
-                "nome": "Corte_Chapas",
-                "cpu": 22.4,
-                "ram": 26.0
+                "cpu": 37.9,
+                "ram": 42.1
             }
         ]
     },
     {
         "id_alerta": 16,
-        "dataHora": "2025-05-28 08:44:54",
+        "dataHora": "2025-05-29 02:03:21",
         "setor": "Manutenção",
         "empresa_consumidor_id": 1,
         "fabrica_id": 3,
@@ -465,30 +420,25 @@
         "tipo_alerta_valor": "ram_livre",
         "processos": [
             {
-                "nome": "Monitoramento_Sensores",
-                "cpu": 50.1,
-                "ram": 12.3
+                "nome": "Controle_Temperatura",
+                "cpu": 43.3,
+                "ram": 4.4
             },
             {
-                "nome": "Diagnostico_Falhas",
-                "cpu": 43.4,
-                "ram": 5.0
+                "nome": "Calibracao_Equipamentos",
+                "cpu": 36.2,
+                "ram": 2.7
             },
             {
                 "nome": "Manutencao_Preventiva",
-                "cpu": 47.5,
-                "ram": 7.2
-            },
-            {
-                "nome": "Controle_Temperatura",
-                "cpu": 42.7,
-                "ram": 32.1
+                "cpu": 18.1,
+                "ram": 10.3
             }
         ]
     },
     {
         "id_alerta": 17,
-        "dataHora": "2025-05-20 22:44:54",
+        "dataHora": "2025-05-21 16:03:21",
         "setor": "Manutenção",
         "empresa_consumidor_id": 1,
         "fabrica_id": 3,
@@ -498,34 +448,34 @@
         "processos": [
             {
                 "nome": "Manutencao_Preventiva",
-                "cpu": 44.8,
-                "ram": 39.4
+                "cpu": 22.6,
+                "ram": 47.2
             },
             {
                 "nome": "Diagnostico_Falhas",
-                "cpu": 46.8,
-                "ram": 43.6
-            },
-            {
-                "nome": "Calibracao_Equipamentos",
-                "cpu": 37.4,
-                "ram": 26.9
+                "cpu": 29.9,
+                "ram": 3.4
             },
             {
                 "nome": "Monitoramento_Sensores",
-                "cpu": 57.6,
-                "ram": 18.9
+                "cpu": 34.6,
+                "ram": 7.8
+            },
+            {
+                "nome": "Calibracao_Equipamentos",
+                "cpu": 32.3,
+                "ram": 3.2
             },
             {
                 "nome": "Controle_Temperatura",
-                "cpu": 7.1,
-                "ram": 16.5
+                "cpu": 24.8,
+                "ram": 39.5
             }
         ]
     },
     {
-        "id_alerta": 21,
-        "dataHora": "2025-05-26 22:44:54",
+        "id_alerta": 18,
+        "dataHora": "2025-05-27 16:03:21",
         "setor": "Embalagem",
         "empresa_consumidor_id": 2,
         "fabrica_id": 4,
@@ -534,35 +484,57 @@
         "tipo_alerta_valor": "cpu_percent",
         "processos": [
             {
-                "nome": "Conferencia_Final",
-                "cpu": 15.6,
-                "ram": 36.5
-            },
-            {
-                "nome": "Rotulagem_Produtos",
-                "cpu": 6.6,
-                "ram": 5.2
-            },
-            {
                 "nome": "Selagem_Automatica",
-                "cpu": 23.4,
-                "ram": 43.3
+                "cpu": 27.6,
+                "ram": 5.5
+            },
+            {
+                "nome": "Conferencia_Final",
+                "cpu": 37.2,
+                "ram": 18.9
             },
             {
                 "nome": "Encaixotamento",
-                "cpu": 35.1,
-                "ram": 33.6
-            },
-            {
-                "nome": "Paletizacao",
-                "cpu": 46.5,
-                "ram": 14.5
+                "cpu": 10.4,
+                "ram": 48.6
             }
         ]
     },
     {
-        "id_alerta": 23,
-        "dataHora": "2025-05-27 22:44:54",
+        "id_alerta": 19,
+        "dataHora": "2025-05-26 16:03:21",
+        "setor": "Embalagem",
+        "empresa_consumidor_id": 2,
+        "fabrica_id": 4,
+        "plc_id": 10,
+        "modelo_plc": "Schneider M580",
+        "tipo_alerta_valor": "ram_percent",
+        "processos": [
+            {
+                "nome": "Encaixotamento",
+                "cpu": 21.6,
+                "ram": 43.9
+            },
+            {
+                "nome": "Paletizacao",
+                "cpu": 29.7,
+                "ram": 20.9
+            },
+            {
+                "nome": "Selagem_Automatica",
+                "cpu": 17.7,
+                "ram": 6.1
+            },
+            {
+                "nome": "Conferencia_Final",
+                "cpu": 19.9,
+                "ram": 48.9
+            }
+        ]
+    },
+    {
+        "id_alerta": 20,
+        "dataHora": "2025-05-28 16:03:21",
         "setor": "Fundição",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
@@ -572,83 +544,108 @@
         "processos": [
             {
                 "nome": "Resfriamento_Pecas",
-                "cpu": 30.6,
-                "ram": 24.9
+                "cpu": 57.0,
+                "ram": 8.3
+            },
+            {
+                "nome": "Desmoldagem",
+                "cpu": 56.0,
+                "ram": 40.5
             },
             {
                 "nome": "Fusao_Metais",
-                "cpu": 35.2,
-                "ram": 7.6
+                "cpu": 41.9,
+                "ram": 36.8
+            },
+            {
+                "nome": "Acabamento_Fundicao",
+                "cpu": 24.3,
+                "ram": 37.5
+            },
+            {
+                "nome": "Vazamento_Controlado",
+                "cpu": 49.5,
+                "ram": 12.9
             }
         ]
     },
     {
         "id_alerta": 27,
-        "dataHora": "2025-05-27 22:44:54",
+        "dataHora": "2025-05-27 16:03:21",
         "setor": "Fundição",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
         "plc_id": 11,
         "modelo_plc": "Rockwell ControlLogix",
-        "tipo_alerta_valor": "cpu_freq",
+        "tipo_alerta_valor": "ram_livre",
         "processos": [
             {
-                "nome": "Vazamento_Controlado",
-                "cpu": 18.6,
-                "ram": 45.1
-            },
-            {
                 "nome": "Desmoldagem",
-                "cpu": 55.5,
-                "ram": 8.1
+                "cpu": 58.9,
+                "ram": 49.2
             },
             {
-                "nome": "Fusao_Metais",
-                "cpu": 50.4,
-                "ram": 41.1
+                "nome": "Acabamento_Fundicao",
+                "cpu": 52.9,
+                "ram": 32.2
+            },
+            {
+                "nome": "Vazamento_Controlado",
+                "cpu": 29.8,
+                "ram": 38.4
             },
             {
                 "nome": "Resfriamento_Pecas",
-                "cpu": 26.2,
-                "ram": 15.2
-            },
-            {
-                "nome": "Acabamento_Fundicao",
-                "cpu": 55.6,
-                "ram": 9.6
-            }
-        ]
-    },
-    {
-        "id_alerta": 28,
-        "dataHora": "2025-05-28 10:44:54",
-        "setor": "Fundição",
-        "empresa_consumidor_id": 3,
-        "fabrica_id": 5,
-        "plc_id": 11,
-        "modelo_plc": "Rockwell ControlLogix",
-        "tipo_alerta_valor": "cpu_percent",
-        "processos": [
-            {
-                "nome": "Acabamento_Fundicao",
-                "cpu": 6.0,
-                "ram": 4.8
+                "cpu": 7.5,
+                "ram": 4.7
             },
             {
                 "nome": "Fusao_Metais",
-                "cpu": 17.5,
-                "ram": 2.4
-            },
-            {
-                "nome": "Vazamento_Controlado",
-                "cpu": 52.7,
+                "cpu": 36.8,
                 "ram": 48.5
             }
         ]
     },
     {
-        "id_alerta": 24,
-        "dataHora": "2025-05-27 22:44:54",
+        "id_alerta": 28,
+        "dataHora": "2025-05-28 16:03:21",
+        "setor": "Fundição",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 5,
+        "plc_id": 11,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "disk_usage_percent",
+        "processos": [
+            {
+                "nome": "Fusao_Metais",
+                "cpu": 33.2,
+                "ram": 18.2
+            },
+            {
+                "nome": "Acabamento_Fundicao",
+                "cpu": 53.9,
+                "ram": 21.9
+            },
+            {
+                "nome": "Resfriamento_Pecas",
+                "cpu": 53.0,
+                "ram": 48.9
+            },
+            {
+                "nome": "Desmoldagem",
+                "cpu": 21.4,
+                "ram": 30.0
+            },
+            {
+                "nome": "Vazamento_Controlado",
+                "cpu": 40.5,
+                "ram": 19.6
+            }
+        ]
+    },
+    {
+        "id_alerta": 21,
+        "dataHora": "2025-05-28 16:03:21",
         "setor": "Prensagem",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
@@ -658,83 +655,78 @@
         "processos": [
             {
                 "nome": "Medicao_Forca",
-                "cpu": 41.8,
-                "ram": 47.5
-            },
-            {
-                "nome": "Conformacao_Metal",
-                "cpu": 27.7,
-                "ram": 16.7
-            },
-            {
-                "nome": "Controle_Pressao",
-                "cpu": 44.8,
-                "ram": 43.1
+                "cpu": 55.8,
+                "ram": 8.3
             },
             {
                 "nome": "Estampagem_Precisao",
-                "cpu": 40.7,
-                "ram": 29.7
+                "cpu": 22.4,
+                "ram": 7.3
+            },
+            {
+                "nome": "Conformacao_Metal",
+                "cpu": 15.7,
+                "ram": 35.1
+            },
+            {
+                "nome": "Prensagem_Hidraulica",
+                "cpu": 34.3,
+                "ram": 16.5
             }
         ]
     },
     {
         "id_alerta": 29,
-        "dataHora": "2025-05-25 22:44:54",
+        "dataHora": "2025-05-29 04:03:21",
         "setor": "Prensagem",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
         "plc_id": 12,
         "modelo_plc": "Rockwell CompactLogix",
-        "tipo_alerta_valor": "cpu_temperatura",
+        "tipo_alerta_valor": "ram_uso",
         "processos": [
             {
-                "nome": "Conformacao_Metal",
-                "cpu": 50.7,
-                "ram": 42.8
+                "nome": "Prensagem_Hidraulica",
+                "cpu": 34.4,
+                "ram": 24.9
             },
             {
                 "nome": "Controle_Pressao",
-                "cpu": 15.1,
-                "ram": 37.0
+                "cpu": 48.3,
+                "ram": 36.3
+            },
+            {
+                "nome": "Conformacao_Metal",
+                "cpu": 12.2,
+                "ram": 3.8
             }
         ]
     },
     {
         "id_alerta": 30,
-        "dataHora": "2025-05-28 16:44:54",
+        "dataHora": "2025-05-29 11:03:21",
         "setor": "Prensagem",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
         "plc_id": 12,
         "modelo_plc": "Rockwell CompactLogix",
-        "tipo_alerta_valor": "ram_percent",
+        "tipo_alerta_valor": "cpu_freq",
         "processos": [
             {
+                "nome": "Prensagem_Hidraulica",
+                "cpu": 17.8,
+                "ram": 44.1
+            },
+            {
                 "nome": "Medicao_Forca",
-                "cpu": 22.8,
-                "ram": 45.4
-            },
-            {
-                "nome": "Estampagem_Precisao",
-                "cpu": 32.6,
-                "ram": 16.6
-            },
-            {
-                "nome": "Conformacao_Metal",
-                "cpu": 57.9,
-                "ram": 36.3
-            },
-            {
-                "nome": "Controle_Pressao",
-                "cpu": 29.8,
-                "ram": 16.3
+                "cpu": 56.3,
+                "ram": 6.7
             }
         ]
     },
     {
-        "id_alerta": 25,
-        "dataHora": "2025-05-24 22:44:54",
+        "id_alerta": 22,
+        "dataHora": "2025-05-25 16:03:21",
         "setor": "Manutenção",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
@@ -743,166 +735,1255 @@
         "tipo_alerta_valor": "cpu_temperatura",
         "processos": [
             {
-                "nome": "Manutencao_Preventiva",
-                "cpu": 40.7,
-                "ram": 39.1
-            },
-            {
                 "nome": "Monitoramento_Sensores",
-                "cpu": 15.3,
-                "ram": 26.6
+                "cpu": 56.0,
+                "ram": 16.7
             },
             {
-                "nome": "Calibracao_Equipamentos",
-                "cpu": 54.2,
-                "ram": 22.8
-            }
-        ]
-    },
-    {
-        "id_alerta": 26,
-        "dataHora": "2025-05-26 22:44:54",
-        "setor": "Manutenção",
-        "empresa_consumidor_id": 3,
-        "fabrica_id": 5,
-        "plc_id": 13,
-        "modelo_plc": "Rockwell SLC 500",
-        "tipo_alerta_valor": "ram_percent",
-        "processos": [
+                "nome": "Manutencao_Preventiva",
+                "cpu": 56.6,
+                "ram": 3.2
+            },
             {
                 "nome": "Controle_Temperatura",
-                "cpu": 29.7,
-                "ram": 44.1
-            },
-            {
-                "nome": "Monitoramento_Sensores",
-                "cpu": 45.1,
-                "ram": 22.3
-            },
-            {
-                "nome": "Calibracao_Equipamentos",
-                "cpu": 10.7,
-                "ram": 27.9
-            },
-            {
-                "nome": "Manutencao_Preventiva",
-                "cpu": 21.9,
-                "ram": 39.5
+                "cpu": 18.3,
+                "ram": 23.3
             },
             {
                 "nome": "Diagnostico_Falhas",
-                "cpu": 9.7,
-                "ram": 14.4
+                "cpu": 12.9,
+                "ram": 23.6
+            },
+            {
+                "nome": "Calibracao_Equipamentos",
+                "cpu": 55.7,
+                "ram": 42.5
             }
         ]
     },
     {
         "id_alerta": 31,
-        "dataHora": "2025-05-28 21:44:54",
+        "dataHora": "2025-05-29 13:03:21",
         "setor": "Manutenção",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
         "plc_id": 13,
         "modelo_plc": "Rockwell SLC 500",
-        "tipo_alerta_valor": "cpu_percent",
+        "tipo_alerta_valor": "ram_livre",
         "processos": [
             {
                 "nome": "Calibracao_Equipamentos",
-                "cpu": 22.1,
-                "ram": 17.6
+                "cpu": 46.6,
+                "ram": 4.6
             },
             {
                 "nome": "Manutencao_Preventiva",
-                "cpu": 40.3,
-                "ram": 26.9
+                "cpu": 53.7,
+                "ram": 21.8
             },
             {
-                "nome": "Diagnostico_Falhas",
-                "cpu": 38.4,
-                "ram": 14.4
+                "nome": "Monitoramento_Sensores",
+                "cpu": 8.9,
+                "ram": 34.1
+            }
+        ]
+    },
+    {
+        "id_alerta": 23,
+        "dataHora": "2025-05-28 16:03:21",
+        "setor": "Solda Robotizada",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 5,
+        "plc_id": 14,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Inspecao_Cordao",
+                "cpu": 24.0,
+                "ram": 4.5
             },
             {
-                "nome": "Controle_Temperatura",
-                "cpu": 17.1,
-                "ram": 29.6
+                "nome": "Solda_MIG",
+                "cpu": 46.5,
+                "ram": 9.1
+            },
+            {
+                "nome": "Solda_Ponto",
+                "cpu": 28.6,
+                "ram": 20.5
+            },
+            {
+                "nome": "Controle_Parametros",
+                "cpu": 18.6,
+                "ram": 10.1
+            }
+        ]
+    },
+    {
+        "id_alerta": 24,
+        "dataHora": "2025-05-28 20:03:21",
+        "setor": "Solda Robotizada",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 5,
+        "plc_id": 14,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "ram_percent",
+        "processos": [
+            {
+                "nome": "Inspecao_Cordao",
+                "cpu": 56.6,
+                "ram": 20.3
+            },
+            {
+                "nome": "Solda_TIG",
+                "cpu": 20.4,
+                "ram": 31.2
+            },
+            {
+                "nome": "Solda_MIG",
+                "cpu": 50.1,
+                "ram": 4.8
+            },
+            {
+                "nome": "Solda_Ponto",
+                "cpu": 28.2,
+                "ram": 41.1
             }
         ]
     },
     {
         "id_alerta": 32,
-        "dataHora": "2025-05-28 18:44:54",
-        "setor": "Manutenção",
+        "dataHora": "2025-05-28 16:03:21",
+        "setor": "Solda Robotizada",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
-        "plc_id": 13,
-        "modelo_plc": "Rockwell SLC 500",
-        "tipo_alerta_valor": "cpu_percent",
+        "plc_id": 14,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "cpu_temperatura",
         "processos": [
             {
-                "nome": "Manutencao_Preventiva",
-                "cpu": 49.1,
-                "ram": 21.3
+                "nome": "Solda_MIG",
+                "cpu": 31.6,
+                "ram": 26.2
             },
             {
-                "nome": "Controle_Temperatura",
-                "cpu": 17.2,
-                "ram": 34.2
+                "nome": "Controle_Parametros",
+                "cpu": 23.6,
+                "ram": 23.2
+            }
+        ]
+    },
+    {
+        "id_alerta": 25,
+        "dataHora": "2025-05-27 16:03:21",
+        "setor": "Tratamento Térmico",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 5,
+        "plc_id": 15,
+        "modelo_plc": "Rockwell CompactLogix",
+        "tipo_alerta_valor": "cpu_temperatura",
+        "processos": [
+            {
+                "nome": "Resfriamento_Gradual",
+                "cpu": 54.0,
+                "ram": 16.1
+            },
+            {
+                "nome": "Aquecimento_Controlado",
+                "cpu": 40.2,
+                "ram": 25.7
+            },
+            {
+                "nome": "Revenimento",
+                "cpu": 53.6,
+                "ram": 4.9
+            }
+        ]
+    },
+    {
+        "id_alerta": 26,
+        "dataHora": "2025-05-29 06:03:21",
+        "setor": "Tratamento Térmico",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 5,
+        "plc_id": 15,
+        "modelo_plc": "Rockwell CompactLogix",
+        "tipo_alerta_valor": "cpu_freq",
+        "processos": [
+            {
+                "nome": "Aquecimento_Controlado",
+                "cpu": 39.1,
+                "ram": 32.3
+            },
+            {
+                "nome": "Normalizacao",
+                "cpu": 20.8,
+                "ram": 42.1
+            },
+            {
+                "nome": "Tempera_Metais",
+                "cpu": 57.9,
+                "ram": 13.5
+            },
+            {
+                "nome": "Resfriamento_Gradual",
+                "cpu": 27.1,
+                "ram": 42.7
             }
         ]
     },
     {
         "id_alerta": 33,
-        "dataHora": "2025-05-28 20:44:54",
-        "setor": "Inspeção Qualidade Avançada",
+        "dataHora": "2025-05-29 12:03:21",
+        "setor": "Tratamento Térmico",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
-        "plc_id": 14,
-        "modelo_plc": "Rockwell MicroLogix 1400",
+        "plc_id": 15,
+        "modelo_plc": "Rockwell CompactLogix",
         "tipo_alerta_valor": "ram_percent",
-        "processos": []
+        "processos": [
+            {
+                "nome": "Tempera_Metais",
+                "cpu": 12.2,
+                "ram": 5.6
+            },
+            {
+                "nome": "Normalizacao",
+                "cpu": 18.7,
+                "ram": 34.0
+            },
+            {
+                "nome": "Revenimento",
+                "cpu": 50.2,
+                "ram": 44.2
+            },
+            {
+                "nome": "Resfriamento_Gradual",
+                "cpu": 52.6,
+                "ram": 17.1
+            },
+            {
+                "nome": "Aquecimento_Controlado",
+                "cpu": 24.2,
+                "ram": 49.3
+            }
+        ]
     },
     {
         "id_alerta": 34,
-        "dataHora": "2025-05-28 22:34:54",
-        "setor": "Inspeção Qualidade Avançada",
+        "dataHora": "2025-05-27 16:03:21",
+        "setor": "Logística",
         "empresa_consumidor_id": 3,
         "fabrica_id": 5,
-        "plc_id": 14,
+        "plc_id": 16,
         "modelo_plc": "Rockwell MicroLogix 1400",
         "tipo_alerta_valor": "cpu_percent",
-        "processos": []
+        "processos": [
+            {
+                "nome": "Movimentacao_Materiais",
+                "cpu": 38.7,
+                "ram": 10.2
+            },
+            {
+                "nome": "Entrada_Mercadorias",
+                "cpu": 29.9,
+                "ram": 6.9
+            }
+        ]
     },
     {
         "id_alerta": 35,
-        "dataHora": "2025-05-28 17:44:54",
-        "setor": "Montagem Eletrônica",
-        "empresa_consumidor_id": 4,
-        "fabrica_id": 6,
-        "plc_id": 15,
-        "modelo_plc": "Rockwell ControlLogix",
+        "dataHora": "2025-05-28 16:03:21",
+        "setor": "Logística",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 5,
+        "plc_id": 16,
+        "modelo_plc": "Rockwell MicroLogix 1400",
         "tipo_alerta_valor": "ram_percent",
-        "processos": []
+        "processos": [
+            {
+                "nome": "Expedicao_Produtos",
+                "cpu": 13.6,
+                "ram": 20.0
+            },
+            {
+                "nome": "Entrada_Mercadorias",
+                "cpu": 30.4,
+                "ram": 46.3
+            },
+            {
+                "nome": "Movimentacao_Materiais",
+                "cpu": 54.7,
+                "ram": 38.2
+            },
+            {
+                "nome": "Controle_Estoque",
+                "cpu": 35.6,
+                "ram": 46.6
+            },
+            {
+                "nome": "Separacao_Pedidos",
+                "cpu": 44.8,
+                "ram": 8.5
+            }
+        ]
     },
     {
         "id_alerta": 36,
-        "dataHora": "2025-05-26 22:44:54",
-        "setor": "Montagem Eletrônica",
+        "dataHora": "2025-05-29 15:53:21",
+        "setor": "Linha de Montagem",
         "empresa_consumidor_id": 4,
         "fabrica_id": 6,
-        "plc_id": 15,
+        "plc_id": 17,
         "modelo_plc": "Rockwell ControlLogix",
-        "tipo_alerta_valor": "cpu_temperatura",
-        "processos": []
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 28.3,
+                "ram": 11.6
+            },
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 17.3,
+                "ram": 13.6
+            }
+        ]
     },
     {
         "id_alerta": 37,
-        "dataHora": "2025-05-27 22:44:54",
-        "setor": "Testes Finais",
+        "dataHora": "2025-05-29 11:03:21",
+        "setor": "Linha de Montagem",
         "empresa_consumidor_id": 4,
         "fabrica_id": 6,
-        "plc_id": 16,
+        "plc_id": 17,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "ram_percent",
+        "processos": [
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 29.5,
+                "ram": 45.6
+            },
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 5.4,
+                "ram": 11.4
+            }
+        ]
+    },
+    {
+        "id_alerta": 38,
+        "dataHora": "2025-05-27 16:03:21",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 18,
+        "modelo_plc": "Rockwell CompactLogix",
+        "tipo_alerta_valor": "cpu_temperatura",
+        "processos": [
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 21.9,
+                "ram": 3.4
+            },
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 9.9,
+                "ram": 28.0
+            },
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 37.2,
+                "ram": 17.9
+            }
+        ]
+    },
+    {
+        "id_alerta": 39,
+        "dataHora": "2025-05-28 16:03:21",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 18,
         "modelo_plc": "Rockwell CompactLogix",
         "tipo_alerta_valor": "cpu_freq",
-        "processos": []
+        "processos": [
+            {
+                "nome": "Teste_Qualidade",
+                "cpu": 36.4,
+                "ram": 19.3
+            },
+            {
+                "nome": "Ajuste_Automatico",
+                "cpu": 6.0,
+                "ram": 20.7
+            },
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 12.2,
+                "ram": 23.3
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 26.4,
+                "ram": 16.4
+            }
+        ]
+    },
+    {
+        "id_alerta": 40,
+        "dataHora": "2025-05-29 10:03:21",
+        "setor": "Laboratório",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 19,
+        "modelo_plc": "Rockwell SLC 500",
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 43.4,
+                "ram": 44.7
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 59.7,
+                "ram": 33.4
+            },
+            {
+                "nome": "Controle_Qualidade",
+                "cpu": 22.9,
+                "ram": 48.3
+            },
+            {
+                "nome": "Teste_Resistencia",
+                "cpu": 6.6,
+                "ram": 26.9
+            },
+            {
+                "nome": "Calibracao_Instrumentos",
+                "cpu": 31.8,
+                "ram": 46.4
+            }
+        ]
+    },
+    {
+        "id_alerta": 41,
+        "dataHora": "2025-05-29 09:03:21",
+        "setor": "Laboratório",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 19,
+        "modelo_plc": "Rockwell SLC 500",
+        "tipo_alerta_valor": "ram_livre",
+        "processos": [
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 24.2,
+                "ram": 48.6
+            },
+            {
+                "nome": "Calibracao_Instrumentos",
+                "cpu": 30.7,
+                "ram": 33.5
+            },
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 8.1,
+                "ram": 14.8
+            },
+            {
+                "nome": "Teste_Resistencia",
+                "cpu": 29.4,
+                "ram": 45.5
+            },
+            {
+                "nome": "Controle_Qualidade",
+                "cpu": 46.0,
+                "ram": 20.9
+            }
+        ]
+    },
+    {
+        "id_alerta": 42,
+        "dataHora": "2025-05-29 08:03:21",
+        "setor": "Laboratório",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 20,
+        "modelo_plc": "Rockwell MicroLogix 1400",
+        "tipo_alerta_valor": "disk_usage_percent",
+        "processos": [
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 32.8,
+                "ram": 41.8
+            },
+            {
+                "nome": "Teste_Resistencia",
+                "cpu": 17.5,
+                "ram": 11.0
+            },
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 42.2,
+                "ram": 34.5
+            },
+            {
+                "nome": "Controle_Qualidade",
+                "cpu": 51.7,
+                "ram": 19.3
+            },
+            {
+                "nome": "Calibracao_Instrumentos",
+                "cpu": 19.1,
+                "ram": 10.5
+            }
+        ]
+    },
+    {
+        "id_alerta": 43,
+        "dataHora": "2025-05-29 07:03:21",
+        "setor": "Laboratório",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 20,
+        "modelo_plc": "Rockwell MicroLogix 1400",
+        "tipo_alerta_valor": "ram_uso",
+        "processos": [
+            {
+                "nome": "Teste_Resistencia",
+                "cpu": 46.6,
+                "ram": 22.7
+            },
+            {
+                "nome": "Controle_Qualidade",
+                "cpu": 12.5,
+                "ram": 19.1
+            },
+            {
+                "nome": "Calibracao_Instrumentos",
+                "cpu": 57.4,
+                "ram": 15.1
+            },
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 47.6,
+                "ram": 22.8
+            }
+        ]
+    },
+    {
+        "id_alerta": 44,
+        "dataHora": "2025-05-29 10:03:21",
+        "setor": "Controle de Qualidade",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 21,
+        "modelo_plc": "Rockwell MicroLogix 1400",
+        "tipo_alerta_valor": "cpu_temperatura",
+        "processos": [
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 27.7,
+                "ram": 48.9
+            },
+            {
+                "nome": "Teste_Dimensional",
+                "cpu": 43.9,
+                "ram": 33.4
+            },
+            {
+                "nome": "Verificacao_Defeitos",
+                "cpu": 37.6,
+                "ram": 16.0
+            }
+        ]
+    },
+    {
+        "id_alerta": 45,
+        "dataHora": "2025-05-29 12:03:21",
+        "setor": "Controle de Qualidade",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 21,
+        "modelo_plc": "Rockwell MicroLogix 1400",
+        "tipo_alerta_valor": "ram_livre",
+        "processos": [
+            {
+                "nome": "Verificacao_Defeitos",
+                "cpu": 18.3,
+                "ram": 5.2
+            },
+            {
+                "nome": "Inspecao_Visual",
+                "cpu": 53.5,
+                "ram": 3.2
+            }
+        ]
+    },
+    {
+        "id_alerta": 46,
+        "dataHora": "2025-05-24 16:03:21",
+        "setor": "Controle de Qualidade",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 22,
+        "modelo_plc": "Rockwell SLC 500",
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Teste_Dimensional",
+                "cpu": 13.5,
+                "ram": 33.4
+            },
+            {
+                "nome": "Inspecao_Visual",
+                "cpu": 24.0,
+                "ram": 27.4
+            },
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 58.9,
+                "ram": 32.4
+            }
+        ]
+    },
+    {
+        "id_alerta": 47,
+        "dataHora": "2025-05-26 16:03:21",
+        "setor": "Controle de Qualidade",
+        "empresa_consumidor_id": 4,
+        "fabrica_id": 6,
+        "plc_id": 22,
+        "modelo_plc": "Rockwell SLC 500",
+        "tipo_alerta_valor": "disk_usage_percent",
+        "processos": [
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 16.7,
+                "ram": 19.5
+            },
+            {
+                "nome": "Verificacao_Defeitos",
+                "cpu": 13.1,
+                "ram": 13.0
+            }
+        ]
+    },
+    {
+        "id_alerta": 48,
+        "dataHora": "2025-05-29 15:03:21",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 7,
+        "plc_id": 23,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Ajuste_Automatico",
+                "cpu": 26.0,
+                "ram": 49.7
+            },
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 46.4,
+                "ram": 14.7
+            },
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 11.6,
+                "ram": 2.3
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 55.8,
+                "ram": 8.8
+            },
+            {
+                "nome": "Teste_Qualidade",
+                "cpu": 42.1,
+                "ram": 26.1
+            }
+        ]
+    },
+    {
+        "id_alerta": 49,
+        "dataHora": "2025-05-29 14:03:21",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 7,
+        "plc_id": 23,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "ram_percent",
+        "processos": [
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 11.5,
+                "ram": 20.3
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 42.9,
+                "ram": 5.9
+            },
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 37.1,
+                "ram": 35.3
+            },
+            {
+                "nome": "Ajuste_Automatico",
+                "cpu": 35.9,
+                "ram": 15.6
+            }
+        ]
+    },
+    {
+        "id_alerta": 50,
+        "dataHora": "2025-05-26 16:03:21",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 7,
+        "plc_id": 24,
+        "modelo_plc": "Rockwell SLC 500",
+        "tipo_alerta_valor": "cpu_temperatura",
+        "processos": [
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 58.2,
+                "ram": 25.0
+            },
+            {
+                "nome": "Ajuste_Automatico",
+                "cpu": 54.4,
+                "ram": 4.9
+            },
+            {
+                "nome": "Teste_Qualidade",
+                "cpu": 10.9,
+                "ram": 45.8
+            },
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 7.2,
+                "ram": 19.7
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 33.5,
+                "ram": 31.7
+            }
+        ]
+    },
+    {
+        "id_alerta": 51,
+        "dataHora": "2025-05-25 16:03:21",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 7,
+        "plc_id": 24,
+        "modelo_plc": "Rockwell SLC 500",
+        "tipo_alerta_valor": "ram_uso",
+        "processos": [
+            {
+                "nome": "Ajuste_Automatico",
+                "cpu": 54.2,
+                "ram": 5.0
+            },
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 52.8,
+                "ram": 37.8
+            },
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 35.2,
+                "ram": 47.4
+            }
+        ]
+    },
+    {
+        "id_alerta": 52,
+        "dataHora": "2025-05-29 15:58:21",
+        "setor": "Laboratório",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 7,
+        "plc_id": 25,
+        "modelo_plc": "Rockwell CompactLogix",
+        "tipo_alerta_valor": "cpu_freq",
+        "processos": [
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 7.4,
+                "ram": 31.3
+            },
+            {
+                "nome": "Calibracao_Instrumentos",
+                "cpu": 55.7,
+                "ram": 23.9
+            },
+            {
+                "nome": "Controle_Qualidade",
+                "cpu": 39.6,
+                "ram": 34.3
+            },
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 59.1,
+                "ram": 16.9
+            },
+            {
+                "nome": "Teste_Resistencia",
+                "cpu": 54.9,
+                "ram": 45.8
+            }
+        ]
+    },
+    {
+        "id_alerta": 53,
+        "dataHora": "2025-05-29 10:03:21",
+        "setor": "Laboratório",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 7,
+        "plc_id": 25,
+        "modelo_plc": "Rockwell CompactLogix",
+        "tipo_alerta_valor": "disk_usage_percent",
+        "processos": [
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 23.7,
+                "ram": 44.9
+            },
+            {
+                "nome": "Controle_Qualidade",
+                "cpu": 53.6,
+                "ram": 22.7
+            },
+            {
+                "nome": "Calibracao_Instrumentos",
+                "cpu": 44.5,
+                "ram": 41.7
+            },
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 15.6,
+                "ram": 38.9
+            },
+            {
+                "nome": "Teste_Resistencia",
+                "cpu": 32.9,
+                "ram": 13.0
+            }
+        ]
+    },
+    {
+        "id_alerta": 54,
+        "dataHora": "2025-05-29 14:03:21",
+        "setor": "Corte e Dobra",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 8,
+        "plc_id": 26,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Corte_Laser",
+                "cpu": 40.2,
+                "ram": 9.5
+            },
+            {
+                "nome": "Dobra_CNC",
+                "cpu": 28.5,
+                "ram": 2.9
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 7.8,
+                "ram": 27.8
+            }
+        ]
+    },
+    {
+        "id_alerta": 55,
+        "dataHora": "2025-05-29 12:03:21",
+        "setor": "Corte e Dobra",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 8,
+        "plc_id": 26,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "ram_percent",
+        "processos": [
+            {
+                "nome": "Acabamento_Bordas",
+                "cpu": 43.5,
+                "ram": 43.3
+            },
+            {
+                "nome": "Dobra_CNC",
+                "cpu": 11.1,
+                "ram": 42.5
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 40.2,
+                "ram": 45.6
+            },
+            {
+                "nome": "Corte_Laser",
+                "cpu": 22.8,
+                "ram": 14.0
+            },
+            {
+                "nome": "Controle_Dimensional",
+                "cpu": 52.5,
+                "ram": 10.5
+            }
+        ]
+    },
+    {
+        "id_alerta": 56,
+        "dataHora": "2025-05-28 16:03:21",
+        "setor": "Corte e Dobra",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 8,
+        "plc_id": 27,
+        "modelo_plc": "Rockwell CompactLogix",
+        "tipo_alerta_valor": "cpu_temperatura",
+        "processos": [
+            {
+                "nome": "Acabamento_Bordas",
+                "cpu": 40.3,
+                "ram": 23.0
+            },
+            {
+                "nome": "Dobra_CNC",
+                "cpu": 24.2,
+                "ram": 4.9
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 43.8,
+                "ram": 19.9
+            },
+            {
+                "nome": "Corte_Laser",
+                "cpu": 14.7,
+                "ram": 6.9
+            },
+            {
+                "nome": "Controle_Dimensional",
+                "cpu": 22.8,
+                "ram": 47.4
+            }
+        ]
+    },
+    {
+        "id_alerta": 57,
+        "dataHora": "2025-05-29 08:03:21",
+        "setor": "Corte e Dobra",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 8,
+        "plc_id": 27,
+        "modelo_plc": "Rockwell CompactLogix",
+        "tipo_alerta_valor": "cpu_freq",
+        "processos": [
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 32.7,
+                "ram": 49.2
+            },
+            {
+                "nome": "Acabamento_Bordas",
+                "cpu": 23.9,
+                "ram": 2.9
+            },
+            {
+                "nome": "Dobra_CNC",
+                "cpu": 31.1,
+                "ram": 12.4
+            },
+            {
+                "nome": "Corte_Laser",
+                "cpu": 34.9,
+                "ram": 49.9
+            }
+        ]
+    },
+    {
+        "id_alerta": 58,
+        "dataHora": "2025-05-29 06:03:21",
+        "setor": "Caldeiraria",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 8,
+        "plc_id": 28,
+        "modelo_plc": "Rockwell SLC 500",
+        "tipo_alerta_valor": "disk_usage_percent",
+        "processos": [
+            {
+                "nome": "Soldagem_Industrial",
+                "cpu": 47.2,
+                "ram": 44.4
+            },
+            {
+                "nome": "Fabricacao_Caldeiras",
+                "cpu": 24.4,
+                "ram": 19.7
+            },
+            {
+                "nome": "Conformacao_Chapas",
+                "cpu": 58.1,
+                "ram": 45.6
+            },
+            {
+                "nome": "Teste_Pressao",
+                "cpu": 49.7,
+                "ram": 36.1
+            },
+            {
+                "nome": "Montagem_Estrutural",
+                "cpu": 44.9,
+                "ram": 3.4
+            }
+        ]
+    },
+    {
+        "id_alerta": 63,
+        "dataHora": "2025-05-27 16:03:21",
+        "setor": "Caldeiraria",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 8,
+        "plc_id": 28,
+        "modelo_plc": "Rockwell SLC 500",
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Teste_Pressao",
+                "cpu": 5.6,
+                "ram": 48.3
+            },
+            {
+                "nome": "Fabricacao_Caldeiras",
+                "cpu": 37.1,
+                "ram": 47.9
+            },
+            {
+                "nome": "Montagem_Estrutural",
+                "cpu": 16.9,
+                "ram": 38.2
+            }
+        ]
+    },
+    {
+        "id_alerta": 64,
+        "dataHora": "2025-05-28 16:03:21",
+        "setor": "Caldeiraria",
+        "empresa_consumidor_id": 3,
+        "fabrica_id": 8,
+        "plc_id": 28,
+        "modelo_plc": "Rockwell SLC 500",
+        "tipo_alerta_valor": "ram_percent",
+        "processos": [
+            {
+                "nome": "Soldagem_Industrial",
+                "cpu": 39.3,
+                "ram": 6.2
+            },
+            {
+                "nome": "Teste_Pressao",
+                "cpu": 11.5,
+                "ram": 34.2
+            }
+        ]
+    },
+    {
+        "id_alerta": 59,
+        "dataHora": "2025-05-24 16:03:21",
+        "setor": "Laboratório",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 9,
+        "plc_id": 29,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Teste_Resistencia",
+                "cpu": 54.2,
+                "ram": 15.3
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 29.6,
+                "ram": 6.6
+            },
+            {
+                "nome": "Controle_Qualidade",
+                "cpu": 57.2,
+                "ram": 38.4
+            },
+            {
+                "nome": "Calibracao_Instrumentos",
+                "cpu": 28.7,
+                "ram": 29.7
+            }
+        ]
+    },
+    {
+        "id_alerta": 60,
+        "dataHora": "2025-05-26 16:03:21",
+        "setor": "Laboratório",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 9,
+        "plc_id": 29,
+        "modelo_plc": "Rockwell ControlLogix",
+        "tipo_alerta_valor": "ram_percent",
+        "processos": [
+            {
+                "nome": "Controle_Qualidade",
+                "cpu": 54.4,
+                "ram": 46.8
+            },
+            {
+                "nome": "Analise_Materiais",
+                "cpu": 55.2,
+                "ram": 39.4
+            },
+            {
+                "nome": "Calibracao_Instrumentos",
+                "cpu": 29.5,
+                "ram": 40.0
+            },
+            {
+                "nome": "Teste_Resistencia",
+                "cpu": 17.2,
+                "ram": 45.8
+            }
+        ]
+    },
+    {
+        "id_alerta": 61,
+        "dataHora": "2025-05-27 16:03:21",
+        "setor": "Embalagem",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 9,
+        "plc_id": 30,
+        "modelo_plc": "Rockwell MicroLogix 1400",
+        "tipo_alerta_valor": "cpu_temperatura",
+        "processos": [
+            {
+                "nome": "Encaixotamento",
+                "cpu": 56.2,
+                "ram": 45.6
+            },
+            {
+                "nome": "Rotulagem_Produtos",
+                "cpu": 12.7,
+                "ram": 9.5
+            },
+            {
+                "nome": "Conferencia_Final",
+                "cpu": 53.0,
+                "ram": 39.2
+            },
+            {
+                "nome": "Paletizacao",
+                "cpu": 47.4,
+                "ram": 21.7
+            }
+        ]
+    },
+    {
+        "id_alerta": 62,
+        "dataHora": "2025-05-29 06:03:21",
+        "setor": "Embalagem",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 9,
+        "plc_id": 30,
+        "modelo_plc": "Rockwell MicroLogix 1400",
+        "tipo_alerta_valor": "ram_livre",
+        "processos": [
+            {
+                "nome": "Encaixotamento",
+                "cpu": 42.2,
+                "ram": 7.4
+            },
+            {
+                "nome": "Paletizacao",
+                "cpu": 56.5,
+                "ram": 19.0
+            },
+            {
+                "nome": "Conferencia_Final",
+                "cpu": 29.1,
+                "ram": 33.1
+            },
+            {
+                "nome": "Selagem_Automatica",
+                "cpu": 25.4,
+                "ram": 6.0
+            }
+        ]
+    },
+    {
+        "id_alerta": 67,
+        "dataHora": "2025-05-23 16:03:21",
+        "setor": "Embalagem",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 9,
+        "plc_id": 30,
+        "modelo_plc": "Rockwell MicroLogix 1400",
+        "tipo_alerta_valor": "cpu_percent",
+        "processos": [
+            {
+                "nome": "Rotulagem_Produtos",
+                "cpu": 43.3,
+                "ram": 39.9
+            },
+            {
+                "nome": "Paletizacao",
+                "cpu": 36.9,
+                "ram": 7.2
+            },
+            {
+                "nome": "Selagem_Automatica",
+                "cpu": 28.1,
+                "ram": 26.8
+            },
+            {
+                "nome": "Encaixotamento",
+                "cpu": 19.7,
+                "ram": 6.4
+            },
+            {
+                "nome": "Conferencia_Final",
+                "cpu": 15.0,
+                "ram": 44.5
+            }
+        ]
+    },
+    {
+        "id_alerta": 68,
+        "dataHora": "2025-05-25 16:03:21",
+        "setor": "Embalagem",
+        "empresa_consumidor_id": 5,
+        "fabrica_id": 9,
+        "plc_id": 30,
+        "modelo_plc": "Rockwell MicroLogix 1400",
+        "tipo_alerta_valor": "ram_percent",
+        "processos": [
+            {
+                "nome": "Encaixotamento",
+                "cpu": 6.2,
+                "ram": 18.4
+            },
+            {
+                "nome": "Conferencia_Final",
+                "cpu": 56.4,
+                "ram": 14.3
+            }
+        ]
     }
 ]

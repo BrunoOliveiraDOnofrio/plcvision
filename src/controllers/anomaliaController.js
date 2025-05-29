@@ -17,24 +17,14 @@ const listarPlcsPorFabricante = (req, res) => {
         });
 };
 
-function listarPlcsPorEmpresa(req, res) {
-    const fabricanteId = req.params.fabricanteId;
+const listarModeloPorEmpresa = (req, res) => {
     const empresaId = req.params.empresaId;
-
-    if (!fabricanteId || !empresaId) {
-        return res.status(400).json({ error: "IDs inválidos" });
-    }
-    
-    anomaliaModel.listarPlcsPorEmpresa(fabricanteId, empresaId)
-        .then(result => {
-            if (!Array.isArray(result)) {
-                result = [];
-            }
-            res.status(200).json(result);
-        })
+    const fabricanteId = req.params.fabricanteId;
+    anomaliaModel.listarModeloPorEmpresa(empresaId, fabricanteId)
+        .then(result => res.status(200).json(result))
         .catch(error => {
-            console.error("ERRO AO BUSCAR PLCs:", error);
-            res.status(500).json([]);  // Return empty array instead of error object
+            console.error("ERRO AO BUSCAR MODELOS POR EMPRESA CONSUMIDORAS:", error);
+            res.status(500).json({ error: "Erro ao buscar empresas consumidoras", details: error });
         });
 };
 
@@ -144,10 +134,25 @@ const setoresPorModelo = async (req, res) => {
     }
 };
 
+const listarFabricasPorModelo = (req, res) => {
+    const { empresaId, modelo } = req.params;
+    
+    anomaliaModel.listarFabricasPorModelo(empresaId, modelo)
+        .then(result => {
+            if (!Array.isArray(result)) {
+                result = [];
+            }
+            res.status(200).json(result);
+        })
+        .catch(error => {
+            console.error("ERRO AO BUSCAR FÁBRICAS DO MODELO:", error);
+            res.status(500).json([]);
+        });
+};
 
 module.exports = {
     listarPlcsPorFabricante,
-    listarPlcsPorEmpresa,
+    listarModeloPorEmpresa,
     listarEmpresasConsumidoras,
     listarFabricaSetores,
     listarPlcsPorFabrica,
@@ -157,5 +162,6 @@ module.exports = {
     setoresPorPlc,
     setoresPorPlcFabrica,
     listarFabricasMaisAlertas,
-    setoresPorModelo
+    setoresPorModelo,
+    listarFabricasPorModelo
 };
