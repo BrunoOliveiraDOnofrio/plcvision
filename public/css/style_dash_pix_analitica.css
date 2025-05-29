@@ -24,9 +24,21 @@
 .box-kpis{
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     background-color: #FFFFFF;
     width: 75%;
     padding: 10%;
+}
+
+.box-kpis-up {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3%;
+}
+
+.box-kpis-down {
+    display: flex;
+    justify-content: space-between;
 }
 
 .box-kpi{
@@ -34,7 +46,11 @@
     border-radius: 10px;
     padding: 10%;
     justify-content: space-evenly;
-    background-color: #00831c;
+    background-color: #24284B;
+}
+
+.kpi-content span{
+    font-size: medium;
 }
 
 .box-graphics{
@@ -46,9 +62,28 @@
 .box-line-graphic{
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
+    margin-top: 3%;
+    margin-bottom: 3%;
 }
 
-.img-regressao-pix{
-    height: 15px;
-    width: 30px;
+.box-linear-graphics{
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.linear-cpu{
+    margin-bottom: 3%;
+}
+
+.img-regressao-cpu-ram{
+    max-width: 100%;
+}
+
+.linear-title{
+    margin-top: 2%;
 }
