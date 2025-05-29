@@ -143,7 +143,7 @@
 .div-title {
     height: 5vh;
     /* margin-bottom: 25px; */
-    border: solid yellow;
+    /* border: solid yellow; */
 
     & h1 {
         font-family: 'Inter';
@@ -192,7 +192,7 @@
     flex-direction: column;
     height: fit-content;
     width: 40vw;
-    height: 44.4vh;
+    height: 45.6vh;
     justify-content: flex-end;
 }
 
@@ -286,6 +286,10 @@
     display: flex;
     flex-direction: column;
     width: 37vw;
+
+    & .apexcharts-text tspan {
+    font-size: 180px !important; 
+    }
 }
 
 .box-modelos {

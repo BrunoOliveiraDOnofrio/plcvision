@@ -1,3 +1,5 @@
+// Empresa mais afetada
+
 // Gráfico de Meta
 document.addEventListener("DOMContentLoaded", function() {
     let metaTotal = 100;
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         },
-        colors: ['#FF8C00', '#D2CDCD'], 
+        colors: ['#FFB20E', '#D2CDCD'], 
         labels: ['Qtd. Atual', '% até atingir a Meta'],
         legend: {
             show: true,
@@ -92,6 +94,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Se precisar atualizar dinamicamente:
     // window.meuDonutProgresso = chartDonutProgresso;
+
+    function carregarKPI1(){
+        const kpi1 = document.getElementById("empresa-afetada");
+        console.log(kpi1)
+        fetch(`/adm/dashNegocio/empresaMaisAfetada/${sessionStorage.getItem('EMPRESA_ID')}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((dados) => {
+                console.log("Empresa mais Afetada:", dados);
+                kpi1.innerHTML = dados[0].razao_social.split(' ')[0];
+            })
+            .catch((error) => {
+                console.log("Erro:", error);
+                kpi1.innerHTML = "baguete";
+            });
+    }
+
+carregarKPI1()
 
 });
 
@@ -173,7 +194,8 @@ document.addEventListener("DOMContentLoaded", function() {
      var optionsDefeitos = {
           series: [{
             name: "% Defeitos",
-            data: [15, 10, 7, 23, 14]
+            data: [15, 10, 7, 23, 14],
+            colors: ['#4B5293','#4B5293', '#4B5293', '#4B5293', '#4B5293', '#4B5293']
         }],
           chart: {
           height: 280,
@@ -280,7 +302,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const optionsDesktop = {
         series: [{
             name: 'Taxa de Defeito', 
-            data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5]
+            data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5],
+            colors: ['#4B5293']
         }],
         chart: {
             height: 300,

@@ -86,15 +86,15 @@ def gerar_csv_plc_diario(plc_id, config_details, data_base, alerts_for_this_plc_
     os.makedirs(f"csv_plcs/{data_base.strftime('%Y-%m')}", exist_ok=True)
     nome_arquivo = f"csv_plcs/{data_base.strftime('%Y-%m')}/{date_str}_plc_{plc_id}.csv"
     
-    with open(nome_arquivo, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(colunas)
-        writer.writerows(registros)
+    # with open(nome_arquivo, "w", newline="") as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerow(colunas)
+    #     writer.writerows(registros)
     plcs_csvs_gerados.append(f"{date_str}_{plc_id}") # Mark this PLC's CSV as generated for this day
     print(f"CSV diário gerado para PLC {plc_id}: {nome_arquivo}")
     
     print(f"Enviando para AWS...")
-    aws.enviar_arquivo_csvs(nome_arquivo)
+    # aws.enviar_arquivo_csvs(nome_arquivo)
 
 def gerar_datetimes_atrasados(qtd=100, atraso_min_horas=8):
     agora = datetime.now()
@@ -109,8 +109,8 @@ def conexao_select():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='root',
-        password='linkinpark',
+        user='laysa',
+        password='Urubu@100',
         database='plcvision'
     )
     return conexao_db

@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const router = express.Router();
 
+const dashNegocioController = require('../controllers/dashNegocioController');
 
 router.get('/monitoramento', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/adm_empresa/dashboard/dashboard.html'));
@@ -85,5 +86,12 @@ router.get('/usuarios/:id/form', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/adm_empresa/usuarios/editar.html'));
 })
 
+router.get('/dashNegocio', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/dashboardNegocio/dashboard.html'))
+})
+    
+router.get('/dashNegocio/empresaMaisAfetada/:empresaId', (req, res) => {
+    dashNegocioController.empresaMaisAfetada(req,res);
+})
 
 module.exports = router;
