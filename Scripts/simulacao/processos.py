@@ -18,7 +18,7 @@ DB_NAME = os.getenv("DB_DATABASE")
 # Configurações AWS
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN")
+AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN") # Adicionado para consistência se usado
 S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
 
 SETORES_E_PROCESSOS = {
@@ -60,7 +60,7 @@ SETORES_E_PROCESSOS = {
     ],
     "Manutenção": [
         "Manutencao_Preventiva", "Diagnostico_Falhas", "Calibracao_Equipamentos",
-        "Monitoramento_Sensores", "Controle_Temperatura" # Nota: "Controle_Temperatura" também está em "Refrigeração"
+        "Monitoramento_Sensores", "Controle_Temperatura"
     ],
     "Injeção Plástica": [
         "Injecao_Materiais", "Controle_Pressao", "Resfriamento_Pecas",
@@ -117,47 +117,62 @@ def buscar_alertas():
             password=DB_PASSWORD,
             database=DB_NAME,
             port=DB_PORT,
+            charset='utf8mb4', # Adicionado para melhor suporte a caracteres
+            cursorclass=pymysql.cursors.DictCursor # Para retornar resultados como dicionários
         )
 
-        cursor = conexao.cursor()
-        sql_query = """
-            SELECT
-                a.id,
-                a.dataHora,
-                sf.nome AS setor,
-                ec.id AS empresa_consumidor_id
-            FROM alerta a
-            JOIN config_plc cp ON a.config_plc_id = cp.id
-            JOIN plc p ON cp.plc_id = p.id
-            JOIN setor_fabrica sf ON p.setor_fabrica_id = sf.id
-            JOIN parceria pa ON p.parceria_id = pa.id
-            JOIN empresa_consumidor ec ON pa.empresa_consumidor_id = ec.id;
-            """
-        cursor.execute(sql_query)
-        linhas = cursor.fetchall()
-        
-        alertas = []
-        for linha in linhas:
-            data_hora_alerta = linha[1]
-            data_hora_str = data_hora_alerta.strftime("%Y-%m-%d %H:%M:%S") if isinstance(data_hora_alerta, datetime) else None
+        with conexao.cursor() as cursor: # Usar with garante que o cursor seja fechado
+            # Query SQL MODIFICADA para incluir fabrica_consumidor_id de config_plc como fabrica_id
+            sql_query = """
+                SELECT
+                    a.id AS alerta_id,
+                    a.dataHora,
+                    sf.nome AS setor_nome,
+                    ec.id AS empresa_consumidor_id,
+                    cp.fabrica_consumidor_id AS fabrica_id ,
+                    p.id AS plc_id,
+                    p.modelo AS plc_modelo,
+                    a.tipo_valor AS tipo_alerta_valor
+                FROM alerta a
+                JOIN config_plc cp ON a.config_plc_id = cp.id
+                JOIN plc p ON cp.plc_id = p.id
+                JOIN setor_fabrica sf ON p.setor_fabrica_id = sf.id
+                JOIN parceria pa ON p.parceria_id = pa.id
+                JOIN empresa_consumidor ec ON pa.empresa_consumidor_id = ec.id;
+                """
+            cursor.execute(sql_query)
+            linhas = cursor.fetchall() # Retorna uma lista de dicionários
             
-            alerta = {
-                "id": linha[0],
-                "dataHora": data_hora_str,
-                "setor": linha[2],
-                "empresa_consumidor_id": linha[3]  # <-- Adicione esta linha!
-            }
-            if alerta["setor"]:
-                 alertas.append(alerta)
-        
-        return alertas
+            alertas_formatados = []
+            for linha_dict in linhas:
+                data_hora_alerta = linha_dict["dataHora"]
+                data_hora_str = data_hora_alerta.strftime("%Y-%m-%d %H:%M:%S") if isinstance(data_hora_alerta, datetime) else str(data_hora_alerta)
+                
+                # Dicionário 'alerta' agora usa diretamente as chaves do DictCursor
+                alerta = {
+                    "id_alerta": linha_dict["alerta_id"], # Renomeado para clareza no JSON
+                    "dataHora": data_hora_str,
+                    "setor": linha_dict["setor_nome"], # Renomeado para clareza no JSON
+                    "empresa_consumidor_id": linha_dict["empresa_consumidor_id"],
+                    "fabrica_id": linha_dict["fabrica_id"], 
+                    "plc_id": linha_dict["plc_id"],
+                    "modelo_plc": linha_dict["plc_modelo"],
+                    "tipo_alerta_valor": linha_dict["tipo_alerta_valor"]
+                }
+                # Garante que campos essenciais existam antes de adicionar
+                if alerta["setor"] and alerta["fabrica_id"] is not None and alerta["empresa_consumidor_id"] is not None and alerta["plc_id"] is not None and alerta["modelo_plc"] is not None:
+                    alertas_formatados.append(alerta)
+                else:
+                    print(f"Aviso: Alerta ID {alerta.get('id_alerta')} descartado por falta de setor, fabrica_id ou empresa_consumidor_id.")
+            
+            return alertas_formatados
     
     except Exception as e:
         print(f"Erro ao buscar alertas: {e}")
         return []
     
     finally:
-        if conexao and conexao.open:
+        if conexao: # Não precisa checar conexao.open se usou 'with conexao.cursor()'
             conexao.close()
 
 def simular_processos(setor):
@@ -165,18 +180,14 @@ def simular_processos(setor):
         print(f"Aviso: Setor '{setor}' não encontrado no dicionário SETORES_E_PROCESSOS. Nenhum processo será simulado para ele.")
         return []
     
-    quantidade = random.randint(2, 6)
     processos_do_setor = SETORES_E_PROCESSOS[setor]
-    num_processos_a_selecionar = min(quantidade, len(processos_do_setor))
-    
-    if num_processos_a_selecionar == 0 and len(processos_do_setor) > 0:
-         num_processos_a_selecionar = 1
-
-
-    if not processos_do_setor:
+    if not processos_do_setor: # Checagem adicional se a lista de processos para o setor estiver vazia
         print(f"Aviso: Setor '{setor}' não possui processos definidos em SETORES_E_PROCESSOS.")
         return []
 
+    quantidade = random.randint(min(2, len(processos_do_setor)), min(6, len(processos_do_setor))) # Garante que não tenta pegar mais do que existe
+    num_processos_a_selecionar = quantidade
+    
     processos_selecionados = random.sample(
         processos_do_setor,
         num_processos_a_selecionar
@@ -196,18 +207,23 @@ def registrar_processos(alertas):
     """Registra processos para cada alerta"""
     simulacoes = []
     
-    for alerta in alertas:
-        if alerta.get("setor"):
-            processos = simular_processos(alerta["setor"])
-            simulacao = {
-                "id_alerta": alerta["id"],
-                "dataHora": alerta["dataHora"],
-                "setor": alerta["setor"],
-                "processos": processos
-            }
-            simulacoes.append(simulacao)
-        else:
-            print(f"Aviso: Alerta ID {alerta.get('id')} não possui setor definido ou o setor não foi encontrado. Processos não simulados para este alerta.")
+    for alerta_data in alertas: # Renomeado para 'alerta_data' para evitar conflito com módulo 'alerta'
+        # 'alerta_data' já vem filtrado e formatado de 'buscar_alertas'
+        processos = simular_processos(alerta_data["setor"])
+        
+        # Objeto 'simulacao' MODIFICADO para usar os campos corretos
+        simulacao = {
+            "id_alerta": alerta_data["id_alerta"],
+            "dataHora": alerta_data["dataHora"],
+            "setor": alerta_data["setor"],
+            "empresa_consumidor_id": alerta_data.get("empresa_consumidor_id"),
+            "fabrica_id": alerta_data.get("fabrica_id"),
+            "plc_id": alerta_data.get("plc_id"),
+            "modelo_plc": alerta_data.get("modelo_plc"),
+            "tipo_alerta_valor": alerta_data.get("tipo_alerta_valor"),
+            "processos": processos
+        }
+        simulacoes.append(simulacao)
             
     return simulacoes
 
@@ -230,12 +246,12 @@ def enviar_para_s3(nome_arquivo, bucket=S3_BUCKET_NAME):
             'aws_access_key_id': AWS_ACCESS_KEY_ID,
             'aws_secret_access_key': AWS_SECRET_ACCESS_KEY,
         }
-        if AWS_SESSION_TOKEN:
+        if AWS_SESSION_TOKEN: # Verifica se AWS_SESSION_TOKEN tem valor
             s3_client_args['aws_session_token'] = AWS_SESSION_TOKEN
         
         s3 = boto3.client(**s3_client_args)
 
-        s3.upload_file(nome_arquivo, bucket, os.path.basename(nome_arquivo)) # Usa os.path.basename para o object key
+        s3.upload_file(nome_arquivo, bucket, os.path.basename(nome_arquivo))
         print(f"Arquivo {nome_arquivo} enviado para o bucket {bucket} no S3 como {os.path.basename(nome_arquivo)}")
     except Exception as e:
         print(f"Erro ao enviar para S3: {e}")
@@ -244,30 +260,27 @@ def main():
     print("Iniciando simulação de processos...")
     
     print("Buscando alertas do banco de dados...")
-    alertas = buscar_alertas()
+    alertas_do_banco = buscar_alertas() # Renomeado para clareza
     
-    if not alertas:
+    if not alertas_do_banco:
         print("Nenhum alerta encontrado ou erro ao buscar alertas. Encerrando.")
         return
 
-    print(f"Encontrados {len(alertas)} alertas com setor associado.")
+    print(f"Encontrados {len(alertas_do_banco)} alertas válidos.")
     
-    if len(alertas) > 0:
-        print("Simulando processos para os alertas encontrados...")
-        simulacoes = registrar_processos(alertas)
+    # 'len(alertas_do_banco) > 0' já é coberto pela checagem 'if not alertas_do_banco'
+    print("Simulando processos para os alertas encontrados...")
+    simulacoes_com_processos = registrar_processos(alertas_do_banco) # Renomeado para clareza
 
-        if simulacoes:
-            print("Salvando simulações em arquivo local...")
-            nome_do_arquivo_json = "processos_simulados.json"
-            salvar_simulacoes(simulacoes, nome_do_arquivo_json)
+    if simulacoes_com_processos:
+        print("Salvando simulações em arquivo local...")
+        nome_do_arquivo_json = "processos_simulados.json"
+        salvar_simulacoes(simulacoes_com_processos, nome_do_arquivo_json)
 
-            print("Enviando arquivo de simulações para o S3...")
-            enviar_para_s3(nome_do_arquivo_json)
-        else:
-            print("Nenhuma simulação foi gerada (possivelmente nenhum setor encontrado nos alertas ou nenhum processo definido para os setores encontrados).")
+        print("Enviando arquivo de simulações para o S3...")
+        enviar_para_s3(nome_do_arquivo_json)
     else:
-        print("Nenhum alerta com setor associado foi encontrado para simulação.")
-
+        print("Nenhuma simulação foi gerada (possivelmente nenhum processo definido para os setores encontrados ou nenhum alerta válido).")
 
     print("Processo de simulação concluído!")
 

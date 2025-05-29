@@ -1,5 +1,4 @@
 const anomaliaModel = require("../models/anomaliaModel");
-const { analisarProcessos } = require('../utils/analisePreditiva');
 
 const listarPlcsPorFabricante = (req, res) => {
     const fabricanteId = req.params.id;
@@ -15,6 +14,27 @@ const listarPlcsPorFabricante = (req, res) => {
         .catch(error => {
             console.error("ERRO AO BUSCAR PLCs:", error);
             res.status(500).json({ error: "Erro ao buscar PLCs", details: error });
+        });
+};
+
+function listarPlcsPorEmpresa(req, res) {
+    const fabricanteId = req.params.fabricanteId;
+    const empresaId = req.params.empresaId;
+
+    if (!fabricanteId || !empresaId) {
+        return res.status(400).json({ error: "IDs inválidos" });
+    }
+    
+    anomaliaModel.listarPlcsPorEmpresa(fabricanteId, empresaId)
+        .then(result => {
+            if (!Array.isArray(result)) {
+                result = [];
+            }
+            res.status(200).json(result);
+        })
+        .catch(error => {
+            console.error("ERRO AO BUSCAR PLCs:", error);
+            res.status(500).json([]);  // Return empty array instead of error object
         });
 };
 
@@ -104,4 +124,38 @@ const setoresPorPlcFabrica = async (req, res) => {
     }
 };
 
-module.exports = { listarPlcsPorFabricante, listarEmpresasConsumidoras, listarFabricaSetores, listarPlcsPorFabrica, analisePreditivaPorSetores, setoresProcessosPorPlcFabrica, setoresProcessosPorPlc, setoresPorPlc, setoresPorPlcFabrica};
+const listarFabricasMaisAlertas = (req, res) => {
+    const empresaConsumidorId = req.params.id;
+    anomaliaModel.listarFabricasMaisAlertas(empresaConsumidorId)
+        .then(result => res.status(200).json(result))
+        .catch(error => {
+            console.error("ERRO AO BUSCAR FÁBRICAS COM MAIS ALERTAS:", error);
+            res.status(500).json({ error: "Erro ao buscar fábricas com mais alertas", details: error });
+        });
+};
+
+const setoresPorModelo = async (req, res) => {
+    const modelo = req.params.modelo;
+    try {
+        const setores = await anomaliaModel.setoresPorModelo(modelo);
+        res.json(setores);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao buscar setores do modelo", details: error });
+    }
+};
+
+
+module.exports = {
+    listarPlcsPorFabricante,
+    listarPlcsPorEmpresa,
+    listarEmpresasConsumidoras,
+    listarFabricaSetores,
+    listarPlcsPorFabrica,
+    analisePreditivaPorSetores,
+    setoresProcessosPorPlcFabrica,
+    setoresProcessosPorPlc,
+    setoresPorPlc,
+    setoresPorPlcFabrica,
+    listarFabricasMaisAlertas,
+    setoresPorModelo
+};

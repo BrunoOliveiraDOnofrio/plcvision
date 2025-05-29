@@ -12,6 +12,25 @@ const listarPlcsPorFabricante = (fabricanteId) => {
     return database.executar(sql);
 };
 
+const listarPlcsPorEmpresa = (fabricanteId, empresaId) => {
+    const sql = `
+        SELECT 
+            p.id,
+            p.modelo,
+            COUNT(DISTINCT a.id) as quantidade_alertas
+        FROM plc p
+        JOIN parceria pa ON p.parceria_id = pa.id
+        LEFT JOIN config_plc cp ON cp.plc_id = p.id
+        LEFT JOIN alerta a ON a.config_plc_id = cp.id
+        WHERE pa.empresa_fabricante_id = ${fabricanteId}
+        AND pa.empresa_consumidor_id = ${empresaId}
+        GROUP BY p.id, p.modelo
+        ORDER BY quantidade_alertas DESC;
+    `;
+    
+    return database.executar(sql);
+}
+
 const listarEmpresasConsumidoras = (fabricanteId) => {
     const sql = `
         SELECT 
@@ -32,21 +51,22 @@ const listarEmpresasConsumidoras = (fabricanteId) => {
 
 const listarFabricaSetores = (empresaConsumidorId) => {
     const sql = `
-        SELECT 
+        SELECT
             fc.id AS fabrica_id,
             fc.nome AS fabrica_nome,
             sf.id AS setor_id,
             sf.nome AS setor_nome,
             COUNT(a.id) AS quantidade_alertas
         FROM fabrica_consumidor fc
-        JOIN setor_fabrica sf ON sf.fabrica_consumidor_id = fc.id
-        JOIN plc p ON p.setor_fabrica_id = sf.id
-        LEFT JOIN config_plc cp ON cp.plc_id = p.id
-        LEFT JOIN alerta a ON a.config_plc_id = cp.id
+                 JOIN setor_fabrica sf ON sf.fabrica_consumidor_id = fc.id
+                 JOIN plc p ON p.setor_fabrica_id = sf.id
+                 LEFT JOIN config_plc cp ON cp.plc_id = p.id
+                 LEFT JOIN alerta a ON a.config_plc_id = cp.id
         WHERE fc.empresa_consumidor_id = ${empresaConsumidorId}
         GROUP BY fc.id, fc.nome, sf.id, sf.nome
         ORDER BY quantidade_alertas DESC
     `;
+
     return database.executar(sql);
 };
 
@@ -69,10 +89,10 @@ const setoresPorPlc = (plcId) => {
     const sql = `
         SELECT sf.nome AS setor_nome, COUNT(a.id) AS quantidade_alertas
         FROM plc p
-        JOIN setor_fabrica sf ON p.setor_fabrica_id = sf.id
-        LEFT JOIN config_plc cp ON cp.plc_id = p.id
-        LEFT JOIN alerta a ON a.config_plc_id = cp.id
-        WHERE p.id = ${plcId}
+                 JOIN setor_fabrica sf ON p.setor_fabrica_id = sf.id
+                 LEFT JOIN config_plc cp ON cp.plc_id = p.id
+                 LEFT JOIN alerta a ON a.config_plc_id = cp.id
+        WHERE p.modelo = (SELECT modelo FROM plc WHERE id = ${plcId})
         GROUP BY sf.nome
         ORDER BY quantidade_alertas DESC
     `;
@@ -94,4 +114,46 @@ const setoresPorPlcFabrica = (plcId, fabricaId) => {
     return database.executar(sql);
 };
 
-module.exports = { listarPlcsPorFabricante, listarEmpresasConsumidoras, listarFabricaSetores, listarPlcsPorFabrica, setoresPorPlc, setoresPorPlcFabrica};
+const listarFabricasMaisAlertas = (empresaConsumidorId) => {
+    const sql = `
+        SELECT 
+            fc.id AS fabrica_id,
+            fc.nome AS fabrica_nome,
+            COUNT(a.id) AS quantidade_alertas
+        FROM fabrica_consumidor fc
+        JOIN setor_fabrica sf ON sf.fabrica_consumidor_id = fc.id
+        JOIN plc p ON p.setor_fabrica_id = sf.id
+        LEFT JOIN config_plc cp ON cp.plc_id = p.id
+        LEFT JOIN alerta a ON a.config_plc_id = cp.id
+        WHERE fc.empresa_consumidor_id = ${empresaConsumidorId}
+        GROUP BY fc.id, fc.nome
+        ORDER BY quantidade_alertas DESC
+    `;
+    return database.executar(sql);
+};
+
+const setoresPorModelo = (modelo) => {
+    const sql = `
+        SELECT DISTINCT sf.nome AS setor_nome, COUNT(a.id) AS quantidade_alertas
+        FROM plc p
+        JOIN setor_fabrica sf ON p.setor_fabrica_id = sf.id
+        LEFT JOIN config_plc cp ON cp.plc_id = p.id
+        LEFT JOIN alerta a ON a.config_plc_id = cp.id
+        WHERE p.modelo = '${modelo}'
+        GROUP BY sf.id, sf.nome
+        ORDER BY quantidade_alertas DESC
+    `;
+    return database.executar(sql);
+};
+
+module.exports = { 
+    listarPlcsPorFabricante,
+    listarPlcsPorEmpresa,
+    listarEmpresasConsumidoras, 
+    listarFabricaSetores, 
+    listarPlcsPorFabrica, 
+    setoresPorPlc, 
+    setoresPorPlcFabrica, 
+    listarFabricasMaisAlertas,
+    setoresPorModelo
+};

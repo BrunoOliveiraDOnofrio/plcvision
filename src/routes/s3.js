@@ -4,4 +4,4 @@ const bucketController = require('../controllers/bucketController');
 
 router.get('/api/s3json', bucketController.getJsonFromS3);
 
-module.exports = router;
+module.exports = router;
