@@ -108,6 +108,11 @@
         margin-left: 10%;
     }
 
+    .linear-box {
+        display: flex;
+        flex-direction: row;
+    }
+
     .kpi-r{
     background-color: #24284B;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
