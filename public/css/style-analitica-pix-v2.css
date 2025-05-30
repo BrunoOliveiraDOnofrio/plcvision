@@ -46,6 +46,11 @@
     padding: 3%;
 }
 
+.value-r {
+    display: flex;
+    justify-content: center;
+}
+
 .graphic-box{
     display: flex;
     flex-direction: column;
@@ -130,12 +135,6 @@
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     padding: 10%;
-}
-
-
-.value-r {
-    display: flex;
-    justify-content: center;
 }
 
 .graphic-box {
