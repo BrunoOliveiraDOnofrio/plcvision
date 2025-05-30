@@ -361,17 +361,26 @@
         for (let i = 0; i < empresasList.length; i++) {
             let empresa = empresasList[i];
             let status = 'Normal';
+            let corFundo = '#28a745';
+            let corLetra = 'white';
+
+
+
             if (empresa.quantidade_alertas > 10) {
                 status = 'Alerta';
+                corFundo = '#dc3545';
+                corLetra = 'white';
             } else if (empresa.quantidade_alertas > 5) {
                 status = 'Atenção';
+                corFundo = '#ffc107';
+                corLetra = 'white';
             }
 
             tabela.innerHTML += `
             <tr>
                 <td>${empresa.razao_social}</td>
                 <td>${empresa.quantidade_alertas}</td>
-                <td>${status}</td>
+                <td style="background-color: ${corFundo}; color: ${corLetra}; font-weight: bold">${status}</td>
                 <td><button onclick="verDetalhesEmpresa(${empresa.id}, ${i})">Detalhes</button></td>
             </tr>
             <tr id="detalhes-${i}" style="display: none;">
@@ -387,18 +396,26 @@
 
         for (let i = 0; i < modelosAgrupados.length; i++) {
             let modelo = modelosAgrupados[i];
+
             let status = 'Normal';
+            let corFundo = '#28a745';
+            let corLetra = 'white';
+
             if (modelo.quantidade_alertas > 10) {
                 status = 'Alerta';
+                corFundo = '#dc3545';
+                corLetra = 'white';
             } else if (modelo.quantidade_alertas > 5) {
                 status = 'Atenção';
+                corFundo = '#ffc107';
+                corLetra = 'white';
             }
 
             tabela.innerHTML += `
             <tr>
                 <td>${modelo.modelo}</td>
                 <td>${modelo.quantidade_alertas}</td>
-                <td>${status}</td>
+                <td style="background-color: ${corFundo}; color: ${corLetra}; font-weight: bold">${status}</td>
                 <td><button onclick="verDetalhesModelo('${modelo.modelo}', ${i})">Detalhes</button></td>
             </tr>
             <tr id="detalhes-${i}" style="display: none;">
@@ -649,7 +666,7 @@
             return b.quantidade_alertas - a.quantidade_alertas;
         });
 
-        let html = `<h4>Modelo ${modelo} - Fábricas desta empresa (período filtrado):</h4>`;
+        let html = `<h4>Modelo ${modelo}:</h4>`;
 
         if (fabricasList.length === 0) {
             html += '<p>Este modelo não teve alertas no período selecionado.</p>';
@@ -881,8 +898,8 @@
         for (let i = 0; i < dadosS3.length; i++) {
             let registro = dadosS3[i];
             if (registro.modelo_plc === modelo &&
-                registro.fabrica_id == fabricaId &&
-                registro.empresa_consumidor_id == empresaId) {
+                registro.fabrica_id === fabricaId &&
+                registro.empresa_consumidor_id === empresaId) {
                 alertasDoModelo.push(registro);
             }
         }
