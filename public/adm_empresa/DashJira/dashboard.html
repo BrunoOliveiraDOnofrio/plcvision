@@ -312,8 +312,8 @@
                 .then(response => response.json())
                 .then(dados => {
                     console.log(dados)
-                    const hardware = dados.map(item => item.tipo);
-                    const qtd = dados.map(item => item.total);
+                    const hardware = dados.map(item => item.hardware);
+                    const qtd = dados.map(item => item.total_alertas);
 
                     if (chartAlertaComponente) {
                         chartAlertaComponente.destroy();
@@ -456,7 +456,6 @@
         if (dados.length > 0) {
             const modeloId = dados[0].modelo;
             gerarGraficoAlertaComponente(modeloId);
-
 
             bodyOptionModelo.value = modeloId;
         }

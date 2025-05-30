@@ -345,7 +345,7 @@ const qtdAlertaHardware = (req,res) => {
             console.error("Erro: ", error)
             res.status(500).json({erro: erro.sqlMessage});
         });
-}
+};
 
 const jiraAberto = async (req, res) => {
     const email = "carvalhohugo425@gmail.com";
@@ -381,7 +381,7 @@ const jiraAbertoValidade = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory!=Done AND created <= -3d`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory != Done AND cf[10092] <= -8h`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -410,7 +410,7 @@ const jiraFechadoNow = async (req,res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory=Done AND statusCategoryChangedDate >= -1d`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project = "Suporte Populacao 3" AND statusCategory = Done AND resolved >= startOfDay()`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -502,7 +502,7 @@ const alertaTraceroute = async (req, res) => {
     const key = process.env.JIRA_KEY;
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
 
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND created >= -7d OR resolutiondate >= -7d&fields=created,resolutiondate,status&maxResults=1000`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND (created >= -7d OR resolutiondate >= -7d)&fields=created,resolutiondate,status,customfield_10092&maxResults=1000`;
 
     const response = await fetch(urlApiJira, {
         method: "GET",
@@ -527,15 +527,20 @@ const alertaTraceroute = async (req, res) => {
         moment().subtract(i, 'days').format('dddd')
     ).reverse();
 
-    for (let alerta of data.issues) {
-        const criado = moment(alerta.fields.created).utcOffset('-03:00').format('YYYY-MM-DD');
-        criadoPorDia[criado] = (criadoPorDia[criado] || 0) + 1;
+    const alertaDateField = 'customfield_10092'; // cf[10092]
 
-        if (alerta.fields.resolutiondate) {
-            const resolvido = moment(alerta.fields.resolutiondate).utcOffset('-03:00').format('YYYY-MM-DD');
-            resolvidoPorDia[resolvido] = (resolvidoPorDia[resolvido] || 0) + 1;
-        }
+for (let alerta of data.issues) {
+    const dataAlerta = alerta.fields[alertaDateField];
+    if (dataAlerta) {
+        const diaAlerta = moment(dataAlerta).utcOffset('-03:00').startOf('day').format('YYYY-MM-DD');
+        criadoPorDia[diaAlerta] = (criadoPorDia[diaAlerta] || 0) + 1;
     }
+
+    if (alerta.fields.resolutiondate) {
+        const resolvido = moment(alerta.fields.resolutiondate).utcOffset('-03:00').startOf('day').format('YYYY-MM-DD');
+        resolvidoPorDia[resolvido] = (resolvidoPorDia[resolvido] || 0) + 1;
+    }
+}
 
     const resultado = {
         dias, // Agora retorna os nomes dos dias da semana
