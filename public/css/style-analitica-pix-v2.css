@@ -1,0 +1,63 @@
+.main{
+    background-color: #F9F9F9;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    & h1{
+        color: #24284B;
+        font-size: larger;
+    }
+}
+
+.kpis-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.kpis-graphics{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.line-graphic-box{
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10%;
+}
+
+.linear-box{
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.img-regressao {
+    max-width: 100%;
+}
+
+#myChart-pie-cor-ram, #myChart-pie-cor-cpu {
+    width: 125px;
+    height: 125px;
+}
+
+@media only screen and (min-width: 760px) {
+
+    .kpis-box {
+        display: flex;
+        max-width: 100%;
+    }
+}

@@ -87,3 +87,8 @@
 .linear-title{
     margin-top: 2%;
 }
+
+#myChart-pie-cor-cpu, #myChart-pie-cor-ram {
+    width: 100px;
+    height: 100px;
+}
