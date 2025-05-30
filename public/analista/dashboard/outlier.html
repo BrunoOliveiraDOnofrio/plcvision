@@ -524,7 +524,20 @@
         }
         html += '</ul>';
 
+        // Adiciona o gráfico
+        const graficoId = `grafico-fabricas-empresa-${Date.now()}-${index}`;
+        html += `
+    <div style="width: 100%; max-width: 700px; height: 400px; margin: 20px auto;">
+        <canvas id="${graficoId}"></canvas>
+    </div>
+`;
+
         linha.querySelector('td').innerHTML = html;
+
+        // Cria o gráfico após o HTML ser inserido
+        setTimeout(function () {
+            criarGraficoFabricas(graficoId, fabricasList, "Fábricas da Empresa");
+        }, 200);
     }
 
     function verDetalhesModelo(modelo, index) {
