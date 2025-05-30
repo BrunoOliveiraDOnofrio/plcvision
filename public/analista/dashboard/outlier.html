@@ -143,17 +143,11 @@
         buscarSimulacoesDoS3();
     });
 
-    function buscarSimulacoesDoS3() {
-        fetch('/api/s3json')
-            .then(resposta => resposta.json())
-            .then(json => {
-                if (Array.isArray(json)) {
-                    dadosS3 = json;
-                } else {
-                    dadosS3 = [];
-                }
-                console.log('Dados S3 carregados:', dadosS3.length, 'registros');
-            });
+    async function buscarSimulacoesDoS3() {
+        const resposta = await fetch('http://localhost:3000/api/s3json');
+        const json = await resposta.json();
+        dadosS3 = Array.isArray(json) ? json : [];
+        console.log('Simulações S3 carregadas:', dadosS3.length, dadosS3.length > 0 ? dadosS3[0] : '(vazio)');
     }
 
     function carregarEmpresas() {
@@ -322,18 +316,7 @@
                 };
             }
 
-            if (filtrosDatas && (filtrosDatas.dataInicial || filtrosDatas.dataFinal)) {
-                let alertasDoModelo = [];
-                for (let j = 0; j < dadosS3.length; j++) {
-                    if (dadosS3[j].modelo_plc === modelo) {
-                        alertasDoModelo.push(dadosS3[j]);
-                    }
-                }
-                let alertasFiltrados = filtrarPorData(alertasDoModelo, filtrosDatas);
-                modelosAgrupados[modelo].quantidade_alertas += alertasFiltrados.length;
-            } else {
-                modelosAgrupados[modelo].quantidade_alertas += plc.quantidade_alertas;
-            }
+            modelosAgrupados[modelo].quantidade_alertas += plc.quantidade_alertas;
 
             modelosAgrupados[modelo].plcs.push(plc);
         }
@@ -893,15 +876,13 @@
     }
 
     function analisarProcessos(modelo, fabricaId, empresaId, filtrosDatas) {
-        let alertasDoModelo = [];
+        let alertasDoModelo = dadosS3.filter(registro => 
+            registro.modelo_plc === modelo && 
+            registro.empresa_consumidor_id == empresaId
+        );
 
-        for (let i = 0; i < dadosS3.length; i++) {
-            let registro = dadosS3[i];
-            if (registro.modelo_plc === modelo &&
-                registro.fabrica_id === fabricaId &&
-                registro.empresa_consumidor_id === empresaId) {
-                alertasDoModelo.push(registro);
-            }
+        if (fabricaId && fabricaId !== "") {
+            alertasDoModelo = alertasDoModelo.filter(r => r.fabrica_id == fabricaId);
         }
 
         if (filtrosDatas) {
@@ -910,53 +891,40 @@
 
         let processos = [];
 
-        for (let i = 0; i < alertasDoModelo.length; i++) {
-            let registro = alertasDoModelo[i];
+        for (let registro of alertasDoModelo) {
+            if (!registro.processos) continue;
 
-            for (let j = 0; j < registro.processos.length; j++) {
-                let processo = registro.processos[j];
-                let processoExistente = null;
-
-                for (let k = 0; k < processos.length; k++) {
-                    if (processos[k].nome === processo.nome && processos[k].setor === registro.setor) {
-                        processoExistente = processos[k];
-                        break;
-                    }
-                }
+            for (let processo of registro.processos) {
+                let processoExistente = processos.find(p => 
+                    p.nome === processo.nome && p.setor === registro.setor
+                );
 
                 if (processoExistente) {
                     processoExistente.ocorrencias++;
-                    processoExistente.totalCpu += processo.cpu;
-                    processoExistente.totalRam += processo.ram;
+                    processoExistente.totalCpu += processo.cpu || 0;
+                    processoExistente.totalRam += processo.ram || 0;
                 } else {
                     processos.push({
                         nome: processo.nome,
                         setor: registro.setor,
                         ocorrencias: 1,
-                        totalCpu: processo.cpu,
-                        totalRam: processo.ram
+                        totalCpu: processo.cpu || 0,
+                        totalRam: processo.ram || 0
                     });
                 }
             }
         }
 
-        for (let i = 0; i < processos.length; i++) {
-            let processo = processos[i];
+        for (let processo of processos) {
             const mediaCpu = processo.totalCpu / processo.ocorrencias;
             const mediaRam = processo.totalRam / processo.ocorrencias;
 
             let pontuacao = processo.ocorrencias * 10;
             if (mediaCpu > 40) pontuacao += 30;
             if (mediaRam > 30) pontuacao += 20;
-
-            if (pontuacao > 100) pontuacao = 100;
-            processo.porcentagem = pontuacao;
+            processo.porcentagem = Math.min(pontuacao, 100);
         }
 
-        processos.sort(function(a, b) {
-            return b.porcentagem - a.porcentagem;
-        });
-
-        return processos;
+        return processos.sort((a, b) => b.porcentagem - a.porcentagem);
     }
 </script>
