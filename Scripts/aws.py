@@ -1,10 +1,7 @@
 import boto3
-from datetime import datetime,  timedelta, timezone
-import pandas as pd
-print("pandas importado com sucesso")
-
+from datetime import timezone,  datetime, timedelta
 import io
-# import pandas as pd
+import pandas as pd
 def conexao_aws():
     s3 = boto3.client('s3',
         aws_access_key_id='',
