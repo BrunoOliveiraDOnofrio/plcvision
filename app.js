@@ -32,7 +32,7 @@ const analistaRouter = require("./src/routes/analista");
 const tempoReal = require("./src/routes/tempoReal");
 
 const setorRegister = require("./src/routes/setor_register");
-const s3Routes = require('./src/routes/s3');
+const s3Router = require('./src/routes/s3');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -41,22 +41,22 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/", indexRouter);
-app.use("/dashComponente", dashComponenteRouter)
+app.use("/dashComponente", dashComponenteRouter);
 app.use("/usuario", usuarioRouter);
-app.use("/fabricante", fabricanteRouter)
-app.use("/plc",plcRouter)
-app.use("/fabrica", fabricaRouter)
-app.use("/plc/register", plcRegister)
+app.use("/fabricante", fabricanteRouter);
+app.use("/plc",plcRouter);
+app.use("/fabrica", fabricaRouter);
+app.use("/plc/register", plcRegister);
 app.use("/adm", admRouter);
 app.use('/analista', analistaRouter);
 app.use("/tempo_real", tempoReal);
-app.use("/consumidor", consumidorRouter)
-app.use("/alerta", alertaRouter)
-app.use("/componente", componenteRouter)
-app.use(anomaliaRoutes);
-app.use("/api", s3Routes);
-app.use("/jira", jiraRouter)
-app.use("/setor",setorRegister)
+app.use("/consumidor", consumidorRouter);
+app.use("/alerta", alertaRouter);
+app.use("/componente", componenteRouter);
+app.use("/api", anomaliaRoutes);
+app.use("/api", s3Router);
+app.use("/jira", jiraRouter);
+app.use("/setor",setorRegister);
 
 app.listen(PORTA_APP, function () {
     console.log(`

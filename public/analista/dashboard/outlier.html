@@ -140,10 +140,11 @@
     let fabricanteId = sessionStorage.getItem('EMPRESA_ID');
     let dadosS3 = [];
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', async function () {
         carregarEmpresas();
         configurarFiltros();
-        buscarSimulacoesDoS3();
+        // buscarSimulacoesDoS3();
+        dadosS3 = await buscarDadosS3();
     });
 
     // async function buscarSimulacoesDoS3() {
@@ -153,38 +154,75 @@
     //     console.log('Simulações S3 carregadas:', dadosS3.length, dadosS3.length > 0 ? dadosS3[0] : '(vazio)');
     // }
 
-    async function buscarSimulacoesDoS3() {
-        try {
-            const resposta = await fetch('./processos_simulados.json');
-            if (!resposta.ok) {
-                throw new Error(`Erro ao carregar arquivo: ${resposta.status}`);
-            }
-            const json = await resposta.json();
-            dadosS3 = Array.isArray(json) ? json : [];
+    // async function buscarSimulacoesDoS3() {
+    //     try {
+    //         const resposta = await fetch('./processos_simulados.json');
+    //         if (!resposta.ok) {
+    //             throw new Error(`Erro ao carregar arquivo: ${resposta.status}`);
+    //         }
+    //         const json = await resposta.json();
+    //         dadosS3 = Array.isArray(json) ? json : [];
 
-            if (dadosS3.length === 0) {
-                document.getElementById('corpoDaTabela').innerHTML = `
-                <tr><td colspan="4">Nenhum dado encontrado no arquivo.</td></tr>`;
+    //         if (dadosS3.length === 0) {
+    //             document.getElementById('corpoDaTabela').innerHTML = `
+    //             <tr><td colspan="4">Nenhum dado encontrado no arquivo.</td></tr>`;
+    //         }
+    //     } catch (erro) {
+    //         console.error('Erro ao carregar dados:', erro);
+    //         document.getElementById('corpoDaTabela').innerHTML = `
+    //         <tr><td colspan="4">Erro ao carregar dados: ${erro.message}</td></tr>`;
+    //     }
+    // }
+
+    async function buscarDadosS3() {
+        try {
+            const resposta = await fetch('/api/s3json');
+            if (!resposta.ok) {
+                throw new Error(`Erro na requisição: ${resposta.status}`);
             }
+            const dados = await resposta.json();
+            console.log('Dados S3 recebidos:', dados);
+            return dados;
         } catch (erro) {
-            console.error('Erro ao carregar dados:', erro);
+            console.error('Erro ao buscar dados do S3:', erro);
             document.getElementById('corpoDaTabela').innerHTML = `
-            <tr><td colspan="4">Erro ao carregar dados: ${erro.message}</td></tr>`;
+            <tr>
+                <td colspan="4">Erro ao carregar dados: ${erro.message}</td>
+            </tr>`;
+            return [];
         }
     }
 
     function carregarEmpresas() {
+        const fabricanteId = sessionStorage.getItem('EMPRESA_ID');
+        if (!fabricanteId) {
+            console.error("ID do fabricante não encontrado no sessionStorage");
+            return;
+        }
+
         fetch(`/api/fabricante/${fabricanteId}/empresas_consumidoras`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                if (!data || data.length === 0) {
+                    throw new Error('Nenhuma empresa encontrada');
+                }
                 empresas = data;
                 const selectEmpresa = document.getElementById('empresa');
-                selectEmpresa.innerHTML = '<option value="">Todas as empresas</option>';
+                selectEmpresa.innerHTML = '<option value="">Selecione uma empresa</option>';
 
-                for (let i = 0; i < empresas.length; i++) {
-                    selectEmpresa.innerHTML += `<option value="${empresas[i].id}">${empresas[i].razao_social}</option>`;
-                }
+                empresas.forEach(empresa => {
+                    selectEmpresa.innerHTML += `<option value="${empresa.id}">${empresa.razao_social}</option>`;
+                });
                 mostrarEmpresas();
+            })
+            .catch(erro => {
+                console.error("Erro ao carregar empresas:", erro);
+                document.getElementById('empresa').innerHTML = '<option value="">Erro ao carregar empresas</option>';
             });
     }
 
@@ -656,7 +694,7 @@
 
             if (!fabricas[fabricaId]) {
                 fabricas[fabricaId] = {
-                    fabrica_nome: `Fábrica ${fabricaId}`,
+                    fabrica_nome: `${alerta.fabrica_nome}`,
                     quantidade_alertas: 0
                 };
             }
@@ -788,7 +826,7 @@
             if (!fabricasEncontradas[fabricaId]) {
                 fabricasEncontradas[fabricaId] = {
                     fabrica_id: fabricaId,
-                    fabrica_nome: `Fábrica ${fabricaId}`,
+                    fabrica_nome: `${alerta.fabrica_nome}`,
                     alertas: 0,
                     setores: []
                 };

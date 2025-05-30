@@ -18,7 +18,7 @@ DB_NAME = os.getenv("DB_DATABASE")
 # Configurações AWS
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN") # Adicionado para consistência se usado
+AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN")
 S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
 
 SETORES_E_PROCESSOS = {
@@ -117,12 +117,11 @@ def buscar_alertas():
             password=DB_PASSWORD,
             database=DB_NAME,
             port=DB_PORT,
-            charset='utf8mb4', # Adicionado para melhor suporte a caracteres
-            cursorclass=pymysql.cursors.DictCursor # Para retornar resultados como dicionários
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor
         )
 
-        with conexao.cursor() as cursor: # Usar with garante que o cursor seja fechado
-            # Query SQL MODIFICADA para incluir fabrica_consumidor_id de config_plc como fabrica_id
+        with conexao.cursor() as cursor:
             sql_query = """
                 SELECT
                     a.id AS alerta_id,
@@ -150,23 +149,19 @@ def buscar_alertas():
                 data_hora_alerta = linha_dict["dataHora"]
                 data_hora_str = data_hora_alerta.strftime("%Y-%m-%d %H:%M:%S") if isinstance(data_hora_alerta, datetime) else str(data_hora_alerta)
                 
-                # Dicionário 'alerta' agora usa diretamente as chaves do DictCursor
                 alerta = {
                     "id_alerta": linha_dict["alerta_id"],
                     "dataHora": data_hora_str,
                     "setor": linha_dict["setor_nome"],
                     "empresa_consumidor_id": linha_dict["empresa_consumidor_id"],
                     "fabrica_id": linha_dict["fabrica_id"],
-                    "fabrica_nome": linha_dict["fabrica_nome"],  # Added this line
+                    "fabrica_nome": linha_dict["fabrica_nome"],
                     "plc_id": linha_dict["plc_id"],
                     "modelo_plc": linha_dict["plc_modelo"],
                     "tipo_alerta_valor": linha_dict["tipo_alerta_valor"]
                 }
-                # Garante que campos essenciais existam antes de adicionar
-                if alerta["setor"] and alerta["fabrica_id"] is not None and alerta["empresa_consumidor_id"] is not None and alerta["plc_id"] is not None and alerta["modelo_plc"] is not None:
-                    alertas_formatados.append(alerta)
-                else:
-                    print(f"Aviso: Alerta ID {alerta.get('id_alerta')} descartado por falta de setor, fabrica_id ou empresa_consumidor_id.")
+                
+                alertas_formatados.append(alerta)
             
             return alertas_formatados
     

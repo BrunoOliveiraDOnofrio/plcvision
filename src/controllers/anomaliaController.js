@@ -28,13 +28,24 @@ const listarModeloPorEmpresa = (req, res) => {
         });
 };
 
-const listarEmpresasConsumidoras = (req, res) => {
+function listarEmpresasConsumidoras(req, res) {
     const fabricanteId = req.params.id;
+    
+    if (!fabricanteId) {
+        return res.status(400).json({ erro: "ID do fabricante não informado" });
+    }
+
     anomaliaModel.listarEmpresasConsumidoras(fabricanteId)
-        .then(result => res.status(200).json(result))
-        .catch(error => {
-            console.error("ERRO AO BUSCAR EMPRESAS CONSUMIDORAS:", error);
-            res.status(500).json({ error: "Erro ao buscar empresas consumidoras", details: error });
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.json(resultado);
+            } else {
+                res.status(404).json({ erro: "Nenhuma empresa encontrada" });
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar empresas:", erro);
+            res.status(500).json({ erro: "Erro interno ao buscar empresas" });
         });
 };
 
