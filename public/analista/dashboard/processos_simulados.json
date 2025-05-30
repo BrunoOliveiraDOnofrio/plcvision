@@ -1,0 +1,312 @@
+[
+    {
+        "id_alerta": 1,
+        "dataHora": "2025-05-28 19:53:30",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 1,
+        "fabrica_id": 1,
+        "plc_id": 1,
+        "modelo_plc": "Siemens S7-1500",
+        "tipo_alerta_valor": "cpu_percent",
+        "fabrica_nome": "Fábrica Motorola - SP Principal",
+        "processos": [
+            {
+                "nome": "Teste_Qualidade",
+                "cpu": 40.7,
+                "ram": 49.4
+            },
+            {
+                "nome": "Ajuste_Automatico",
+                "cpu": 24.6,
+                "ram": 32.4
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 22.3,
+                "ram": 40.0
+            },
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 31.8,
+                "ram": 19.6
+            },
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 18.0,
+                "ram": 31.2
+            }
+        ]
+    },
+    {
+        "id_alerta": 2,
+        "dataHora": "2025-05-28 21:53:30",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 1,
+        "fabrica_id": 1,
+        "plc_id": 1,
+        "modelo_plc": "Siemens S7-1500",
+        "tipo_alerta_valor": "ram_percent",
+        "fabrica_nome": "Fábrica Motorola - SP Principal",
+        "processos": [
+            {
+                "nome": "Ajuste_Automatico",
+                "cpu": 37.2,
+                "ram": 13.7
+            },
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 54.6,
+                "ram": 40.7
+            },
+            {
+                "nome": "Controle_Velocidade",
+                "cpu": 31.3,
+                "ram": 8.4
+            }
+        ]
+    },
+    {
+        "id_alerta": 3,
+        "dataHora": "2025-05-27 19:53:30",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 1,
+        "fabrica_id": 1,
+        "plc_id": 2,
+        "modelo_plc": "Siemens S7-1200",
+        "tipo_alerta_valor": "cpu_temperatura",
+        "fabrica_nome": "Fábrica Motorola - SP Principal",
+        "processos": [
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 17.5,
+                "ram": 9.2
+            },
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 22.3,
+                "ram": 9.5
+            },
+            {
+                "nome": "Teste_Qualidade",
+                "cpu": 9.3,
+                "ram": 20.7
+            },
+            {
+                "nome": "Ajuste_Automatico",
+                "cpu": 12.8,
+                "ram": 8.1
+            }
+        ]
+    },
+    {
+        "id_alerta": 4,
+        "dataHora": "2025-05-28 23:53:30",
+        "setor": "Linha de Montagem",
+        "empresa_consumidor_id": 1,
+        "fabrica_id": 1,
+        "plc_id": 2,
+        "modelo_plc": "Siemens S7-1200",
+        "tipo_alerta_valor": "ram_livre",
+        "fabrica_nome": "Fábrica Motorola - SP Principal",
+        "processos": [
+            {
+                "nome": "Teste_Qualidade",
+                "cpu": 46.0,
+                "ram": 28.6
+            },
+            {
+                "nome": "Medicao_Precisao",
+                "cpu": 30.3,
+                "ram": 17.8
+            },
+            {
+                "nome": "Ajuste_Automatico",
+                "cpu": 31.6,
+                "ram": 34.2
+            },
+            {
+                "nome": "Montagem_Componentes",
+                "cpu": 18.9,
+                "ram": 32.8
+            }
+        ]
+    },
+    {
+        "id_alerta": 5,
+        "dataHora": "2025-05-29 00:53:30",
+        "setor": "Pintura Industrial",
+        "empresa_consumidor_id": 1,
+        "fabrica_id": 1,
+        "plc_id": 3,
+        "modelo_plc": "Siemens S7-400",
+        "tipo_alerta_valor": "cpu_percent",
+        "fabrica_nome": "Fábrica Motorola - SP Principal",
+        "processos": [
+            {
+                "nome": "Secagem_Controlada",
+                "cpu": 14.6,
+                "ram": 16.5
+            },
+            {
+                "nome": "Acabamento_Final",
+                "cpu": 25.6,
+                "ram": 47.5
+            },
+            {
+                "nome": "Aplicacao_Primer",
+                "cpu": 42.6,
+                "ram": 10.2
+            },
+            {
+                "nome": "Preparacao_Superficie",
+                "cpu": 16.9,
+                "ram": 28.6
+            }
+        ]
+    },
+    {
+        "id_alerta": 6,
+        "dataHora": "2025-05-27 19:53:30",
+        "setor": "Armazenamento",
+        "empresa_consumidor_id": 1,
+        "fabrica_id": 2,
+        "plc_id": 10,
+        "modelo_plc": "Siemens S7-1200",
+        "tipo_alerta_valor": "cpu_percent",
+        "fabrica_nome": "Fábrica Motorola - SP Logística",
+        "processos": [
+            {
+                "nome": "Separacao_Itens",
+                "cpu": 7.4,
+                "ram": 34.1
+            },
+            {
+                "nome": "Controle_Temperatura",
+                "cpu": 53.2,
+                "ram": 41.2
+            }
+        ]
+    },
+    {
+        "id_alerta": 7,
+        "dataHora": "2025-05-26 19:53:30",
+        "setor": "Armazenamento",
+        "empresa_consumidor_id": 1,
+        "fabrica_id": 2,
+        "plc_id": 10,
+        "modelo_plc": "Siemens S7-1200",
+        "tipo_alerta_valor": "ram_percent",
+        "fabrica_nome": "Fábrica Motorola - SP Logística",
+        "processos": [
+            {
+                "nome": "Inventario_Automatico",
+                "cpu": 20.4,
+                "ram": 35.0
+            },
+            {
+                "nome": "Controle_Temperatura",
+                "cpu": 24.1,
+                "ram": 41.7
+            },
+            {
+                "nome": "Gestao_Estoque",
+                "cpu": 58.9,
+                "ram": 40.5
+            },
+            {
+                "nome": "Organizacao_Espacial",
+                "cpu": 45.9,
+                "ram": 38.6
+            }
+        ]
+    },
+    {
+        "id_alerta": 8,
+        "dataHora": "2025-05-28 19:53:30",
+        "setor": "Injeção Plástica",
+        "empresa_consumidor_id": 1,
+        "fabrica_id": 3,
+        "plc_id": 12,
+        "modelo_plc": "Siemens S7-400",
+        "tipo_alerta_valor": "disk_usage_percent",
+        "fabrica_nome": "Fábrica Motorola - SP Produção",
+        "processos": [
+            {
+                "nome": "Resfriamento_Pecas",
+                "cpu": 53.3,
+                "ram": 17.0
+            },
+            {
+                "nome": "Controle_Pressao",
+                "cpu": 11.6,
+                "ram": 21.0
+            },
+            {
+                "nome": "Controle_Qualidade",
+                "cpu": 10.2,
+                "ram": 40.1
+            },
+            {
+                "nome": "Extracao_Automatica",
+                "cpu": 21.7,
+                "ram": 47.4
+            }
+        ]
+    },
+    {
+        "id_alerta": 9,
+        "dataHora": "2025-05-28 19:53:30",
+        "setor": "Embalagem",
+        "empresa_consumidor_id": 2,
+        "fabrica_id": 4,
+        "plc_id": 13,
+        "modelo_plc": "Siemens S7-1500",
+        "tipo_alerta_valor": "ram_percent",
+        "fabrica_nome": "Fábrica Samsung - Eletrônicos",
+        "processos": [
+            {
+                "nome": "Paletizacao",
+                "cpu": 37.6,
+                "ram": 37.9
+            },
+            {
+                "nome": "Conferencia_Final",
+                "cpu": 40.1,
+                "ram": 18.8
+            },
+            {
+                "nome": "Encaixotamento",
+                "cpu": 58.9,
+                "ram": 20.8
+            }
+        ]
+    },
+    {
+        "id_alerta": 10,
+        "dataHora": "2025-05-25 19:53:30",
+        "setor": "Embalagem",
+        "empresa_consumidor_id": 2,
+        "fabrica_id": 4,
+        "plc_id": 14,
+        "modelo_plc": "Siemens S7-1200",
+        "tipo_alerta_valor": "cpu_temperatura",
+        "fabrica_nome": "Fábrica Samsung - Eletrônicos",
+        "processos": [
+            {
+                "nome": "Selagem_Automatica",
+                "cpu": 30.7,
+                "ram": 10.0
+            },
+            {
+                "nome": "Conferencia_Final",
+                "cpu": 13.3,
+                "ram": 36.8
+            },
+            {
+                "nome": "Rotulagem_Produtos",
+                "cpu": 25.5,
+                "ram": 45.9
+            }
+        ]
+    }
+]

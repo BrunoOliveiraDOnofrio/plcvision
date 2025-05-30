@@ -7,7 +7,9 @@
     <title>Relatório</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/nav_side_bar.css">
     <link rel="stylesheet" href="../../css/dashboards/monitoramento_tempo_real.css">
@@ -18,116 +20,117 @@
 </head>
 
 <body>
-<!-- Nav Bar -->
-<header class="header-nav">
-    <div class="menu-foto">
-        <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
-        <div class="foto"></div>
-        <div class="barra-sep"></div>
-    </div>
-    <div class="user-options">
-        <span id="username">Usuário</span>
-        <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
-        <div id="div_menu" class="collapse-menu">
-            <nav>
-                <ul>
-                    <li><a href=""><span>Dashboard</span></a></li>
-                    <li><a href=""><span>Alertas</span></a></li>
-                    <li><a href=""><span>Perfil</span></a></li>
-                    <li><a href=""><span>Sair</span></a></li>
-                </ul>
-            </nav>
+    <!-- Nav Bar -->
+    <header class="header-nav">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="foto"></div>
+            <div class="barra-sep"></div>
+        </div>
+        <div class="user-options">
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+            <div id="div_menu" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li><a href=""><span>Dashboard</span></a></li>
+                        <li><a href=""><span>Alertas</span></a></li>
+                        <li><a href=""><span>Perfil</span></a></li>
+                        <li><a href=""><span>Sair</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <header class="header-nav header-nav-desk">
+        <div class="menu-foto">
+            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+            <div class="fotoEmpresa"></div>
+            <span id="span_empresa" class="nome-empresa">Motorola</span>
+            <div class="barra-sep"></div>
+            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+        </div>
+        <div class="user-options">
+            <div class="foto"></div>
+            <span id="username">Usuário</span>
+            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+            <div id="div_menu_desk" class="collapse-menu">
+                <nav>
+                    <ul>
+                        <li><a href=""><span>Dashboard</span></a></li>
+                        <li><a href=""><span>Alertas</span></a></li>
+                        <li><a href=""><span>Perfil</span></a></li>
+                        <li><a href=""><span>Sair</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side bar  -->
+    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
+        <div class="inicio">
+            <ul>
+                <li><a href=".././dashboard"><i class='bx bx-timer'></i></a></li>
+                <li><a href=".././alertas"><i class='bx bxs-bell-ring'></i></a></li>
+                <li><a href=".././plcs"><i class='bx bx-desktop'></i></a></li>
+            </ul>
+        </div>
+        <div class="saida">
+            <ul>
+                <li><a href="#"><i class='bx bx-exit'></i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main">
+        <div class="content">
+            <h1 class="dashboard-title">Processos</h1>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="empresa">Empresa</label>
+                    <select id="empresa" class="filter-select">
+                        <option value="">Todas as empresas</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="fabrica">Fábrica</label>
+                    <select id="fabrica" class="filter-select">
+                        <option value="">Todas as fábricas</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="data-inicial">Data Inicial</label>
+                    <input type="date" id="dataInicial" class="filter-select">
+                </div>
+                <div class="filter-group">
+                    <label for="data-final">Data Final</label>
+                    <input type="date" id="dataFinal" class="filter-select">
+                </div>
+                <button id="btn-aplicar-filtros" class="filter-select" style="background-color: #24284B;">Aplicar
+                    Filtros</button>
+            </div>
+
+            <table id="tabelaAnomalias">
+                <thead>
+                    <tr>
+                        <th>Modelo</th>
+                        <th>Quantidade de Alerta(s) Relacionado(s)</th>
+                        <th>Status de Criticidade</th>
+                        <th>Detalhe</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoDaTabela"></tbody>
+            </table>
+
+            <div id="janelaDetalhes" style="display: none;">
+                <div id="conteudoDetalhes"></div>
+            </div>
         </div>
     </div>
-</header>
-
-<header class="header-nav header-nav-desk">
-    <div class="menu-foto">
-        <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
-        <div class="fotoEmpresa"></div>
-        <span id="span_empresa" class="nome-empresa">Motorola</span>
-        <div class="barra-sep"></div>
-        <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
-    </div>
-    <div class="user-options">
-        <div class="foto"></div>
-        <span id="username">Usuário</span>
-        <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
-        <div id="div_menu_desk" class="collapse-menu">
-            <nav>
-                <ul>
-                    <li><a href=""><span>Dashboard</span></a></li>
-                    <li><a href=""><span>Alertas</span></a></li>
-                    <li><a href=""><span>Perfil</span></a></li>
-                    <li><a href=""><span>Sair</span></a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</header>
-
-<!-- Side bar  -->
-<nav id="nav_sidebar" class="sidebar sidebar-fechada">
-    <div class="inicio">
-        <ul>
-            <li><a href=".././dashboard"><i class='bx bx-timer'></i></a></li>
-            <li><a href=".././alertas"><i class='bx bxs-bell-ring'></i></a></li>
-            <li><a href=".././plcs"><i class='bx bx-desktop'></i></a></li>
-        </ul>
-    </div>
-    <div class="saida">
-        <ul>
-            <li><a href="#"><i class='bx bx-exit'></i></a></li>
-        </ul>
-    </div>
-</nav>
-
-<div class="main">
-    <div class="content">
-        <h1 class="dashboard-title">Processos</h1>
-
-        <div class="filters">
-            <div class="filter-group">
-                <label for="empresa">Empresa</label>
-                <select id="empresa" class="filter-select">
-                    <option value="">Todas as empresas</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="fabrica">Fábrica</label>
-                <select id="fabrica" class="filter-select">
-                    <option value="">Todas as fábricas</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="data-inicial">Data Inicial</label>
-                <input type="date" id="dataInicial" class="filter-select">
-            </div>
-            <div class="filter-group">
-                <label for="data-final">Data Final</label>
-                <input type="date" id="dataFinal" class="filter-select">
-            </div>
-            <button id="btn-aplicar-filtros" class="filter-select" style="background-color: #24284B;">Aplicar Filtros</button>
-        </div>
-
-        <table id="tabelaAnomalias">
-            <thead>
-            <tr>
-                <th>Modelo</th>
-                <th>Quantidade de Alerta(s) Relacionado(s)</th>
-                <th>Status de Criticidade</th>
-                <th>Detalhe</th>
-            </tr>
-            </thead>
-            <tbody id="corpoDaTabela"></tbody>
-        </table>
-
-        <div id="janelaDetalhes" style="display: none;">
-            <div id="conteudoDetalhes"></div>
-        </div>
-    </div>
-</div>
-<script src="../../js/nav_sidebar.js"></script>
+    <script src="../../js/nav_sidebar.js"></script>
 </body>
 
 </html>
@@ -143,11 +146,31 @@
         buscarSimulacoesDoS3();
     });
 
+    // async function buscarSimulacoesDoS3() {
+    //     const resposta = await fetch('http://localhost:3000/api/s3json');
+    //     const json = await resposta.json();
+    //     dadosS3 = Array.isArray(json) ? json : [];
+    //     console.log('Simulações S3 carregadas:', dadosS3.length, dadosS3.length > 0 ? dadosS3[0] : '(vazio)');
+    // }
+
     async function buscarSimulacoesDoS3() {
-        const resposta = await fetch('http://localhost:3000/api/s3json');
-        const json = await resposta.json();
-        dadosS3 = Array.isArray(json) ? json : [];
-        console.log('Simulações S3 carregadas:', dadosS3.length, dadosS3.length > 0 ? dadosS3[0] : '(vazio)');
+        try {
+            const resposta = await fetch('./processos_simulados.json');
+            if (!resposta.ok) {
+                throw new Error(`Erro ao carregar arquivo: ${resposta.status}`);
+            }
+            const json = await resposta.json();
+            dadosS3 = Array.isArray(json) ? json : [];
+
+            if (dadosS3.length === 0) {
+                document.getElementById('corpoDaTabela').innerHTML = `
+                <tr><td colspan="4">Nenhum dado encontrado no arquivo.</td></tr>`;
+            }
+        } catch (erro) {
+            console.error('Erro ao carregar dados:', erro);
+            document.getElementById('corpoDaTabela').innerHTML = `
+            <tr><td colspan="4">Erro ao carregar dados: ${erro.message}</td></tr>`;
+        }
     }
 
     function carregarEmpresas() {
@@ -294,7 +317,7 @@
             empresasFiltradas.push(empresaComFiltro);
         }
 
-        empresasFiltradas.sort(function(a, b) {
+        empresasFiltradas.sort(function (a, b) {
             return b.quantidade_alertas - a.quantidade_alertas;
         });
 
@@ -326,7 +349,7 @@
             modelosArray.push(modelosAgrupados[modelo]);
         }
 
-        modelosArray.sort(function(a, b) {
+        modelosArray.sort(function (a, b) {
             return b.quantidade_alertas - a.quantidade_alertas;
         });
 
@@ -437,7 +460,7 @@
 
             if (!fabricas[fabricaId]) {
                 fabricas[fabricaId] = {
-                    fabrica_nome: `Fábrica ${fabricaId}`,
+                    fabrica_nome: `${alerta.fabrica_nome}`,
                     quantidade_alertas: 0
                 };
             }
@@ -449,7 +472,7 @@
             fabricasList.push(fabricas[fabricaId]);
         }
 
-        fabricasList.sort(function(a, b) {
+        fabricasList.sort(function (a, b) {
             return b.quantidade_alertas - a.quantidade_alertas;
         });
 
@@ -536,7 +559,7 @@
 
         linha.querySelector('td').innerHTML = html;
 
-        setTimeout(function() {
+        setTimeout(function () {
             for (let i = 0; i < graficosIds.length; i++) {
                 criarGraficoProcessos(graficosIds[i]);
             }
@@ -645,7 +668,7 @@
             fabricasList.push(fabricas[fabricaId]);
         }
 
-        fabricasList.sort(function(a, b) {
+        fabricasList.sort(function (a, b) {
             return b.quantidade_alertas - a.quantidade_alertas;
         });
 
@@ -672,7 +695,7 @@
 
         linha.querySelector('td').innerHTML = html;
 
-        setTimeout(function() {
+        setTimeout(function () {
             criarGraficoFabricas(graficoId, fabricasList, modelo);
         }, 200);
     }
@@ -782,7 +805,7 @@
             fabricas.push(fabricasEncontradas[fabricaId]);
         }
 
-        fabricas.sort(function(a, b) {
+        fabricas.sort(function (a, b) {
             return b.alertas - a.alertas;
         });
 
@@ -815,7 +838,7 @@
         linha.querySelector('td').innerHTML = html;
 
         if (fabricas.length > 0) {
-            setTimeout(function() {
+            setTimeout(function () {
                 criarGraficoGeral(graficoId, fabricas);
             }, 200);
         }
@@ -876,8 +899,8 @@
     }
 
     function analisarProcessos(modelo, fabricaId, empresaId, filtrosDatas) {
-        let alertasDoModelo = dadosS3.filter(registro => 
-            registro.modelo_plc === modelo && 
+        let alertasDoModelo = dadosS3.filter(registro =>
+            registro.modelo_plc === modelo &&
             registro.empresa_consumidor_id == empresaId
         );
 
@@ -895,7 +918,7 @@
             if (!registro.processos) continue;
 
             for (let processo of registro.processos) {
-                let processoExistente = processos.find(p => 
+                let processoExistente = processos.find(p =>
                     p.nome === processo.nome && p.setor === registro.setor
                 );
 

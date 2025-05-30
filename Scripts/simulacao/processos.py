@@ -129,7 +129,8 @@ def buscar_alertas():
                     a.dataHora,
                     sf.nome AS setor_nome,
                     ec.id AS empresa_consumidor_id,
-                    cp.fabrica_consumidor_id AS fabrica_id ,
+                    cp.fabrica_consumidor_id AS fabrica_id,
+                    fc.nome AS fabrica_nome,
                     p.id AS plc_id,
                     p.modelo AS plc_modelo,
                     a.tipo_valor AS tipo_alerta_valor
@@ -138,7 +139,8 @@ def buscar_alertas():
                 JOIN plc p ON cp.plc_id = p.id
                 JOIN setor_fabrica sf ON p.setor_fabrica_id = sf.id
                 JOIN parceria pa ON p.parceria_id = pa.id
-                JOIN empresa_consumidor ec ON pa.empresa_consumidor_id = ec.id;
+                JOIN empresa_consumidor ec ON pa.empresa_consumidor_id = ec.id
+                JOIN fabrica_consumidor fc ON fc.id = cp.fabrica_consumidor_id;
                 """
             cursor.execute(sql_query)
             linhas = cursor.fetchall() # Retorna uma lista de dicionários
@@ -150,11 +152,12 @@ def buscar_alertas():
                 
                 # Dicionário 'alerta' agora usa diretamente as chaves do DictCursor
                 alerta = {
-                    "id_alerta": linha_dict["alerta_id"], # Renomeado para clareza no JSON
+                    "id_alerta": linha_dict["alerta_id"],
                     "dataHora": data_hora_str,
-                    "setor": linha_dict["setor_nome"], # Renomeado para clareza no JSON
+                    "setor": linha_dict["setor_nome"],
                     "empresa_consumidor_id": linha_dict["empresa_consumidor_id"],
-                    "fabrica_id": linha_dict["fabrica_id"], 
+                    "fabrica_id": linha_dict["fabrica_id"],
+                    "fabrica_nome": linha_dict["fabrica_nome"],  # Added this line
                     "plc_id": linha_dict["plc_id"],
                     "modelo_plc": linha_dict["plc_modelo"],
                     "tipo_alerta_valor": linha_dict["tipo_alerta_valor"]
@@ -221,6 +224,7 @@ def registrar_processos(alertas):
             "plc_id": alerta_data.get("plc_id"),
             "modelo_plc": alerta_data.get("modelo_plc"),
             "tipo_alerta_valor": alerta_data.get("tipo_alerta_valor"),
+            "fabrica_nome": alerta_data.get("fabrica_nome"),
             "processos": processos
         }
         simulacoes.append(simulacao)
