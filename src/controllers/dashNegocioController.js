@@ -78,9 +78,30 @@ function taxaDefeitosMes(req,res){
 }
 
 
+function taxaDefeitosPorModelo(req,res){
+    
+    var empresaId = req.params.empresaId
+
+    dashNegocioModel
+    .getDefeitosPorModelo(empresaId).
+    then(function(prctPorModelo){
+        console.log(prctPorModelo)
+        if(prctPorModelo.length > 0){
+            res.status(200).json(prctPorModelo)
+        }else{
+            res.status(204).send('Não foi possível encontrar as taxas por modelo!')
+        }
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage)
+        console.log(erro)
+    })
+}
+
+
 module.exports = {
     empresaMaisAfetada,
     mesMaisAfetado,
     modeloMaisAfetado,
-    taxaDefeitosMes
+    taxaDefeitosMes,
+    taxaDefeitosPorModelo
 }

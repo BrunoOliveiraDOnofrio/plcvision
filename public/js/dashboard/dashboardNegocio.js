@@ -259,7 +259,7 @@ async function gerarGraficoTaxaDefeitos() {
             }
       
         const nomeMes = month[dado.mes];
-        const prctDefeito = ((dado.qtd/somaTotal) * 100).toFixed(0);
+        const prctDefeito = ((dado.qtd/somaTotal) * 100).toFixed(2);
 
     dados.push(prctDefeito);
     meses.push(nomeMes);
@@ -269,7 +269,7 @@ var optionsDefeitos = {
         series: [{
           name: "% Defeitos",
           data: dados,
-          colors: ['#4B5293','#4B5293', '#4B5293', '#4B5293', '#4B5293', '#4B5293']
+          colors: ['#4B5293']
       }],
         chart: {
           height: 280,
@@ -310,13 +310,32 @@ var optionsDefeitos = {
 
 
 // Gráfico % de Defeito por Modelo
-document.addEventListener("DOMContentLoaded", function() {
-    const chartModelosContainer = document.querySelector("#chart-modelos");
+async function gerarGraficoDefeitosPorModelo(){
+
+  const request = await fetch(`/adm/dashNegocio/taxaDefeitosPorModelo/${sessionStorage.getItem('EMPRESA_ID')}`);
+  const dadosModelos = await request.json();
+  console.log(dadosModelos);
+
+  const dados = [];
+  const modelos = [];
+
+  const somaTotal = dadosModelos.reduce((soma, valor)=> soma += valor.qtd, 0);
+  console.log(somaTotal);
+
+  for(let dado of dadosModelos) {
+    
+    const prctDefeito = ((dado.qtd/somaTotal) * 100).toFixed(1);
+
+    dados.push(prctDefeito);
+    modelos.push(dado.modelo);
+  }
+
+  const chartModelosContainer = document.querySelector("#chart-modelos");
     let chartModelosInstance = null;
 
     const optionsModelosMobile = {
         series: [{
-            data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5]
+            data: dados
         }],
         chart: {
           type: 'bar',
@@ -354,7 +373,7 @@ document.addEventListener("DOMContentLoaded", function() {
             colors: ['#fff']
         },
         xaxis: {
-            categories: ['LOGO!', 'SISMATIC S7-200', 'SISMATIC S7-400', 'SISMATIC S7-1200', 'SISMATIC S7-1500', 'SISMATIC ET 200SP', 'SISMATIC ET 200MP', 'SISMATIC S5', 'SISMATIC S7-1500T', 'SISMATIC S7-1500F', 'SISMATIC S7-300F'],
+            categories: modelos,
         },
         yaxis: {
             labels: {
@@ -383,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const optionsDesktop = {
       series: [{
             name: 'Taxa de Defeito', 
-            data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5],
+            data: dados,
             colors: ['#4B5293']
         }],
         chart: {
@@ -410,7 +429,7 @@ document.addEventListener("DOMContentLoaded", function() {
           }
         },
         xaxis: {
-          categories: ['LOGO!', 'SISMATIC S7-200', 'SISMATIC S7-400', 'SISMATIC S7-1200', 'SISMATIC S7-1500', 'SISMATIC ET 200SP', 'SISMATIC ET 200MP', 'SISMATIC S5', 'SISMATIC S7-1500T', 'SISMATIC S7-1500F', 'SISMATIC S7-300F'],
+          categories: modelos,
           position: 'bottom',
           axisBorder: {
             show: false
@@ -475,7 +494,8 @@ document.addEventListener("DOMContentLoaded", function() {
     updateChart();
 
     window.matchMedia("(min-width: 702px)").addEventListener('change', updateChart);
-});
+
+}
     
 
 
@@ -487,5 +507,6 @@ document.addEventListener("DOMContentLoaded", function() {
     gerarMetaVendas();
     gerarPainelCancel();
     gerarGraficoTaxaDefeitos();
+    gerarGraficoDefeitosPorModelo();
 
 });

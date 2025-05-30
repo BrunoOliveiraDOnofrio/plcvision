@@ -32,10 +32,20 @@ function getPrctDefeitosMes(empresaId) {
     return database.executar(sql);
 }
 
+function getDefeitosPorModelo(empresaId) {
+
+    sql = `SELECT * FROM vw_taxa_defeito_por_modelo;`
+
+    console.log();
+    return database.executar(sql);
+
+}
+
 
 module.exports = {
     getEmpresaMaisAfetada,
     getMesMaisAfetado,
     getModeloMaisAfetado,
-    getPrctDefeitosMes
+    getPrctDefeitosMes,
+    getDefeitosPorModelo
 }
