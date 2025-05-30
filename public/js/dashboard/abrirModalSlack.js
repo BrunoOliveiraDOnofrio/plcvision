@@ -1,7 +1,11 @@
 let modal = document.querySelector('.modal-slack-message');
 
 
-const abrirModal = () => {
+const abrirModal = (titulo, texto) => {
+    console.log(titulo)
+    console.log(texto)
+
+    p_mensagem.innerText = titulo + `\n` + texto; 
     modal.style.display = 'flex';
     modal.showModal();
 }

@@ -109,7 +109,7 @@ def enviar_monitoramento(plc, rodadaDeAlerta):
         
         if rodadaDeAlerta and empresa_id == empresaGerandoAlertas:
             valor = random.randint(limite_atencao + 1, limite_critico + 1)
-            selectsInfos.inserirAlerta(config_id, valor, f"{hardware} {tipo_dado}", 1, tipo_dado, unidade_dado, hardware, fabrica_id, id_plc)
+            # selectsInfos.inserirAlerta(config_id, valor, f"{hardware} {tipo_dado}", 1, tipo_dado, unidade_dado, hardware, fabrica_id, id_plc)
             alertas += 1
             if alertas == 1:
                 rodadaDeAlerta = False
@@ -159,5 +159,4 @@ def simular_monitoramento():
             enviar_monitoramento(plc, rodadaDeAlerta)
         time.sleep(1)
 
-if __name__ == "__main__":
-    simular_monitoramento()
+simular_monitoramento()

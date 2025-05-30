@@ -131,9 +131,9 @@ const getIssuesDoProjeto = async (req, res) => {
 }
 
 
-const getAlertasComTempoDeRespostaAtrasado = async (req, res) => {
+const getAlertasParaNivelDeCriticidade = async() => {
     try{
-        const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=SUP1%20AND%20created <= -8H AND statusCategory=new`
+        const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project = SPOP3 AND cf[10092] <= -5h AND statusCategory = New`
 
         
 
@@ -148,8 +148,46 @@ const getAlertasComTempoDeRespostaAtrasado = async (req, res) => {
         
     
         const data = await response.json();
-        console.log(data)
-        res.status(200).json(data.total);
+        
+        const issuesTratados = await tratarIssuesEmpresaRazaoPlcId(data.issues);
+        // console.log(issuesTratados)
+        return issuesTratados
+        
+        ;
+    }catch (error) {
+        console.error('Erro ao buscar alertas:', error);
+        return { error: 'Erro ao buscar alertas' };
+    }
+
+}
+
+
+
+const getAlertasComTempoDeRespostaAtrasado = async (req, res) => {
+    try{
+        const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project = SPOP3 AND cf[10092] <= -5h AND statusCategory = New`
+
+        
+
+        const response = await fetch(endpoint, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Basic ${Buffer.from(`${email}:${key}`).toString('base64')}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+        })
+        
+    
+        const data = await response.json();
+        
+        const issuesTratados = await tratarIssuesEmpresaRazaoPlcId(data.issues);
+        // console.log(issuesTratados)
+        res.status(200).json({
+            total :data.total,
+            issues: issuesTratados
+        }
+        );
     }catch (error) {
         console.error('Erro ao buscar alertas:', error);
         res.status(500).json({ error: 'Erro ao buscar alertas' });
@@ -157,7 +195,124 @@ const getAlertasComTempoDeRespostaAtrasado = async (req, res) => {
 
 }
 
+
+function formatarDataParaDDMMYY(dataString) {
+    const data = new Date(dataString);
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = String(data.getFullYear()).slice(-2);
+    const horas = String(data.getHours()).padStart(2, '0');
+    const minutos = String(data.getMinutes()).padStart(2, '0');
+    const segundos = String(data.getSeconds()).padStart(2, '0');
+    return `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
+}
+
+function calcularHorasAtraso(dataString) {
+    // Converte a string para objeto Date
+    const dataAlvo = new Date(dataString);
+    // Pega o momento atual
+    const agora = new Date();
+    // Calcula a diferença em milissegundos
+    const diffMs = agora - dataAlvo;
+    // Converte para horas
+    let diffHoras = diffMs / (1000 * 60 * 60);
+    // Retorna o valor arredondado para duas casas decimais
+
+    if(diffHoras < 0){
+        let diffMinutos = Math.abs(diffHoras * 60);
+        return `${diffMinutos.toFixed(2)} minutos`;
+    }else if(diffHoras > 24){
+       let diffDias = Math.floor(diffHoras / 24);
+         diffHoras = diffHoras - (diffDias * 24);
+        return `${diffDias} dias e ${diffHoras.toFixed(2)} horas`;
+    }  
+    return diffHoras.toFixed(2);
+}
+
+const tratarIssuesEmpresaRazaoPlcId = async (issues) => {
+    novasInformacoes = []
+    console.log(issues.length)
+    issues.map(issue => {
+
+        const objetoDaEmpresa = {
+            "empresa" : "",
+            "issues" : [],
+            "qtdIssuesCriticos" : 0,
+            "qtdIssuesAtencao":0
+        }
+        const novoIssue = {
+            "titulo" : issue.fields.summary,
+            "empresa" : "",
+            "plcId" : "",
+            "texto" : "",
+            "issueKey" : issue.key,
+            "prioridade" : issue.fields.priority.name,
+            "status" : issue.fields.status.name,
+            "dataCriacao" : formatarDataParaDDMMYY(issue.fields.customfield_10092),
+            "atraso" : calcularHorasAtraso(issue.fields.customfield_10092),
+        }
+
+        novoIssue.nivelAlerta = novoIssue.prioridade === "Medium" ? "Atenção" : "Crítico";
+
+        
+
+        const textoDoIssue = issue.fields.description.content[0].content[0].text;
+        novoIssue.texto = textoDoIssue;
+        const linhasDoTexto = textoDoIssue.split('\n')
+        linhasDoTexto.forEach(linha => {
+            if(linha.includes("Empresa:")){
+                const empresa = linha.split(":")[1].trim();
+                novoIssue.empresa = empresa
+                objetoDaEmpresa.empresa = empresa;
+                
+            }else if(linha.includes("PLC:")){
+                novoIssue.plcId = linha.split(":")[1].trim();
+            }
+
+
+        
+    }
+
+        
+    
+    )
+        let existe = false    
+        novasInformacoes.forEach(informacao => {
+            if(informacao.empresa === objetoDaEmpresa.empresa){
+                informacao.issues.push(novoIssue);
+                existe = true;
+                if(novoIssue.prioridade === "Medium"){
+                    informacao.qtdIssuesAtencao++;
+                }else{
+                    informacao.qtdIssuesCriticos++;
+                }
+            }
+        })
+
+        if(!existe){
+            if(novoIssue.prioridade === "Medium"){
+                    objetoDaEmpresa.qtdIssuesAtencao++;
+            }else{
+                    objetoDaEmpresa.qtdIssuesCriticos++;
+            }
+            objetoDaEmpresa.issues.push(novoIssue);
+            novasInformacoes.push(objetoDaEmpresa);
+        }
+
+})
+
+        
+    return novasInformacoes
+}
+
+    // agrupar os alertas separando por empresas 
+
+    
+
+
+
 module.exports = {
     getAlertasComTempoDeRespostaAtrasado,
-    getIssuesDoProjeto
+    getIssuesDoProjeto,
+    getAlertasParaNivelDeCriticidade
 }

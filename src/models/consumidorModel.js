@@ -2,6 +2,11 @@ const database = require("../database/config")
 
 
 
+const getRazaoSocialById = (id) => {
+    const sql = `SELECT razao_social FROM empresa_consumidor WHERE id = ${id};`
+    return database.executar(sql)
+}
+
 
 const getByFabricanteId = (id) => {     
     const sql = `select ec.id , ec.razao_social FROM empresa_consumidor as ec
@@ -67,5 +72,6 @@ module.exports = {
     getAll,
     getById,
     updateConsumidor,
-    getByFabricanteId
+    getByFabricanteId,
+    getRazaoSocialById
 }

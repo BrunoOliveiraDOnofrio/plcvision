@@ -27,7 +27,7 @@ router.get("/", function (req, res) {
 router.get('/monitoramento/empresas', async (req, res) => {
     let response  = "No data";
 
-    const dadosAgrupados = monitoramentoService.agruparComportamentosForaPadrao(dados)
+    const dadosAgrupados = await monitoramentoService.agruparComportamentosForaPadrao(dados)
     const alertas = await monitoramentoService.buscarAlertasDasUltimas24Horas(1)
     const empresasRankeadas = monitoramentoService.rankearEmpresasCriticidade(dadosAgrupados, alertas)
     
@@ -40,7 +40,23 @@ router.get('/monitoramento/empresas/:empresaId/barras', async(req, res) => {
     const dadosEmpresaFiltrada = monitoramentoService.filtrarDadosEmpresa(dados, empresaId)
     const dadosBarrasAgrupadas = monitoramentoService.gerarDadosBarrasAgrupadas(dadosEmpresaFiltrada.plcs)
     
-    res.json(dadosBarrasAgrupadas)
+    res.json(dadosEmpresaFiltrada)
+})
+
+router.post('/monitoramento/empresas/:empresaId/monitorar', async(req, res) => {
+    const empresaId = req.params.empresaId
+    const idsPlcs = req.body.idsPlcs
+    console.log(idsPlcs)
+    console.log(empresaId)
+    const dadosEmpresaFiltrada = monitoramentoService.filtrarDadosEmpresa(dados, empresaId)
+    const dadosPlcsMonitorados = {
+        empresa: dadosEmpresaFiltrada.empresa,
+    }
+    dadosPlcsMonitorados.plcs = monitoramentoService.filtrarPorIdsEspecificos(dadosEmpresaFiltrada.plcs, idsPlcs)
+    const dadosCriticos = monitoramentoService.analisarCriticidadePlcs(dadosPlcsMonitorados.plcs)
+    
+    res.json(dadosCriticos)
+    // res.status(200).json(dadosPlcsMonitorados)
 })
 
 router.get('/monitoramento/empresas/:empresaId/foraNormal', async (req, res) => {
@@ -167,7 +183,7 @@ router.get("/monitoramento/:id", (req,res) => {
             }
         })
     }
-    res.json(response)
+    res.json(dados)
     
 })
 

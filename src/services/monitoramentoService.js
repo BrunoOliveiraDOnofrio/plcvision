@@ -1,5 +1,65 @@
 const alertaModel = require('../models/alertaModel')
 
+const jiraController = require('../controllers/jiraController')
+
+const empresaModel = require('../models/consumidorModel')
+
+
+const filtrarPorIdsEspecificos = (dados, ids) => {
+  return dados.filter(dado => dado.maquina_id && ids.includes(dado.maquina_id));
+}
+
+function analisarCriticidadePlcs(plcs) {
+  return plcs.map(plc => {
+    const campos = {};
+
+    plc.dados.flat().forEach(dado => {
+      if (!dado.campo) return;
+      if (!campos[dado.campo]) {
+        campos[dado.campo] = {
+          foraPadraoCount: 0,
+          maiorCriticidade: 0,
+          valorMaisCritico: null
+        };
+      }
+      if (dado.foraPadrao > 0) {
+        campos[dado.campo].foraPadraoCount++;
+        // Atualiza se a criticidade for maior
+        if (dado.foraPadrao > campos[dado.campo].maiorCriticidade) {
+          campos[dado.campo].maiorCriticidade = dado.foraPadrao;
+          campos[dado.campo].valorMaisCritico = dado.valor;
+        }
+      }
+    });
+
+    // Encontrar o campo mais crítico
+    let campoMaisCritico = null;
+    let maiorCriticidade = -1;
+    let maiorForaPadraoCount = -1;
+
+    for (const campo in campos) {
+      const info = campos[campo];
+      // Prioriza maior criticidade, depois maior quantidade de vezes fora do padrão
+      if (
+        info.maiorCriticidade > maiorCriticidade ||
+        (info.maiorCriticidade === maiorCriticidade && info.foraPadraoCount > maiorForaPadraoCount)
+      ) {
+        campoMaisCritico = campo;
+        maiorCriticidade = info.maiorCriticidade;
+        maiorForaPadraoCount = info.foraPadraoCount;
+      }
+    }
+
+    return {
+      maquina_id: plc.maquina_id,
+      campoMaisCritico,
+      valorMaisCritico: campoMaisCritico ? campos[campoMaisCritico].valorMaisCritico : null,
+      vezesForaPadrao: campoMaisCritico ? campos[campoMaisCritico].foraPadraoCount : 0,
+      nivelCriticidade: campoMaisCritico ? campos[campoMaisCritico].maiorCriticidade : 0
+    };
+  });
+}
+
 
 function gerarDadosBarrasAgrupadas(plcs) {
   const tiposCampos = new Set();
@@ -73,7 +133,7 @@ function gerarDadosDispersao(modelo, filtroEmpresaId) {
 
           // Só adiciona se ambos estiverem presentes
           if (cpu !== null && ram !== null) {
-            console.log("ADICIONANDO A BUCETA DE UM PONTO AII AI IA I AI ")
+            
             pontos.push({
               x: cpu,
               y: ram,
@@ -102,13 +162,37 @@ function gerarDadosDispersao(modelo, filtroEmpresaId) {
 function rankearEmpresasCriticidade(empresas, alertas){
 
     empresas.map((empresa) => {
-        empresa['criticidade'] = empresa.foraPadrao1 + (empresa.foraPadrao2 * 2) + (empresa.foraPadrao3 * 3)  
+        
+        empresa['criticidade'] = empresa.foraPadrao1 + (empresa.foraPadrao2 * 1.2) + (empresa.foraPadrao3 * 1.8)  
         alertas.forEach(alerta => {
-            if(empresa.empresa == alerta.empresaId){
-                empresa['criticidade'] += (alerta.qtdAlertas * 1.5)
+            if(empresa.razao_social == alerta.empresa){
+                empresa['criticidade'] += (alerta.qtdIssuesCriticos * 3) + (alerta.qtdIssuesAtencao * 2) 
+                
             }
         })
     })
+
+    empresas.map((empresa) => {
+        
+        alertas.forEach(alerta => {
+            if(empresa.razao_social == alerta.empresa){
+                empresa['criticos'] = alerta.qtdIssuesCriticos
+                empresa['atencao'] = alerta.qtdIssuesAtencao
+                console.log("caiu no if")
+            }
+        })
+    })
+
+    empresas.map(empresa => {
+      if(empresa['criticidade'] > 150 ){
+                  empresa['porcentagemBarra'] = 100
+                }else if(empresa['criticidade'] > 100){
+                  empresa['porcentagemBarra'] = 66
+                }else {
+                  empresa['porcentagemBarra'] = 30
+                }
+                console.log(empresa['porcentagemBarra'], "PORCENTAGEM BARRA")
+  })
     empresas = ordenarMaiorParaMenor(empresas)
     return empresas;
 }
@@ -173,7 +257,7 @@ function ordenarMaiorParaMenor(dados){
     return dados
 }
 
-function agruparComportamentosForaPadrao(dados) {
+async function agruparComportamentosForaPadrao(dados) {
   const resultado = [];
 
   for (const empresaData of dados) {
@@ -203,9 +287,10 @@ function agruparComportamentosForaPadrao(dados) {
       if (temFora) foraPadraoPlcs++
     }
 
-
-
+    const razao_social = await empresaModel.getRazaoSocialById(empresaId);
+    
     resultado.push({
+      razao_social : razao_social[0].razao_social,
       empresa: empresaId,
       foraPadrao1: fora1,
       foraPadrao2: fora2,
@@ -219,8 +304,11 @@ function agruparComportamentosForaPadrao(dados) {
 }
 
 async function buscarAlertasDasUltimas24Horas(empresas){
-    const alertasPorEmpresa = await alertaModel.getAlertasNasUltimas24Horas(1)
-    
+    const alertasPorEmpresa = await jiraController.getAlertasParaNivelDeCriticidade()
+    alertasPorEmpresa.map(alerta => {
+        alerta.issues = alerta.issues.length
+    })
+
     return alertasPorEmpresa
 }
 
@@ -231,5 +319,7 @@ module.exports = {
     filtrarDadosEmpresa,
     mapaDeCalorEmpresa,
     gerarDadosBarrasAgrupadas,
-    gerarDadosDispersao
+    gerarDadosDispersao,
+    filtrarPorIdsEspecificos,
+    analisarCriticidadePlcs,
 }
