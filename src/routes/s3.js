@@ -1,7 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const bucketController = require('../controllers/bucketController');
+var express = require("express");
+var router = express.Router();
 
-router.get('/api/s3json', bucketController.getJsonFromS3);
+var bucketController = require("../controllers/bucketController");
 
-module.exports = router;
+router.get("/s3json", function (req, res) {
+    bucketController.getJsonFromS3(req, res);
+});
+
+module.exports = router;

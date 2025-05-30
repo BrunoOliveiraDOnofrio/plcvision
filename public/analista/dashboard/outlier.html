@@ -5,192 +5,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório</title>
-    <!-- Fonte google  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/nav_side_bar.css">
     <link rel="stylesheet" href="../../css/dashboards/monitoramento_tempo_real.css">
     <link rel="stylesheet" href="../../css/dashboards/outlier.css">
-    <!-- Link dos icones - boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Link do Papa Parse para tranformar csv em json -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    <!-- Nav Bar -->
-    <header class="header-nav">
-        <div class="menu-foto">
-            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
-            <div class="foto"></div>
-            <div class="barra-sep"></div>
-        </div>
-
-        <div class="user-options">
-            <span id="username">Usuário</span>
-            <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
-            <div id="div_menu" class="collapse-menu">
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="">
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <span>Alertas</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <span>Perfil</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <span>Sair</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <header class="header-nav header-nav-desk">
-        <div class="menu-foto">
-            <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
-            <div class="fotoEmpresa"></div>
-            <span id="span_empresa" class="nome-empresa">Motorola</span>
-            <div class="barra-sep"></div>
-            <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
-        </div>
-
-        <div class="user-options">
-            <div class="foto"></div>
-            <span id="username">Usuário</span>
-            <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
-            <div id="div_menu_desk" class="collapse-menu">
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="">
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <span>Alertas</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <span>Perfil</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <span>Sair</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <!-- Side bar  -->
-    <nav id="nav_sidebar" class="sidebar sidebar-fechada">
-        <div class="inicio">
-            <ul>
-
-                <li>
-                    <a href=".././dashboard">
-                        <i class='bx bx-timer'></i>
-                    </a>
-                </li>
-                <li>
-                    <a href=".././alertas">
-                        <i class='bx bxs-bell-ring'></i>
-                    </a>
-                </li>
-                <li>
-                    <a href=".././plcs">
-                        <i class='bx bx-desktop'></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="saida">
-            <ul>
-                <li>
-                    <a href="#">
-                        <i class='bx bx-exit'></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="main">
-        <div class="content">
-            <h1 class="dashboard-title">Processos</h1>
-
-            <div class="filters">
-                <div class="filter-group">
-                    <label for="empresa">Empresa</label>
-                    <select id="empresa" class="filter-select">
-                        <option value="">Todas as empresas</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="fabrica">Fábrica</label>
-                    <select id="fabrica" class="filter-select">
-                        <option value="">Todas as fábricas</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="data-inicial">Data Inicial</label>
-                    <input type="date" id="data-inicial" class="filter-select">
-                </div>
-                <div class="filter-group">
-                    <label for="data-final">Data Final</label>
-                    <input type="date" id="data-final" class="filter-select">
-                </div>
-                <button id="btn-aplicar-filtros" class="filter-select" style="background-color: #24284B;">Aplicar
-                    Filtros
-                </button>
-            </div>
-
-            <table id="tabelaAnomalias">
-                <thead>
-                    <tr>
-                        <th>Modelo</th>
-                        <th>Quantidade de Alerta(s) Relacionado(s)</th>
-                        <th>Status de Criticidade</th>
-                        <th>Detalhe</th>
-                    </tr>
-                </thead>
-                <tbody id="corpoDaTabela">
-
-                </tbody>
-            </table>
-
-            <div id="janelaDetalhes" style="display: none;">
-                <div id="conteudoDetalhes">
-
-                </div>
-            </div>
+<!-- Nav Bar -->
+<header class="header-nav">
+    <div class="menu-foto">
+        <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+        <div class="foto"></div>
+        <div class="barra-sep"></div>
+    </div>
+    <div class="user-options">
+        <span id="username">Usuário</span>
+        <i onclick="menuCollapse()" class='bx bx-chevron-down'></i>
+        <div id="div_menu" class="collapse-menu">
+            <nav>
+                <ul>
+                    <li><a href=""><span>Dashboard</span></a></li>
+                    <li><a href=""><span>Alertas</span></a></li>
+                    <li><a href=""><span>Perfil</span></a></li>
+                    <li><a href=""><span>Sair</span></a></li>
+                </ul>
+            </nav>
         </div>
     </div>
-    <script src="../../js/nav_sidebar.js"></script>
+</header>
+
+<header class="header-nav header-nav-desk">
+    <div class="menu-foto">
+        <i id="hamb_menu" onclick="abrirSideBar()" class='bx bx-menu'></i>
+        <div class="fotoEmpresa"></div>
+        <span id="span_empresa" class="nome-empresa">Motorola</span>
+        <div class="barra-sep"></div>
+        <span id="span_endereco_empresa" class="endereco">Alameda Ferraz 456</span>
+    </div>
+    <div class="user-options">
+        <div class="foto"></div>
+        <span id="username">Usuário</span>
+        <i onclick="menuCollapseDesk()" class='bx bx-chevron-down'></i>
+        <div id="div_menu_desk" class="collapse-menu">
+            <nav>
+                <ul>
+                    <li><a href=""><span>Dashboard</span></a></li>
+                    <li><a href=""><span>Alertas</span></a></li>
+                    <li><a href=""><span>Perfil</span></a></li>
+                    <li><a href=""><span>Sair</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Side bar  -->
+<nav id="nav_sidebar" class="sidebar sidebar-fechada">
+    <div class="inicio">
+        <ul>
+            <li><a href=".././dashboard"><i class='bx bx-timer'></i></a></li>
+            <li><a href=".././alertas"><i class='bx bxs-bell-ring'></i></a></li>
+            <li><a href=".././plcs"><i class='bx bx-desktop'></i></a></li>
+        </ul>
+    </div>
+    <div class="saida">
+        <ul>
+            <li><a href="#"><i class='bx bx-exit'></i></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="main">
+    <div class="content">
+        <h1 class="dashboard-title">Processos</h1>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="empresa">Empresa</label>
+                <select id="empresa" class="filter-select">
+                    <option value="">Todas as empresas</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="fabrica">Fábrica</label>
+                <select id="fabrica" class="filter-select">
+                    <option value="">Todas as fábricas</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="data-inicial">Data Inicial</label>
+                <input type="date" id="dataInicial" class="filter-select">
+            </div>
+            <div class="filter-group">
+                <label for="data-final">Data Final</label>
+                <input type="date" id="dataFinal" class="filter-select">
+            </div>
+            <button id="btn-aplicar-filtros" class="filter-select" style="background-color: #24284B;">Aplicar Filtros</button>
+        </div>
+
+        <table id="tabelaAnomalias">
+            <thead>
+            <tr>
+                <th>Modelo</th>
+                <th>Quantidade de Alerta(s) Relacionado(s)</th>
+                <th>Status de Criticidade</th>
+                <th>Detalhe</th>
+            </tr>
+            </thead>
+            <tbody id="corpoDaTabela"></tbody>
+        </table>
+
+        <div id="janelaDetalhes" style="display: none;">
+            <div id="conteudoDetalhes"></div>
+        </div>
+    </div>
+</div>
+<script src="../../js/nav_sidebar.js"></script>
 </body>
 
 </html>
@@ -198,228 +135,281 @@
 <script>
     let empresas = [];
     let fabricanteId = sessionStorage.getItem('EMPRESA_ID');
+    let dadosS3 = [];
 
-    // carregar informações quando a página é carregada
     document.addEventListener('DOMContentLoaded', function () {
         carregarEmpresas();
         configurarFiltros();
+        buscarSimulacoesDoS3();
     });
 
-    // Carregar lista das empresas no filtro
-    async function carregarEmpresas() {
-        const response = await fetch(`/api/fabricante/${fabricanteId}/empresas_consumidoras`);
-        empresas = await response.json();
-
-        // joga as empresas no select e no option
-        const selectEmpresa = document.getElementById('empresa');
-        selectEmpresa.innerHTML = '<option value="">Todas as empresas</option>';
-        empresas.forEach(empresa => {
-            selectEmpresa.innerHTML += `<option value="${empresa.id}">${empresa.razao_social}</option>`;
-        });
-
-        mostrarEmpresas();
+    function buscarSimulacoesDoS3() {
+        fetch('/api/s3json')
+            .then(resposta => resposta.json())
+            .then(json => {
+                if (Array.isArray(json)) {
+                    dadosS3 = json;
+                } else {
+                    dadosS3 = [];
+                }
+                console.log('Dados S3 carregados:', dadosS3.length, 'registros');
+            });
     }
 
-    // aplica evento nos filtros
-    // e carrega as fábricas quando a empresa é selecionada
+    function carregarEmpresas() {
+        fetch(`/api/fabricante/${fabricanteId}/empresas_consumidoras`)
+            .then(response => response.json())
+            .then(data => {
+                empresas = data;
+                const selectEmpresa = document.getElementById('empresa');
+                selectEmpresa.innerHTML = '<option value="">Todas as empresas</option>';
+
+                for (let i = 0; i < empresas.length; i++) {
+                    selectEmpresa.innerHTML += `<option value="${empresas[i].id}">${empresas[i].razao_social}</option>`;
+                }
+                mostrarEmpresas();
+            });
+    }
+
     function configurarFiltros() {
         document.getElementById('empresa').onchange = carregarFabricas;
         document.getElementById('btn-aplicar-filtros').onclick = aplicarFiltros;
+
+        const hoje = new Date();
+        const trintaDiasAtras = new Date();
+        trintaDiasAtras.setDate(hoje.getDate() - 30);
+
+        document.getElementById('dataInicial').value = trintaDiasAtras.toISOString().split('T')[0];
+        document.getElementById('dataFinal').value = hoje.toISOString().split('T')[0];
     }
 
-    // carrega fabrica quandoa a empresa é selecionada
-    async function carregarFabricas() {
+    function obterFiltrosDatas() {
+        const dataInicial = document.getElementById('dataInicial').value;
+        const dataFinal = document.getElementById('dataFinal').value;
+
+        let filtros = {};
+        if (dataInicial) {
+            filtros.dataInicial = dataInicial + ' 00:00:00';
+        }
+        if (dataFinal) {
+            filtros.dataFinal = dataFinal + ' 23:59:59';
+        }
+        return filtros;
+    }
+
+    function filtrarPorData(dados, filtrosDatas) {
+        if (!filtrosDatas.dataInicial && !filtrosDatas.dataFinal) {
+            return dados;
+        }
+
+        let dadosFiltrados = [];
+        for (let i = 0; i < dados.length; i++) {
+            let item = dados[i];
+            let dataItem = item.dataHora;
+            let incluir = true;
+
+            if (filtrosDatas.dataInicial && dataItem < filtrosDatas.dataInicial) {
+                incluir = false;
+            }
+            if (filtrosDatas.dataFinal && dataItem > filtrosDatas.dataFinal) {
+                incluir = false;
+            }
+
+            if (incluir) {
+                dadosFiltrados.push(item);
+            }
+        }
+        return dadosFiltrados;
+    }
+
+    function carregarFabricas() {
         const empresaId = document.getElementById('empresa').value;
         const selectFabrica = document.getElementById('fabrica');
-
         selectFabrica.innerHTML = '<option value="">Todas as fábricas</option>';
 
         if (empresaId) {
-            const response = await fetch(`/api/empresa_consumidora/${empresaId}/fabrica_setores`);
-            const dados = await response.json();
+            fetch(`/api/empresa_consumidora/${empresaId}/fabrica_setores`)
+                .then(response => response.json())
+                .then(dados => {
+                    let fabricas = [];
+                    let idsFabricas = [];
 
-            const fabricas = [];
-            const idsFabricas = [];
-            dados.forEach(item => {
-                if (!idsFabricas.includes(item.fabrica_id)) {
-                    fabricas.push({ id: item.fabrica_id, nome: item.fabrica_nome });
-                    idsFabricas.push(item.fabrica_id);
-                }
-            });
+                    for (let i = 0; i < dados.length; i++) {
+                        let item = dados[i];
+                        if (idsFabricas.indexOf(item.fabrica_id) === -1) {
+                            fabricas.push({ id: item.fabrica_id, nome: item.fabrica_nome });
+                            idsFabricas.push(item.fabrica_id);
+                        }
+                    }
 
-            fabricas.forEach(fabrica => {
-                selectFabrica.innerHTML += `<option value="${fabrica.id}">${fabrica.nome}</option>`;
-            });
+                    for (let i = 0; i < fabricas.length; i++) {
+                        selectFabrica.innerHTML += `<option value="${fabricas[i].id}">${fabricas[i].nome}</option>`;
+                    }
+                });
         }
     }
 
-    // Filtros
-    async function aplicarFiltros() {
+    function aplicarFiltros() {
         const empresaId = document.getElementById('empresa').value;
         const fabricaId = document.getElementById('fabrica').value;
+        const filtrosDatas = obterFiltrosDatas();
 
-        // caso não filtro selecionado da empresa, volta para a lista das empresas clientes
         if (!empresaId && !fabricaId) {
-            mostrarEmpresas();
+            const empresasFiltradas = filtrarEmpresas(filtrosDatas);
+            mostrarEmpresasFiltradas(empresasFiltradas);
             return;
         }
 
-        // Se tem fábrica selecionada, busca PLCs da fábrica
         if (fabricaId) {
-            const response = await fetch(`/api/fabrica/${fabricaId}/plcs`);
-            const plcs = await response.json();
-            mostrarPlcs(plcs);
-        }
-        // Se tem só empresa selecionada, busca PLCs da empresa
-        else if (empresaId) {
-            const response = await fetch(`/api/empresa_consumidora/${empresaId}/fabricante/${fabricanteId}/modelosPorEmpresa`);
-            const plcs = await response.json();
-            mostrarPlcs(plcs);
+            fetch(`/api/fabrica/${fabricaId}/plcs`)
+                .then(response => response.json())
+                .then(plcs => {
+                    const plcsAgrupados = agruparPorModelo(plcs, filtrosDatas);
+                    mostrarModelos(plcsAgrupados);
+                });
+        } else if (empresaId) {
+            fetch(`/api/empresa_consumidora/${empresaId}/fabricante/${fabricanteId}/modelosPorEmpresa`)
+                .then(response => response.json())
+                .then(plcs => {
+                    const plcsAgrupados = agruparPorModelo(plcs, filtrosDatas);
+                    mostrarModelos(plcsAgrupados);
+                });
         }
     }
 
-    // Mostrar tabela de empresas
-    function mostrarEmpresas() {
-        const tabela = document.getElementById('corpoDaTabela');
-        tabela.innerHTML = '';
+    function filtrarEmpresas(filtrosDatas) {
+        let empresasFiltradas = [];
 
-        empresas.forEach((empresa, index) => {
-            const status = empresa.quantidade_alertas > 10 ? 'Alerta' :
-                empresa.quantidade_alertas > 5 ? 'Atenção' : 'Normal';
+        for (let i = 0; i < empresas.length; i++) {
+            let empresa = empresas[i];
+            let alertasDaEmpresa = [];
 
-            tabela.innerHTML += `
-                    <tr>
-                        <td>${empresa.razao_social}</td>
-                        <td>${empresa.quantidade_alertas}</td>
-                        <td>${status}</td>
-                        <td>
-                            <button onclick="verDetalhesEmpresa(${empresa.id}, ${index})">
-                                Detalhes
-                            </button>
-                        </td>
-                    </tr>
-                    <tr id="detalhes-${index}" style="display: none;">
-                        <td colspan="4">Carregando...</td>
-                    </tr>
-                `;
+            for (let j = 0; j < dadosS3.length; j++) {
+                if (dadosS3[j].empresa_consumidor_id === empresa.id) {
+                    alertasDaEmpresa.push(dadosS3[j]);
+                }
+            }
+
+            let alertasFiltrados = filtrarPorData(alertasDaEmpresa, filtrosDatas);
+
+            let empresaComFiltro = {
+                id: empresa.id,
+                razao_social: empresa.razao_social,
+                quantidade_alertas: alertasFiltrados.length
+            };
+            empresasFiltradas.push(empresaComFiltro);
+        }
+
+        empresasFiltradas.sort(function(a, b) {
+            return b.quantidade_alertas - a.quantidade_alertas;
         });
+
+        return empresasFiltradas;
     }
 
-    // Mostrar tabela de PLCs
-    function mostrarPlcs(plcs) {
+    function agruparPorModelo(listaPLCs, filtrosDatas) {
+        let modelosAgrupados = {};
+
+        for (let i = 0; i < listaPLCs.length; i++) {
+            let plc = listaPLCs[i];
+            let modelo = plc.modelo;
+
+            if (!modelosAgrupados[modelo]) {
+                modelosAgrupados[modelo] = {
+                    modelo: modelo,
+                    quantidade_alertas: 0,
+                    plcs: []
+                };
+            }
+
+            if (filtrosDatas && (filtrosDatas.dataInicial || filtrosDatas.dataFinal)) {
+                let alertasDoModelo = [];
+                for (let j = 0; j < dadosS3.length; j++) {
+                    if (dadosS3[j].modelo_plc === modelo) {
+                        alertasDoModelo.push(dadosS3[j]);
+                    }
+                }
+                let alertasFiltrados = filtrarPorData(alertasDoModelo, filtrosDatas);
+                modelosAgrupados[modelo].quantidade_alertas += alertasFiltrados.length;
+            } else {
+                modelosAgrupados[modelo].quantidade_alertas += plc.quantidade_alertas;
+            }
+
+            modelosAgrupados[modelo].plcs.push(plc);
+        }
+
+        let modelosArray = [];
+        for (let modelo in modelosAgrupados) {
+            modelosArray.push(modelosAgrupados[modelo]);
+        }
+
+        modelosArray.sort(function(a, b) {
+            return b.quantidade_alertas - a.quantidade_alertas;
+        });
+
+        return modelosArray;
+    }
+
+    function mostrarEmpresas() {
+        mostrarEmpresasFiltradas(empresas);
+    }
+
+    function mostrarEmpresasFiltradas(empresasList) {
         const tabela = document.getElementById('corpoDaTabela');
         tabela.innerHTML = '';
 
-        plcs.forEach((plc, index) => {
-            const status = plc.quantidade_alertas > 10 ? 'Alerta' :
-                plc.quantidade_alertas > 5 ? 'Atenção' : 'Normal';
+        for (let i = 0; i < empresasList.length; i++) {
+            let empresa = empresasList[i];
+            let status = 'Normal';
+            if (empresa.quantidade_alertas > 10) {
+                status = 'Alerta';
+            } else if (empresa.quantidade_alertas > 5) {
+                status = 'Atenção';
+            }
 
             tabela.innerHTML += `
             <tr>
-                <td>${plc.modelo}</td>
-                <td>${plc.quantidade_alertas}</td>
+                <td>${empresa.razao_social}</td>
+                <td>${empresa.quantidade_alertas}</td>
                 <td>${status}</td>
-                <td>
-                    <button onclick="verDetalhesPorModelo('${plc.modelo}', ${index})">
-                        Detalhes
-                    </button>
-                </td>
+                <td><button onclick="verDetalhesEmpresa(${empresa.id}, ${i})">Detalhes</button></td>
             </tr>
-            <tr id="detalhes-${index}" style="display: none;">
+            <tr id="detalhes-${i}" style="display: none;">
                 <td colspan="4">Carregando...</td>
             </tr>
         `;
-        });
-    }
-
-    // Ver detalhes de uma empresa
-    async function verDetalhesEmpresa(empresaId, index) {
-        const linha = document.getElementById(`detalhes-${index}`);
-
-        if (linha.style.display === 'table-row') {
-            linha.style.display = 'none';
-            return;
         }
-
-        linha.style.display = 'table-row';
-
-        const response = await fetch(`/api/empresa_consumidora/${empresaId}/fabricas_mais_alertas`);
-        const fabricas = await response.json();
-
-        let html = '<h4>Fábricas com mais alertas:</h4><ul>';
-        fabricas.forEach(fabrica => {
-            html += `<li><b>${fabrica.fabrica_nome}</b>: ${fabrica.quantidade_alertas} alertas</li>`;
-        });
-        html += '</ul>';
-
-        linha.querySelector('td').innerHTML = html;
     }
 
-    // Ver detalhes de um PLC
-    async function verDetalhesPlc(plcId, modelo, index) {
-        const linha = document.getElementById(`detalhes-${index}`);
+    function mostrarModelos(modelosAgrupados) {
+        const tabela = document.getElementById('corpoDaTabela');
+        tabela.innerHTML = '';
 
-        if (linha.style.display === 'table-row') {
-            linha.style.display = 'none';
-            return;
-        }
-
-        linha.style.display = 'table-row';
-
-        const response = await fetch(`/api/plc/${plcId}/setores`);
-        const setores = await response.json();
-
-        let html = `<h4>Setores do modelo ${modelo}:</h4><ul>`;
-        setores.forEach(setor => {
-            html += `<li><b>${setor.setor_nome}</b>: ${setor.quantidade_alertas} alertas</li>`;
-        });
-        html += '</ul>';
-
-
-        // add gráfico na web
-        const graficoId = `grafico-${plcId}-${Date.now()}`;
-        html += `<div style="width: 400px; height: 200px; margin: 20px auto;">
-                        <canvas id="${graficoId}"></canvas>
-                     </div>`;
-
-        linha.querySelector('td').innerHTML = html;
-
-        setTimeout(() => criarGrafico(graficoId, setores), 100);
-    }
-
-    // gráfico barras
-    function criarGrafico(graficoId, setores) {
-        const canvas = document.getElementById(graficoId);
-
-        const nomes = setores.map(s => s.setor_nome);
-        const valores = setores.map(s => s.quantidade_alertas);
-
-        new Chart(canvas.getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: nomes,
-                datasets: [{
-                    label: 'Alertas por Setor',
-                    data: valores,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true }
-                }
+        for (let i = 0; i < modelosAgrupados.length; i++) {
+            let modelo = modelosAgrupados[i];
+            let status = 'Normal';
+            if (modelo.quantidade_alertas > 10) {
+                status = 'Alerta';
+            } else if (modelo.quantidade_alertas > 5) {
+                status = 'Atenção';
             }
-        });
+
+            tabela.innerHTML += `
+            <tr>
+                <td>${modelo.modelo}</td>
+                <td>${modelo.quantidade_alertas}</td>
+                <td>${status}</td>
+                <td><button onclick="verDetalhesModelo('${modelo.modelo}', ${i})">Detalhes</button></td>
+            </tr>
+            <tr id="detalhes-${i}" style="display: none;">
+                <td colspan="4">Carregando...</td>
+            </tr>
+        `;
+        }
     }
 
-    // Add new function to show model details
-    async function verDetalhesPorModelo(modelo, index) {
+    function verDetalhesEmpresa(empresaId, index) {
         const linha = document.getElementById(`detalhes-${index}`);
-        const empresaId = document.getElementById('empresa').value;
 
         if (linha.style.display === 'table-row') {
             linha.style.display = 'none';
@@ -429,58 +419,527 @@
         linha.style.display = 'table-row';
         linha.querySelector('td').innerHTML = 'Carregando...';
 
-        try {
-            const response = await fetch(`/api/empresa_consumidora/${empresaId}/modelo/${encodeURIComponent(modelo)}/fabricas`);
-            const fabricas = await response.json();
+        const filtrosDatas = obterFiltrosDatas();
+        let alertasDaEmpresa = [];
 
-            let html = `<h4>Fábricas com o modelo "${modelo}":</h4><ul>`;
-            
-            if (fabricas.length === 0) {
-                html += '<li>Nenhuma fábrica encontrada</li>';
+        for (let i = 0; i < dadosS3.length; i++) {
+            if (dadosS3[i].empresa_consumidor_id === empresaId) {
+                alertasDaEmpresa.push(dadosS3[i]);
+            }
+        }
+
+        let alertasFiltrados = filtrarPorData(alertasDaEmpresa, filtrosDatas);
+        let fabricas = {};
+
+        for (let i = 0; i < alertasFiltrados.length; i++) {
+            let alerta = alertasFiltrados[i];
+            let fabricaId = alerta.fabrica_id;
+
+            if (!fabricas[fabricaId]) {
+                fabricas[fabricaId] = {
+                    fabrica_nome: `Fábrica ${fabricaId}`,
+                    quantidade_alertas: 0
+                };
+            }
+            fabricas[fabricaId].quantidade_alertas++;
+        }
+
+        let fabricasList = [];
+        for (let fabricaId in fabricas) {
+            fabricasList.push(fabricas[fabricaId]);
+        }
+
+        fabricasList.sort(function(a, b) {
+            return b.quantidade_alertas - a.quantidade_alertas;
+        });
+
+        let html = '<h4>Fábricas com mais alertas: </h4><ul>';
+        if (fabricasList.length === 0) {
+            html += '<li>Nenhum alerta encontrado no período selecionado.</li>';
+        } else {
+            for (let i = 0; i < fabricasList.length; i++) {
+                html += `<li><b>${fabricasList[i].fabrica_nome}</b>: ${fabricasList[i].quantidade_alertas} alertas</li>`;
+            }
+        }
+        html += '</ul>';
+
+        linha.querySelector('td').innerHTML = html;
+    }
+
+    function verDetalhesModelo(modelo, index) {
+        const linha = document.getElementById(`detalhes-${index}`);
+
+        if (linha.style.display === 'table-row') {
+            linha.style.display = 'none';
+            return;
+        }
+
+        linha.style.display = 'table-row';
+        linha.querySelector('td').innerHTML = 'Carregando...';
+
+        const empresaId = document.getElementById('empresa').value;
+        const fabricaId = document.getElementById('fabrica').value;
+
+        if (empresaId && fabricaId) {
+            mostrarGraficosProcessosPorSetor(modelo, fabricaId, empresaId, linha);
+        } else if (empresaId) {
+            mostrarFabricasDaEmpresa(modelo, empresaId, linha);
+        } else {
+            mostrarGeralDoModelo(modelo, linha);
+        }
+    }
+
+    function mostrarGraficosProcessosPorSetor(modelo, fabricaId, empresaId, linha) {
+        const filtrosDatas = obterFiltrosDatas();
+        let processos = analisarProcessos(modelo, fabricaId, empresaId, filtrosDatas);
+
+        let html = `<h4>Análise dos Processos - ${modelo}</h4>`;
+
+        if (processos.length === 0) {
+            html += '<p>Sem dados para análise.</p>';
+            linha.querySelector('td').innerHTML = html;
+            return;
+        }
+
+        html += '<p>Processos que mais causam problemas por setor:</p><br>';
+
+        let setores = {};
+        for (let i = 0; i < processos.length; i++) {
+            let p = processos[i];
+            if (!setores[p.setor]) {
+                setores[p.setor] = [];
+            }
+            setores[p.setor].push(p);
+        }
+
+        let graficosIds = [];
+        let setorIndex = 0;
+
+        for (let setor in setores) {
+            const graficoId = `chart_${Date.now()}_${setorIndex}`;
+            graficosIds.push({
+                id: graficoId,
+                setor: setor,
+                processos: setores[setor].slice(0, 5)
+            });
+
+            html += `
+            <div style="margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+                <h5>Setor: ${setor}</h5>
+                <div style="width: 100%; height: 300px; margin: 15px 0;">
+                    <canvas id="${graficoId}"></canvas>
+                </div>
+            </div>
+        `;
+            setorIndex++;
+        }
+
+        linha.querySelector('td').innerHTML = html;
+
+        setTimeout(function() {
+            for (let i = 0; i < graficosIds.length; i++) {
+                criarGraficoProcessos(graficosIds[i]);
+            }
+        }, 200);
+    }
+
+    function criarGraficoProcessos(grafico) {
+        const canvas = document.getElementById(grafico.id);
+
+        if (canvas && grafico.processos.length > 0) {
+            const ctx = canvas.getContext('2d');
+
+            let labels = [];
+            let dados = [];
+            let cores = [];
+
+            for (let i = 0; i < grafico.processos.length; i++) {
+                let p = grafico.processos[i];
+                labels.push(p.nome.replace(/_/g, ' '));
+                dados.push(p.porcentagem);
+
+                if (p.porcentagem > 70) {
+                    cores.push('rgba(220, 53, 69, 0.8)');
+                } else if (p.porcentagem > 40) {
+                    cores.push('rgba(255, 193, 7, 0.8)');
+                } else {
+                    cores.push('rgba(40, 167, 69, 0.8)');
+                }
+            }
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Probabilidade (%)',
+                        data: dados,
+                        backgroundColor: cores,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        barThickness: 30
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: `Processos Problemáticos - ${grafico.setor}`,
+                            font: { size: 14, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Probabilidade de Problema (%)',
+                                font: { size: 12 }
+                            },
+                            grid: { display: false }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function mostrarFabricasDaEmpresa(modelo, empresaId, linha) {
+        const filtrosDatas = obterFiltrosDatas();
+        let alertasDoModelo = [];
+
+        for (let i = 0; i < dadosS3.length; i++) {
+            let item = dadosS3[i];
+            if (item.modelo_plc === modelo && item.empresa_consumidor_id == empresaId) {
+                alertasDoModelo.push(item);
+            }
+        }
+
+        let alertasFiltrados = filtrarPorData(alertasDoModelo, filtrosDatas);
+        let fabricas = {};
+
+        for (let i = 0; i < alertasFiltrados.length; i++) {
+            let alerta = alertasFiltrados[i];
+            let fabricaId = alerta.fabrica_id;
+
+            if (!fabricas[fabricaId]) {
+                fabricas[fabricaId] = {
+                    fabrica_nome: `Fábrica ${fabricaId}`,
+                    quantidade_alertas: 0
+                };
+            }
+            fabricas[fabricaId].quantidade_alertas++;
+        }
+
+        let fabricasList = [];
+        for (let fabricaId in fabricas) {
+            fabricasList.push(fabricas[fabricaId]);
+        }
+
+        fabricasList.sort(function(a, b) {
+            return b.quantidade_alertas - a.quantidade_alertas;
+        });
+
+        let html = `<h4>Modelo ${modelo} - Fábricas desta empresa (período filtrado):</h4>`;
+
+        if (fabricasList.length === 0) {
+            html += '<p>Este modelo não teve alertas no período selecionado.</p>';
+            linha.querySelector('td').innerHTML = html;
+            return;
+        }
+
+        html += '<ul>';
+        for (let i = 0; i < fabricasList.length; i++) {
+            html += `<li><b>${fabricasList[i].fabrica_nome}</b>: ${fabricasList[i].quantidade_alertas} alertas</li>`;
+        }
+        html += '</ul>';
+
+        const graficoId = `grafico-fabricas-empresa-${Date.now()}`;
+        html += `
+        <div style="width: 100%; max-width: 700px; height: 400px; margin: 20px auto;">
+            <canvas id="${graficoId}"></canvas>
+        </div>
+    `;
+
+        linha.querySelector('td').innerHTML = html;
+
+        setTimeout(function() {
+            criarGraficoFabricas(graficoId, fabricasList, modelo);
+        }, 200);
+    }
+
+    function criarGraficoFabricas(graficoId, fabricas, modelo) {
+        const canvas = document.getElementById(graficoId);
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+
+        let labels = [];
+        let dados = [];
+        let cores = [];
+
+        for (let i = 0; i < fabricas.length; i++) {
+            let f = fabricas[i];
+            labels.push(f.fabrica_nome);
+            dados.push(f.quantidade_alertas);
+
+            if (f.quantidade_alertas > 10) {
+                cores.push('rgba(220, 53, 69, 0.8)');
+            } else if (f.quantidade_alertas > 5) {
+                cores.push('rgba(255, 193, 7, 0.8)');
             } else {
-                fabricas.forEach(fabrica => {
-                    html += `<li><b>${fabrica.fabrica_nome}</b>: ${fabrica.quantidade_alertas} alertas</li>`;
-                });
+                cores.push('rgba(40, 167, 69, 0.8)');
+            }
+        }
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Quantidade de Alertas',
+                    data: dados,
+                    backgroundColor: cores,
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    barThickness: 40
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: `Alertas por Fábrica - ${modelo}`,
+                        font: { size: 16, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Quantidade de Alertas',
+                            font: { size: 12 }
+                        },
+                        grid: { display: false }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { font: { size: 11 } }
+                    }
+                }
+            }
+        });
+    }
+
+    function mostrarGeralDoModelo(modelo, linha) {
+        const filtrosDatas = obterFiltrosDatas();
+        let alertasDoModelo = [];
+
+        for (let i = 0; i < dadosS3.length; i++) {
+            if (dadosS3[i].modelo_plc === modelo) {
+                alertasDoModelo.push(dadosS3[i]);
+            }
+        }
+
+        alertasDoModelo = filtrarPorData(alertasDoModelo, filtrosDatas);
+        let fabricasEncontradas = {};
+
+        for (let i = 0; i < alertasDoModelo.length; i++) {
+            let registro = alertasDoModelo[i];
+            let fabricaId = registro.fabrica_id;
+
+            if (!fabricasEncontradas[fabricaId]) {
+                fabricasEncontradas[fabricaId] = {
+                    fabrica_id: fabricaId,
+                    fabrica_nome: `Fábrica ${fabricaId}`,
+                    alertas: 0,
+                    setores: []
+                };
+            }
+            fabricasEncontradas[fabricaId].alertas++;
+
+            if (fabricasEncontradas[fabricaId].setores.indexOf(registro.setor) === -1) {
+                fabricasEncontradas[fabricaId].setores.push(registro.setor);
+            }
+        }
+
+        let fabricas = [];
+        for (let fabricaId in fabricasEncontradas) {
+            fabricas.push(fabricasEncontradas[fabricaId]);
+        }
+
+        fabricas.sort(function(a, b) {
+            return b.alertas - a.alertas;
+        });
+
+        let html = `
+        <div style="padding: 15px;">
+            <h4>Fábricas com o modelo "${modelo}"</h4>
+            <p><i>Selecione uma empresa e fábrica para ver análise detalhada</i></p>
+    `;
+
+        if (fabricas.length === 0) {
+            html += '<p>Nenhum alerta encontrado para este modelo no período selecionado.</p></div>';
+        } else {
+            html += '<ul>';
+            for (let i = 0; i < fabricas.length; i++) {
+                let fabrica = fabricas[i];
+                let setoresList = fabrica.setores.join(', ');
+                html += `<li><strong>${fabrica.fabrica_nome}</strong>: ${fabrica.alertas} alertas em ${fabrica.setores.length} setores (${setoresList})</li>`;
             }
             html += '</ul>';
 
-            // Add chart
-            const graficoId = `grafico-${index}-${Date.now()}`;
-            html += `<div style="width: 400px; height: 200px; margin: 20px auto;">
+            const graficoId = `grafico-geral-${Date.now()}`;
+            html += `
+            <div style="width: 100%; max-width: 600px; height: 300px; margin: 15px auto;">
                 <canvas id="${graficoId}"></canvas>
-            </div>`;
+            </div>
+        `;
+            html += '</div>';
+        }
 
-            linha.querySelector('td').innerHTML = html;
+        linha.querySelector('td').innerHTML = html;
 
-            // Create chart
-            setTimeout(() => {
-                const ctx = document.getElementById(graficoId).getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: fabricas.map(f => f.fabrica_nome),
-                        datasets: [{
-                            label: 'Alertas por Fábrica',
-                            data: fabricas.map(f => f.quantidade_alertas),
-                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: { beginAtZero: true }
-                        }
-                    }
-                });
-            }, 100);
-
-        } catch (erro) {
-            linha.querySelector('td').innerHTML = 'Erro ao carregar detalhes';
-            console.error(erro);
+        if (fabricas.length > 0) {
+            setTimeout(function() {
+                criarGraficoGeral(graficoId, fabricas);
+            }, 200);
         }
     }
-    window.verDetalhesPorModelo = verDetalhesPorModelo;
+
+    function criarGraficoGeral(graficoId, fabricas) {
+        const canvas = document.getElementById(graficoId);
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+
+        let labels = [];
+        let dados = [];
+        let cores = [];
+
+        for (let i = 0; i < fabricas.length; i++) {
+            let f = fabricas[i];
+            labels.push(f.fabrica_nome);
+            dados.push(f.alertas);
+
+            if (f.alertas > 10) {
+                cores.push('rgba(220, 53, 69, 0.8)');
+            } else if (f.alertas > 5) {
+                cores.push('rgba(255, 193, 7, 0.8)');
+            } else {
+                cores.push('rgba(40, 167, 69, 0.8)');
+            }
+        }
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Alertas',
+                    data: dados,
+                    backgroundColor: cores,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Alertas' }
+                    },
+                    x: {
+                        title: { display: true, text: 'Fábricas' }
+                    }
+                }
+            }
+        });
+    }
+
+    function analisarProcessos(modelo, fabricaId, empresaId, filtrosDatas) {
+        let alertasDoModelo = [];
+
+        for (let i = 0; i < dadosS3.length; i++) {
+            let registro = dadosS3[i];
+            if (registro.modelo_plc === modelo &&
+                registro.fabrica_id == fabricaId &&
+                registro.empresa_consumidor_id == empresaId) {
+                alertasDoModelo.push(registro);
+            }
+        }
+
+        if (filtrosDatas) {
+            alertasDoModelo = filtrarPorData(alertasDoModelo, filtrosDatas);
+        }
+
+        let processos = [];
+
+        for (let i = 0; i < alertasDoModelo.length; i++) {
+            let registro = alertasDoModelo[i];
+
+            for (let j = 0; j < registro.processos.length; j++) {
+                let processo = registro.processos[j];
+                let processoExistente = null;
+
+                for (let k = 0; k < processos.length; k++) {
+                    if (processos[k].nome === processo.nome && processos[k].setor === registro.setor) {
+                        processoExistente = processos[k];
+                        break;
+                    }
+                }
+
+                if (processoExistente) {
+                    processoExistente.ocorrencias++;
+                    processoExistente.totalCpu += processo.cpu;
+                    processoExistente.totalRam += processo.ram;
+                } else {
+                    processos.push({
+                        nome: processo.nome,
+                        setor: registro.setor,
+                        ocorrencias: 1,
+                        totalCpu: processo.cpu,
+                        totalRam: processo.ram
+                    });
+                }
+            }
+        }
+
+        for (let i = 0; i < processos.length; i++) {
+            let processo = processos[i];
+            const mediaCpu = processo.totalCpu / processo.ocorrencias;
+            const mediaRam = processo.totalRam / processo.ocorrencias;
+
+            let pontuacao = processo.ocorrencias * 10;
+            if (mediaCpu > 40) pontuacao += 30;
+            if (mediaRam > 30) pontuacao += 20;
+
+            if (pontuacao > 100) pontuacao = 100;
+            processo.porcentagem = pontuacao;
+        }
+
+        processos.sort(function(a, b) {
+            return b.porcentagem - a.porcentagem;
+        });
+
+        return processos;
+    }
 </script>

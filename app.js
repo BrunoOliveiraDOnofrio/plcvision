@@ -54,7 +54,7 @@ app.use("/consumidor", consumidorRouter)
 app.use("/alerta", alertaRouter)
 app.use("/componente", componenteRouter)
 app.use(anomaliaRoutes);
-app.use(s3Routes);
+app.use("/api", s3Routes);
 app.use("/jira", jiraRouter)
 app.use("/setor",setorRegister)
 
