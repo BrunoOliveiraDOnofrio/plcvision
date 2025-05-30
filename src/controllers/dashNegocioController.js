@@ -58,9 +58,29 @@ function modeloMaisAfetado(req,res){
     })
 }
 
+function taxaDefeitosMes(req,res){
+    
+    var empresaId = req.params.empresaId
+
+    dashNegocioModel
+    .getPrctDefeitosMes(empresaId).
+    then(function(prctDefeito){
+        console.log(prctDefeito)
+        if(prctDefeito.length > 0){
+            res.status(200).json(prctDefeito)
+        }else{
+            res.status(204).send('Não foi possível encontrar as porcentagens!')
+        }
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage)
+        console.log(erro)
+    })
+}
+
 
 module.exports = {
     empresaMaisAfetada,
     mesMaisAfetado,
-    modeloMaisAfetado
+    modeloMaisAfetado,
+    taxaDefeitosMes
 }

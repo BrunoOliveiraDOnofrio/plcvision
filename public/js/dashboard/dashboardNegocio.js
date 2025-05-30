@@ -1,6 +1,82 @@
+// Empresa mais afetada
+function carregarKPI1(){
+    const kpi1 = document.getElementById("empresa-afetada");
+    console.log(kpi1)
+    fetch(`/adm/dashNegocio/empresaMaisAfetada/${sessionStorage.getItem('EMPRESA_ID')}`)
+        .then((response) => {
+            return response.json();
+        })
+        .then((dados) => {
+            console.log("Empresa mais Afetada:", dados);
+            kpi1.innerHTML = dados[0].razao_social.split(' ')[0].toUpperCase();
+        })
+        .catch((error) => {
+            console.log("Erro:", error);
+            kpi1.innerHTML = "baguete";
+        });
+}
+
+
+
+// Mês com maior taxa de defeitos
+function carregarKPI2(){
+    const kpi2 = document.getElementById("mes-afetado");
+    console.log(kpi2)
+    fetch(`/adm/dashNegocio/mesMaisAfetado/${sessionStorage.getItem('ALERTA_ID')}`)
+        .then((response) => {
+            return response.json();
+        })
+        .then((dados) => {
+            console.log("Mês com maior taxa de defeitos:", dados);
+            
+            const month = {
+            "01": "Janeiro",
+            "02": "Fevereiro",
+            "03": "Março",
+            "04": "Abril",
+            "05": "Maio",
+            "06": "Junho",
+            "07": "Julho",
+            "08": "Agosto",
+            "09": "Setembro",
+            "10": "Outubro",
+            "11": "Novembro",
+            "12": "Dezembro"
+            }
+            
+            kpi2.innerHTML = month[dados[0].dataHoraMod].toUpperCase();
+        })
+        .catch((error) => {
+            console.log("Erro:", error);
+            kpi2.innerHTML = "baguete";
+        });
+}
+
+
+
+// Modelo com maior taxa de defeitos
+function carregarKPI3(){
+    const kpi3 = document.getElementById("modelo-defeito");
+    console.log(kpi3)
+    fetch(`/adm/dashNegocio/modeloMaisAfetado/${sessionStorage.getItem('EMPRESA_ID')}`)
+        .then((response) => {
+            return response.json();
+        })
+        .then((dados) => {
+            console.log("Modelo mais afetado:", dados);
+            kpi3.innerHTML = dados[0].modelo.toUpperCase();
+        })
+        .catch((error) => {
+            console.log("Erro:", error);
+            kpi3.innerHTML = "baguete";
+        });
+}
+
+
+
 // Gráfico de Meta
-document.addEventListener("DOMContentLoaded", function() {
-    let metaTotal = 100;
+function gerarMetaVendas (){
+  let metaTotal = 100;
     let qtdAtingida = 74;
 
     let qtdAtual = (qtdAtingida / metaTotal) * 100;
@@ -89,203 +165,147 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var chartMeta = new ApexCharts(containerDoGrafico, optionsMeta);
     chartMeta.render();
-
-    // Se precisar atualizar dinamicamente:
-    // window.meuDonutProgresso = chartDonutProgresso;
-
-
-
-
-    // Empresa mais afetada
-    function carregarKPI1(){
-        const kpi1 = document.getElementById("empresa-afetada");
-        console.log(kpi1)
-        fetch(`/adm/dashNegocio/empresaMaisAfetada/${sessionStorage.getItem('EMPRESA_ID')}`)
-            .then((response) => {
-                return response.json();
-            })
-            .then((dados) => {
-                console.log("Empresa mais Afetada:", dados);
-                kpi1.innerHTML = dados[0].razao_social.split(' ')[0].toUpperCase();
-            })
-            .catch((error) => {
-                console.log("Erro:", error);
-                kpi1.innerHTML = "baguete";
-            });
-    }
-
-
-
-
-    // Mês com maior taxa de defeitos
-    function carregarKPI2(){
-        const kpi2 = document.getElementById("mes-afetado");
-        console.log(kpi2)
-        fetch(`/adm/dashNegocio/mesMaisAfetado/${sessionStorage.getItem('ALERTA_ID')}`)
-            .then((response) => {
-                return response.json();
-            })
-            .then((dados) => {
-                console.log("Mês com maior taxa de defeitos:", dados);
-                
-                const month = {
-                "01": "Janeiro",
-                "02": "Fevereiro",
-                "03": "Março",
-                "04": "Abril",
-                "05": "Maio",
-                "06": "Junho",
-                "07": "Julho",
-                "08": "Agosto",
-                "09": "Setembro",
-                "10": "Outubro",
-                "11": "Novembro",
-                "12": "Dezembro"
-               }
-                
-                kpi2.innerHTML = month[dados[0].dataHoraMod].toUpperCase();
-            })
-            .catch((error) => {
-                console.log("Erro:", error);
-                kpi2.innerHTML = "baguete";
-            });
-    }
-
-
-    function carregarKPI3(){
-        const kpi3 = document.getElementById("modelo-defeito");
-        console.log(kpi3)
-        fetch(`/adm/dashNegocio/modeloMaisAfetado/${sessionStorage.getItem('EMPRESA_ID')}`)
-            .then((response) => {
-                return response.json();
-            })
-            .then((dados) => {
-                console.log("Modelo mais afetado:", dados);
-                kpi3.innerHTML = dados[0].modelo.toUpperCase();
-            })
-            .catch((error) => {
-                console.log("Erro:", error);
-                kpi3.innerHTML = "baguete";
-            });
-    }
-
-
-
-carregarKPI1()
-carregarKPI2()
-carregarKPI3()
-
-});
-
-// Função de exemplo para atualizar o gráfico (coloque fora do DOMContentLoaded se chamada de outros lugares)
-/*
-function atualizarDonutProgresso(novoqtdAtingida) {
-    let valorTotal = 100; // Ou sua variável metaTotal
-    let novaPorcentagemPreenchida = (novoqtdAtingida / valorTotal) * 100;
-    let novametaPedidos = 100 - novaPorcentagemPreenchida;
-
-    if (window.meuDonutProgresso) {
-        window.meuDonutProgresso.updateSeries([novaPorcentagemPreenchida, novametaPedidos]);
-    }
 }
-*/
+
 
 
 
 
 // Gráfico de Cancelamentos
-document.addEventListener("DOMContentLoaded", function() 
-{var optionsCancel = {
-          series: [{
-          name: 'Média de Cancelamentos',
-          data: [7]
-        }, {
-          name: 'Qtd. de Cancelamentos Atual',
-          data: [4]
-        }],
-          chart: {
-          type: 'bar',
-          height: 280
+function gerarPainelCancel() {
+
+var optionsCancel = {
+        series: [{
+        name: 'Média de Cancelamentos',
+        data: [7]
+      }, {
+        name: 'Qtd. de Cancelamentos Atual',
+        data: [4]
+      }],
+        chart: {
+        type: 'bar',
+        height: 280
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          borderRadius: 5,
+          borderRadiusApplication: 'end'
         },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '55%',
-            borderRadius: 5,
-            borderRadiusApplication: 'end'
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: ['Maio'],
+      },
+      fill: {
+        opacity: 1
+      },
+      legend: {
           show: true,
-          width: 2,
-          colors: ['transparent']
-        },
-        xaxis: {
-          categories: ['Maio'],
-        },
-        fill: {
-          opacity: 1
-        },
-        legend: {
-            show: true,
-            position: 'bottom',
-            fontSize: '15vw'
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return val + " pedidos"
-            }
+          position: 'bottom',
+          fontSize: '15vw'
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + " pedidos"
           }
         }
-        };
-        
-        var chartCancel = new ApexCharts(document.querySelector("#chart-cancel"), optionsCancel);
-        chartCancel.render(); 
-});
+      }
+      };
+      
+      var chartCancel = new ApexCharts(document.querySelector("#chart-cancel"), optionsCancel);
+      chartCancel.render();
+}
+
 
 
 
 // Gráfico de Taxa de Defeitos
-document.addEventListener("DOMContentLoaded", function() {
+async function gerarGraficoTaxaDefeitos() {
 
-     var optionsDefeitos = {
-          series: [{
-            name: "% Defeitos",
-            data: [15, 10, 7, 23, 14],
-            colors: ['#4B5293','#4B5293', '#4B5293', '#4B5293', '#4B5293', '#4B5293']
-        }],
-          chart: {
+  const request = await fetch(`/adm/dashNegocio/taxaDefeitosMes/${sessionStorage.getItem('EMPRESA_ID')}`);
+  const dadosMes = await request.json();
+  console.log(dadosMes);
+
+  const dados = [];
+  const meses = [];
+
+  const somaTotal = dadosMes.reduce((soma, valor)=> soma += valor.qtd, 0);
+  console.log(somaTotal);
+  
+  for(let dado of dadosMes) {
+    const month = {
+            "01": "Janeiro",
+            "02": "Fevereiro",
+            "03": "Março",
+            "04": "Abril",
+            "05": "Maio",
+            "06": "Junho",
+            "07": "Julho",
+            "08": "Agosto",
+            "09": "Setembro",
+            "10": "Outubro",
+            "11": "Novembro",
+            "12": "Dezembro"
+            }
+      
+        const nomeMes = month[dado.mes];
+        const prctDefeito = ((dado.qtd/somaTotal) * 100).toFixed(0);
+
+    dados.push(prctDefeito);
+    meses.push(nomeMes);
+  }
+
+var optionsDefeitos = {
+        series: [{
+          name: "% Defeitos",
+          data: dados,
+          colors: ['#4B5293','#4B5293', '#4B5293', '#4B5293', '#4B5293', '#4B5293']
+      }],
+        chart: {
           height: 280,
-          type: 'line',
-          zoom: {
-            enabled: false
-          }
-        },
-        dataLabels: {
+        type: 'line',
+        zoom: {
           enabled: false
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-          },
-        },
-        xaxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         }
-        };
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      grid: {
+        row: {
+          colors: ['#f3f3f3', 'transparent'], 
+          opacity: 0.5
+        },
+      },
+      xaxis: {
+        categories: meses,
+      },
+      yaxis: {
+        labels: {
+          formatter: function(valor){
+            return valor + "%";
+          }
+        }
+      }
+      };
 
-        var chartDefeitos = new ApexCharts(document.querySelector("#chart-defeitos"), optionsDefeitos);
-        chartDefeitos.render();
+      var chartDefeitos = new ApexCharts(document.querySelector("#chart-defeitos"), optionsDefeitos);
+      chartDefeitos.render();
 
-});
+}
 
 
 
@@ -299,12 +319,12 @@ document.addEventListener("DOMContentLoaded", function() {
             data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5]
         }],
         chart: {
-            type: 'bar',
+          type: 'bar',
             height: 500 
         },
         plotOptions: {
             bar: {
-                barHeight: '100%',
+              barHeight: '100%',
                 distributed: true,
                 horizontal: true,
                 dataLabels: {
@@ -319,16 +339,16 @@ document.addEventListener("DOMContentLoaded", function() {
             enabled: true,
             textAnchor: 'start',
             style: {
-                colors: ['#fff']
+              colors: ['#fff']
             },
             formatter: function(val, opt) {
-                return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val + "%"
+              return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val + "%"
             },
             offsetX: 0,
             dropShadow: {
                 enabled: true
             }
-        },
+          },
         stroke: {
             width: 1,
             colors: ['#fff']
@@ -348,27 +368,27 @@ document.addEventListener("DOMContentLoaded", function() {
             theme: 'dark',
             x: {
                 show: false
-            },
+              },
             y: {
                 title: {
-                    formatter: function() {
+                  formatter: function() {
                         return ''
                     }
                 }
             }
         }
     };
-
+    
 
     const optionsDesktop = {
-        series: [{
+      series: [{
             name: 'Taxa de Defeito', 
             data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5],
             colors: ['#4B5293']
         }],
         chart: {
-            height: 300,
-            type: 'bar',
+          height: 300,
+          type: 'bar',
         },
         plotOptions: {
           bar: {
@@ -399,7 +419,7 @@ document.addEventListener("DOMContentLoaded", function() {
             show: false
           },
           labels: {
-                style: {
+            style: {
                     fontSize: '12px !important', 
                     fontFamily: 'Inter'
                 }
@@ -444,15 +464,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (chartModelosInstance) {
             chartModelosInstance.destroy();
-        }
-        
-        chartModelosContainer.innerHTML = ''; 
-
-        chartModelosInstance = new ApexCharts(chartModelosContainer, currentOptions);
-        chartModelosInstance.render();
+          }
+          
+          chartModelosContainer.innerHTML = ''; 
+          
+          chartModelosInstance = new ApexCharts(chartModelosContainer, currentOptions);
+          chartModelosInstance.render();
     }
-
+    
     updateChart();
 
     window.matchMedia("(min-width: 702px)").addEventListener('change', updateChart);
+});
+    
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    
+    carregarKPI1();
+    carregarKPI2();
+    carregarKPI3();
+    gerarMetaVendas();
+    gerarPainelCancel();
+    gerarGraficoTaxaDefeitos();
+
 });
