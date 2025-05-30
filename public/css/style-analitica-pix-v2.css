@@ -57,6 +57,7 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    padding: 5%;
 }
 
 .img-regressao {
@@ -82,11 +83,42 @@
     width: 80vw;
 }
 
+
 @media only screen and (min-width: 760px) {
+
+    .desktop-content {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
     .kpis-box {
         display: flex;
+        flex-direction: column;
         max-width: 100%;
     }
+
+    .kpis-graphics {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .kpis-r-quadrado{
+        display: flex;
+        flex-direction: row;
+        margin-left: 10%;
+    }
+
+    .kpi-r{
+    background-color: #24284B;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 3%;
+}
+
+.title-r span{
+    color: #F9F9F9;
+    font-size: 50%;
+}
 
     #myChart-line {
         width: 50vw !important;

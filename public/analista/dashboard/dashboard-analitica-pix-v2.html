@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/nav_side_bar.css">
     <!-- <link rel="stylesheet" href="../../css/style_dash_pix_analitica.css"> -->
-     <link rel="stylesheet" href="../../css/style-analitica-pix-v2.css">
+    <link rel="stylesheet" href="../../css/style-analitica-pix-v2.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- <script src="../../js/nav_sidebar.js"></script> -->
     <link rel="shortcut icon" href="../../assets/imgs/logo-aba_white.png">
@@ -152,51 +152,57 @@
             <div class="title">
                 <h1>Dashboard Analítica | Sobrecarga de PLCs e PIX em 2024</h1>
             </div>
-            <div class="kpis-box">
-                <div class="kpis-graphics">
-                    <div class="kpi-1">
-                        <canvas id="myChart-pie-cor-cpu"></canvas>
-                    </div>
-                    <div class="kpi-2">
-                        <canvas id="myChart-pie-cor-ram"></canvas>
-                    </div>
-                </div>
-                <div class="kpis-r-quadrado">
+            <div class="desktop-content">
 
-                    <div class="kpi-r">
-                        <div class="title-r">
-                            <span>Coeficiente de Determinação da RAM:</span>
+                <div class="kpis-box">
+                    <div class="kpis-graphics">
+                        <div class="kpi-1">
+                            <canvas id="myChart-pie-cor-cpu"></canvas>
                         </div>
-                        <div class="value-r">
-                            <span>89%</span>
-                        </div>
-                    </div>
-                    <div class="kpi-r">
-                        <div class="title-r">
-                            <span>Coeficiente de Determinação da CPU:</span>
-                        </div>
-                        <div class="value-r">
-                            <span>78%</span>
+                        <div class="kpi-2">
+                            <canvas id="myChart-pie-cor-ram"></canvas>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="title">
-                <h1>CPU e RAM em relação às transações de PIX</h1>
-            </div>
-            <div class="line-graphic-box">
-                <canvas id="myChart-line"></canvas>
-            </div>
-            <div class="title">
-                <h1>Regressões Lineares</h1>
-            </div>
-            <div class="linear-box">
+                    <div class="kpis-r-quadrado">
 
-                <div class="linear-ram">
-                    <img class="img-regressao" src="../../assets/imgs/dash-analitica/regressao-ram-pix.png" alt="">
+                        <div class="kpi-r">
+                            <div class="title-r">
+                                <span>Coeficiente de Determinação da RAM:</span>
+                            </div>
+                            <div class="value-r">
+                                <span>89%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-r">
+                            <div class="title-r">
+                                <span>Coeficiente de Determinação da CPU:</span>
+                            </div>
+                            <div class="value-r">
+                                <span>78%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="lienar-cpu">
-                    <img class="img-regressao" src="../../assets/imgs/dash-analitica/regressao-ram-pix.png" alt="">
+                <div class="graphic-box">
+
+                    <div class="title">
+                        <h1>CPU e RAM em relação às transações de PIX</h1>
+                    </div>
+                    <div class="line-graphic-box">
+                        <canvas id="myChart-line"></canvas>
+                    </div>
+                    <div class="title">
+                        <h1>Regressões Lineares</h1>
+                    </div>
+                    <div class="linear-box">
+
+                        <div class="linear-ram">
+                            <img class="img-regressao" src="../../assets/imgs/dash-analitica/regre-lin-ram.png" alt="">
+                        </div>
+                        <div class="lienar-cpu">
+                            <img class="img-regressao" src="../../assets/imgs/dash-analitica/regre-lin-cpu.png" alt="">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -237,8 +243,8 @@
                     legend: {
                         position: 'top',
                         align: 'start',
-                        labels: {  
-                            usePointStyle: true 
+                        labels: {
+                            usePointStyle: true
                         }
                     }
                 },
@@ -252,63 +258,63 @@
         });
 
         const piecorramgraphic = new Chart(ctxpiecpu, {
-    type: 'pie',
-    data: {
-        labels: ['95% de Correlação', '5% Não há Correlação'],
-        datasets: [{
-            data: [95, 5],
-            backgroundColor: ['#36A2EB', '#FF6384'],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false
+            type: 'pie',
+            data: {
+                labels: ['95% de Correlação', '5% Não há Correlação'],
+                datasets: [{
+                    data: [95, 5],
+                    backgroundColor: ['#36A2EB', '#FF6384'],
+                    borderWidth: 0
+                }]
             },
-            tooltip: {
-                enabled: true
-            },
-            title: {
-                display: true,
-                text: 'Correlação RAM e PIX: 95%',
-                font: {
-                    size: 12
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true
+                    },
+                    title: {
+                        display: true,
+                        text: 'Correlação RAM e PIX: 95%',
+                        font: {
+                            size: 12
+                        }
+                    }
                 }
             }
-        }
-    }
-});
+        });
 
         const piecorcpugraphic = new Chart(ctxpieram, {
-    type: 'pie',
-    data: {
-        labels: ['89% de Correlação', '11% Não há Correlação'],
-        datasets: [{
-            data: [89, 11],
-            backgroundColor: ['#FFCE56', '#4BC0C0'],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false
+            type: 'pie',
+            data: {
+                labels: ['89% de Correlação', '11% Não há Correlação'],
+                datasets: [{
+                    data: [89, 11],
+                    backgroundColor: ['#FFCE56', '#4BC0C0'],
+                    borderWidth: 0
+                }]
             },
-            tooltip: {
-                enabled: true
-            },
-            title: {
-                display: true,
-                text: 'Correlação CPU e PIX: 89%',
-                font: {
-                    size: 12
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true
+                    },
+                    title: {
+                        display: true,
+                        text: 'Correlação CPU e PIX: 89%',
+                        font: {
+                            size: 12
+                        }
+                    }
                 }
             }
-        }
-    }
-});
+        });
 
     </script>
