@@ -46,9 +46,17 @@
     padding: 3%;
 }
 
+.graphic-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .line-graphic-box{
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
+    display: flex;
+    max-width: fit-content;
     
 }
 
@@ -94,23 +102,25 @@
     .kpis-box {
         display: flex;
         flex-direction: column;
-        max-width: 100%;
+        justify-content: flex-start;
     }
 
     .kpis-graphics {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        margin-left: 3%;
     }
 
     .kpis-r-quadrado{
         display: flex;
-        flex-direction: row;
-        margin-left: 10%;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .linear-box {
         display: flex;
         flex-direction: row;
+        padding: 0%;
     }
 
     .kpi-r{
@@ -120,12 +130,17 @@
     padding: 3%;
 }
 
+.graphic-box {
+    padding: 0%;
+}
+
 .title-r span{
     color: #F9F9F9;
     font-size: 50%;
 }
 
     #myChart-line {
-        width: 50vw !important;
+        height: 25vw !important;
+        width: 70vw !important;
     }
 }
