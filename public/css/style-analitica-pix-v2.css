@@ -84,7 +84,7 @@
 
 .value-r span{
     color: #F9F9F9;
-    font-weight: 900;
+    font-weight: 700;
 }
 
 #myChart-line {
@@ -102,7 +102,8 @@
     .kpis-box {
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: space-evenly;
+        margin-left: 3%;
     }
 
     .kpis-graphics {
@@ -115,6 +116,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        height: 30%;
     }
 
     .linear-box {
@@ -127,7 +129,13 @@
     background-color: #24284B;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    padding: 3%;
+    padding: 10%;
+}
+
+
+.value-r {
+    display: flex;
+    justify-content: center;
 }
 
 .graphic-box {
@@ -143,4 +151,9 @@
         height: 25vw !important;
         width: 70vw !important;
     }
+
+    #myChart-pie-cor-ram, #myChart-pie-cor-cpu {
+    width: 100px;
+    height: 100px;
+}
 }
