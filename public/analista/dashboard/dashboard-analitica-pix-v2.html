@@ -165,18 +165,18 @@
 
                     <div class="kpi-r">
                         <div class="title-r">
-                            <span>R² RAM:</span>
+                            <span>Coeficiente de Determinação da RAM:</span>
                         </div>
                         <div class="value-r">
-                            <span>79%</span>
+                            <span>89%</span>
                         </div>
                     </div>
                     <div class="kpi-r">
                         <div class="title-r">
-                            <span>R² CPU:</span>
+                            <span>Coeficiente de Determinação da CPU:</span>
                         </div>
                         <div class="value-r">
-                            <span>94%</span>
+                            <span>78%</span>
                         </div>
                     </div>
                 </div>
@@ -222,12 +222,12 @@
                 },
                 {
                     label: 'Percentual Médio de RAM',
-                    data: [21.77, 22.66, 22.69, 23.31, 23.34, 23.43, 23.46, 23.48, 23.96, 24.11, 24.15, 24.30],
+                    data: [71.21, 71.51, 71.66, 71.82, 71.87, 71.94, 71.97, 72.10, 72.14, 72.21, 72.47, 72.68],
                     borderWidth: 1
                 },
                 {
                     label: 'Percentual de Transações PIX',
-                    data: [21.77, 22.66, 22.69, 23.31, 23.34, 23.43, 23.46, 23.48, 23.96, 24.11, 24.15, 24.30],
+                    data: [6.83, 6.45, 7.28, 7.81, 7.97, 8.02, 8.85, 8.81, 8.76, 9.38, 9.31, 10.53],
                     borderWidth: 1
                 }]
             },
@@ -244,7 +244,8 @@
                 },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: false,
+                        stepSize: 20
                     }
                 }
             }
@@ -253,10 +254,9 @@
         const piecorramgraphic = new Chart(ctxpiecpu, {
     type: 'pie',
     data: {
-        labels: ['Usado', 'Livre'],
+        labels: ['95% de Correlação', '5% Não há Correlação'],
         datasets: [{
-            label: 'Percentual Médio de RAM',
-            data: [80, 20],
+            data: [95, 5],
             backgroundColor: ['#36A2EB', '#FF6384'],
             borderWidth: 0
         }]
@@ -272,7 +272,7 @@
             },
             title: {
                 display: true,
-                text: 'Correlação RAM e PIX',
+                text: 'Correlação RAM e PIX: 95%',
                 font: {
                     size: 12
                 }
@@ -284,9 +284,8 @@
         const piecorcpugraphic = new Chart(ctxpieram, {
     type: 'pie',
     data: {
-        labels: ['Usado', 'Livre'],
+        labels: ['89% de Correlação', '11% Não há Correlação'],
         datasets: [{
-            label: 'Percentual Médio de CPU',
             data: [89, 11],
             backgroundColor: ['#FFCE56', '#4BC0C0'],
             borderWidth: 0
@@ -303,7 +302,7 @@
             },
             title: {
                 display: true,
-                text: 'Correlação CPU e PIX',
+                text: 'Correlação CPU e PIX: 89%',
                 font: {
                     size: 12
                 }

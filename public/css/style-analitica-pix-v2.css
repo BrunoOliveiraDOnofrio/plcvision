@@ -32,10 +32,24 @@
     justify-content: space-between;
 }
 
+.kpis-r-quadrado{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 20%;
+}
+
+.kpi-r{
+    background-color: #24284B;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 3%;
+}
+
 .line-graphic-box{
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    padding: 10%;
+    
 }
 
 .linear-box{
@@ -54,10 +68,27 @@
     height: 125px;
 }
 
-@media only screen and (min-width: 760px) {
+.title-r span{
+    color: #F9F9F9;
+    font-size: 80%;
+}
 
+.value-r span{
+    color: #F9F9F9;
+    font-weight: 900;
+}
+
+#myChart-line {
+    width: 80vw;
+}
+
+@media only screen and (min-width: 760px) {
     .kpis-box {
         display: flex;
         max-width: 100%;
+    }
+
+    #myChart-line {
+        width: 50vw !important;
     }
 }
