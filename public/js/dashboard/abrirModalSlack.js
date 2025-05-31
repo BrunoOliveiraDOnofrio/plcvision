@@ -68,7 +68,7 @@ const enviarMensagem = () => {
     let mensagem = p_mensagem.innerText;
     let obs = document.querySelector('#text_message').value;
     console.log(mensagem);
-    const url = 'https://hooks.slack.com/services/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';
+    const url = 'https://hooks.slack.com/services/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';
     const data = {
         color: '#FF0000',
         
@@ -105,7 +105,7 @@ const enviarMensagem = () => {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: "*🔗 Link do chamado:*\n<https://carvalhohugo425.atlassian.net/jira/servicedesk/projects/SUP/queues/custom/1/SUP-250|Clique aqui>"
+        text: `*🔗 Link do chamado:*\n<https://carvalhohugo425.atlassian.net/jira/servicedesk/projects/SUP/queues/custom/1/${issueKeyGlobal}|Clique aqui>`
 
       }
     },
