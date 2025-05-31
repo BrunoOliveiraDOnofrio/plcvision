@@ -1,0 +1,151 @@
+TIPO;EMPRESA;MODELO;QTD.;VALOR_UN;VALOR_TOTAL;ENDERECO;DATA_HORA
+Pedido;LENOVO TECNOLOGIA BRASIL LTDA;ET 200SP;69;5800.00;400200.00;Avenida Paulista, 1000 - São Paulo (SP);2025-05-19 11:57:20
+Pedido;VOLKSWAGEN BRASIL LTDA;S7-1500 T;62;17500.00;1085000.00;Rua XV de Novembro, 500 - Curitiba (PR);2025-05-31 15:10:52
+Pedido;Peixoto;S7-1500 T;60;17500.00;1050000.00;Sítio de Mendonça, 78, Conjunto Bonsucesso, 09484415 Santos / PA;2025-05-10 09:13:28
+Pedido;Ribeiro - EI;S7-1500 R/H;10;45000.00;450000.00;Vila Alexandre Cirino, 2, Ipe, 77877239 Gomes das Pedras / PR;2025-05-13 18:04:41
+Pedido;Oliveira;S7-1200 F;40;6300.00;252000.00;Área de da Luz, Concórdia, 49470-692 Moraes Alegre / PB;2025-05-04 18:36:44
+Pedido;Abreu;S7-400H;26;95000.00;2470000.00;Área Vicente Pereira, 5, Tiradentes, 92422-919 Rocha / PE;2025-06-01 09:06:39
+Pedido;Moura;S7-1500;25;8200.00;205000.00;Travessa Luana Porto, 9, Etelvina Carneiro, 02461447 Rodrigues das Flores / AM;2025-06-02 08:02:27
+Pedido;Sampaio;S7-1500 R/H;57;45000.00;2565000.00;Vereda Garcia, 16, Camponesa 2ª Seção, 87519-540 Pires / TO;2025-05-20 18:09:33
+Pedido;Nascimento S.A.;S7-1500;33;8200.00;270600.00;Campo de Guerra, 15, Petropolis, 30227-579 Sousa / PI;2025-05-03 16:34:18
+Pedido;Lopes S/A;S7-1500;13;8200.00;106600.00;Avenida Ana Júlia Moura, 63, Boa Viagem, 17844-652 Aparecida / MS;2025-05-19 14:12:46
+Pedido;Viana;S7-1500 R/H;68;45000.00;3060000.00;Fazenda de da Conceição, 402, Vila Das Oliveiras, 18583-616 Cirino de Vieira / ES;2025-05-02 15:42:01
+Pedido;Costela Cirino S/A;LOGO!;22;1150.00;25300.00;Lago Kaique Vargas, 17, Solimoes, 57411710 Gonçalves da Praia / PE;2025-05-09 08:29:36
+Pedido;Vieira;S7-1500 T;22;17500.00;385000.00;Setor Yan Sales, 59, Providencia, 69774397 Carvalho do Amparo / MT;2025-05-24 09:01:42
+Pedido;Costela;S7-1200 F;31;6300.00;195300.00;Viaduto Camargo, Monte Azul, 51984255 Azevedo das Pedras / RS;2025-05-21 08:02:51
+Pedido;Freitas;S7-1500 T;21;17500.00;367500.00;Esplanada de Guerra, 47, Vila Da Luz, 66903-411 Silveira da Prata / PB;2025-05-15 18:11:32
+Pedido;Barros S.A.;S7-200 SMART;29;1400.00;40600.00;Distrito de Dias, 375, Delta, 22066444 Correia da Prata / MT;2025-05-28 11:55:07
+Pedido;da Paz;S7-1500 T;54;17500.00;945000.00;Feira de Peixoto, 9, Vila Olhos D'água, 29089926 Sampaio / AC;2025-06-03 08:20:45
+Pedido;Dias S.A.;ET 200SP;61;5800.00;353800.00;Avenida Marcos Vinicius Moraes, 20, Vila São Geraldo, 02759-855 Souza / PA;2025-05-21 11:36:09
+Pedido;Nogueira;ET 200SP;42;5800.00;243600.00;Núcleo de Araújo, 92, Vila Puc, 10213-882 Cunha do Amparo / ES;2025-05-23 10:53:56
+Pedido;Novais Cunha - ME;S7-1500;12;8200.00;98400.00;Estação Pietra Teixeira, 45, Colégio Batista, 84704065 Almeida / MS;2025-05-30 12:57:57
+Pedido;Montenegro S/A;S7-1500 T;29;17500.00;507500.00;Lago Nogueira, 82, Trevo, 64869-925 Pinto do Oeste / PR;2025-05-25 08:17:07
+Pedido;Melo;S7-1500 R/H;60;45000.00;2700000.00;Trecho de Araújo, 68, Castelo, 12488346 Cavalcanti / BA;2025-05-03 09:51:53
+Cancelamento;Azevedo;ET 200SP;18;5800.00;104400.00;Condomínio de Fonseca, 506, Padre Eustáquio, 50077248 da Luz / RN;2025-06-02 14:55:33
+Pedido;Dias Costela - ME;ET 200SP;65;5800.00;377000.00;Rua de Rocha, Ventosa, 57972216 da Rosa de Goiás / PR;2025-05-23 18:40:33
+Pedido;Guerra;S7-1500 T;68;17500.00;1190000.00;Trecho Aurora Novaes, 8, Santo André, 61765-210 Borges da Serra / ES;2025-05-31 13:39:18
+Pedido;da Mota Santos e Filhos;S7-1500;37;8200.00;303400.00;Núcleo de Teixeira, 13, Jardinópolis, 82296405 Oliveira Verde / SC;2025-06-02 14:18:01
+Pedido;Cavalcanti;S7-1500 PN;35;8200.00;287000.00;Trevo Almeida, 83, Dona Clara, 29839260 da Costa / BA;2025-05-12 11:51:38
+Pedido;Leão Sales S.A.;ET 200SP;19;5800.00;110200.00;Vale Rezende, 92, São Bernardo, 95112-285 Freitas Grande / AC;2025-05-20 13:12:10
+Pedido;Farias;ET 200SP;10;5800.00;58000.00;Praia Natália Casa Grande, 6, Coração Eucarístico, 23083-046 Silva do Oeste / SP;2025-05-22 12:13:17
+Pedido;Rodrigues Marques S.A.;S7-200 SMART;60;1400.00;84000.00;Aeroporto de Fernandes, 966, São Geraldo, 49380284 Pacheco / PB;2025-05-20 09:58:06
+Pedido;Fogaça S/A;S7-1200 F;27;6300.00;170100.00;Praça Pires, Ambrosina, 92699413 Rocha de Fogaça / CE;2025-05-31 18:39:35
+Pedido;Pastor Costa Ltda.;S7-1200 F;56;6300.00;352800.00;Morro Castro, 55, Vila Ecológica, 51075385 Peixoto / SP;2025-05-28 08:54:04
+Pedido;Rios;S7-1200;57;3950.00;225150.00;Largo Dias, 94, Trevo, 17629-067 Caldeira / GO;2025-05-26 09:56:46
+Pedido;Gonçalves;S7-1500 PN;17;8200.00;139400.00;Rua Rael da Rocha, Araguaia, 60353-807 Almeida de da Mota / RR;2025-05-27 15:30:59
+Pedido;Nunes;LOGO!;69;1150.00;79350.00;Lagoa Fernandes, 42, Piraja, 64423296 Borges do Galho / MS;2025-06-03 10:47:19
+Pedido;Nogueira Aragão - ME;S7-1500;37;8200.00;303400.00;Rua de Mendonça, 60, Barreiro, 61762-522 Aragão de da Costa / PI;2025-05-28 16:00:41
+Pedido;Santos;S7-1500;56;8200.00;459200.00;Jardim da Rosa, 54, Estrela, 00915-907 Araújo do Galho / PB;2025-05-31 09:24:26
+Pedido;da Cunha;S7-1500;63;8200.00;516600.00;Praia de Moraes, 89, Marçola, 75029607 Silva Paulista / AM;2025-05-16 13:05:23
+Pedido;Freitas e Filhos;LOGO!;21;1150.00;24150.00;Estação Emanuel das Neves, 645, Monsenhor Messias, 70487605 Monteiro de Goiás / PI;2025-05-14 18:25:11
+Pedido;Marques Leão Ltda.;ET 200SP;29;5800.00;168200.00;Chácara Dias, 85, Vila Jardim São José, 41773461 Dias do Oeste / RO;2025-05-30 11:39:04
+Pedido;Fernandes;S7-1200;38;3950.00;150100.00;Vila Clarice Melo, 31, Vila Real 1ª Seção, 80487078 Dias / MT;2025-05-23 13:02:06
+Pedido;Camargo;S7-1500 R/H;22;45000.00;990000.00;Campo de Rezende, 18, Piratininga, 17165-891 Siqueira de Araújo / AL;2025-05-07 14:53:29
+Pedido;da Conceição;S7-1500 R/H;36;45000.00;1620000.00;Praia Apollo Albuquerque, 63, Lindéia, 02790957 Jesus da Praia / AC;2025-05-28 18:09:20
+Pedido;Albuquerque Câmara S/A;LOGO!;45;1150.00;51750.00;Lagoa Bruna Fernandes, 7, Vitoria Da Conquista, 10090892 Macedo da Prata / MA;2025-05-25 15:23:31
+Pedido;Pereira;S7-1200;23;3950.00;90850.00;Trecho Davi Rocha, 61, Atila De Paiva, 38877266 Martins Verde / AL;2025-05-31 18:00:39
+Pedido;Cavalcante;S7-1500 PN;69;8200.00;565800.00;Viela de Guerra, 22, Lindéia, 05060-888 Pinto de Novaes / ES;2025-05-15 15:37:12
+Pedido;da Luz S.A.;ET 200SP;42;5800.00;243600.00;Largo Nathan Mendes, 59, Conjunto Providencia, 46379-399 da Costa do Oeste / RO;2025-05-20 13:28:41
+Pedido;da Mota;LOGO!;10;1150.00;11500.00;Núcleo de Aparecida, 7, Vila São Paulo, 81124281 Fonseca / GO;2025-05-01 12:47:16
+Pedido;Gomes;S7-1500 PN;43;8200.00;352600.00;Rodovia de Silva, 617, Itaipu, 50551466 Mendes Alegre / GO;2025-05-26 17:00:37
+Pedido;Novais;S7-1200;32;3950.00;126400.00;Quadra Pereira, 77, Olaria, 91947-411 Casa Grande da Prata / SC;2025-05-09 14:17:27
+Pedido;Cardoso;S7-1200;13;3950.00;51350.00;Estrada de Pinto, 65, Conjunto Paulo Vi, 18898-015 Silva de Casa Grande / PI;2025-05-07 12:46:42
+Pedido;Cavalcanti e Filhos;S7-200 SMART;15;1400.00;21000.00;Residencial Vasconcelos, 3, Aeroporto, 87925-507 Carvalho de Pimenta / MT;2025-05-22 10:40:07
+Pedido;Barbosa - ME;S7-1200 F;16;6300.00;100800.00;Morro Aurora da Mata, 27, Vila Jardim Leblon, 75816943 Abreu / RS;2025-05-23 18:35:18
+Pedido;das Neves;S7-1500 T;64;17500.00;1120000.00;Estrada Vieira, 97, Lorena, 67723480 Pimenta / AC;2025-05-29 17:19:17
+Pedido;Sampaio Fogaça - EI;S7-1500 PN;50;8200.00;410000.00;Morro Moura, 43, Minaslandia, 49526-596 Vasconcelos de Cavalcante / MG;2025-05-28 10:27:27
+Pedido;Mendonça - EI;S7-1500 R/H;24;45000.00;1080000.00;Alameda Anthony Gabriel da Cruz, 18, Nazare, 19720236 Marques / AL;2025-05-31 16:38:29
+Pedido;Moreira da Cunha - ME;S7-1500 T;40;17500.00;700000.00;Ladeira de Mendes, 387, Vila Nossa Senhora Do Rosário, 01170258 Pires / RS;2025-05-28 18:23:18
+Pedido;Lopes;S7-400H;14;95000.00;1330000.00;Pátio Ravi Lucca Porto, 4, Campo Alegre, 85120-802 Ferreira da Serra / MA;2025-05-03 18:49:44
+Pedido;Silveira Novaes - ME;S7-1200 F;49;6300.00;308700.00;Sítio de Santos, 37, Madre Gertrudes, 73343085 Camargo Paulista / MT;2025-05-11 16:19:24
+Pedido;Sampaio Azevedo S/A;S7-1200 F;55;6300.00;346500.00;Alameda Vinícius Costela, Distrito Industrial Do Jatoba, 81251294 Caldeira / ES;2025-05-10 11:39:20
+Pedido;Pacheco;S7-1500;39;8200.00;319800.00;Vereda Ferreira, Vila Real 2ª Seção, 28130-172 Fogaça / PB;2025-05-22 10:12:55
+Pedido;Sales - ME;ET 200SP;32;5800.00;185600.00;Vale Barros, 9, Conjunto Capitão Eduardo, 86201212 Borges / RJ;2025-05-03 09:01:05
+Pedido;Almeida;LOGO!;20;1150.00;23000.00;Vale de da Mata, 53, Novo Aarão Reis, 53570-242 Silva / PA;2025-05-19 12:06:25
+Pedido;Macedo - EI;S7-400H;40;95000.00;3800000.00;Colônia Sophie Sá, 1, Caiçaras, 08776-793 Andrade / MG;2025-05-08 18:49:49
+Pedido;Porto e Filhos;S7-1500 PN;63;8200.00;516600.00;Avenida Maria Luísa Borges, 8, Marieta 1ª Seção, 92323860 Sampaio Paulista / RN;2025-05-09 08:39:18
+Pedido;Cardoso - EI;S7-1200 F;67;6300.00;422100.00;Largo de Fogaça, 716, Lourdes, 57641-769 Dias dos Dourados / RJ;2025-05-07 09:22:57
+Pedido;da Cruz Correia Ltda.;S7-1500 PN;19;8200.00;155800.00;Via Vieira, 637, Vista Alegre, 46433862 Mendonça / GO;2025-05-03 12:05:47
+Pedido;Martins;S7-1200;8;3950.00;31600.00;Alameda de Mendonça, 81, Vila Bandeirantes, 66363-373 da Rosa do Galho / AC;2025-05-18 16:06:11
+Pedido;Câmara S/A;S7-1500 PN;55;8200.00;451000.00;Jardim Murilo Mendes, 8, Vila Nova Gameleira 2ª Seção, 73742160 Pinto / RO;2025-05-10 10:58:12
+Pedido;Castro;S7-1500;23;8200.00;188600.00;Núcleo Thiago da Luz, 14, Vila Nova Gameleira 2ª Seção, 14055-804 Siqueira do Galho / AP;2025-05-26 18:10:54
+Pedido;Dias Freitas e Filhos;S7-1200 F;69;6300.00;434700.00;Recanto de Alves, 4, Camponesa 1ª Seção, 77551-190 da Paz da Serra / RJ;2025-05-10 17:07:45
+Pedido;Fonseca S.A.;S7-1500;36;8200.00;295200.00;Setor de Abreu, 67, São Pedro, 61052437 Macedo Verde / SE;2025-05-04 09:18:59
+Pedido;Marques Pimenta e Filhos;S7-1200 F;32;6300.00;201600.00;Aeroporto Gonçalves, 43, Vila Nova Cachoeirinha 1ª Seção, 33969321 Moura / RJ;2025-05-25 17:40:05
+Pedido;Marques - ME;S7-1200;49;3950.00;193550.00;Campo Fogaça, 113, Aparecida, 61354-169 Fonseca / RO;2025-05-16 09:56:03
+Pedido;Andrade;ET 200SP;64;5800.00;371200.00;Parque Caio Albuquerque, Varzea Da Palma, 93461681 Leão Alegre / SP;2025-05-27 14:11:43
+Pedido;Aragão;ET 200SP;45;5800.00;261000.00;Pátio de Rodrigues, Vila Jardim Montanhes, 47101548 Montenegro / SE;2025-05-12 12:01:55
+Pedido;Pimenta;S7-1200 F;9;6300.00;56700.00;Praça de da Rosa, 8, Vila Ecológica, 61736405 Cardoso Verde / AL;2025-05-11 18:21:40
+Pedido;Martins Araújo - ME;ET 200SP;8;5800.00;46400.00;Quadra Sousa, 66, Nova Vista, 83829-792 da Mata / MT;2025-05-12 09:51:30
+Pedido;da Rosa Almeida - EI;LOGO!;47;1150.00;54050.00;Residencial Costa, 89, Ventosa, 83880-799 da Costa / AC;2025-05-04 15:32:08
+Pedido;Casa Grande Vargas S/A;S7-1500 R/H;34;45000.00;1530000.00;Praia de Aparecida, 89, São Gonçalo, 86973-433 Novaes de Silveira / AC;2025-05-05 10:39:45
+Pedido;Sá;ET 200SP;17;5800.00;98600.00;Conjunto Pires, 9, Vila São Rafael, 27470194 Santos do Oeste / RR;2025-05-16 11:39:10
+Pedido;Pereira Andrade Ltda.;ET 200SP;63;5800.00;365400.00;Morro de Araújo, 715, Nossa Senhora Do Rosário, 19607551 Barros / PI;2025-05-22 13:11:11
+Pedido;Silva - EI;S7-1500;37;8200.00;303400.00;Rua Luiza Castro, 66, Zilah Sposito, 42178-450 Novais / PI;2025-05-21 16:40:37
+Cancelamento;Câmara Leão S/A;S7-1500 PN;37;8200.00;303400.00;Ladeira de da Cruz, 39, Vila Copasa, 55860559 Gomes do Norte / TO;2025-05-10 11:31:00
+Pedido;Alves;S7-1500 R/H;22;45000.00;990000.00;Praça Bárbara Rezende, 58, Vila Atila De Paiva, 06888081 Teixeira Alegre / RN;2025-05-04 18:14:53
+Pedido;Pereira Fogaça S.A.;S7-1500;40;8200.00;328000.00;Ladeira Gustavo Henrique Costela, 75, Santa Branca, 64548-224 Marques / PE;2025-05-24 10:32:07
+Pedido;da Luz - ME;S7-1500 PN;10;8200.00;82000.00;Vale Machado, 843, Vila Jardim São José, 03874978 Machado do Sul / RJ;2025-05-02 09:52:50
+Pedido;Pacheco e Filhos;S7-1200 F;66;6300.00;415800.00;Viela Thales da Cunha, 34, Delta, 01952908 Pastor de da Cunha / SC;2025-05-09 11:53:17
+Pedido;Casa Grande;S7-1500 R/H;24;45000.00;1080000.00;Lagoa de Souza, 89, Apolonia, 09580-890 Sousa / PR;2025-05-24 15:05:23
+Pedido;Albuquerque Moreira S.A.;S7-1200;38;3950.00;150100.00;Recanto de Almeida, 590, Novo São Lucas, 72164148 Gomes das Flores / RR;2025-05-11 12:27:26
+Pedido;Lopes Ltda.;S7-1200;62;3950.00;244900.00;Morro Azevedo, 86, Santa Amelia, 25065-564 Fernandes Alegre / SE;2025-05-22 17:55:58
+Pedido;Araújo;S7-1500 T;45;17500.00;787500.00;Sítio Maria Sophia Rezende, 20, Santa Branca, 67049733 Pinto Alegre / AM;2025-05-01 09:13:41
+Pedido;Guerra - EI;S7-1200;29;3950.00;114550.00;Avenida Nogueira, 68, Bom Jesus, 31358197 Fernandes / RS;2025-05-08 18:06:17
+Pedido;Porto Castro S.A.;S7-1500;9;8200.00;73800.00;Lagoa José Rodrigues, 19, São Francisco, 51709-137 Campos / RN;2025-05-30 13:19:29
+Pedido;Martins - ME;LOGO!;11;1150.00;12650.00;Praia de Azevedo, 17, Santa Tereza, 12491683 Rodrigues / ES;2025-05-12 15:17:57
+Pedido;Garcia;S7-1500 R/H;54;45000.00;2430000.00;Trevo de Camargo, 29, Vila Nova Paraíso, 80430-195 Aragão Grande / AP;2025-05-22 16:00:45
+Pedido;Campos S/A;S7-1200;36;3950.00;142200.00;Trevo de Costa, 893, Madri, 98969-182 Cardoso da Serra / GO;2025-05-06 17:08:20
+Pedido;da Conceição Ltda.;S7-400H;17;95000.00;1615000.00;Ladeira de Sales, 83, Mariquinhas, 28080019 Abreu / BA;2025-05-11 15:52:33
+Pedido;Ribeiro e Filhos;ET 200SP;13;5800.00;75400.00;Fazenda Antônio Barros, 336, Buraco Quente, 88484-789 Araújo da Serra / CE;2025-05-30 17:22:19
+Pedido;Azevedo S.A.;S7-1500 T;64;17500.00;1120000.00;Distrito Otávio Brito, 342, Alípio De Melo, 94033-338 Farias / RO;2025-05-10 17:11:18
+Pedido;Fonseca e Filhos;S7-1500 T;19;17500.00;332500.00;Sítio de Teixeira, 19, Paulo Vi, 97760189 Costela de Porto / RR;2025-05-08 16:34:31
+Pedido;Moreira;S7-1500;51;8200.00;418200.00;Favela Pietro Silveira, 5, Pousada Santo Antonio, 02176-615 da Mota / PR;2025-05-04 08:08:53
+Cancelamento;Albuquerque;S7-1500 T;61;17500.00;1067500.00;Jardim de Cassiano, 77, Vera Cruz, 93644-295 Mendes Alegre / RO;2025-06-03 08:22:08
+Pedido;Barros;S7-1500 PN;42;8200.00;344400.00;Travessa de Fogaça, Nova Granada, 33315215 da Mata do Campo / DF;2025-05-31 09:42:55
+Pedido;Pimenta e Filhos;S7-1500;13;8200.00;106600.00;Praça Fernanda Costa, 17, Pousada Santo Antonio, 07487761 Ramos Paulista / RO;2025-05-27 11:27:35
+Pedido;Sampaio Ltda.;S7-400H;24;95000.00;2280000.00;Esplanada Melo, Universo, 97036728 Sampaio / CE;2025-06-01 15:20:15
+Pedido;Vasconcelos;S7-200 SMART;10;1400.00;14000.00;Via Luiz Miguel Vargas, 417, Lagoinha, 26625-008 Rodrigues / RO;2025-05-15 12:22:24
+Pedido;Macedo;S7-1500;59;8200.00;483800.00;Parque Freitas, 61, Vila Pilar, 69884412 Sales do Galho / AP;2025-05-03 14:29:56
+Cancelamento;Dias S/A;LOGO!;43;1150.00;49450.00;Travessa Nicolas Sampaio, 317, Taquaril, 75912719 da Costa / SP;2025-06-03 18:42:42
+Pedido;Abreu - EI;S7-1200;9;3950.00;35550.00;Vereda Melo, 78, Vila Das Oliveiras, 77554-124 Santos do Galho / MA;2025-05-29 16:40:38
+Pedido;Marques;S7-1500 T;69;17500.00;1207500.00;Avenida Sá, 34, Santa Rosa, 57268576 da Costa / AM;2025-05-12 16:37:11
+Pedido;Vieira - ME;S7-1500;48;8200.00;393600.00;Pátio Vitória Cavalcanti, 34, Vila Calafate, 08921345 Carvalho / AP;2025-05-19 09:37:26
+Pedido;Lima Câmara Ltda.;S7-1500 R/H;70;45000.00;3150000.00;Estação Duarte, 91, Bela Vitoria, 74091-517 Peixoto / PI;2025-05-02 18:02:54
+Pedido;da Cruz Moura Ltda.;S7-400H;29;95000.00;2755000.00;Núcleo de Sales, 17, Independência, 72480192 Brito do Sul / PB;2025-05-05 10:22:59
+Pedido;Cavalcante - ME;S7-1500 PN;68;8200.00;557600.00;Setor de Alves, 34, Serrano, 49621845 Marques / AL;2025-05-04 17:44:35
+Pedido;Caldeira - EI;S7-1200 F;20;6300.00;126000.00;Praça de Castro, 9, Santa Helena, 08707-150 Rios / TO;2025-05-28 14:32:29
+Pedido;Moura e Filhos;S7-1200;19;3950.00;75050.00;Ladeira Farias, 45, Rio Branco, 08073915 Novaes / AP;2025-05-26 18:37:10
+Pedido;Silva;S7-400H;37;95000.00;3515000.00;Via de Fernandes, Satelite, 24964875 Sampaio Paulista / SC;2025-05-13 15:55:22
+Pedido;Sales;S7-1200 F;56;6300.00;352800.00;Esplanada de Barros, 84, São Tomaz, 64748-962 Costa / BA;2025-05-07 15:43:19
+Pedido;Macedo S/A;S7-1500 R/H;59;45000.00;2655000.00;Aeroporto de Macedo, Vila Nova Cachoeirinha 3ª Seção, 63014-388 das Neves / RJ;2025-05-24 12:11:32
+Pedido;Macedo Araújo - EI;S7-400H;23;95000.00;2185000.00;Quadra Melissa Casa Grande, Vila Calafate, 37545-430 Vasconcelos / MA;2025-05-18 09:50:29
+Pedido;Caldeira Freitas - ME;S7-200 SMART;64;1400.00;89600.00;Morro Ian da Rocha, 502, Conjunto Novo Dom Bosco, 48741-764 da Paz / PB;2025-05-06 13:43:08
+Pedido;Correia;S7-400H;69;95000.00;6555000.00;Vila Ana Clara Macedo, 83, Vila Nossa Senhora Do Rosário, 05924-018 Cunha / MT;2025-05-09 14:21:46
+Pedido;Duarte;S7-1200 F;20;6300.00;126000.00;Vale Alves, 43, Primeiro De Maio, 21880280 Vasconcelos / GO;2025-05-31 16:57:23
+Pedido;Fernandes - ME;S7-1500;49;8200.00;401800.00;Condomínio de Melo, Ernesto Nascimento, 62477-913 Siqueira / PB;2025-05-18 09:30:36
+Pedido;Pinto Casa Grande S.A.;S7-200 SMART;8;1400.00;11200.00;Colônia de Gonçalves, 508, Araguaia, 17187-043 Fonseca do Galho / CE;2025-05-08 08:52:23
+Pedido;Azevedo Câmara S/A;S7-1500 R/H;37;45000.00;1665000.00;Trecho de Costela, 600, Palmeiras, 08217859 Lopes de Freitas / SP;2025-05-08 15:32:54
+Pedido;da Luz;S7-200 SMART;66;1400.00;92400.00;Colônia Aparecida, 46, Maria Helena, 11012779 Sampaio de Goiás / RO;2025-05-20 08:04:23
+Pedido;Dias;S7-1500 PN;49;8200.00;401800.00;Morro Henry Gabriel da Paz, 92, Vila Antena Montanhês, 70144-872 Freitas Paulista / PA;2025-05-27 16:40:48
+Pedido;Rodrigues Teixeira e Filhos;S7-1500;34;8200.00;278800.00;Morro Isabelly Pinto, 17, Camponesa 2ª Seção, 99353886 Rezende / PI;2025-05-21 13:23:01
+Pedido;Ramos;S7-200 SMART;70;1400.00;98000.00;Vereda da Cruz, 72, Barão Homem De Melo 1ª Seção, 09777053 Fonseca do Norte / BA;2025-05-15 16:03:24
+Pedido;Pinto;S7-1500 PN;24;8200.00;196800.00;Largo Nogueira, 23, Horto Florestal, 29437059 Rios / DF;2025-06-03 12:09:06
+Pedido;Machado Silva S.A.;S7-1200 F;50;6300.00;315000.00;Quadra Moura, Satelite, 58036929 Lopes do Oeste / MG;2025-05-20 12:46:01
+Pedido;Aparecida e Filhos;S7-1200 F;66;6300.00;415800.00;Vale Cunha, 49, Itapoa, 79638571 Moraes / MS;2025-05-03 10:41:19
+Pedido;Cavalcante S.A.;S7-400H;48;95000.00;4560000.00;Ladeira Fogaça, 8, Vila Inestan, 06164568 Aragão / RN;2025-05-13 13:19:52
+Pedido;Sousa Cirino Ltda.;S7-1500 R/H;48;45000.00;2160000.00;Lago Cauê Rodrigues, 42, Vila Santa Monica 2ª Seção, 81187-277 da Mata / SP;2025-05-29 17:24:26
+Pedido;Borges - EI;S7-1200;51;3950.00;201450.00;Rua de Monteiro, 89, Santa Branca, 98313-322 da Paz de Freitas / MT;2025-05-30 10:29:17
+Pedido;Leão;S7-1200;53;3950.00;209350.00;Viaduto Nathan Leão, 3, Vila Nossa Senhora Do Rosário, 72151983 Silva das Pedras / MT;2025-05-05 17:03:13
+Pedido;Montenegro;S7-1500;14;8200.00;114800.00;Favela Sousa, 13, Bandeirantes, 84428-700 Costela / MT;2025-05-08 09:33:07
+Pedido;Barros Mendonça S.A.;LOGO!;51;1150.00;58650.00;Condomínio Vargas, 77, Concórdia, 58267-743 Gomes / SC;2025-05-11 10:52:32
+Pedido;Cunha;S7-1500 PN;33;8200.00;270600.00;Praia Sousa, 6, Alta Tensão 2ª Seção, 03059614 Pereira da Prata / PA;2025-05-12 14:30:06
+Pedido;Fonseca;S7-200 SMART;50;1400.00;70000.00;Conjunto de Porto, 61, Vila Real 2ª Seção, 89509-095 Almeida da Serra / AM;2025-06-03 12:25:56
+Pedido;Moraes - EI;S7-1500 T;13;17500.00;227500.00;Fazenda de da Rosa, 96, Leticia, 15514-086 Freitas Grande / MG;2025-05-18 08:20:08
+Pedido;Pacheco da Cunha S/A;S7-200 SMART;65;1400.00;91000.00;Jardim Pires, 392, Nova Pampulha, 61516-154 Correia do Galho / AM;2025-05-14 08:20:30
+Pedido;Silveira S/A;S7-1500 T;65;17500.00;1137500.00;Área de Gonçalves, 462, Vila Calafate, 50482706 Ribeiro do Galho / PR;2025-06-02 08:27:08
+Pedido;Peixoto - EI;LOGO!;9;1150.00;10350.00;Passarela de Siqueira, 57, São Vicente, 88021-315 Costa do Campo / MS;2025-05-08 11:54:33
+Pedido;Novais Rodrigues S.A.;S7-200 SMART;9;1400.00;12600.00;Distrito Paulo Rios, 71, Padre Eustáquio, 46701-733 da Cruz de Aragão / PE;2025-05-02 12:56:57
+Pedido;Pereira - ME;S7-1500 R/H;24;45000.00;1080000.00;Campo João Gabriel Cirino, 12, São Paulo, 16523117 Brito / AC;2025-05-21 16:10:02
+Pedido;Nunes Araújo S.A.;S7-1500 R/H;10;45000.00;450000.00;Recanto de Costela, 9, Renascença, 06194986 Correia do Norte / PE;2025-05-23 17:14:42
+Pedido;da Luz Monteiro S.A.;S7-1200;20;3950.00;79000.00;Jardim Cunha, Pantanal, 92808-968 da Mata de Minas / AL;2025-05-12 17:02:34

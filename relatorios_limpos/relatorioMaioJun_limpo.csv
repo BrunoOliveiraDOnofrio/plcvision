@@ -1,0 +1,101 @@
+TIPO;EMPRESA;MODELO;QTD.;DATA_HORA
+Pedido;VOLKSWAGEN BRASIL LTDA;S7-1200 F;24;2025-05-17 09:22:36
+Pedido;LENOVO TECNOLOGIA BRASIL LTDA;S7-400H;60;2025-05-14 11:28:20
+Pedido;da Mata Ltda.;S7-1500 T;32;2025-05-10 14:20:53
+Pedido;Cassiano;S7-1200 F;35;2025-05-27 08:40:33
+Pedido;Cardoso - EI;S7-400H;48;2025-05-01 15:24:29
+Pedido;Costa;S7-400H;68;2025-05-20 09:32:15
+Pedido;Pereira Caldeira S.A.;S7-1500 T;15;2025-05-12 12:09:45
+Pedido;Leão Rios S/A;ET 200SP;18;2025-05-29 13:07:24
+Pedido;Sales;LOGO!;19;2025-05-06 16:41:56
+Pedido;da Mata;S7-1500 PN;11;2025-05-31 14:23:59
+Pedido;Sales e Filhos;LOGO!;64;2025-06-01 14:25:12
+Pedido;Sousa S/A;S7-1500 T;12;2025-05-07 18:27:00
+Pedido;Machado Cavalcante Ltda.;S7-1500;44;2025-05-20 08:20:45
+Pedido;Duarte Rocha - ME;S7-1500;51;2025-05-04 10:10:05
+Pedido;Duarte;S7-1500 PN;8;2025-05-17 13:37:45
+Pedido;Ribeiro Melo e Filhos;LOGO!;20;2025-05-01 11:59:15
+Pedido;Teixeira S.A.;ET 200SP;62;2025-05-15 08:50:24
+Pedido;Carvalho;S7-1500 R/H;16;2025-05-07 10:26:12
+Pedido;Vieira;S7-1500 R/H;19;2025-05-09 17:27:45
+Pedido;Silveira Vargas - ME;S7-1500 PN;65;2025-05-11 14:25:31
+Pedido;da Paz Siqueira e Filhos;S7-1500 T;49;2025-05-31 09:27:21
+Pedido;Aparecida e Filhos;S7-400H;68;2025-05-16 08:52:44
+Pedido;Cavalcante - ME;LOGO!;46;2025-05-22 09:44:38
+Pedido;Melo Lima S.A.;S7-200 SMART;41;2025-05-16 09:05:57
+Pedido;Moreira;S7-1500;10;2025-05-23 17:24:38
+Pedido;Moreira S.A.;S7-1500 T;21;2025-05-09 12:19:06
+Pedido;Lima;LOGO!;59;2025-06-03 16:19:05
+Pedido;Santos;LOGO!;57;2025-05-23 10:54:20
+Pedido;Fernandes Castro e Filhos;S7-1500;11;2025-05-10 08:47:17
+Pedido;Nunes S/A;S7-1500 PN;33;2025-05-15 13:07:40
+Pedido;Monteiro Cirino e Filhos;ET 200SP;37;2025-05-02 17:00:36
+Pedido;Mendes Ltda.;S7-1200 F;40;2025-05-14 10:08:25
+Pedido;Alves Sales - ME;S7-1500 PN;54;2025-05-30 17:20:53
+Pedido;da Costa;S7-1500 PN;46;2025-05-15 12:02:36
+Cancelamento;Fonseca Castro Ltda.;S7-1500 PN;18;2025-05-17 11:25:49
+Pedido;Pires;LOGO!;11;2025-05-10 12:11:21
+Pedido;Oliveira;S7-400H;31;2025-05-29 09:51:25
+Pedido;da Rosa Siqueira - EI;S7-1200;53;2025-05-30 18:09:01
+Pedido;Dias;S7-1500 PN;29;2025-05-12 09:10:11
+Pedido;da Mata Gonçalves S.A.;S7-400H;54;2025-05-30 11:57:30
+Pedido;Farias;S7-1200 F;49;2025-05-30 12:46:45
+Pedido;Cirino;ET 200SP;25;2025-05-11 12:47:01
+Pedido;Ramos Cunha S/A;S7-400H;37;2025-06-01 10:35:45
+Cancelamento;Rios;LOGO!;19;2025-06-01 16:23:40
+Pedido;Jesus;S7-1500;46;2025-05-07 15:27:01
+Pedido;Porto - ME;S7-1500 PN;38;2025-05-19 11:33:26
+Pedido;Vasconcelos Aparecida - EI;LOGO!;14;2025-05-18 08:14:28
+Pedido;Peixoto;S7-1500 T;43;2025-05-16 17:42:34
+Pedido;Nascimento e Filhos;S7-200 SMART;58;2025-05-22 14:18:47
+Pedido;Martins Ltda.;S7-400H;19;2025-05-04 15:40:29
+Pedido;Macedo Cunha e Filhos;S7-400H;56;2025-05-21 11:53:27
+Pedido;Sampaio;LOGO!;32;2025-06-03 15:25:19
+Pedido;Sá;LOGO!;53;2025-05-21 08:59:47
+Pedido;Fernandes;S7-200 SMART;37;2025-05-17 14:31:40
+Pedido;Cunha;S7-1200 F;49;2025-05-21 09:08:01
+Pedido;Guerra;S7-1500;54;2025-05-01 08:42:07
+Pedido;Porto e Filhos;S7-400H;40;2025-05-19 12:44:44
+Pedido;Ramos - ME;S7-1500 R/H;11;2025-06-01 11:58:23
+Pedido;Pastor S.A.;S7-1500 PN;34;2025-05-04 18:56:59
+Pedido;Nascimento Ribeiro - ME;S7-1200 F;45;2025-05-05 11:05:30
+Pedido;Cardoso Ltda.;S7-1200;38;2025-05-10 12:40:18
+Pedido;Porto;S7-1500;43;2025-05-02 08:37:37
+Pedido;Fogaça;S7-1200;61;2025-05-26 16:39:10
+Pedido;Gomes;S7-400H;22;2025-05-27 17:33:22
+Pedido;Teixeira - ME;S7-400H;35;2025-05-20 09:30:38
+Pedido;Lima Melo - EI;S7-400H;22;2025-06-03 16:10:52
+Pedido;Costela;ET 200SP;36;2025-05-09 11:48:45
+Pedido;da Cunha S.A.;ET 200SP;44;2025-05-06 10:03:25
+Pedido;da Mota;S7-1500 R/H;27;2025-05-05 08:42:26
+Pedido;Rocha;S7-1500;64;2025-05-06 18:00:38
+Pedido;Pereira;S7-400H;47;2025-05-24 16:37:52
+Pedido;Moura;S7-1500 T;20;2025-05-30 15:48:34
+Pedido;Abreu;ET 200SP;40;2025-05-10 09:09:54
+Pedido;Andrade Ltda.;S7-1500 PN;66;2025-06-02 10:17:15
+Pedido;Pacheco;S7-1500;37;2025-05-31 10:31:25
+Pedido;Pastor Costa - ME;S7-1500 T;12;2025-05-06 15:10:22
+Pedido;Rezende;ET 200SP;25;2025-05-12 13:38:24
+Pedido;Cavalcanti Moreira e Filhos;S7-200 SMART;68;2025-05-15 10:22:56
+Pedido;Garcia;ET 200SP;65;2025-05-13 12:08:50
+Pedido;Ramos e Filhos;S7-1500 T;11;2025-05-05 15:54:15
+Pedido;Dias S/A;S7-400H;34;2025-05-09 08:32:36
+Pedido;Abreu - ME;S7-1200;22;2025-05-20 10:04:59
+Pedido;Pimenta;LOGO!;45;2025-05-20 16:16:33
+Pedido;Vieira Marques S/A;S7-1500 R/H;62;2025-05-30 17:28:18
+Pedido;Moreira Macedo Ltda.;S7-1500 PN;55;2025-05-18 13:25:00
+Pedido;Câmara;LOGO!;17;2025-05-20 10:42:06
+Pedido;Teixeira;S7-1500 R/H;14;2025-05-11 09:27:18
+Pedido;Sales Jesus S/A;ET 200SP;53;2025-06-03 14:53:55
+Pedido;Gomes Rocha - EI;S7-400H;18;2025-05-27 18:48:07
+Pedido;Campos - ME;S7-1500 T;47;2025-05-13 08:28:33
+Pedido;Borges S/A;S7-1500 R/H;35;2025-05-19 12:56:59
+Pedido;Azevedo;S7-1200;38;2025-05-18 18:45:44
+Pedido;Câmara S/A;S7-1500 R/H;54;2025-05-19 10:37:07
+Pedido;Cavalcanti;S7-1500 PN;42;2025-05-13 15:22:03
+Pedido;da Rocha;S7-1200;18;2025-05-28 10:27:20
+Pedido;das Neves;S7-1500 R/H;21;2025-05-26 08:16:35
+Pedido;Montenegro Araújo S/A;S7-1200 F;46;2025-05-10 09:34:29
+Pedido;Silva da Rocha - ME;S7-1500;50;2025-05-05 14:07:57
+Pedido;Vasconcelos;LOGO!;69;2025-05-15 08:41:53
+Pedido;da Cruz S/A;S7-1500 R/H;34;2025-05-15 16:50:07
