@@ -345,7 +345,7 @@ const qtdAlertaHardware = (req,res) => {
             console.error("Erro: ", error)
             res.status(500).json({erro: erro.sqlMessage});
         });
-};
+}
 
 const jiraAberto = async (req, res) => {
     const email = "carvalhohugo425@gmail.com";
@@ -381,7 +381,7 @@ const jiraAbertoValidade = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory != Done AND cf[10092] <= -8h`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory != Done AND cf[10092] <= -36h&fields=key,summary,status,created,customfield_10092&maxResults=1000`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -410,7 +410,7 @@ const jiraFechadoNow = async (req,res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project = "Suporte Populacao 3" AND statusCategory = Done AND resolved >= startOfDay()`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project = "Suporte Populacao 3" AND statusCategory = Done AND (statusCategoryChangedDate >= startOfDay() AND statusCategoryChangedDate <= endOfDay() OR (cf[10092] >= startOfDay() AND cf[10092] <= endOfDay()))`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -442,58 +442,62 @@ const tempoFechamento = async (req, res) => {
 
     const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory=Done&fields=customfield_10092,created,resolutiondate&expand=changelog&maxResults=1000`;
 
-    const response = await fetch(urlApiJira, {
-      method: "GET",
-      headers: {
-        'Authorization': `Basic ${auth}`,
-        'Accept': 'application/json'
-      }
-    });
+        const response = await fetch(urlApiJira, {
+            method: "GET",
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Accept': 'application/json'
+            }
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    const issuesComDatas = data.issues.filter(issue => issue.fields.created && issue.changelog && issue.changelog.histories);
+        // Filtra os issues que possuem a data de criação (customfield_10092) e histórico de alterações (changelog)
+        const issuesComDatas = data.issues.filter(issue => issue.fields.customfield_10092 && issue.changelog && issue.changelog.histories);
 
-    if (issuesComDatas.length === 0) {
-      return res.json({ mediaHoras: 0, totalChamados: 0 });
-    }
-
-    const temposEmMs = [];
-
-    for (const issue of issuesComDatas) {
-      const criado = new Date(issue.fields.created);
-
-      // Procurar no changelog o momento que o status virou "Done"
-      // os alertas n tem resolutionDate, então eu pego o log do momento que o alerta virou Done
-      let dataDone = null;
-      for (const history of issue.changelog.histories) {
-        for (const item of history.items) {
-          if (item.field === "status" && item.toString === "Done") {
-            dataDone = new Date(history.created);
-            break;
-          }
+        if (issuesComDatas.length === 0) {
+            return res.json({ mediaHoras: 0, totalChamados: 0 });
         }
-        if (dataDone) break;
-      }
 
-      if (dataDone && dataDone > criado) {
-        temposEmMs.push(dataDone - criado);
-      }
-    }
+        const temposEmMs = [];
 
-    if (temposEmMs.length === 0) {
-      return res.json({ mediaHoras: 0, totalChamados: 0 });
-    }
+        for (const issue of issuesComDatas) {
+            // Usamos customfield_10092 como a data de criação, conforme solicitado.
+            const criado = new Date(issue.fields.customfield_10092); 
 
-    const totalMs = temposEmMs.reduce((acc, cur) => acc + cur, 0);
+            let dataDone = null;
+
+            for (const history of issue.changelog.histories) {
+                for (const item of history.items) {
+                    
+                    if (item.field === "status" && item.toString === "Done") {
+                        
+                        dataDone = new Date(history.created); 
+                        break;
+                    }
+                }
+                if (dataDone) break;
+            }
+
+            if (dataDone && dataDone > criado) {
+                temposEmMs.push(dataDone - criado);
+            }
+        }
+
+        if (temposEmMs.length === 0) {
+            return res.json({ mediaHoras: 0, totalChamados: 0 });
+        }
+
+        const totalMs = temposEmMs.reduce((acc, cur) => acc + cur, 0);
+
+        const mediaHoras = (totalMs / temposEmMs.length / 1000 / 60 / 60).toFixed(2);
 
 
-    const mediaHoras = (totalMs / temposEmMs.length / 1000 / 60 / 60).toFixed(2);
+        res.json({
+            mediaHoras,
+            totalChamados: temposEmMs.length
+        });
 
-    res.json({
-      mediaHoras,
-      totalChamados: temposEmMs.length
-    });
 };
 
 const alertaTraceroute = async (req, res) => {
@@ -502,57 +506,110 @@ const alertaTraceroute = async (req, res) => {
     const key = process.env.JIRA_KEY;
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
 
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND (created >= -7d OR resolutiondate >= -7d)&fields=created,resolutiondate,status,customfield_10092&maxResults=1000`;
+    // O 'expand=changelog' é crucial para podermos verificar a data da transição de status.
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND (cf[10092] >= "-7d" OR resolutiondate >= "-7d")&fields=created,status,customfield_10092,resolutiondate&expand=changelog&maxResults=1000`;
 
-    const response = await fetch(urlApiJira, {
-        method: "GET",
-        headers: {
-            'Authorization': `Basic ${auth}`,
-            'Accept': 'application/json'
+try {
+        const response = await fetch(urlApiJira, {
+            method: "GET",
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`Erro na requisição ao Jira: ${response.status} - ${errorText}`);
+            return res.status(response.status).json({ error: "Erro ao buscar dados do Jira", details: errorText });
         }
-    });
 
-    const data = await response.json();
-    console.log(data);
+        const data = await response.json();
+        // console.log("Dados recebidos do Jira para alertaTraceroute:", JSON.stringify(data, null, 2)); // Para depuração, agora com dados mais completos
 
-    const criadoPorDia = {};
-    const resolvidoPorDia = {};
+        const criadoPorDia = {};
+        const resolvidoPorDia = {};
 
-    const diasDatas = Array.from({ length: 7 }, (_, i) =>
-        moment().subtract(i, 'days').format('YYYY-MM-DD')
-    ).reverse();
+        const diasDatas = Array.from({ length: 7 }, (_, i) =>
+            moment().subtract(i, 'days').format('YYYY-MM-DD')
+        ).reverse();
 
-   
-    const dias = Array.from({ length: 7 }, (_, i) =>
-        moment().subtract(i, 'days').format('dddd')
-    ).reverse();
+        const dias = Array.from({ length: 7 }, (_, i) =>
+            moment().subtract(i, 'days').format('dddd')
+        ).reverse();
 
-    const alertaDateField = 'customfield_10092'; // cf[10092]
+        const alertaDateField = 'customfield_10092'; // cf[10092] é a Data de Criação do Alerta
 
-for (let alerta of data.issues) {
-    const dataAlerta = alerta.fields[alertaDateField];
-    if (dataAlerta) {
-        const diaAlerta = moment(dataAlerta).utcOffset('-03:00').startOf('day').format('YYYY-MM-DD');
-        criadoPorDia[diaAlerta] = (criadoPorDia[diaAlerta] || 0) + 1;
+        for (let alerta of data.issues) {
+            // --- Contabiliza Alertas Criados (ainda baseado APENAS na data simulada de criação) ---
+            const dataAlertaCriado = alerta.fields[alertaDateField];
+            if (dataAlertaCriado) {
+                const diaAlertaCriado = moment(dataAlertaCriado).utcOffset('-03:00').startOf('day').format('YYYY-MM-DD');
+                if (moment(diaAlertaCriado).isSameOrAfter(moment().subtract(7, 'days').startOf('day'))) {
+                    criadoPorDia[diaAlertaCriado] = (criadoPorDia[diaAlertaCriado] || 0) + 1;
+                }
+            }
+
+            // --- Contabiliza Alertas Resolvidos ---
+            // Um alerta é considerado "resolvido" se seu status atual for "Concluído"
+            if (alerta.fields.status && alerta.fields.status.name === "Concluído") {
+                let dataResolucaoParaContagem = null;
+
+                // 1. Prioridade Máxima: Tenta usar o campo 'resolutiondate' do Jira
+                if (alerta.fields.resolutiondate) {
+                    const jiraResolutionMoment = moment(alerta.fields.resolutiondate).utcOffset('-03:00').startOf('day');
+                    if (jiraResolutionMoment.isSameOrAfter(moment().subtract(7, 'days').startOf('day'))) {
+                        dataResolucaoParaContagem = jiraResolutionMoment;
+                    }
+                }
+
+                // 2. Segunda Prioridade: Tenta usar o changelog (se resolutiondate não for usado ou não estiver no período)
+                //    Isso é útil se resolutiondate estiver ausente mas a transição para "Concluído" existir.
+                if (!dataResolucaoParaContagem && alerta.changelog && alerta.changelog.histories) {
+                    for (const history of alerta.changelog.histories) {
+                        for (const item of history.items) {
+                            if (item.field === "status" && item.toString === "Concluído") {
+                                const changelogResolutionMoment = moment(history.created).utcOffset('-03:00').startOf('day');
+                                if (changelogResolutionMoment.isSameOrAfter(moment().subtract(7, 'days').startOf('day'))) {
+                                    dataResolucaoParaContagem = changelogResolutionMoment;
+                                    break; // Encontrou a primeira transição para Concluído
+                                }
+                            }
+                        }
+                        if (dataResolucaoParaContagem) break;
+                    }
+                }
+
+                // 3. Terceira Prioridade: Se nenhuma das datas reais foi usada, tenta usar o PROXY (cf[10092])
+                //    Isso captura alertas simulados que já estão "Concluídos" e foram criados recentemente,
+                //    mas não têm uma data de resolução real no Jira nos últimos 7 dias.
+                if (!dataResolucaoParaContagem && alerta.fields[alertaDateField]) { // alertaDateField é customfield_10092
+                    const proxyResolutionMoment = moment(alerta.fields[alertaDateField]).utcOffset('-03:00').startOf('day');
+                    if (proxyResolutionMoment.isSameOrAfter(moment().subtract(7, 'days').startOf('day'))) {
+                         dataResolucaoParaContagem = proxyResolutionMoment;
+                    }
+                }
+
+                // Se uma data de resolução válida (real ou proxy) foi determinada, contabiliza
+                if (dataResolucaoParaContagem) {
+                    const diaAlertaResolvido = dataResolucaoParaContagem.format('YYYY-MM-DD');
+                    resolvidoPorDia[diaAlertaResolvido] = (resolvidoPorDia[diaAlertaResolvido] || 0) + 1;
+                }
+            }
+        }
+
+        const resultado = {
+            dias,
+            criados: diasDatas.map(dia => criadoPorDia[dia] || 0),
+            resolvidos: diasDatas.map(dia => resolvidoPorDia[dia] || 0)
+        };
+
+        res.json(resultado);
+
+    } catch (error) {
+        console.error("Erro ao processar a requisição alertaTraceroute:", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
     }
-
-    if (alerta.fields.resolutiondate) {
-        const resolvido = moment(alerta.fields.resolutiondate).utcOffset('-03:00').startOf('day').format('YYYY-MM-DD');
-        resolvidoPorDia[resolvido] = (resolvidoPorDia[resolvido] || 0) + 1;
-    }
-}
-
-    const resultado = {
-        dias, // Agora retorna os nomes dos dias da semana
-        criados: diasDatas.map(dia => criadoPorDia[dia] || 0),
-        resolvidos: diasDatas.map(dia => resolvidoPorDia[dia] || 0)
-    };
-
-    console.log("Criados por dia:", criadoPorDia);
-    console.log("Resolvidos por dia:", resolvidoPorDia);
-    console.log("Array dias:", dias);
-    res.json(resultado);
-
 }
 
 const pegarModelos = (req, res) => {
