@@ -16,6 +16,7 @@
     <!-- Link dos icones - boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
     <link
@@ -179,7 +180,7 @@
                     </div>
                 </div>
                 <div class="nivel-ok-content">
-                    <span>Nível OK</span>
+                    <span>Nível Esperado</span>
                     <div class="barra-criticidade">
                             <div class="barra-preenchida"></div>
                     </div>
@@ -187,7 +188,7 @@
             </div>
             <div class="card-expansive card-expansive2">
                 <div class="titulo">
-                    <span>Clientes com estado crítico</span>
+                    <span>Distribuição de alertas dos clientes</span>
                     <i onclick="recolherCard2()" class='bx  bx-caret-down'></i>
                 </div>
                 <div id="div_qtd_alertas" class="clientes-content">
@@ -207,7 +208,7 @@
             </div>
         </div>
         <div class="monitoramento">
-            <h1>Monitoramento Casas Bahia</h1>
+            <h1 id="h1_empresa">Monitoramento Casas Bahia</h1>
             <div class="line-mon">
                 <div class="kpi">
                     <div class="evenly-divs">
@@ -215,7 +216,7 @@
                             
                             <i class="fa-solid fa-triangle-exclamation"></i>
                             <span>
-                                Qtd de PLCs gerando alertas atrasados no Jira
+                                Qtd de PLCs com alertas atrasados no Jira
                             </span>
                         </div>
                         <div class="value">
@@ -237,7 +238,72 @@
                     </div>
                 </div>
             </div>
+            
             <div class="line-mon">
+                <div class="sempre-em-frente">
+                <div  class="chart-container">
+                    <div class="titulo">
+                        <i class="fa-solid fa-list-ol"></i>
+                        <h2>Situação atual dos PLCs com alertas atrasados</h2>
+                    </div>
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div class="time-line-container">
+                    <div class="bar-line"></div>
+                    <div class="titulo">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <h2>Linha do Tempo dos alertas atrasados em aberto</h2>
+                    </div>
+                    <div id="div_events" class="events">
+                        <div class="event">
+                            <div class="ball-desc">
+                                <div class="ball"></div>
+                                <div class="desc">
+                                    <span>13:40 Alerta Atenção</span>
+                                    <span>PLC 01</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="ball-desc">
+                                <div class="ball"></div>
+                                <div class="desc">
+                                    <span>13:40 Alerta Atenção</span>
+                                    <span>PLC 01</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="ball-desc">
+                                <div class="ball"></div>
+                                <div class="desc">
+                                    <span>13:40 Alerta Atenção</span>
+                                    <span>PLC 01</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="ball-desc">
+                                <div class="ball"></div>
+                                <div class="desc">
+                                    <span>13:40 Alerta Atenção</span>
+                                    <span>PLC 01</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="line-mon">
+                
+            </div>
+            <div class="line-mon">
+                <div class="agrupadeira">
+                    <div class="agrupadeira-titulo">
+                        <h2>Alertas em Aberto</h2>
+                        <button id="btn_mudar_alertas">Ver Alertas em Progresso</button>
+                    </div>
                 <div class="swiper">
                     <div class="swiper-pagination"></div>
                     <div id="div_wrapper" class="swiper-wrapper">
@@ -296,65 +362,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="line-mon">
-                <div class="sempre-em-frente">
-                <div  class="chart-container">
-                    <div class="titulo">
-                        <i class="fa-solid fa-list-ol"></i>
-                        <h2>PLC com alertas atrasados X Componente Anormal</h2>
-                    </div>
-                    <canvas id="myChart"></canvas>
                 </div>
-                <div class="time-line-container">
-                    <div class="bar-line"></div>
-                    <div class="titulo">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <h2>Linha do Tempo - 19/05/25</h2>
-                    </div>
-                    <div id="div_events" class="events">
-                        <div class="event">
-                            <div class="ball-desc">
-                                <div class="ball"></div>
-                                <div class="desc">
-                                    <span>13:40 Alerta Atenção</span>
-                                    <span>PLC 01</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="event">
-                            <div class="ball-desc">
-                                <div class="ball"></div>
-                                <div class="desc">
-                                    <span>13:40 Alerta Atenção</span>
-                                    <span>PLC 01</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="event">
-                            <div class="ball-desc">
-                                <div class="ball"></div>
-                                <div class="desc">
-                                    <span>13:40 Alerta Atenção</span>
-                                    <span>PLC 01</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="event">
-                            <div class="ball-desc">
-                                <div class="ball"></div>
-                                <div class="desc">
-                                    <span>13:40 Alerta Atenção</span>
-                                    <span>PLC 01</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div class="line-mon">
-                
             </div>
         </div>
     </div>
@@ -402,6 +410,20 @@
     <h2>Mensagem enviada!</h2>
     <p>Sua mensagem foi enviada com sucesso para o Slack.</p>
     <button onclick="fecharModalSucesso()">OK</button>
+  </div>
+</dialog>
+
+<dialog class="modal-sucesso" id="modalAtualizacao">
+  <div class="modal-sucesso-content">
+    <div class="checkmark">
+      <svg viewBox="0 0 52 52">
+        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
+      </svg>
+    </div>
+    <h2>Alerta em progresso no JIRA!</h2>
+    <p id="p_alerta_att"></p>
+    <button onclick="fecharModalAtualizacao()">OK</button>
   </div>
 </dialog>
 </body>

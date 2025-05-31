@@ -3,6 +3,29 @@ let textoDoModal
 let idsPlcsParaMonitorar = [1];
 let alertas 
 let tempoRealDados
+let ranking;
+let indiceAtualEmpresa = 0
+
+const buttonMudar = document.getElementById('btn_mudar_alertas')
+
+buttonMudar.addEventListener('click', () => mostrarAlertasAlterados())
+const mostrarAlertasNormais = () => {
+    fillHtmlAlertas(alertas)
+    buttonMudar.innerText = `Ver Alertas em Progresso`
+    buttonMudar.addEventListener('click', () => mostrarAlertasAlterados())
+}
+
+const mostrarAlertasAlterados = () => {
+    if(alertasComunicados.length >0){
+        fillHtmlAlertas(alertasComunicados)
+        buttonMudar.innerText = "Voltar"
+        buttonMudar.addEventListener('click', () => mostrarAlertasNormais())
+     }else{
+        alert("Não há alertas que foram alterados no Jira")
+    }
+}
+
+
 
 const divLoading = document.getElementById('div_loading');
 const main = document.querySelector('.main');
@@ -84,6 +107,20 @@ const ativarTela = () => {
     }, 450)
 }
 
+
+const ativarLoading = () => {
+    divLoading.style.display = 'flex';
+    
+    main.style.animation = '';
+
+    setTimeout(()=> {
+        
+        main.style.display = 'none';
+        main.style.animation = 'showTela 0.5s ease-in-out';
+        main.style.opacity = '0';
+    }, 450)
+}
+
 fillLinhaDoTempo = (issues) => {
     const div_events = document.getElementById('div_events');
 
@@ -134,25 +171,31 @@ const fillHtmlAlertas = (issues) => {
     let html = '';
     issues.forEach(issue => {
         let texto = prepararTextoParaParametro(issue.texto);
-        let cor = issue.nivelAlerta == 'Atenção' ? "#fc9a0a" : "#FC3A0A"
-        
-        html += `<div style="background-color:${cor}" class="swiper-slide">
+        let cor = issue.plotar ? "#24284B" : issue.nivelAlerta == 'Atenção' ? "#fc9a0a" : "#FC3A0A"
+        let atraso =-issue.plotar ? `Status alterado em: ${issue.horarioAtualizacao}` : issue.atraso 
+        html += `<div id="${issue.issueKey}" style="background-color:${cor}" class="swiper-slide">
                             <div class="title-esc">
                                 <div class="titulo">
                                     <!-- icone -->
                                     <i class="fa-solid fa-bell"></i>
                                      
                                      <span>Alerta ${issue.nivelAlerta} - PLC ${issue.plcId}</span>
-                                </div>
-                                <i class='bx  bx-x'></i>
-                            </div>
+                                </div>`
+
+                            if(issue.plotar){
+                                    html += `<i class='bx  bx-x'></i>`
+                                    console.log("buceta")
+                            } 
+                            html+=`</div>
                             <div class="desc-alerta">
                                 <span>${issue.titulo}</span>
                             </div>
                             <div class="tempo-button">
-                                <span>${issue.atraso}</span>
-                                <button onclick="abrirModal('','${texto}')">Comunicar</button>
-                            </div>
+                                <span>${atraso}</span>`
+                                if(!issue.plotar){
+                                html+= `<button onclick="abrirModal('','${texto}', '${issue.atraso}', '${issue.empresa}', '${issue.nivelAlerta}', '${issue.issueKey}')">Comunicar</button>`
+                                }
+                            html+=`</div>
                         </div>`
     });
     wrapper.innerHTML = html;
@@ -164,7 +207,8 @@ const getAlertasComTempoDeRespostaAtrasado = async (razao_social) => {
         
         
         console.log(response.issues)
-        empresaSelecionada = response.issues.map(empresa =>{
+        
+        empresaSelecionada = response.issues.filter(empresa =>{
             if(empresa.empresa == razao_social){
                 return empresa
             }
@@ -172,103 +216,208 @@ const getAlertasComTempoDeRespostaAtrasado = async (razao_social) => {
         if(empresaSelecionada == [undefined]){
             return await getEmpresasRankeadas()
         } 
-        console.log(empresaSelecionada)
+        document.getElementById('h1_empresa').innerText ="Monitoramento " + razao_social
+        document.getElementById('span_nome_empresa').innerText = razao_social.split(' ')[0]
         empresaSelecionada = empresaSelecionada[0]
         console.log(empresaSelecionada)
         alertas = empresaSelecionada.issues
         qtdAlertas.innerText = empresaSelecionada.issues.length
         await plotarQtdPlcsNoJira(empresaSelecionada.issues);
         console.log(sortMachineDataAndAlerts(tempoRealDados, alertas))
-        const {sortedMachineCriticality, sortedAlerts} =sortMachineDataAndAlerts(tempoRealDados, alertas)
+        let {sortedMachineCriticality, sortedAlerts} =sortMachineDataAndAlerts(tempoRealDados, alertas)
+        if(sortedAlerts.length == 0){
+          sortedAlerts = alertas  
+        } else{
+            alertas = sortedAlerts
+        }
         fillHtmlAlertas(sortedAlerts);
         fillLinhaDoTempo(sortedAlerts);
         plotCriticalityChart(sortedMachineCriticality)
         ativarTela();
+        iniciarVerificacoesSituacao()
      }
     ))
 } 
-
-
+Chart.register(ChartDataLabels);
 function plotCriticalityChart(machineCriticalityData) {
-  // Sort the machine criticality data by 'vezesForaPadrao' in descending order
-  // We'll filter out machines with 0 'vezesForaPadrao' as they are not critical
-  const sortedAndFilteredData = [...machineCriticalityData]
-    .filter(machine => machine.vezesForaPadrao > 0) // Only include critical machines
-    .sort((a, b) => b.vezesForaPadrao - a.vezesForaPadrao);
+    // Sort the machine criticality data by 'vezesForaPadrao' in descending order
+    // We'll filter out machines with 0 'vezesForaPadrao' as they are not critical
+    const sortedAndFilteredData = [...machineCriticalityData]
+        .filter(machine => machine.vezesForaPadrao > 0) // Only include critical machines
+        .sort((a, b) => b.vezesForaPadrao - a.vezesForaPadrao);
 
-  // Take the top 5 (or fewer if less than 5 critical machines)
-  const topCriticalMachines = sortedAndFilteredData.slice(0, 5);
+    // Take the top 5 (or fewer if less than 5 critical machines)
+    const topCriticalMachines = sortedAndFilteredData.slice(0, 5);
 
-  // Prepare labels and data for the chart
-  const labels = topCriticalMachines.map(machine => `PLC - ${machine.maquina_id}`);
-  const data = topCriticalMachines.map(machine => machine.vezesForaPadrao);
+    // Prepare labels and data for the chart
+    // X-axis labels will now only show PLC ID
+    const labels = topCriticalMachines.map(machine => `PLC - ${machine.maquina_id}`);
+    const data = topCriticalMachines.map(machine => machine.vezesForaPadrao);
 
-  // Get the canvas context
-  const ctx = document.getElementById('myChart').getContext('2d');
+    // Get the canvas context
+    const ctx = document.getElementById('myChart').getContext('2d');
 
-  // Destroy existing chart if it exists to prevent re-rendering issues
-  if (window.myChartInstance) {
-    window.myChartInstance.destroy();
-  }
-
-  // Create the new chart
-  window.myChartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: labels, // Dynamically generated labels (e.g., 'PLC - 8', 'PLC - 4')
-      datasets: [{
-        label: 'Vezes Fora do Padrão', // Meaningful label for the dataset
-        data: data, // Dynamically generated data (vezesForaPadrao)
-        backgroundColor: 'orangered',
-        borderRadius: 6,
-        barThickness: 30
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false // Hide legend as there's only one dataset
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: 'Quantidade de Registros Fora do Padrão', // Updated Y-axis title
-            font: { size: 14, weight: 'bold' },
-            color: 'black'
-          },
-          ticks: {
-            stepSize: 1, // Set step size to 1 for whole numbers of "vezesForaPadrao"
-            color: 'black',
-            font: { weight: 'bold' }
-          }
-        },
-        x: {
-          grid: {
-            display: false
-          },
-          title: {
-            display: true,
-            text: 'PLCs com Situação Crítica (Top 5)', // Updated X-axis title
-            font: { size: 14, weight: 'bold' },
-            color: 'black'
-          },
-          ticks: {
-            font: { size: 14, weight: 'bold', color: 'black' },
-          }
-        }
-      }
+    // Destroy existing chart if it exists to prevent re-rendering issues
+    if (window.myChartInstance) {
+        window.myChartInstance.destroy();
     }
-  });
+
+    // Create the new chart
+    window.myChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels, // Dynamically generated labels (e.g., 'PLC - 8', 'PLC - 4')
+            datasets: [{
+                label: 'Vezes Fora do Padrão', // Meaningful label for the dataset
+                data: data, // Dynamically generated data (vezesForaPadrao)
+                backgroundColor: 'orangered',
+                borderRadius: 6,
+                barThickness: 30
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Allow canvas to resize freely
+            plugins: {
+                legend: {
+                    display: false // Hide legend as there's only one dataset
+                },
+                datalabels: { // Configuration for the datalabels plugin
+                    display: true, // Show the labels
+                    anchor: 'end', // Position the label at the end of the bar (top)
+                    align: 'end', // Align the label to the end of the bar (top)
+                    offset: 4, // Small offset from the bar
+                    color: 'black', // Color of the label text
+                    font: {
+                        weight: 'bold',
+                        size: 12
+                    },
+                    formatter: function(value, context) {
+                        // Get the original machine object for the current bar
+                        const machineIndex = context.dataIndex;
+                        const machine = topCriticalMachines[machineIndex];
+                        // Return the critical component name
+                        return machine.campoMaisCritico + " (" + machine.valorMaisCritico + ")";
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 9,
+                    title: {
+                        display: true,
+                        text: 'Registros Anormais', // Updated Y-axis title
+                        font: { size: 12, weight: 'bold' },
+                        color: 'black'
+                    },
+                    ticks: {
+                        stepSize: 1, // Set step size to 1 for whole numbers of "vezesForaPadrao"
+                        color: 'black',
+                        font: { weight: 'bold' }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'PLCs com Situação Crítica (Top 5)', // Updated X-axis title
+                        font: { size: 14, weight: 'bold' },
+                        color: 'black'
+                    },
+                    ticks: {
+                        font: { size: 14, weight: 'bold', color: 'black' },
+                        // Ensure labels are displayed correctly for multi-line text if needed, though now single line
+                    }
+                }
+            }
+        }
+    });
 }
+
+// function plotCriticalityChart(machineCriticalityData) {
+//   // Sort the machine criticality data by 'vezesForaPadrao' in descending order
+//   // We'll filter out machines with 0 'vezesForaPadrao' as they are not critical
+//   const sortedAndFilteredData = [...machineCriticalityData]
+//     .filter(machine => machine.vezesForaPadrao > 0) // Only include critical machines
+//     .sort((a, b) => b.vezesForaPadrao - a.vezesForaPadrao);
+
+//   // Take the top 5 (or fewer if less than 5 critical machines)
+//   const topCriticalMachines = sortedAndFilteredData.slice(0, 5);
+
+//   // Prepare labels and data for the chart
+//   const labels = topCriticalMachines.map(machine => `PLC - ${machine.maquina_id}\nCOMPONENTE - ${machine.campoMaisCritico}`);
+//   const data = topCriticalMachines.map(machine => machine.vezesForaPadrao);
+
+//   // Get the canvas context
+//   const ctx = document.getElementById('myChart').getContext('2d');
+
+//   // Destroy existing chart if it exists to prevent re-rendering issues
+//   if (window.myChartInstance) {
+//     window.myChartInstance.destroy();
+//   }
+
+//   // Create the new chart
+//   window.myChartInstance = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//       labels: labels, // Dynamically generated labels (e.g., 'PLC - 8', 'PLC - 4')
+//       datasets: [{
+//         label: 'Vezes Fora do Padrão', // Meaningful label for the dataset
+//         data: data, // Dynamically generated data (vezesForaPadrao)
+//         backgroundColor: 'orangered',
+//         borderRadius: 6,
+//         barThickness: 30
+//       }]
+//     },
+//     options: {
+//       responsive: true,
+//       plugins: {
+//         legend: {
+//           display: false // Hide legend as there's only one dataset
+//         }
+//       },
+//       scales: {
+//         y: {
+//           beginAtZero: true,
+//           title: {
+//             display: true,
+//             text: 'Quantidade de Registros Fora do Padrão', // Updated Y-axis title
+//             font: { size: 14, weight: 'bold' },
+//             color: 'black'
+//           },
+//           ticks: {
+//             stepSize: 1, // Set step size to 1 for whole numbers of "vezesForaPadrao"
+//             color: 'black',
+//             font: { weight: 'bold' }
+//           }
+//         },
+//         x: {
+//           grid: {
+//             display: false
+//           },
+//           title: {
+//             display: true,
+//             text: 'PLCs com Situação Crítica (Top 5)', // Updated X-axis title
+//             font: { size: 14, weight: 'bold' },
+//             color: 'black'
+//           },
+//           ticks: {
+//             font: { size: 14, weight: 'bold', color: 'black' },
+//           }
+//         }
+//       }
+//     }
+//   });
+// }
 
 
 const getEmpresasRankeadas = async () => {
     fetch('/monitoramento/empresas').then(response => response.json().then(response =>{
         console.log(response)
+        ranking = response
         getAlertasComTempoDeRespostaAtrasado(response[0].razao_social)
         fillRanking(response)
         fillDistribuicaoDeAlertas(response)
@@ -319,7 +468,7 @@ const fillDistribuicaoDeAlertas = (empresas) => {
                                 <span>Críticos ${critico}</span>
                             </div>
                             <div class="atencao">
-                                <span>Críticos ${atencao}</span>
+                                <span>Atenção ${atencao}</span>
                             </div>
                         </div>
                     </div>`

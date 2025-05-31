@@ -7,7 +7,7 @@ router.get('/alertas', (req, res) => {
 })
 
 router.get('/monitoramento', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public/tempo_real/dashboard/dashboard.html'));
+    res.sendFile(path.join(__dirname, '../../public/tempo_real/dashboard/dashboardTempoReal.html'));
 })
 
 

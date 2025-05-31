@@ -62,7 +62,7 @@ const store = (req,res) => {
             console.log(alertaInfo)
             
             // aqui voces vao chamar o jira, e o slack
-            let {url, descricao} = await openJiraTaskSendSlackNotificationFake(alertaInfo);
+            let {url, descricao} = await openJiraTaskSendSlackNotification(alertaInfo);
             req.body.link_chamado = url
             alertaInfo.link_chamado = url
             alertaInfo.descricao = descricao;

@@ -1,3 +1,4 @@
+const { response } = require('express');
 const alertaModel = require('../models/alertaModel');
 require("dotenv").config({path: '../../.env'});
 const key = process.env.JIRA_KEY;
@@ -7,6 +8,57 @@ const email = "carvalhohugo425@gmail.com"
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+const buscarDetalhamento = async (req, res) => {
+    const issueKey = req.params.key;
+    
+
+
+    
+    const authString = Buffer.from(`${email}:${key}`).toString('base64');
+
+    const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/issue/${issueKey}`;
+
+    try {
+        const response = await fetch(endpoint, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Basic ${authString}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Erro ao buscar detalhamento do Jira:', errorData);
+            // Retorna o erro exato do Jira para o cliente
+            return res.status(response.status).json({
+                error: errorData.errorMessages ? errorData.errorMessages.join(', ') : 'Erro desconhecido da API do Jira',
+                jiraResponse: errorData
+            });
+        }
+
+        const issueData = await response.json();
+
+        // Extrai o status category
+        const statusCategory = issueData.fields.status.statusCategory;
+        const statusCategoryChangeDate = formatarDataParaDDMMYY(issueData.fields.statuscategorychangedate);
+
+        res.status(200).json({
+            statusCategory: statusCategory,
+            dataModificacao: statusCategoryChangeDate
+        });
+
+    } catch (e) {
+        console.error('Erro na requisição fetch:', e);
+        res.status(500).json({
+            error: 'Ocorreu um erro ao processar sua requisição.',
+            details: e.message
+        });
+    }
+};
 
 
 const excluirIssues = async (issuesKeys) => {
@@ -66,8 +118,10 @@ const atualizarIssues = async (issuesKeys) => {
 
             if((index >= 0 && index <= 7) || (index >=  29 && index <= 31) ){
                 idTransition = idAndamento;
-            }else if ((index >= 8 && index <= 17) || (index >= 32 && index <= 39)){
+            }else if ((index >= 8 && index <= 17) || (index >= 32 && index <= 46)){
                 idTransition = idConcluido;
+            }else{
+                console.log("sem alterar", issueKey)
             }
             if(idTransition){
             const response = await fetch(endpoint, {
@@ -104,7 +158,7 @@ const atualizarIssues = async (issuesKeys) => {
 
 
 const getIssuesDoProjeto = async (req, res) => {
-    const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=SPOP3&maxResults=50`
+    const endpoint = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=SPOP3&maxResults=100`
     try{
     const response = await fetch(endpoint, {
         method: 'GET',
@@ -119,6 +173,8 @@ const getIssuesDoProjeto = async (req, res) => {
     console.log(data)
 
     let issuesKeys = data.issues.map(issue => issue.key);
+    issuesKeys = issuesKeys.reverse()
+
 
     const quantidadeAtualizada = await atualizarIssues(issuesKeys);
 
@@ -314,5 +370,6 @@ const tratarIssuesEmpresaRazaoPlcId = async (issues) => {
 module.exports = {
     getAlertasComTempoDeRespostaAtrasado,
     getIssuesDoProjeto,
-    getAlertasParaNivelDeCriticidade
+    getAlertasParaNivelDeCriticidade,
+    buscarDetalhamento
 }

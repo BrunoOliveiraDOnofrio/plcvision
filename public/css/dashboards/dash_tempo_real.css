@@ -8,6 +8,31 @@
     gap: 2vh;
 }
 
+.agrupadeira{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 1%;
+}
+
+
+.agrupadeira-titulo{
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & button{
+        background-color: transparent;
+        color: #24284B;
+        border: 2px solid #24284B;
+        border-radius: 8px;
+        padding: 5px 10px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+}
 
 i{
     cursor: pointer;
@@ -447,12 +472,13 @@ i{
         gap: 10px;  
         & i{
             align-self: flex-start;
+            margin-top: 5%;
             
         }     
         & h2{
         font-size: 5vw;
         color: #24284B;
-        margin-bottom: 5%;
+        margin-top: 5%;
 
         
     }     
@@ -461,7 +487,7 @@ i{
 }
 
 .swiper, .swiper-wrapper{
-    padding: 15px 15px 15px 10px !important;
+    padding: 5px 15px 15px 10px !important;
     width: 95% !important;
 }
 
@@ -903,7 +929,7 @@ i{
                     }
 
                     & .atencao{
-                        background-color: #FCE40A;
+                        background-color: rgb(252, 154, 10);
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -1093,6 +1119,7 @@ i{
 
         & canvas{
             align-self: flex-start;
+            padding: 8px
             
         }
         & .titulo{

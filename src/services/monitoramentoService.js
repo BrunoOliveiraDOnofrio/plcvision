@@ -52,7 +52,7 @@ function analisarCriticidadePlcs(plcs) {
 
     return {
       maquina_id: plc.maquina_id,
-      campoMaisCritico,
+      campoMaisCritico: campoMaisCritico,
       valorMaisCritico: campoMaisCritico ? campos[campoMaisCritico].valorMaisCritico : null,
       vezesForaPadrao: campoMaisCritico ? campos[campoMaisCritico].foraPadraoCount : 0,
       nivelCriticidade: campoMaisCritico ? campos[campoMaisCritico].maiorCriticidade : 0
