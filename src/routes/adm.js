@@ -102,6 +102,10 @@ router.get('/dashNegocio/modeloMaisAfetado/:empresaId', (req, res) => {
     dashNegocioController.modeloMaisAfetado(req,res);
 })
 
+router.get('/dashNegocio/modeloMaisVendido/:empresaId', (req, res) => {
+    dashNegocioController.modeloMaisVendido(req,res);
+})
+
 router.get('/dashNegocio/taxaDefeitosMes/:empresaId', (req, res) => {
     dashNegocioController.taxaDefeitosMes(req,res);
 })

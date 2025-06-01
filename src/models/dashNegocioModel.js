@@ -41,11 +41,20 @@ function getDefeitosPorModelo(empresaId) {
 
 }
 
+function getModeloMaisVendido(empresaId) {
+
+    sql = `SELECT * FROM vw_modelo_mais_vendido;`
+
+    console.log();
+    return database.executar(sql);
+}
+
 
 module.exports = {
     getEmpresaMaisAfetada,
     getMesMaisAfetado,
     getModeloMaisAfetado,
     getPrctDefeitosMes,
-    getDefeitosPorModelo
+    getDefeitosPorModelo,
+    getModeloMaisVendido
 }

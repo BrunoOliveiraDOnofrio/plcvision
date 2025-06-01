@@ -58,6 +58,27 @@ function modeloMaisAfetado(req,res){
     })
 }
 
+
+function modeloMaisVendido(req,res){
+    
+    var empresaId = req.params.empresaId
+
+    dashNegocioModel
+    .getModeloMaisVendido(empresaId).
+    then(function(nomeModelo){
+        console.log(nomeModelo)
+        if(nomeModelo.length > 0){
+            res.status(200).json(nomeModelo)
+        }else{
+            res.status(204).send('Não foi possível encontrar o modelo!')
+        }
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage)
+        console.log(erro)
+    })
+}
+
+
 function taxaDefeitosMes(req,res){
     
     var empresaId = req.params.empresaId
@@ -103,5 +124,6 @@ module.exports = {
     mesMaisAfetado,
     modeloMaisAfetado,
     taxaDefeitosMes,
-    taxaDefeitosPorModelo
+    taxaDefeitosPorModelo,
+    modeloMaisVendido
 }

@@ -72,6 +72,23 @@ function carregarKPI3(){
         });
 }
 
+function carregarKPI4(){
+    const kpi4 = document.getElementById("modelo-vendido");
+    console.log(kpi4)
+    fetch(`/adm/dashNegocio/modeloMaisVendido/${sessionStorage.getItem('EMPRESA_ID')}`)
+        .then((response) => {
+            return response.json();
+        })
+        .then((dados) => {
+            console.log("Modelo mais vendido:", dados);
+            kpi4.innerHTML = dados[0].modelo.toUpperCase();
+        })
+        .catch((error) => {
+            console.log("Erro:", error);
+            kpi4.innerHTML = "baguete";
+        });
+}
+
 
 
 // Gráfico de Meta
@@ -504,6 +521,7 @@ document.addEventListener("DOMContentLoaded", function() {
     carregarKPI1();
     carregarKPI2();
     carregarKPI3();
+    carregarKPI4();
     gerarMetaVendas();
     gerarPainelCancel();
     gerarGraficoTaxaDefeitos();
