@@ -1,14 +1,42 @@
+// Select empresa
+async function buscarEmpConsumidoras() {
+
+  fetch(`/consumidor/select/${sessionStorage.getItem('EMPRESA_ID')}`).then(response=>response.json().then(response=>{
+    console.log(response)
+    
+    const select = document.getElementById("slt_empresa");
+    let htmlText = '<option value="#"> Selecione uma empresa </option>';
+    
+    response.empresas.map(empresa=>{
+      htmlText += `<option value='${empresa.id}'>${empresa.razao_social.split(' ')[0]}</option> `
+    })
+
+    select.innerHTML = htmlText;
+  }))
+
+}
+
+
+
 // Empresa mais afetada
-function carregarKPI1(){
+function carregarKPI1(empresaId){
     const kpi1 = document.getElementById("empresa-afetada");
+    const title = document.getElementById("title-empresa");
     console.log(kpi1)
-    fetch(`/adm/dashNegocio/empresaMaisAfetada/${sessionStorage.getItem('EMPRESA_ID')}`)
+
+    if (empresaId) {
+      title.innerHTML = "Empresa:"
+    } else {
+      title.innerHTML = "Empresa <b>MAIS</b> Afetada <br>no Mês:"
+    }
+
+    fetch(`/adm/dashNegocio/empresaMaisAfetada/${empresaId}`)
         .then((response) => {
             return response.json();
         })
         .then((dados) => {
             console.log("Empresa mais Afetada:", dados);
-            kpi1.innerHTML = dados[0].razao_social.split(' ')[0].toUpperCase();
+            if (!empresaId) kpi1.innerHTML = dados[0].razao_social.split(' ')[0].toUpperCase();
         })
         .catch((error) => {
             console.log("Erro:", error);
@@ -19,10 +47,10 @@ function carregarKPI1(){
 
 
 // Mês com maior taxa de defeitos
-function carregarKPI2(){
+function carregarKPI2(empresaId){
     const kpi2 = document.getElementById("mes-afetado");
     console.log(kpi2)
-    fetch(`/adm/dashNegocio/mesMaisAfetado/${sessionStorage.getItem('ALERTA_ID')}`)
+    fetch(`/adm/dashNegocio/mesMaisAfetado/${empresaId}`)
         .then((response) => {
             return response.json();
         })
@@ -55,10 +83,10 @@ function carregarKPI2(){
 
 
 // Modelo com maior taxa de defeitos
-function carregarKPI3(){
+function carregarKPI3(empresaId){
     const kpi3 = document.getElementById("modelo-defeito");
     console.log(kpi3)
-    fetch(`/adm/dashNegocio/modeloMaisAfetado/${sessionStorage.getItem('EMPRESA_ID')}`)
+    fetch(`/adm/dashNegocio/modeloMaisAfetado/${empresaId}`)
         .then((response) => {
             return response.json();
         })
@@ -72,10 +100,11 @@ function carregarKPI3(){
         });
 }
 
-function carregarKPI4(){
+// Modelo mais vendido
+function carregarKPI4(empresaId){
     const kpi4 = document.getElementById("modelo-vendido");
     console.log(kpi4)
-    fetch(`/adm/dashNegocio/modeloMaisVendido/${sessionStorage.getItem('EMPRESA_ID')}`)
+    fetch(`/adm/dashNegocio/modeloMaisVendido/${empresaId}`)
         .then((response) => {
             return response.json();
         })
@@ -92,9 +121,9 @@ function carregarKPI4(){
 
 
 // Gráfico de Meta
-async function gerarMetaVendas (){
+async function gerarMetaVendas (empresaId){
 
-  const request = await fetch(`/adm/dashNegocio/prctMeta/${sessionStorage.getItem('EMPRESA_ID')}`)
+  const request = await fetch(`/adm/dashNegocio/prctMeta/${empresaId}`)
 
   const json = await request.json();
 
@@ -140,7 +169,7 @@ async function gerarMetaVendas (){
             }
         },
         colors: ['#FFB20E', '#D2CDCD'], 
-        labels: ['Qtd. Atual', '% até atingir a Meta'],
+        labels: ['% da meta atingida', '% até atingir a meta'],
         legend: {
             show: true,
             position: 'bottom',
@@ -194,9 +223,9 @@ async function gerarMetaVendas (){
 
 
 // Gráfico de Cancelamentos
-async function gerarPainelCancel() {
+async function gerarPainelCancel(empresaId) {
 
-  const request = await fetch(`/adm/dashNegocio/painelCancelamento/${sessionStorage.getItem('EMPRESA_ID')}`)
+  const request = await fetch(`/adm/dashNegocio/painelCancelamento/${empresaId}`)
 
   const json = await request.json();
 
@@ -259,9 +288,9 @@ var optionsCancel = {
 
 
 // Gráfico de Taxa de Defeitos
-async function gerarGraficoTaxaDefeitos() {
+async function gerarGraficoTaxaDefeitos(empresaId) {
 
-  const request = await fetch(`/adm/dashNegocio/taxaDefeitosMes/${sessionStorage.getItem('EMPRESA_ID')}`);
+  const request = await fetch(`/adm/dashNegocio/taxaDefeitosMes/${empresaId}`);
   const dadosMes = await request.json();
   console.log(dadosMes);
 
@@ -344,9 +373,9 @@ var optionsDefeitos = {
 
 
 // Gráfico % de Defeito por Modelo
-async function gerarGraficoDefeitosPorModelo(){
+async function gerarGraficoDefeitosPorModelo(empresaId){
 
-  const request = await fetch(`/adm/dashNegocio/taxaDefeitosPorModelo/${sessionStorage.getItem('EMPRESA_ID')}`);
+  const request = await fetch(`/adm/dashNegocio/taxaDefeitosPorModelo/${empresaId}`);
   const dadosModelos = await request.json();
   console.log(dadosModelos);
 
@@ -531,10 +560,33 @@ async function gerarGraficoDefeitosPorModelo(){
 
 }
     
-
+async function recarregar (empresaId) {
+  
+  document.getElementById('chart-cancel').innerHTML = ""
+  document.getElementById('chart-defeitos').innerHTML = ""
+  
+    carregarKPI1(empresaId);
+    carregarKPI2(empresaId);
+    carregarKPI3(empresaId);
+    carregarKPI4(empresaId);
+    gerarMetaVendas(empresaId);
+    gerarPainelCancel(empresaId);
+    gerarGraficoTaxaDefeitos(empresaId);
+    gerarGraficoDefeitosPorModelo(empresaId);
+}
 
 document.addEventListener("DOMContentLoaded", function() {
-    
+
+    const selectEmpresa = document.getElementById("slt_empresa");
+    selectEmpresa.addEventListener('change',(e)=>{
+    let id = e.target.value != '#' ? e.target.value : undefined
+
+    const kpi1 = document.getElementById("empresa-afetada");
+    kpi1.innerHTML = e.target.selectedOptions[0].text;
+      recarregar(id);
+
+    })
+
     carregarKPI1();
     carregarKPI2();
     carregarKPI3();
@@ -543,5 +595,7 @@ document.addEventListener("DOMContentLoaded", function() {
     gerarPainelCancel();
     gerarGraficoTaxaDefeitos();
     gerarGraficoDefeitosPorModelo();
+   
+    buscarEmpConsumidoras();
 
 });

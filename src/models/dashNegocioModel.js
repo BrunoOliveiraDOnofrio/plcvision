@@ -9,8 +9,8 @@ function getEmpresaMaisAfetada(empresaId){
 }
 
 function getMesMaisAfetado(empresaId) {
-
-    const sql = `SELECT * FROM vw_mes_com_mais_alertas;`
+    
+    let sql = empresaId !== "undefined" ? `SELECT * FROM vw_mes_com_mais_alertas_din WHERE empresaId = ${empresaId};` :`SELECT * FROM vw_mes_com_mais_alertas;`
 
     console.log(sql);
     return database.executar(sql);
@@ -18,7 +18,8 @@ function getMesMaisAfetado(empresaId) {
 
 function getModeloMaisAfetado(empresaId) {
 
-    const sql = `SELECT * FROM vw_modelo_com_mais_alertas;`
+    let sql = empresaId == 'undefined' ? `SELECT * FROM vw_modelo_com_mais_alertas;` : 
+    `SELECT * FROM vw_modelo_com_mais_alertas_din WHERE empresaId = ${empresaId};`
 
     console.log(sql);
     return database.executar(sql);
@@ -26,7 +27,8 @@ function getModeloMaisAfetado(empresaId) {
 
 function getPrctDefeitosMes(empresaId) {
 
-    sql = `SELECT * FROM vw_prct_defeito_mes;`
+    let sql = empresaId == 'undefined' ? `SELECT * FROM vw_prct_defeito_mes;` :
+    `SELECT * FROM vw_prct_defeito_mes_din WHERE empresaId = ${empresaId};`
 
     console.log(sql);
     return database.executar(sql);
@@ -34,7 +36,8 @@ function getPrctDefeitosMes(empresaId) {
 
 function getDefeitosPorModelo(empresaId) {
 
-    sql = `SELECT * FROM vw_taxa_defeito_por_modelo;`
+    let sql = empresaId == 'undefined' ? `SELECT * FROM vw_taxa_defeito_por_modelo;` :
+    `SELECT * FROM vw_taxa_defeito_por_modelo_din WHERE empresaId = ${empresaId} ; `
 
     console.log();
     return database.executar(sql);
