@@ -132,6 +132,21 @@ async function prctMeta(req, res) {
     }
 
 }
+ 
+async function painelCancelamento(req, res) {
+
+    var empresaId = req.params.empresaId
+
+    try {
+       var funcao =  await dashNegocioModel.getPainelCancelamento(empresaId);
+       res.json(funcao)
+
+    } catch (error) {
+        res.status(500).json(error.sqlMessage)
+        console.log(error)
+    }
+
+}
 
 
 module.exports = {
@@ -141,5 +156,6 @@ module.exports = {
     taxaDefeitosMes,
     taxaDefeitosPorModelo,
     modeloMaisVendido,
-    prctMeta
+    prctMeta,
+    painelCancelamento
 }

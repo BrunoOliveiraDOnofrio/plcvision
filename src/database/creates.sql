@@ -1,5 +1,5 @@
- DROP DATABASE IF EXISTS plcvision;
- CREATE DATABASE IF NOT EXISTS plcvision;
+DROP DATABASE IF EXISTS plcvision;
+CREATE DATABASE IF NOT EXISTS plcvision;
 USE plcvision;
 
 
@@ -141,3 +141,24 @@ CREATE TABLE alerta (
     ,CONSTRAINT fkconfigplcalerta FOREIGN KEY (config_plc_id) REFERENCES config_plc(id)
 );
 
+CREATE TABLE painel_vendas (
+id INT AUTO_INCREMENT PRIMARY KEY,
+tipo VARCHAR(15),
+empresa VARCHAR(100),
+modelo VARCHAR(15),
+qtd INT,
+dtHora DATETIME
+);
+
+CREATE TABLE meta_vendas (
+id INT AUTO_INCREMENT PRIMARY KEY,
+mes VARCHAR(15),
+data_hora DATETIME,
+meta_de_vendas INT,
+media_de_cancelamentos INT
+);
+
+
+select * from alerta order by dataHora desc;
+select * from meta_vendas;
+select * from painel_vendas;

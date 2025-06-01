@@ -118,4 +118,8 @@ router.get('/dashNegocio/prctMeta/:empresaId', (req, res) => {
     dashNegocioController.prctMeta(req,res);
 })
 
+router.get('/dashNegocio/painelCancelamento/:empresaId', (req, res) => {
+    dashNegocioController.painelCancelamento(req,res);
+})
+
 module.exports = router;

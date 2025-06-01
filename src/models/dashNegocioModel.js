@@ -54,7 +54,7 @@ async function getPrctMeta(empresaId) {
     WHERE MONTH(data_hora) = MONTH(NOW());`
 
     const qtdAtual = `SELECT SUM(qtd) AS qtdTotal FROM painel_vendas
-    WHERE MONTH(dtHora) = MONTH(NOW());`
+    WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Pedido';`
 
     const meta = await database.executar(metaSql);
     const atual = await database.executar(qtdAtual);
@@ -67,6 +67,25 @@ async function getPrctMeta(empresaId) {
 }
 
 
+async function getPainelCancelamento(empresaId) {
+
+    const mediaCancel = `SELECT media_de_cancelamentos AS mediaCancel, mes FROM meta_vendas
+    WHERE MONTH(data_hora) = MONTH(NOW());`
+
+    const cancelAtual = `SELECT COUNT(id) AS cancelAtual, SUM(qtd) AS qtd, tipo FROM painel_vendas
+    WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Cancelamento'`
+
+    const media = await database.executar(mediaCancel);
+    const atual = await database.executar(cancelAtual);
+    
+    return {
+        media : media[0].mediaCancel,
+        atual : atual[0].qtd
+    }
+
+}
+
+
 module.exports = {
     getEmpresaMaisAfetada,
     getMesMaisAfetado,
@@ -74,5 +93,6 @@ module.exports = {
     getPrctDefeitosMes,
     getDefeitosPorModelo,
     getModeloMaisVendido,
-    getPrctMeta
+    getPrctMeta,
+    getPainelCancelamento
 }

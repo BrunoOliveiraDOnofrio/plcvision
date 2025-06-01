@@ -23,7 +23,7 @@ JOIN config_plc AS conf ON a.config_plc_id = conf.id
 JOIN plc AS p ON conf.plc_id = p.id
 JOIN parceria AS pa ON p.parceria_id = pa.id
 JOIN  empresa_fabricante AS ef ON pa.empresa_fabricante_id = ef.id
-WHERE ef.id = 1 AND dataHora >= '2025-01-01' AND dataHora <= now()
+WHERE ef.id = 1 AND MONTH(dataHora) = MONTH(NOW())
 GROUP BY dataHoraMod
 ORDER BY dataHoraMod DESC LIMIT 1;
 
@@ -66,3 +66,42 @@ WHERE date_format(a.dataHora, '%m') = DATE_FORMAT(NOW(), '%m')
 GROUP BY modelo, date_format(a.dataHora, '%m');
 
 SELECT * FROM vw_taxa_defeito_por_modelo;
+
+
+-- modelo mais vendido no mês
+CREATE OR REPLACE VIEW vw_modelo_mais_vendido AS
+SELECT COUNT(id), modelo FROM painel_vendas
+WHERE dtHora <= NOW()
+GROUP BY modelo
+ORDER BY modelo DESC
+LIMIT 1;
+
+SELECT * FROM vw_modelo_mais_vendido;
+
+
+-- meta de vendas
+SELECT meta_de_vendas AS meta, mes FROM meta_vendas
+WHERE MONTH(data_hora) = MONTH(NOW());
+
+-- qtd atual de vendas
+SELECT SUM(qtd) AS qtdTotal FROM painel_vendas
+WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Pedido';
+
+
+-- media de cancelamentos
+SELECT media_de_cancelamentos AS mediaCancel, mes FROM meta_vendas
+WHERE MONTH(data_hora) = MONTH(NOW());
+
+
+-- qtd cancelamentos atual
+SELECT COUNT(id) AS cancelAtual, SUM(qtd) AS qtd, tipo  FROM painel_vendas
+WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Cancelamento';
+
+select * from painel_vendas ORDER BY tipo;
+
+
+CREATE OR REPLACE VIEW vw_dados_painel AS
+SELECT SUM(qtd) AS total, COUNT(id) AS pedidos FROM painel_vendas
+WHERE tipo = 'Pedido' AND dtHora <= NOW();
+
+SELECT * FROM vw_dados_painel;

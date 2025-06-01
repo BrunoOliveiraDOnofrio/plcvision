@@ -194,15 +194,22 @@ async function gerarMetaVendas (){
 
 
 // Gráfico de Cancelamentos
-function gerarPainelCancel() {
+async function gerarPainelCancel() {
+
+  const request = await fetch(`/adm/dashNegocio/painelCancelamento/${sessionStorage.getItem('EMPRESA_ID')}`)
+
+  const json = await request.json();
+
+  let mediaTotal = json.media;
+    let qtdAtual = json.atual;
 
 var optionsCancel = {
         series: [{
         name: 'Média de Cancelamentos',
-        data: [7]
+        data: [mediaTotal]
       }, {
         name: 'Qtd. de Cancelamentos Atual',
-        data: [4]
+        data: [qtdAtual]
       }],
         chart: {
         type: 'bar',
@@ -238,7 +245,7 @@ var optionsCancel = {
       tooltip: {
         y: {
           formatter: function (val) {
-            return val + " pedidos"
+            return val + " unidades"
           }
         }
       }

@@ -62,6 +62,23 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('REDE', 'Erros mandado', 'Unidade', 'erro_sent', 'psutil.net_io_counters(pernic=False, nowrap=True).dropin'),
 ('REDE', 'Conexões', 'Unidade', 'rede_conexoes','len(psutil.net_connections(kind="all"))');
 
+INSERT INTO painel_vendas (tipo, empresa, modelo, qtd, dtHora) VALUES 
+('Pedido',	'VOLKSWAGEN BRASIL LTDA', 'S7-1200 F',	24,	'2025-06-02 15:36:21'),
+('Pedido',	'LENOVO TECNOLOGIA BRASIL LTDA', 'S7-400H',	60,	'2025-06-02 11:12:45');
+
+INSERT INTO meta_vendas (mes, data_hora, meta_de_vendas, media_de_cancelamentos) VALUES
+('Janeiro/2025', '2025-01-01 00:00:00', 2100, 18),
+('Fevereiro/2025', '2025-02-01 00:00:00', 2250, 20),
+('Março/2025', '2025-03-01 00:00:00', 2450, 26),
+('Abril/2025', '2025-04-01 00:00:00', 2600, 30),
+('Maio/2025', '2025-05-01 00:00:00', 2750, 33),
+('Junho/2025', '2025-06-01 00:00:00', 2850, 35),
+('Julho/2025', '2025-07-01 00:00:00', 2900, 38),
+('Agosto/2025', '2025-08-01 00:00:00', 2800, 34),
+('Setembro/2025', '2025-09-01 00:00:00', 3050, 40),
+('Outubro/2025', '2025-10-01 00:00:00', 3150, 42),
+('Novembro/2025', '2025-11-01 00:00:00', 3300, 48),
+('Dezembro/2025', '2025-12-01 00:00:00', 3500, 50);
 
 
 
