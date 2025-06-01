@@ -14,7 +14,7 @@ const listarPlcsPorFabricante = (fabricanteId) => {
 
 const listarModeloPorEmpresa = (empresaId, fabricanteId) => {
     const sql = `
-        SELECT 
+SELECT 
             p.modelo,
             COUNT(DISTINCT a.id) as quantidade_alertas
         FROM plc p

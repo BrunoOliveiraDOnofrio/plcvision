@@ -136,104 +136,54 @@
 </html>
 
 <script>
-    let empresas = [];
+    let empresas = []; // guarda todas as empresas
     let fabricanteId = sessionStorage.getItem('EMPRESA_ID');
-    let dadosS3 = [];
+    let dadosS3 = []; // guarda os dados do json que vem do bucket S3
 
+    // Espera a pág carregar para carregar os dados
     document.addEventListener('DOMContentLoaded', async function () {
-        carregarEmpresas();
+        carregarEmpresas(); // carrega as empresas no filtro
         configurarFiltros();
-        // buscarSimulacoesDoS3();
+        // Função async serve para trazer todos os dados da S3 antes de continuar
         dadosS3 = await buscarDadosS3();
     });
 
-    // async function buscarSimulacoesDoS3() {
-    //     const resposta = await fetch('http://localhost:3000/api/s3json');
-    //     const json = await resposta.json();
-    //     dadosS3 = Array.isArray(json) ? json : [];
-    //     console.log('Simulações S3 carregadas:', dadosS3.length, dadosS3.length > 0 ? dadosS3[0] : '(vazio)');
-    // }
 
-    // async function buscarSimulacoesDoS3() {
-    //     try {
-    //         const resposta = await fetch('./processos_simulados.json');
-    //         if (!resposta.ok) {
-    //             throw new Error(`Erro ao carregar arquivo: ${resposta.status}`);
-    //         }
-    //         const json = await resposta.json();
-    //         dadosS3 = Array.isArray(json) ? json : [];
-
-    //         if (dadosS3.length === 0) {
-    //             document.getElementById('corpoDaTabela').innerHTML = `
-    //             <tr><td colspan="4">Nenhum dado encontrado no arquivo.</td></tr>`;
-    //         }
-    //     } catch (erro) {
-    //         console.error('Erro ao carregar dados:', erro);
-    //         document.getElementById('corpoDaTabela').innerHTML = `
-    //         <tr><td colspan="4">Erro ao carregar dados: ${erro.message}</td></tr>`;
-    //     }
-    // }
-
+    // API para buscar os dados do S3
     async function buscarDadosS3() {
-        try {
-            const resposta = await fetch('/api/s3json');
-            if (!resposta.ok) {
-                throw new Error(`Erro na requisição: ${resposta.status}`);
-            }
-            const dados = await resposta.json();
-            console.log('Dados S3 recebidos:', dados);
-            return dados;
-        } catch (erro) {
-            console.error('Erro ao buscar dados do S3:', erro);
-            document.getElementById('corpoDaTabela').innerHTML = `
-            <tr>
-                <td colspan="4">Erro ao carregar dados: ${erro.message}</td>
-            </tr>`;
-            return [];
-        }
+        // const resposta = await fetch('/api/s3json'); // descomenta para usar API e pegar do bucket S3
+        const resposta = await fetch('processos_simulados.json');
+        const dados = await resposta.json();
+        console.log(dados);
+        return dados;
     }
 
+
+    // 
     function carregarEmpresas() {
         const fabricanteId = sessionStorage.getItem('EMPRESA_ID');
-        if (!fabricanteId) {
-            console.error("ID do fabricante não encontrado no sessionStorage");
-            return;
-        }
-
+        // fetch = requisição pra API pra pegar as empresas
         fetch(`/api/fabricante/${fabricanteId}/empresas_consumidoras`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
+            .then(response => response.json()) // pega a resposta e transforma em json
             .then(data => {
-                if (!data || data.length === 0) {
-                    throw new Error('Nenhuma empresa encontrada');
-                }
-                empresas = data;
+                empresas = data; // armeza na variável global
                 const selectEmpresa = document.getElementById('empresa');
-                selectEmpresa.innerHTML = '<option value="">Selecione uma empresa</option>';
-
-                empresas.forEach(empresa => {
+                selectEmpresa.innerHTML = '<option value="">Selecione uma empresa</option>'; // Inicia o select com uma opção padrão
+                empresas.forEach(empresa => { // para cada empresa, add um na opção
                     selectEmpresa.innerHTML += `<option value="${empresa.id}">${empresa.razao_social}</option>`;
                 });
                 mostrarEmpresas();
-            })
-            .catch(erro => {
-                console.error("Erro ao carregar empresas:", erro);
-                document.getElementById('empresa').innerHTML = '<option value="">Erro ao carregar empresas</option>';
             });
     }
 
-    function configurarFiltros() {
-        document.getElementById('empresa').onchange = carregarFabricas;
-        document.getElementById('btn-aplicar-filtros').onclick = aplicarFiltros;
 
+    // Add evento pros botões
+    function configurarFiltros() {
+        document.getElementById('empresa').onchange = carregarFabricas; // quando muda a empresa, carrega as fábricas
+        document.getElementById('btn-aplicar-filtros').onclick = aplicarFiltros; // add onclick em "Aplicar Filtros"
         const hoje = new Date();
         const trintaDiasAtras = new Date();
-        trintaDiasAtras.setDate(hoje.getDate() - 30);
-
+        trintaDiasAtras.setDate(hoje.getDate() - 30); // Ele pega a data atual e joga 30 dias antes
         document.getElementById('dataInicial').value = trintaDiasAtras.toISOString().split('T')[0];
         document.getElementById('dataFinal').value = hoje.toISOString().split('T')[0];
     }
@@ -241,35 +191,33 @@
     function obterFiltrosDatas() {
         const dataInicial = document.getElementById('dataInicial').value;
         const dataFinal = document.getElementById('dataFinal').value;
-
         let filtros = {};
         if (dataInicial) {
-            filtros.dataInicial = dataInicial + ' 00:00:00';
+            filtros.dataInicial = dataInicial + ' 00:00:00'; // Adiciona hora para o filtro
         }
         if (dataFinal) {
-            filtros.dataFinal = dataFinal + ' 23:59:59';
+            filtros.dataFinal = dataFinal + ' 23:59:59'; // Adiciona hora para o filtro
         }
         return filtros;
     }
 
     function filtrarPorData(dados, filtrosDatas) {
         if (!filtrosDatas.dataInicial && !filtrosDatas.dataFinal) {
-            return dados;
-        }
+            return dados; // Se não tiver filtro, retorna o padrão
+        };
 
         let dadosFiltrados = [];
+        // Passa por cada item, se tivem entre as datas, add na lista
         for (let i = 0; i < dados.length; i++) {
             let item = dados[i];
             let dataItem = item.dataHora;
             let incluir = true;
-
             if (filtrosDatas.dataInicial && dataItem < filtrosDatas.dataInicial) {
                 incluir = false;
             }
             if (filtrosDatas.dataFinal && dataItem > filtrosDatas.dataFinal) {
                 incluir = false;
             }
-
             if (incluir) {
                 dadosFiltrados.push(item);
             }
@@ -277,26 +225,28 @@
         return dadosFiltrados;
     }
 
+    // carrega as fábricas e preenche o select
     function carregarFabricas() {
         const empresaId = document.getElementById('empresa').value;
         const selectFabrica = document.getElementById('fabrica');
         selectFabrica.innerHTML = '<option value="">Todas as fábricas</option>';
-
         if (empresaId) {
             fetch(`/api/empresa_consumidora/${empresaId}/fabrica_setores`)
                 .then(response => response.json())
                 .then(dados => {
                     let fabricas = [];
                     let idsFabricas = [];
-
                     for (let i = 0; i < dados.length; i++) {
                         let item = dados[i];
+                        // indexOf retorna o primeiro indice do valor
+                        // -1 serve para ver se existe ou não, pois o 0 é um valor válido
                         if (idsFabricas.indexOf(item.fabrica_id) === -1) {
-                            fabricas.push({ id: item.fabrica_id, nome: item.fabrica_nome });
+                            fabricas.push({ id: item.fabrica_id, nome: item.fabrica_nome }); // add objeto com id e nome
                             idsFabricas.push(item.fabrica_id);
                         }
                     }
 
+                    // cria uma lista das fabricas no select
                     for (let i = 0; i < fabricas.length; i++) {
                         selectFabrica.innerHTML += `<option value="${fabricas[i].id}">${fabricas[i].nome}</option>`;
                     }
@@ -304,49 +254,43 @@
         }
     }
 
+
+    // Func para atualizar a tabela de acordo com
     function aplicarFiltros() {
         const empresaId = document.getElementById('empresa').value;
         const fabricaId = document.getElementById('fabrica').value;
         const filtrosDatas = obterFiltrosDatas();
+        const fabricanteId = sessionStorage.getItem('EMPRESA_ID')
 
+        // Se não tiver empresa e fábrica selecionada, mostra a lista de empresas
         if (!empresaId && !fabricaId) {
-            const empresasFiltradas = filtrarEmpresas(filtrosDatas);
+            const empresasFiltradas = filtrarEmpresas(filtrosDatas); // Mostra todas as empresas com as datas filtradas
             mostrarEmpresasFiltradas(empresasFiltradas);
+            console.log("Retorna o que???", empresasFiltradas); // id, qtdAlertas, razao_social
             return;
         }
 
-        if (fabricaId) {
-            fetch(`/api/fabrica/${fabricaId}/plcs`)
-                .then(response => response.json())
-                .then(plcs => {
-                    const plcsAgrupados = agruparPorModelo(plcs, filtrosDatas);
-                    mostrarModelos(plcsAgrupados);
-                });
-        } else if (empresaId) {
-            fetch(`/api/empresa_consumidora/${empresaId}/fabricante/${fabricanteId}/modelosPorEmpresa`)
-                .then(response => response.json())
-                .then(plcs => {
-                    const plcsAgrupados = agruparPorModelo(plcs, filtrosDatas);
-                    mostrarModelos(plcsAgrupados);
-                });
-        }
+        const modelosResultantes = agruparPorModelo(dadosS3, filtrosDatas, empresaId, fabricaId);
+        mostrarModelos(modelosResultantes);
     }
 
+
+    // Empresas de acordo com a data - alertas
     function filtrarEmpresas(filtrosDatas) {
         let empresasFiltradas = [];
-
         for (let i = 0; i < empresas.length; i++) {
             let empresa = empresas[i];
             let alertasDaEmpresa = [];
 
+            // se tiver o mesmo id, add na lista
             for (let j = 0; j < dadosS3.length; j++) {
                 if (dadosS3[j].empresa_consumidor_id === empresa.id) {
                     alertasDaEmpresa.push(dadosS3[j]);
                 }
             }
 
+            // Filtra os alertas da empresa, passando os dados do alerta e as datas
             let alertasFiltrados = filtrarPorData(alertasDaEmpresa, filtrosDatas);
-
             let empresaComFiltro = {
                 id: empresa.id,
                 razao_social: empresa.razao_social,
@@ -355,71 +299,98 @@
             empresasFiltradas.push(empresaComFiltro);
         }
 
+        // coloca as empresas que mais possuem alertas primeiro
         empresasFiltradas.sort(function (a, b) {
             return b.quantidade_alertas - a.quantidade_alertas;
         });
-
         return empresasFiltradas;
     }
 
-    function agruparPorModelo(listaPLCs, filtrosDatas) {
-        let modelosAgrupados = {};
 
-        for (let i = 0; i < listaPLCs.length; i++) {
-            let plc = listaPLCs[i];
-            let modelo = plc.modelo;
+    // Junta todos os PLCs por modelo
+    // aqui consegue a qtd de alertas por modelo
+    function agruparPorModelo(dadosDoS3, filtrosDatas, empresaIdFiltro, fabricaIdFiltro) {
+        let modelosAgrupados = [];
+        let alertasFiltrados = [];
 
-            if (!modelosAgrupados[modelo]) {
-                modelosAgrupados[modelo] = {
-                    modelo: modelo,
-                    quantidade_alertas: 0,
-                    plcs: []
-                };
+        for (let i = 0; i < dadosDoS3.length; i++) {
+            let alerta = dadosDoS3[i];
+            let mesmoEmpresa = true;
+            let mesmoFabrica = true;
+
+            if (empresaIdFiltro) {
+                if (alerta.empresa_consumidor_id != empresaIdFiltro) {
+                    mesmoEmpresa = false;
+                }
             }
 
-            modelosAgrupados[modelo].quantidade_alertas += plc.quantidade_alertas;
+            if (fabricaIdFiltro) {
+                if (alerta.fabrica_id != fabricaIdFiltro) {
+                    mesmoFabrica = false;
+                }
+            }
 
-            modelosAgrupados[modelo].plcs.push(plc);
+            if (mesmoEmpresa && mesmoFabrica) {
+                alertasFiltrados.push(alerta);
+            }
         }
 
-        let modelosArray = [];
-        for (let modelo in modelosAgrupados) {
-            modelosArray.push(modelosAgrupados[modelo]);
+        let alertasFinais = filtrarPorData(alertasFiltrados, filtrosDatas);
+
+        // conta os alertas por modelo
+        let contagemPorModelo = {};
+        for (let i = 0; i < alertasFinais.length; i++) {
+            let modelo = alertasFinais[i].modelo_plc;
+
+            if (contagemPorModelo[modelo]) {
+                contagemPorModelo[modelo]++;
+            } else {
+                contagemPorModelo[modelo] = 1;
+            }
         }
 
-        modelosArray.sort(function (a, b) {
+        // transforma em array
+        for (let modelo in contagemPorModelo) {
+            modelosAgrupados.push({
+                modelo: modelo,
+                quantidade_alertas: contagemPorModelo[modelo]
+            });
+        }
+
+        // ordenação com mais alertas
+        modelosAgrupados.sort(function (a, b) {
             return b.quantidade_alertas - a.quantidade_alertas;
         });
 
-        return modelosArray;
+        return modelosAgrupados;
     }
 
+    // func para mostrar todas as empresas
     function mostrarEmpresas() {
         mostrarEmpresasFiltradas(empresas);
     }
 
-    function mostrarEmpresasFiltradas(empresasList) {
-        const tabela = document.getElementById('corpoDaTabela');
-        tabela.innerHTML = '';
 
+    // lista de empresas 
+    function mostrarEmpresasFiltradas(empresasList) {
+        console.log('Empresas Filtradas: ', empresasList);
+        const tabela = document.getElementById('corpoDaTabela');
+        tabela.innerHTML = ''; // limpa a tabela
         for (let i = 0; i < empresasList.length; i++) {
             let empresa = empresasList[i];
             let status = 'Normal';
             let corFundo = '#28a745';
             let corLetra = 'white';
-
-
-
             if (empresa.quantidade_alertas > 10) {
-                status = 'Alerta';
+                status = 'Crítico';
                 corFundo = '#dc3545';
-                corLetra = 'white';
             } else if (empresa.quantidade_alertas > 5) {
                 status = 'Atenção';
                 corFundo = '#ffc107';
-                corLetra = 'white';
             }
 
+            // Monta a tabela html dinamicamente
+            // colspan = 4 -> a célula ocupa o tamanho das 4 colunas
             tabela.innerHTML += `
             <tr>
                 <td>${empresa.razao_social}</td>
@@ -434,27 +405,26 @@
         }
     }
 
+
+    // Mesma coisa que as empresas, mas pros modelo
     function mostrarModelos(modelosAgrupados) {
+        console.log('retorno modelo: ', modelosAgrupados);
+        console.log('Modelos Agrupados: ', modelosAgrupados);
         const tabela = document.getElementById('corpoDaTabela');
         tabela.innerHTML = '';
-
         for (let i = 0; i < modelosAgrupados.length; i++) {
             let modelo = modelosAgrupados[i];
-
+            console.log('Modelo: ', modelo);
             let status = 'Normal';
             let corFundo = '#28a745';
             let corLetra = 'white';
-
-            if (modelo.quantidade_alertas > 10) {
-                status = 'Alerta';
+            if (modelo.quantidade_alertas > 6) {
+                status = 'Crítico';
                 corFundo = '#dc3545';
-                corLetra = 'white';
-            } else if (modelo.quantidade_alertas > 5) {
+            } else if (modelo.quantidade_alertas > 3) {
                 status = 'Atenção';
                 corFundo = '#ffc107';
-                corLetra = 'white';
             }
-
             tabela.innerHTML += `
             <tr>
                 <td>${modelo.modelo}</td>
@@ -469,33 +439,37 @@
         }
     }
 
+
+    // quando clica em detalhes, expande com os detalhes
     function verDetalhesEmpresa(empresaId, index) {
+        console.log('index: ', index)
+        // index = indice para identificar a linha na tabela
         const linha = document.getElementById(`detalhes-${index}`);
 
+        // se tiver aberta, fecha
         if (linha.style.display === 'table-row') {
             linha.style.display = 'none';
             return;
         }
 
+        // se tiver fechada, abre
         linha.style.display = 'table-row';
-        linha.querySelector('td').innerHTML = 'Carregando...';
-
         const filtrosDatas = obterFiltrosDatas();
-        let alertasDaEmpresa = [];
 
+        // todos os dados de alerta (json) da empresa vai pra lista
+        let alertasDaEmpresa = [];
         for (let i = 0; i < dadosS3.length; i++) {
             if (dadosS3[i].empresa_consumidor_id === empresaId) {
                 alertasDaEmpresa.push(dadosS3[i]);
             }
         }
-
         let alertasFiltrados = filtrarPorData(alertasDaEmpresa, filtrosDatas);
-        let fabricas = {};
 
+        // mesma coisa do agrupamento por modelo, mas agora por fábrica
+        let fabricas = {};
         for (let i = 0; i < alertasFiltrados.length; i++) {
             let alerta = alertasFiltrados[i];
             let fabricaId = alerta.fabrica_id;
-
             if (!fabricas[fabricaId]) {
                 fabricas[fabricaId] = {
                     fabrica_nome: `${alerta.fabrica_nome}`,
@@ -505,15 +479,17 @@
             fabricas[fabricaId].quantidade_alertas++;
         }
 
+        // torna os objetos em lista e ordena por qtd alerta
         let fabricasList = [];
         for (let fabricaId in fabricas) {
             fabricasList.push(fabricas[fabricaId]);
         }
-
         fabricasList.sort(function (a, b) {
             return b.quantidade_alertas - a.quantidade_alertas;
         });
 
+
+        // montagem do html
         let html = '<h4>Fábricas com mais alertas: </h4><ul>';
         if (fabricasList.length === 0) {
             html += '<li>Nenhum alerta encontrado no período selecionado.</li>';
@@ -523,50 +499,42 @@
             }
         }
         html += '</ul>';
-
-        // Adiciona o gráfico
         const graficoId = `grafico-fabricas-empresa-${Date.now()}-${index}`;
         html += `
-    <div style="width: 100%; max-width: 700px; height: 400px; margin: 20px auto;">
-        <canvas id="${graficoId}"></canvas>
-    </div>
-`;
-
+        <div style="width: 100%; max-width: 700px; height: 400px; margin: 20px auto;">
+            <canvas id="${graficoId}"></canvas>
+        </div>
+    `;
+        // substitui o td (carregando...) lá em cima por esse html
         linha.querySelector('td').innerHTML = html;
 
-        // Cria o gráfico após o HTML ser inserido
-        setTimeout(function () {
-            criarGraficoFabricas(graficoId, fabricasList, "Fábricas da Empresa");
-        }, 200);
+        criarGraficoFabricas(graficoId, fabricasList, "Fábricas da Empresa");
     }
 
+
+    // mesma lógica da empresa, mas agora pros modelos
     function verDetalhesModelo(modelo, index) {
         const linha = document.getElementById(`detalhes-${index}`);
-
         if (linha.style.display === 'table-row') {
             linha.style.display = 'none';
             return;
         }
-
         linha.style.display = 'table-row';
         linha.querySelector('td').innerHTML = 'Carregando...';
-
         const empresaId = document.getElementById('empresa').value;
         const fabricaId = document.getElementById('fabrica').value;
-
         if (empresaId && fabricaId) {
             mostrarGraficosProcessosPorSetor(modelo, fabricaId, empresaId, linha);
         } else if (empresaId) {
             mostrarFabricasDaEmpresa(modelo, empresaId, linha);
         } else {
-            mostrarGeralDoModelo(modelo, linha);
+            linha.querySelector('td').innerHTML = '<p>Selecione uma empresa ou fábrica para ver os detalhes.</p>';
         }
     }
 
     function mostrarGraficosProcessosPorSetor(modelo, fabricaId, empresaId, linha) {
         const filtrosDatas = obterFiltrosDatas();
         let processos = analisarProcessos(modelo, fabricaId, empresaId, filtrosDatas);
-
         let html = `<h4>Análise dos Processos - ${modelo}</h4>`;
 
         if (processos.length === 0) {
@@ -574,10 +542,10 @@
             linha.querySelector('td').innerHTML = html;
             return;
         }
-
         html += '<p>Processos que mais causam problemas por setor:</p><br>';
 
         let setores = {};
+
         for (let i = 0; i < processos.length; i++) {
             let p = processos[i];
             if (!setores[p.setor]) {
@@ -591,6 +559,7 @@
 
         for (let setor in setores) {
             const graficoId = `chart_${Date.now()}_${setorIndex}`;
+
             graficosIds.push({
                 id: graficoId,
                 setor: setor,
@@ -598,23 +567,19 @@
             });
 
             html += `
-            <div style="margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-                <h5>Setor: ${setor}</h5>
-                <div style="width: 100%; height: 300px; margin: 15px 0;">
-                    <canvas id="${graficoId}"></canvas>
+                <div style="margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+                    <h5>Setor: ${setor}</h5>
+                    <div style="width: 100%; height: 300px; margin: 15px 0;">
+                        <canvas id="${graficoId}"></canvas>
+                    </div>
                 </div>
-            </div>
         `;
             setorIndex++;
         }
 
         linha.querySelector('td').innerHTML = html;
 
-        setTimeout(function () {
-            for (let i = 0; i < graficosIds.length; i++) {
-                criarGraficoProcessos(graficosIds[i]);
-            }
-        }, 200);
+        criarGraficoProcessos(graficosIds[0]);
     }
 
     function criarGraficoProcessos(grafico) {
@@ -622,7 +587,6 @@
 
         if (canvas && grafico.processos.length > 0) {
             const ctx = canvas.getContext('2d');
-
             let labels = [];
             let dados = [];
             let cores = [];
@@ -631,7 +595,6 @@
                 let p = grafico.processos[i];
                 labels.push(p.nome.replace(/_/g, ' '));
                 dados.push(p.porcentagem);
-
                 if (p.porcentagem > 70) {
                     cores.push('rgba(220, 53, 69, 0.8)');
                 } else if (p.porcentagem > 40) {
@@ -640,7 +603,6 @@
                     cores.push('rgba(40, 167, 69, 0.8)');
                 }
             }
-
             new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -704,7 +666,6 @@
         for (let i = 0; i < alertasFiltrados.length; i++) {
             let alerta = alertasFiltrados[i];
             let fabricaId = alerta.fabrica_id;
-
             if (!fabricas[fabricaId]) {
                 fabricas[fabricaId] = {
                     fabrica_nome: `${alerta.fabrica_nome}`,
@@ -715,10 +676,10 @@
         }
 
         let fabricasList = [];
+
         for (let fabricaId in fabricas) {
             fabricasList.push(fabricas[fabricaId]);
         }
-
         fabricasList.sort(function (a, b) {
             return b.quantidade_alertas - a.quantidade_alertas;
         });
@@ -736,27 +697,24 @@
             html += `<li><b>${fabricasList[i].fabrica_nome}</b>: ${fabricasList[i].quantidade_alertas} alertas</li>`;
         }
         html += '</ul>';
-
         const graficoId = `grafico-fabricas-empresa-${Date.now()}`;
         html += `
         <div style="width: 100%; max-width: 700px; height: 400px; margin: 20px auto;">
             <canvas id="${graficoId}"></canvas>
         </div>
-    `;
-
+        `;
         linha.querySelector('td').innerHTML = html;
 
-        setTimeout(function () {
-            criarGraficoFabricas(graficoId, fabricasList, modelo);
-        }, 200);
+        criarGraficoFabricas(graficoId, fabricasList, modelo);
     }
 
     function criarGraficoFabricas(graficoId, fabricas, modelo) {
         const canvas = document.getElementById(graficoId);
-        if (!canvas) return;
+        if (!canvas) {
+            return; // Se não tiver canvas, não faz nada
+        }
 
         const ctx = canvas.getContext('2d');
-
         let labels = [];
         let dados = [];
         let cores = [];
@@ -765,7 +723,6 @@
             let f = fabricas[i];
             labels.push(f.fabrica_nome);
             dados.push(f.quantidade_alertas);
-
             if (f.quantidade_alertas > 10) {
                 cores.push('rgba(220, 53, 69, 0.8)');
             } else if (f.quantidade_alertas > 5) {
@@ -774,7 +731,6 @@
                 cores.push('rgba(40, 167, 69, 0.8)');
             }
         }
-
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -819,140 +775,9 @@
         });
     }
 
-    function mostrarGeralDoModelo(modelo, linha) {
-        const filtrosDatas = obterFiltrosDatas();
-        let alertasDoModelo = [];
-
-        for (let i = 0; i < dadosS3.length; i++) {
-            if (dadosS3[i].modelo_plc === modelo) {
-                alertasDoModelo.push(dadosS3[i]);
-            }
-        }
-
-        alertasDoModelo = filtrarPorData(alertasDoModelo, filtrosDatas);
-        let fabricasEncontradas = {};
-
-        for (let i = 0; i < alertasDoModelo.length; i++) {
-            let registro = alertasDoModelo[i];
-            let fabricaId = registro.fabrica_id;
-
-            if (!fabricasEncontradas[fabricaId]) {
-                fabricasEncontradas[fabricaId] = {
-                    fabrica_id: fabricaId,
-                    fabrica_nome: `${alerta.fabrica_nome}`,
-                    alertas: 0,
-                    setores: []
-                };
-            }
-            fabricasEncontradas[fabricaId].alertas++;
-
-            if (fabricasEncontradas[fabricaId].setores.indexOf(registro.setor) === -1) {
-                fabricasEncontradas[fabricaId].setores.push(registro.setor);
-            }
-        }
-
-        let fabricas = [];
-        for (let fabricaId in fabricasEncontradas) {
-            fabricas.push(fabricasEncontradas[fabricaId]);
-        }
-
-        fabricas.sort(function (a, b) {
-            return b.alertas - a.alertas;
-        });
-
-        let html = `
-        <div style="padding: 15px;">
-            <h4>Fábricas com o modelo "${modelo}"</h4>
-            <p><i>Selecione uma empresa e fábrica para ver análise detalhada</i></p>
-    `;
-
-        if (fabricas.length === 0) {
-            html += '<p>Nenhum alerta encontrado para este modelo no período selecionado.</p></div>';
-        } else {
-            html += '<ul>';
-            for (let i = 0; i < fabricas.length; i++) {
-                let fabrica = fabricas[i];
-                let setoresList = fabrica.setores.join(', ');
-                html += `<li><strong>${fabrica.fabrica_nome}</strong>: ${fabrica.alertas} alertas em ${fabrica.setores.length} setores (${setoresList})</li>`;
-            }
-            html += '</ul>';
-
-            const graficoId = `grafico-geral-${Date.now()}`;
-            html += `
-            <div style="width: 100%; max-width: 600px; height: 300px; margin: 15px auto;">
-                <canvas id="${graficoId}"></canvas>
-            </div>
-        `;
-            html += '</div>';
-        }
-
-        linha.querySelector('td').innerHTML = html;
-
-        if (fabricas.length > 0) {
-            setTimeout(function () {
-                criarGraficoGeral(graficoId, fabricas);
-            }, 200);
-        }
-    }
-
-    function criarGraficoGeral(graficoId, fabricas) {
-        const canvas = document.getElementById(graficoId);
-        if (!canvas) return;
-
-        const ctx = canvas.getContext('2d');
-
-        let labels = [];
-        let dados = [];
-        let cores = [];
-
-        for (let i = 0; i < fabricas.length; i++) {
-            let f = fabricas[i];
-            labels.push(f.fabrica_nome);
-            dados.push(f.alertas);
-
-            if (f.alertas > 10) {
-                cores.push('rgba(220, 53, 69, 0.8)');
-            } else if (f.alertas > 5) {
-                cores.push('rgba(255, 193, 7, 0.8)');
-            } else {
-                cores.push('rgba(40, 167, 69, 0.8)');
-            }
-        }
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Alertas',
-                    data: dados,
-                    backgroundColor: cores,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Alertas' }
-                    },
-                    x: {
-                        title: { display: true, text: 'Fábricas' }
-                    }
-                }
-            }
-        });
-    }
-
     function analisarProcessos(modelo, fabricaId, empresaId, filtrosDatas) {
         let alertasDoModelo = dadosS3.filter(registro =>
-            registro.modelo_plc === modelo &&
-            registro.empresa_consumidor_id == empresaId
+            registro.modelo_plc === modelo && registro.empresa_consumidor_id == empresaId
         );
 
         if (fabricaId && fabricaId !== "") {
@@ -967,12 +792,10 @@
 
         for (let registro of alertasDoModelo) {
             if (!registro.processos) continue;
-
             for (let processo of registro.processos) {
                 let processoExistente = processos.find(p =>
                     p.nome === processo.nome && p.setor === registro.setor
                 );
-
                 if (processoExistente) {
                     processoExistente.ocorrencias++;
                     processoExistente.totalCpu += processo.cpu || 0;
@@ -988,17 +811,18 @@
                 }
             }
         }
-
         for (let processo of processos) {
             const mediaCpu = processo.totalCpu / processo.ocorrencias;
             const mediaRam = processo.totalRam / processo.ocorrencias;
-
             let pontuacao = processo.ocorrencias * 10;
-            if (mediaCpu > 40) pontuacao += 30;
-            if (mediaRam > 30) pontuacao += 20;
+            if (mediaCpu > 40) {
+                pontuacao += 30;
+            }
+            if (mediaRam > 30) {
+                pontuacao += 20;
+            }
             processo.porcentagem = Math.min(pontuacao, 100);
         }
-
         return processos.sort((a, b) => b.porcentagem - a.porcentagem);
     }
 </script>
