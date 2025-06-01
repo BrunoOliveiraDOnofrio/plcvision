@@ -123,7 +123,7 @@ router.get('/dashNegocio/painelCancelamento/:empresaNome', (req, res) => {
 })
 
 router.get('/dashJira', (req,res) => {
-    res.sendFile(path.join(__dirname, '../../public/adm_empresa/dashJira/dashboard.html'))
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/DashJira/dashboard.html'))
 })
 
 module.exports = router;

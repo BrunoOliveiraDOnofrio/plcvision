@@ -6,7 +6,7 @@ import mysql.connector as db
 import selectsInfos
 
 from datetime import datetime
-from pytz import timezone
+
 
 foraDoPadrao = []
 empresaGerandoAlertas = None
@@ -15,8 +15,8 @@ def conexao_select():
     # configurar var de ambientes e criar conexao com o banco de dados
 
     conexao_db = db.connect(
-        host='db',
-        port=3306,
+        host='52.200.168.170',
+        port=3307,
         user='plc_manager',
         password='plc_password',
         database='plcvision'
@@ -24,7 +24,7 @@ def conexao_select():
 
     return conexao_db
 
-URL = "http://52.200.168.178/monitoramento/0"
+URL = "http://52.200.168.170/monitoramento/0"
 HEADERS = {'Content-Type': 'application/json'}
 
 def simular_valor(tipo_dado, limite_critico, limite_atencao):

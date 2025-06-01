@@ -191,7 +191,7 @@ function atualizarGraficoDeLinhaEKPIsDeUso(opcaoDePeriodo) {
 }
 
 function buscarDadosIniciaisDoServidor() {
-    fetch('http://127.0.0.1:3000/bucket/api/s3json')
+    fetch('/bucket/api/s3json')
         .then(function(resposta) {
             return resposta.json();
         })
