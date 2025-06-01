@@ -122,4 +122,8 @@ router.get('/dashNegocio/painelCancelamento/:empresaNome', (req, res) => {
     dashNegocioController.painelCancelamento(req,res);
 })
 
+router.get('/dashJira', (req,res) => {
+    res.sendFile(path.join(__dirname, '../../public/adm_empresa/dashJira/dashboard.html'))
+})
+
 module.exports = router;

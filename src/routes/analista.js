@@ -27,8 +27,16 @@ router.get('/plcs', (req, res) => {
     });
 })
 
+router.get('/dashPix', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/analista/dashboard/dashboard-analitica-pix-v2.html'));
+})
+
 router.get('/plcs/:id/show', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/analista/plcs/visualizar_plc.html'));
+})
+
+router.get('/dashModelo', (req, res) =>{
+    res.sendFile(path.join(__dirname, '../../public/analista/dashboard/outlier.html'));
 })
 
 module.exports = router;

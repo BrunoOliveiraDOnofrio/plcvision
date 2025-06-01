@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLCVision - Lista de PLCs</title>
+    <title>PLCVISION - Lista PLCs</title>
+    <!-- Fonte google  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fonts.css">
     <link rel="stylesheet" href="../../css/nav_side_bar.css">
     <link rel="stylesheet" href="../../css/corpo_consumidoras.css">
-    <link rel="shortcut icon" href="../../assets/imgs/logo-aba_white.png">
     <!-- Link dos icones - boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../../css/fonts.css">
 
 </head>
 <body>
@@ -101,10 +106,9 @@
         <div class="inicio">
             <ul>
                 
-                
                 <li>
-                    <a href="../dashboard">
-                        <i class='bx bx-timer'></i>
+                    <a href="../monitoramento">
+                        <i class='bx bx-bar-chart-square'></i>
                     </a>
                 </li>
                 <li>
@@ -135,23 +139,26 @@
      <div class="main">
         <div class="container">
             <h1>Lista de PLCs</h1>
-            <br><br>
-        <div id="listagem">
-    <table class="tabela">
-        <thead>
-            <tr>
-                <th>Empresa</th>
-                <th>Fabrica</th>
-                <th>Setor</th>
-                <th>Modelo</th>
-                <th>Componente</th>
-                <th>Problemas</th>
-            </tr>
-        </thead>
-        <tbody id="dados_alertas_tbody">
-            </tbody>
-    </table>
-</div>
+            
+        <div class="container-tabela">
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Modelo</th>
+                        <th>Ano</th>
+                        <th>RAM</th>
+                        <th>Endereço MAC</th>
+                        <th>Host</th>
+                        <th class="viz_rem_colum">Vizualização</th>
+                        
+                    </tr>
+                </thead>
+                <tbody id="tbody_plcs">
+                    
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="modal" id="modalVisualizar">
@@ -183,7 +190,6 @@
                 </div>
             </div>
             <div class="modal-btn-fechar">
-                <button class="btn-configurar btn-fechar">Configurar</button>
                 <button class="btn-fechar">Fechar</button>
             </div>
         </div>

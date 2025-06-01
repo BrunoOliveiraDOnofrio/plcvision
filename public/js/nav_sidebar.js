@@ -6,6 +6,9 @@ const rotasTempoReal = {
 }
 
 const rotasAnalista = {
+    dashGabriel: '/analista/dashPix',
+    dashEnrico: '/analista/dashboardComponente',
+    dashJoao: '/analista/dashModelo',
     alertas: '/analista/alertas',
     dashboard: '/analista/dashboard',
     plcs: '/analista/plcs',
@@ -13,6 +16,8 @@ const rotasAnalista = {
 }
 
 const rotasAdm = {
+    dashLaysa: '/adm/dashNegocio',
+    dashBruno: '/adm/dashJira',
     monitoramento: '/adm/monitoramento',
     dashboard: '/adm/dashboard',
     consumidores : '/adm/consumidores',
@@ -92,14 +97,14 @@ console.log(divMenuDesk)
             <ul>
                 
                 <li class="tooltip-container">
-                    <a href="${enderecoApp + rotasAdm.plcs}">
+                    <a href="${enderecoApp + rotasAdm.dashLaysa}">
                         <i class='bx bx-briefcase'></i>
                         <span class="tooltip-text">Product Overview!</span>
                     </a>
                 </li>
 
                 <li class="tooltip-container">
-                    <a href="${enderecoApp + rotasAdm.plcs}">
+                    <a href="${enderecoApp + rotasAdm.dashBruno}">
                         <i class='bx bx-hard-hat' ></i>
                         <span class="tooltip-text">Desempenho da Equipe!</span>
                     </a>
@@ -172,7 +177,27 @@ console.log(divMenuDesk)
         sidebar.innerHTML = `<div class="inicio">
             <ul>
              
+                <li class="tooltip-container">
+                    <a href="${enderecoApp + rotasAnalista.dashGabriel}">
+                        <i class='bx bx-bulb' ></i> 
+                        <span class="tooltip-text">Análise Pix!</span>
+                    </a>
+                </li>
+
                 
+                <li class="tooltip-container">
+                    <a href="${enderecoApp + rotasAnalista.dashEnrico}">
+                        <i class='bx bx-microchip'></i> 
+                        <span class="tooltip-text">Análise Componentes!</span>
+                    </a>
+                </li>
+                
+                <li class="tooltip-container">
+                    <a href="${enderecoApp + rotasAnalista.dashJoao}">
+                        <i class='bx bx-line-chart'></i>
+                        <span class="tooltip-text">Análise de Modelos!</span>
+                    </a>
+                </li>   
 
                 <li class="tooltip-container">
                     <a href="${enderecoApp + rotasAnalista.plcs}">
@@ -181,27 +206,6 @@ console.log(divMenuDesk)
                     </a>
                 </li>
 
-                <li class="tooltip-container">
-                    <a href="${enderecoApp + rotasAnalista.dashboard}">
-                        <i class='bx bx-bulb' ></i> 
-                        <span class="tooltip-text">Análise Pix!</span>
-                    </a>
-                </li>
-
-                
-                <li class="tooltip-container">
-                    <a href="${enderecoApp + rotasAnalista.dashboard}">
-                        <i class='bx bx-microchip'></i> 
-                        <span class="tooltip-text">Análise Componentes!</span>
-                    </a>
-                </li>
-                
-                <li class="tooltip-container">
-                    <a href="${enderecoApp + rotasAnalista.dashboard}">
-                        <i class='bx bx-line-chart'></i>
-                        <span class="tooltip-text">Análise de Modelos!</span>
-                    </a>
-                </li>
             </ul>
         </div>
         <div class="saida">
