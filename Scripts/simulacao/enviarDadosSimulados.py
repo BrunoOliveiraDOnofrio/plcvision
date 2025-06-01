@@ -17,8 +17,8 @@ def conexao_select():
     conexao_db = db.connect(
         host='127.0.0.1',
         port=3306,
-        user='laysa',
-        password='Urubu@100',
+        user='root',
+        password='linkinpark',
         database='plcvision'
     )
 
@@ -156,7 +156,7 @@ def simular_monitoramento():
             print('RODADA DE ALERTAS')
         random.shuffle(plcs)
         for plc in plcs:
-            enviar_monitoramento(plc, rodadaDeAlerta)
+            enviar_monitoramento(plc, True)
         time.sleep(1)
 
 simular_monitoramento()

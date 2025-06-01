@@ -1,10 +1,11 @@
 let empresaSelecionada
 let textoDoModal
-let idsPlcsParaMonitorar = [1];
+let idsPlcsParaMonitorar = [];
 let alertas 
 let tempoRealDados
 let ranking;
 let indiceAtualEmpresa = 0
+let atualizarGraficoInterval
 
 const buttonMudar = document.getElementById('btn_mudar_alertas')
 
@@ -21,7 +22,8 @@ const mostrarAlertasAlterados = () => {
         buttonMudar.innerText = "Voltar"
         buttonMudar.addEventListener('click', () => mostrarAlertasNormais())
      }else{
-        alert("Não há alertas que foram alterados no Jira")
+        mostrarModalSemAlertas()
+        return
     }
 }
 
@@ -183,8 +185,8 @@ const fillHtmlAlertas = (issues) => {
                                 </div>`
 
                             if(issue.plotar){
-                                    html += `<i class='bx  bx-x'></i>`
-                                    console.log("buceta")
+                                    html += `<i onclick="removerAlertasAlterados(this)" class='bx  bx-x'></i>`
+                                    
                             } 
                             html+=`</div>
                             <div class="desc-alerta">
@@ -200,6 +202,44 @@ const fillHtmlAlertas = (issues) => {
     });
     wrapper.innerHTML = html;
     criarCarrosselDeAlertas();
+}
+
+const buscarIssuesEAtualizarGraficos = async (razao_social) => {
+    fetch('/jira/alertas').then(response => response.json().then(async response =>{
+        
+        
+        console.log(response.issues)
+        
+        empresaSelecionada = response.issues.filter(empresa =>{
+            if(empresa.empresa == razao_social){
+                return empresa
+            }
+        })
+        // if(empresaSelecionada == [undefined]){
+        //     return await getEmpresasRankeadas()
+        // } 
+        
+        empresaSelecionada = empresaSelecionada[0]
+        
+        alertas = empresaSelecionada.issues
+        
+        await plotarQtdPlcsNoJira(empresaSelecionada.issues);
+        
+        await filtrarETrazerDadosTempoReal()
+        let {sortedMachineCriticality, sortedAlerts} =sortMachineDataAndAlerts(tempoRealDados, alertas)
+        if(sortedAlerts.length == 0){
+          sortedAlerts = alertas  
+        } else{
+            alertas = sortedAlerts
+        }
+        // fillHtmlAlertas(sortedAlerts);
+        fillLinhaDoTempo(sortedAlerts);
+        plotCriticalityChart(sortedMachineCriticality)
+        
+        
+        
+     }
+    ))
 }
 
 const getAlertasComTempoDeRespostaAtrasado = async (razao_social) => {
@@ -233,185 +273,214 @@ const getAlertasComTempoDeRespostaAtrasado = async (razao_social) => {
         fillHtmlAlertas(sortedAlerts);
         fillLinhaDoTempo(sortedAlerts);
         plotCriticalityChart(sortedMachineCriticality)
+        if(atualizarGraficoInterval) clearInterval(atualizarGraficoInterval)
+        atualizarGraficoInterval = setInterval(() => buscarIssuesEAtualizarGraficos(razao_social), 2*10000)
         ativarTela();
         iniciarVerificacoesSituacao()
      }
     ))
 } 
 Chart.register(ChartDataLabels);
+// function plotCriticalityChart(machineCriticalityData) {
+   
+   
+//     const sortedAndFilteredData = [...machineCriticalityData]
+//         .filter(machine => machine.vezesForaPadrao > 0) // Only include critical machines
+//         .sort((a, b) => b.vezesForaPadrao - a.vezesForaPadrao);
+
+    
+//     const topCriticalMachines = sortedAndFilteredData.slice(0, 5);
+
+    
+    
+//     const labels = topCriticalMachines.map(machine => `PLC - ${machine.maquina_id}`);
+//     const data = topCriticalMachines.map(machine => machine.vezesForaPadrao);
+
+    
+//     const ctx = document.getElementById('myChart').getContext('2d');
+
+    
+//     if (window.myChartInstance) {
+//         window.myChartInstance.destroy();
+//     }
+
+   
+//     window.myChartInstance = new Chart(ctx, {
+//         type: 'bar',
+//         data: {
+//             labels: labels, 
+//             datasets: [{
+//                 label: 'Vezes Fora do Padrão',
+//                 data: data,
+//                 backgroundColor: 'orangered',
+//                 borderRadius: 6,
+//                 barThickness: 30
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             maintainAspectRatio: false,
+//             plugins: {
+//                 legend: {
+//                     display: false 
+//                 },
+//                 datalabels: { 
+//                     display: true, 
+//                     anchor: 'end', 
+//                     align: 'end', 
+//                     offset: 4, 
+//                     color: 'black', 
+//                     font: {
+//                         weight: 'bold',
+//                         size: 12
+//                     },
+//                     formatter: function(value, context) {
+                       
+//                         const machineIndex = context.dataIndex;
+//                         const machine = topCriticalMachines[machineIndex];
+                       
+//                         return machine.campoMaisCritico + " (" + machine.valorMaisCritico + ")";
+//                     }
+//                 }
+//             },
+//             scales: {
+//                 y: {
+//                     beginAtZero: true,
+//                     max: 9,
+//                     title: {
+//                         display: true,
+//                         text: 'Registros Anormais', 
+//                         font: { size: 12, weight: 'bold' },
+//                         color: 'black'
+//                     },
+//                     ticks: {
+//                         stepSize: 1,
+//                         color: 'black',
+//                         font: { weight: 'bold' }
+//                     }
+//                 },
+//                 x: {
+//                     grid: {
+//                         display: false
+//                     },
+//                     title: {
+//                         display: true,
+//                         text: 'PLCs com Situação Crítica (Top 5)', 
+//                         font: { size: 14, weight: 'bold' },
+//                         color: 'black'
+//                     },
+//                     ticks: {
+//                         font: { size: 14, weight: 'bold', color: 'black' },
+                       
+//                     }
+//                 }
+//             }
+//         }
+//     });
+// }
+
 function plotCriticalityChart(machineCriticalityData) {
-    // Sort the machine criticality data by 'vezesForaPadrao' in descending order
-    // We'll filter out machines with 0 'vezesForaPadrao' as they are not critical
     const sortedAndFilteredData = [...machineCriticalityData]
         .filter(machine => machine.vezesForaPadrao > 0) // Only include critical machines
         .sort((a, b) => b.vezesForaPadrao - a.vezesForaPadrao);
 
-    // Take the top 5 (or fewer if less than 5 critical machines)
     const topCriticalMachines = sortedAndFilteredData.slice(0, 5);
 
-    // Prepare labels and data for the chart
-    // X-axis labels will now only show PLC ID
-    const labels = topCriticalMachines.map(machine => `PLC - ${machine.maquina_id}`);
-    const data = topCriticalMachines.map(machine => machine.vezesForaPadrao);
-
-    // Get the canvas context
     const ctx = document.getElementById('myChart').getContext('2d');
 
-    // Destroy existing chart if it exists to prevent re-rendering issues
+    
     if (window.myChartInstance) {
         window.myChartInstance.destroy();
+        window.myChartInstance = null; 
     }
 
-    // Create the new chart
-    window.myChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels, // Dynamically generated labels (e.g., 'PLC - 8', 'PLC - 4')
-            datasets: [{
-                label: 'Vezes Fora do Padrão', // Meaningful label for the dataset
-                data: data, // Dynamically generated data (vezesForaPadrao)
-                backgroundColor: 'orangered',
-                borderRadius: 6,
-                barThickness: 30
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false, // Allow canvas to resize freely
-            plugins: {
-                legend: {
-                    display: false // Hide legend as there's only one dataset
-                },
-                datalabels: { // Configuration for the datalabels plugin
-                    display: true, // Show the labels
-                    anchor: 'end', // Position the label at the end of the bar (top)
-                    align: 'end', // Align the label to the end of the bar (top)
-                    offset: 4, // Small offset from the bar
-                    color: 'black', // Color of the label text
-                    font: {
-                        weight: 'bold',
-                        size: 12
-                    },
-                    formatter: function(value, context) {
-                        // Get the original machine object for the current bar
-                        const machineIndex = context.dataIndex;
-                        const machine = topCriticalMachines[machineIndex];
-                        // Return the critical component name
-                        return machine.campoMaisCritico + " (" + machine.valorMaisCritico + ")";
-                    }
-                }
+    if (topCriticalMachines.length === 0) {
+        
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); 
+
+        ctx.font = '14px Arial';
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Nenhum PLC em estado crítico no momento atual.', ctx.canvas.width / 2, ctx.canvas.height / 2);
+
+    } else {
+        
+        const labels = topCriticalMachines.map(machine => `PLC - ${machine.maquina_id}`);
+        const data = topCriticalMachines.map(machine => machine.vezesForaPadrao);
+
+        window.myChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Vezes Fora do Padrão',
+                    data: data,
+                    backgroundColor: 'orangered',
+                    borderRadius: 6,
+                    barThickness: 30
+                }]
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 9,
-                    title: {
-                        display: true,
-                        text: 'Registros Anormais', // Updated Y-axis title
-                        font: { size: 12, weight: 'bold' },
-                        color: 'black'
-                    },
-                    ticks: {
-                        stepSize: 1, // Set step size to 1 for whole numbers of "vezesForaPadrao"
-                        color: 'black',
-                        font: { weight: 'bold' }
-                    }
-                },
-                x: {
-                    grid: {
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
                         display: false
                     },
-                    title: {
+                    datalabels: {
                         display: true,
-                        text: 'PLCs com Situação Crítica (Top 5)', // Updated X-axis title
-                        font: { size: 14, weight: 'bold' },
-                        color: 'black'
+                        anchor: 'end',
+                        align: 'end',
+                        offset: 4,
+                        color: 'black',
+                        font: {
+                            weight: 'bold',
+                            size: 12
+                        },
+                        formatter: function(value, context) {
+                            const machineIndex = context.dataIndex;
+                            const machine = topCriticalMachines[machineIndex];
+                            return machine.campoMaisCritico + " (" + machine.valorMaisCritico + ")";
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 9,
+                        title: {
+                            display: true,
+                            text: 'Registros Anormais',
+                            font: { size: 12, weight: 'bold' },
+                            color: 'black'
+                        },
+                        ticks: {
+                            stepSize: 1,
+                            color: 'black',
+                            font: { weight: 'bold' }
+                        }
                     },
-                    ticks: {
-                        font: { size: 14, weight: 'bold', color: 'black' },
-                        // Ensure labels are displayed correctly for multi-line text if needed, though now single line
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'PLCs com Situação Crítica (Top 5)',
+                            font: { size: 14, weight: 'bold' },
+                            color: 'black'
+                        },
+                        ticks: {
+                            font: { size: 14, weight: 'bold', color: 'black' },
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 }
 
-// function plotCriticalityChart(machineCriticalityData) {
-//   // Sort the machine criticality data by 'vezesForaPadrao' in descending order
-//   // We'll filter out machines with 0 'vezesForaPadrao' as they are not critical
-//   const sortedAndFilteredData = [...machineCriticalityData]
-//     .filter(machine => machine.vezesForaPadrao > 0) // Only include critical machines
-//     .sort((a, b) => b.vezesForaPadrao - a.vezesForaPadrao);
-
-//   // Take the top 5 (or fewer if less than 5 critical machines)
-//   const topCriticalMachines = sortedAndFilteredData.slice(0, 5);
-
-//   // Prepare labels and data for the chart
-//   const labels = topCriticalMachines.map(machine => `PLC - ${machine.maquina_id}\nCOMPONENTE - ${machine.campoMaisCritico}`);
-//   const data = topCriticalMachines.map(machine => machine.vezesForaPadrao);
-
-//   // Get the canvas context
-//   const ctx = document.getElementById('myChart').getContext('2d');
-
-//   // Destroy existing chart if it exists to prevent re-rendering issues
-//   if (window.myChartInstance) {
-//     window.myChartInstance.destroy();
-//   }
-
-//   // Create the new chart
-//   window.myChartInstance = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//       labels: labels, // Dynamically generated labels (e.g., 'PLC - 8', 'PLC - 4')
-//       datasets: [{
-//         label: 'Vezes Fora do Padrão', // Meaningful label for the dataset
-//         data: data, // Dynamically generated data (vezesForaPadrao)
-//         backgroundColor: 'orangered',
-//         borderRadius: 6,
-//         barThickness: 30
-//       }]
-//     },
-//     options: {
-//       responsive: true,
-//       plugins: {
-//         legend: {
-//           display: false // Hide legend as there's only one dataset
-//         }
-//       },
-//       scales: {
-//         y: {
-//           beginAtZero: true,
-//           title: {
-//             display: true,
-//             text: 'Quantidade de Registros Fora do Padrão', // Updated Y-axis title
-//             font: { size: 14, weight: 'bold' },
-//             color: 'black'
-//           },
-//           ticks: {
-//             stepSize: 1, // Set step size to 1 for whole numbers of "vezesForaPadrao"
-//             color: 'black',
-//             font: { weight: 'bold' }
-//           }
-//         },
-//         x: {
-//           grid: {
-//             display: false
-//           },
-//           title: {
-//             display: true,
-//             text: 'PLCs com Situação Crítica (Top 5)', // Updated X-axis title
-//             font: { size: 14, weight: 'bold' },
-//             color: 'black'
-//           },
-//           ticks: {
-//             font: { size: 14, weight: 'bold', color: 'black' },
-//           }
-//         }
-//       }
-//     }
-//   });
-// }
 
 
 const getEmpresasRankeadas = async () => {
@@ -443,15 +512,19 @@ const fillRanking = (empresas) => {
     empresas.forEach(empresa => {
         let cor = empresa.porcentagemBarra == 66 ? 'orange' : empresa.porcentagemBarra == 100 ? 'red' : 'green';
         let razao_social = empresa.razao_social.split(' ')[0]
-        html += `<div class="line-cliente">
+        html += `<div onclick="getAlertasComTempoDeRespostaAtrasado('${empresa.razao_social}')" class="line-cliente">
                         <span>${razao_social}</span>
                         <div class="barra-criticidade">
                             <div style="width: ${empresa.porcentagemBarra}%; background-color:${cor}" class="barra-preenchida"></div>
                         </div>
+                        <div class="monitor-tooltip">
+                        Clique para monitorar
+                         </div>
                     </div>`
 
     });
     ranking.innerHTML = html;
+
 }
 
 const fillDistribuicaoDeAlertas = (empresas) => {
@@ -461,7 +534,7 @@ const fillDistribuicaoDeAlertas = (empresas) => {
         let razao_social = empresa.razao_social.split(' ')[0]
         let critico = empresa.criticos ? empresa.criticos : 0
         let atencao = empresa.atencao ? empresa.atencao : 0
-        html += `<div class="line-cliente">
+        html += `<div onclick="getAlertasComTempoDeRespostaAtrasado('${empresa.razao_social}')" class="line-cliente">
                         <span>${razao_social}</span>
                         <div class="alertas-rounded">
                             <div class="criticos">
@@ -471,9 +544,13 @@ const fillDistribuicaoDeAlertas = (empresas) => {
                                 <span>Atenção ${atencao}</span>
                             </div>
                         </div>
+                        <div class="monitor-tooltip">
+                            Clique para monitorar
+                        </div>
                     </div>`
     })
     divQtdAlertas.innerHTML = html;
+   
 
 
 

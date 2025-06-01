@@ -168,7 +168,7 @@
             </div>
             <div class="card-expansive">
                 <div class="titulo">
-                    <span>Clientes com estado crítico</span>
+                    <span>Clientes rankeados por criticidade</span>
                     <i onclick="recolherCard()" class='bx  bx-caret-down'></i>
                 </div>
                 <div id="lista_empresa_criticidade" class="clientes-content">
@@ -425,6 +425,18 @@
     <p id="p_alerta_att"></p>
     <button onclick="fecharModalAtualizacao()">OK</button>
   </div>
+  <audio id="myAudio" src="../../sounds/sucesso.mp3"></audio>
+</dialog>
+
+
+<dialog class="modal-sucesso" id="modalSemAlertas">
+  <div class="modal-sucesso-content">
+    
+    <h2>Sem alertas em Progresso no Jira</h2>
+    <p id="p_alerta_att"></p>
+    <button onclick="fecharModalSemAlertas()">OK</button>
+  </div>
+  
 </dialog>
 </body>
 

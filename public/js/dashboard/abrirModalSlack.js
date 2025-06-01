@@ -68,7 +68,7 @@ const enviarMensagem = () => {
     let mensagem = p_mensagem.innerText;
     let obs = document.querySelector('#text_message').value;
     console.log(mensagem);
-    const url = 'https://hooks.slack.com/services/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';
+    const url = 'https://hooks.slack.com/services/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';
     const data = {
         color: '#FF0000',
         
@@ -164,7 +164,17 @@ function mostrarModalSucesso() {
   }
 }
 
+function mostrarModalSemAlertas() {
+  const modal = document.getElementById('modalSemAlertas');
+  modal.style.display = 'flex';
+  if (modal) {
+    modal.showModal();
+  }
+}
+
 function mostrarModalAtualizacao(texto) {
+  const audio = document.getElementById('myAudio');
+  audio.play();
   const modal = document.getElementById('modalAtualizacao');
   p_alerta_att.innerText = "Chamado: "+texto
   modal.style.display = 'flex';
@@ -181,6 +191,14 @@ function fecharModalSucesso() {
   }
 }
 
+function fecharModalSemAlertas() {
+  const modal = document.getElementById('modalSemAlertas');
+  modal.style.display = 'none';
+  if (modal) {
+    modal.close();
+  }
+}
+
 function fecharModalAtualizacao() {
   const modal = document.getElementById('modalAtualizacao');
   modal.style.display = 'none';
@@ -189,7 +207,22 @@ function fecharModalAtualizacao() {
   }
 }
 
+
+const removerAlertasAlterados = (element) => {
+  clearInterval(verificarSituacaoInterval)
+  const issueKeyAremover = element.parentNode.parentNode.id
+  alertasComunicados = alertasComunicados.filter(alerta => alerta.issueKey !== issueKeyAremover)
+  let alertasComunicadosString = JSON.stringify(alertasComunicados)
+  sessionStorage.setItem('ALERTAS', alertasComunicadosString)
+  element.parentNode.parentNode.remove()
+  if(alertasComunicados.length > 0) return
+  mostrarAlertasNormais()
+  setTimeout(() => iniciarVerificacoesSituacao(), 2000)
+  
+}
+
 const adicionarAlertaNoSessionStorage = (key) => {
+  clearInterval(verificarSituacaoInterval)
   let alertaCerto = alertas.filter(alerta => alerta.issueKey == key ? alerta : null)
   alertasComunicados.push(alertaCerto[0])
   if(!sessionStorage.ALERTAS){
@@ -202,6 +235,6 @@ const adicionarAlertaNoSessionStorage = (key) => {
   alertasComunicadosJson.push(alertaCerto[0])
   let alertasComunicadosString = JSON.stringify(alertasComunicadosJson)
   sessionStorage.setItem('ALERTAS', alertasComunicadosString)
-
+  setTimeout(() => iniciarVerificacoesSituacao(), 2000)
 
 }

@@ -163,10 +163,10 @@ function rankearEmpresasCriticidade(empresas, alertas){
 
     empresas.map((empresa) => {
         
-        empresa['criticidade'] = empresa.foraPadrao1 + (empresa.foraPadrao2 * 1.2) + (empresa.foraPadrao3 * 1.8)  
+        empresa['criticidade'] = empresa.foraPadrao1 / 100 + (empresa.foraPadrao2 /100 * 1.2) + (empresa.foraPadrao3/100 * 1.8)  
         alertas.forEach(alerta => {
             if(empresa.razao_social == alerta.empresa){
-                empresa['criticidade'] += (alerta.qtdIssuesCriticos * 3) + (alerta.qtdIssuesAtencao * 2) 
+                empresa['criticidade'] += (alerta.qtdIssuesCriticos * 30) + (alerta.qtdIssuesAtencao * 20) 
                 
             }
         })
@@ -306,6 +306,8 @@ async function agruparComportamentosForaPadrao(dados) {
 async function buscarAlertasDasUltimas24Horas(empresas){
     const alertasPorEmpresa = await jiraController.getAlertasParaNivelDeCriticidade()
     alertasPorEmpresa.map(alerta => {
+        const plcsIds = alerta.issues.map(issue => issue.plcId)
+        alerta.idsPlcs = [...new Set(plcsIds)]
         alerta.issues = alerta.issues.length
     })
 

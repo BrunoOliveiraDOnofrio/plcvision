@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const monitoramentoService = require('../services/monitoramentoService')
+const empresaModel = require('../models/consumidorModel')
 
 
 const path = require("path");
@@ -27,10 +28,21 @@ router.get("/", function (req, res) {
 router.get('/monitoramento/empresas', async (req, res) => {
     let response  = "No data";
 
-    const dadosAgrupados = await monitoramentoService.agruparComportamentosForaPadrao(dados)
     const alertas = await monitoramentoService.buscarAlertasDasUltimas24Horas(1)
+    const dadosFiltradosIdsEspecificos = dados
+    dadosFiltradosIdsEspecificos.map(async dado => {
+        const responseEmpresa = await empresaModel.getRazaoSocialById(dado.empresa)
+        dado.razao_social = responseEmpresa[0].razao_social
+        const alertaCerto = alertas.filter(alerta => alerta.empresa == dado.razao_social)
+        const idsPlcs = alertaCerto[0].idsPlcs
+        console.log(idsPlcs)
+        dado.plcs = monitoramentoService.filtrarPorIdsEspecificos(dado.plcs, idsPlcs)
+        // dado.
+        // if(dado.razao_social == )
+    })
+    const dadosAgrupados = await monitoramentoService.agruparComportamentosForaPadrao(dadosFiltradosIdsEspecificos)
     const empresasRankeadas = monitoramentoService.rankearEmpresasCriticidade(dadosAgrupados, alertas)
-    
+    console.log(dadosAgrupados)
     res.status(200).json(empresasRankeadas)
 })
 

@@ -92,6 +92,7 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
     
     // Título dinâmico com base nas informações do alerta
     const nivelAlerta = alertaInfo.nivel === 1 ? "Crítico" : "Atenção";
+    const priority = alertaInfo.nivel === 1? "High" : "Medium"
     if(alertaInfo.hardware == undefined || alertaInfo.hardware == null || alertaInfo.hardware == '' || alertaInfo.valor == 0 || alertaInfo.valor == undefined || alertaInfo.valor == null){
       console.log("SAIA");
       
@@ -147,7 +148,10 @@ const openJiraTaskSendSlackNotification = async (alertaInfo) => {
         },
         issuetype: {
           name: "Task"
-        }
+        },
+        priority: {
+        name: priority
+      }
       }
     };
     

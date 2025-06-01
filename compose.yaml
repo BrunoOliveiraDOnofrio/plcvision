@@ -1,0 +1,18 @@
+services:
+    site: 
+        image: hugocarval/plcvision-site:1.2
+        ports:
+              - "80:3000"
+        networks: 
+              - rede-compose
+        depends_on: 
+              - db
+    db: 
+        image: hugocarval/mysql-plcvision:1.1
+        ports:
+              - "3307:3306"
+        networks: 
+              - rede-compose
+networks:
+    rede-compose:
+        driver: bridge

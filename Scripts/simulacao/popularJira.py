@@ -89,12 +89,12 @@ def gerar_csv_plc(plc_id, config_id, data_base):
 
 
 
-def gerar_datetimes_atrasados(qtd=100, atraso_min_horas=8):
+def gerar_datetimes_atrasados(qtd=100, atraso_min_horas=5):
     agora = datetime.now()
     datetimes = []
     for _ in range(qtd):
         # Gera um atraso aleatório entre 8 e 48 horas atrás
-        atraso_horas = random.uniform(atraso_min_horas, 168)
+        atraso_horas = random.randint(atraso_min_horas, 23)
         dt = agora - timedelta(hours=atraso_horas)
         datetimes.append(dt)
     return datetimes
@@ -207,8 +207,13 @@ def enviar_monitoramento(plc, rodadaDeAlerta, horario, horarioMysql, maxAlertas)
             break
         
         if True:
-            valor = random.randint(limite_atencao + 1, limite_critico + 1)
-            selectsInfos.inserirAlertaSimulado(horarioMysql,horario ,config_id, valor, f"{hardware} {tipo_dado}", 1, tipo_dado, unidade_dado, hardware, fabrica_id, id_plc)
+            nivel = random.randint(1, 2)
+            valor = random.randint(limite_atencao + 1, limite_critico -1)
+            if nivel == 1:
+                valor = random.randint(limite_critico + 1, limite_critico + 2)
+
+            
+            selectsInfos.inserirAlertaSimulado(horarioMysql,horario ,config_id, valor, f"{hardware} {tipo_dado}", nivel, tipo_dado, unidade_dado, hardware, fabrica_id, id_plc)
             print("inseriu um novo alerta")
             horariosComAlertasEConfig.append({
                 "horario" : horarioMysql,
@@ -245,7 +250,7 @@ def simular_monitoramento():
             maxAlertas = 40
         else:
             maxAlertas = 12
-        horarios = gerar_datetimes_atrasados(100, 8)
+        horarios = gerar_datetimes_atrasados(100, 5)
         for i, plc in enumerate(plcs) :
             print("chamando enviar monitoramento")
             enviar_monitoramento(plc, True, horarios[i].strftime("%Y-%m-%dT%H:%M:%S.000+0000"),horarios[i].strftime("%Y-%m-%d %H:%M:%S"),maxAlertas )

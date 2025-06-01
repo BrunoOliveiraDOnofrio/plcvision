@@ -1,3 +1,31 @@
+.line-cliente {
+    position: relative; /* Needed for absolute positioning of the tooltip */
+    /* Add any existing styles for your .line-cliente here */
+    
+    
+    cursor: pointer; /* Indicates it's clickable */
+}
+
+.monitor-tooltip {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for perfect centering */
+    background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap; /* Prevents text from wrapping */
+    pointer-events: none; /* Allows clicks to pass through to the element underneath */
+    z-index: 10; /* Ensures it appears above other content */
+}
+
+.line-cliente:hover .monitor-tooltip {
+    display: block; /* Show on hover */
+}
+
 
 .sempre-em-frente{
     width: 100%;
