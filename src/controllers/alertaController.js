@@ -385,7 +385,7 @@ const jiraAbertoValidade = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory != Done AND cf[10092] <= -36h&fields=key,summary,status,created,customfield_10092&maxResults=1000`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project= "Suporte Populacao 3" AND cf[10092] <= -24h AND statusCategory = new&fields=customfield_10092`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -513,7 +513,7 @@ const alertaTraceroute = async (req, res) => {
     // O 'expand=changelog' é crucial para podermos verificar a data da transição de status.
     const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND (cf[10092] >= "-7d" OR resolutiondate >= "-7d")&fields=created,status,customfield_10092,resolutiondate&expand=changelog&maxResults=1000`;
 
-try {
+    try {
         const response = await fetch(urlApiJira, {
             method: "GET",
             headers: {
@@ -559,7 +559,7 @@ try {
             if (alerta.fields.status && alerta.fields.status.name === "Concluído") {
                 let dataResolucaoParaContagem = null;
 
-                // 1. Prioridade Máxima: Tenta usar o campo 'resolutiondate' do Jira
+                // 1. pegar os alertas que foram resolvidos manualmente
                 if (alerta.fields.resolutiondate) {
                     const jiraResolutionMoment = moment(alerta.fields.resolutiondate).utcOffset('-03:00').startOf('day');
                     if (jiraResolutionMoment.isSameOrAfter(moment().subtract(7, 'days').startOf('day'))) {
@@ -567,26 +567,23 @@ try {
                     }
                 }
 
-                // 2. Segunda Prioridade: Tenta usar o changelog (se resolutiondate não for usado ou não estiver no período)
-                //    Isso é útil se resolutiondate estiver ausente mas a transição para "Concluído" existir.
-                if (!dataResolucaoParaContagem && alerta.changelog && alerta.changelog.histories) {
-                    for (const history of alerta.changelog.histories) {
-                        for (const item of history.items) {
-                            if (item.field === "status" && item.toString === "Concluído") {
-                                const changelogResolutionMoment = moment(history.created).utcOffset('-03:00').startOf('day');
-                                if (changelogResolutionMoment.isSameOrAfter(moment().subtract(7, 'days').startOf('day'))) {
-                                    dataResolucaoParaContagem = changelogResolutionMoment;
-                                    break; // Encontrou a primeira transição para Concluído
-                                }
-                            }
-                        }
-                        if (dataResolucaoParaContagem) break;
-                    }
-                }
+                // 2. pegar os alertas resolvidos simulados, pegando o changeLog
+                // if (!dataResolucaoParaContagem && alerta.changelog && alerta.changelog.histories) {
+                //     for (const history of alerta.changelog.histories) {
+                //         for (const item of history.items) {
+                //             if (item.field === "status" && item.toString === "Concluído") {
+                //                 const changelogResolutionMoment = moment(history.created).utcOffset('-03:00').startOf('day');
+                //                 if (changelogResolutionMoment.isSameOrAfter(moment().subtract(7, 'days').startOf('day'))) {
+                //                     dataResolucaoParaContagem = changelogResolutionMoment;
+                //                     break;
+                //                 }
+                //             }
+                //         }
+                //         if (dataResolucaoParaContagem) break;
+                //     }
+                // }
 
-                // 3. Terceira Prioridade: Se nenhuma das datas reais foi usada, tenta usar o PROXY (cf[10092])
-                //    Isso captura alertas simulados que já estão "Concluídos" e foram criados recentemente,
-                //    mas não têm uma data de resolução real no Jira nos últimos 7 dias.
+                // 3.customField como proxy para a data de resolução (alerta que ja vem concluido) para simulação
                 if (!dataResolucaoParaContagem && alerta.fields[alertaDateField]) { // alertaDateField é customfield_10092
                     const proxyResolutionMoment = moment(alerta.fields[alertaDateField]).utcOffset('-03:00').startOf('day');
                     if (proxyResolutionMoment.isSameOrAfter(moment().subtract(7, 'days').startOf('day'))) {

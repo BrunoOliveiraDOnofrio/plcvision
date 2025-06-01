@@ -294,8 +294,10 @@
             })
             .then((data) => {
                 console.log("Resposta da KPI5:", data);
-                if(data.mediaHoras > 24){
-                    demora.style.boxShadow = "1px 6px 12px 9px rgba(223, 32, 20, 0.61)";
+                if(data.mediaHoras >= 24){
+                    demora.style.boxShadow = "1px 6px 12px 9px rgba(255, 51, 51, 0.61)"
+                }else if(data.mediaHoras >= 8) {
+                    demora.style.boxShadow = "1px 6px 12px 9px rgba(255, 204, 0, 0.61)";
                 }
                 kpi5.innerHTML = data.mediaHoras + " Horas";
             })

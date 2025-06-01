@@ -73,13 +73,10 @@ console.log(divMenuDesk)
                         <li>
                             <a href="${enderecoApp + rotasAdm.monitoramento}">
                                 <span>Dashboard</span>
+                                
                             </a>
                         </li>
-                        <li>
-                            <a href="${enderecoApp + rotasAdm.alertas}">
-                                <span>Alertas</span>
-                            </a>
-                        </li>
+
                         
                         <li>
                             <a onclick="logout()">
@@ -93,47 +90,54 @@ console.log(divMenuDesk)
         const div_side_bar = document.querySelector('#nav_sidebar')
         div_side_bar.innerHTML = ` <div class="inicio">
             <ul>
-                <li>
-                    <a href="${enderecoApp + rotasAdm.monitoramento}">
-                        <i class='bx bx-bar-chart-square'></i>
+                
+                <li class="tooltip-container">
+                    <a href="${enderecoApp + rotasAdm.plcs}">
+                        <i class='bx bx-briefcase'></i>
+                        <span class="tooltip-text">Product Overview!</span>
                     </a>
                 </li>
-                <li>
-                    <a href="${enderecoApp + rotasAdm.dashboard}">
-                        <i class='bx bx-timer'></i>
+
+                <li class="tooltip-container">
+                    <a href="${enderecoApp + rotasAdm.plcs}">
+                        <i class='bx bx-hard-hat' ></i>
+                        <span class="tooltip-text">Desempenho da Equipe!</span>
                     </a>
                 </li>
-                <li>
+
+                <li class="tooltip-container">
                     <a href="${enderecoApp + rotasAdm.consumidores} ">
                         <i class='bx bx-group'></i>
+                        <span class="tooltip-text">Lista de Consumidores!</span>
                     </a>
                 </li>
-                <li>
-                    <a href="${enderecoApp + rotasAdm.alertas}">
-                        <i class='bx bxs-bell-ring' ></i>
-                    </a>
-                </li>
-                <li>
+
+                <li class="tooltip-container">
                     <a href="${enderecoApp + rotasAdm.fabricas}">
                         <i class='bx bxs-factory'></i>
+                        <span class="tooltip-text">Lista de Fábricas!</span>
                     </a>
                 </li>
-                <li>
+                <li class="tooltip-container">
                     <a href="${enderecoApp + rotasAdm.setores}">
                 <i class='bx bx-category-alt'></i>
-                        
+                        <span class="tooltip-text">Lista de Setores!</span>
                     </a>
                 </li>
-                <li>
+                <li class="tooltip-container">
                     <a href="${enderecoApp + rotasAdm.usuarios}">
                         <i class='bx bxs-user'></i>
+                        <span class="tooltip-text">Lista de Usuários!</span>
                     </a>
                 </li>
-                <li>
+                <li class="tooltip-container">
                     <a href="${enderecoApp + rotasAdm.plcs}">
                         <i class='bx bx-desktop'></i>
+                        <span class="tooltip-text">Listas de PLC's!</span>
                     </a>
                 </li>
+
+
             </ul>
         </div>
         <div class="saida">
@@ -151,20 +155,12 @@ console.log(divMenuDesk)
         html_menu = `
         <nav>
                     <ul>
-                        <li>
-                            <a href="${enderecoApp + rotasAnalista.dashboard}">
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="${enderecoApp + rotasAnalista.alertas}">
-                                <span>Alertas</span>
-                            </a>
-                        </li>
                         
-                        <li>
+
+                        <li class="tooltip-container">
                             <a onclick="logout()">
                                 <span>Sair</span>
+                                <span class="tooltip-text">Sair!</span>
                             </a>
                         </li>
                     </ul>
@@ -176,28 +172,44 @@ console.log(divMenuDesk)
         sidebar.innerHTML = `<div class="inicio">
             <ul>
              
-                <li>
-                    <a href="${enderecoApp + rotasAnalista.dashboard}">
-                        <i class='bx bx-timer'></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="${enderecoApp + rotasAnalista.alertas}">
-                        <i class='bx bxs-bell-ring'></i>
-                    </a>
-                </li>
-                <li>
+                
+
+                <li class="tooltip-container">
                     <a href="${enderecoApp + rotasAnalista.plcs}">
                         <i class='bx bx-desktop'></i>
+                        <span class="tooltip-text">Lista de PLC's!</span>
+                    </a>
+                </li>
+
+                <li class="tooltip-container">
+                    <a href="${enderecoApp + rotasAnalista.dashboard}">
+                        <i class='bx bx-bulb' ></i> 
+                        <span class="tooltip-text">Análise Pix!</span>
+                    </a>
+                </li>
+
+                
+                <li class="tooltip-container">
+                    <a href="${enderecoApp + rotasAnalista.dashboard}">
+                        <i class='bx bx-microchip'></i> 
+                        <span class="tooltip-text">Análise Componentes!</span>
+                    </a>
+                </li>
+                
+                <li class="tooltip-container">
+                    <a href="${enderecoApp + rotasAnalista.dashboard}">
+                        <i class='bx bx-line-chart'></i>
+                        <span class="tooltip-text">Análise de Modelos!</span>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="saida">
             <ul>
-                <li>
+                <li class="tooltip-container">
                     <a href="#">
                         <i class='bx bx-exit'></i>
+                        <span class="tooltip-text">Sair!</span>
                     </a>
                 </li>
             </ul>
@@ -206,20 +218,18 @@ console.log(divMenuDesk)
         html_menu = `
         <nav>
                     <ul>
-                        <li>
+                        <li class="tooltip-container">
                             <a href="${enderecoApp + rotasTempoReal.monitoramento}">
                                 <span>Dashboard</span>
+                                <span class="tooltip-text">Análise de ...!</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="${enderecoApp + rotasTempoReal.alertas}">
-                                <span>Alertas</span>
-                            </a>
-                        </li>
+
                         
-                        <li>
+                        <li class="tooltip-container">
                             <a onclick="logout()">
                                 <span>Sair</span>
+                                <span class="tooltip-text">Sair!</span>
                             </a>
                         </li>
                     </ul>
@@ -235,11 +245,7 @@ console.log(divMenuDesk)
                         <i class='bx bx-bar-chart-square'></i>
                     </a>
                 </li>
-                <li>
-                    <a href="${enderecoApp + rotasTempoReal.alertas}">
-                        <i class='bx bxs-bell-ring' ></i>
-                    </a>
-                </li>
+
                
                
                 <li>
@@ -247,6 +253,8 @@ console.log(divMenuDesk)
                         <i class='bx bx-desktop'></i>
                     </a>
                 </li>
+
+                
             </ul>
         </div>
         <div class="saida">
