@@ -92,9 +92,14 @@ function carregarKPI4(){
 
 
 // Gráfico de Meta
-function gerarMetaVendas (){
-  let metaTotal = 100;
-    let qtdAtingida = 74;
+async function gerarMetaVendas (){
+
+  const request = await fetch(`/adm/dashNegocio/prctMeta/${sessionStorage.getItem('EMPRESA_ID')}`)
+
+  const json = await request.json();
+
+  let metaTotal = json.meta;
+    let qtdAtingida = json.atual;
 
     let qtdAtual = (qtdAtingida / metaTotal) * 100;
     let metaPedidos = 100 - qtdAtual;
@@ -145,7 +150,7 @@ function gerarMetaVendas (){
             enabled: true,
             y: {
                 formatter: function(val) {
-                    return parseFloat(val).toFixed(0) + "%";
+                    return parseFloat(val).toFixed(1) + "%";
                 }
             }
         },
@@ -287,6 +292,11 @@ var optionsDefeitos = {
           name: "% Defeitos",
           data: dados,
           colors: ['#4B5293']
+      },
+      {
+        name: "% Média de Defeitos",
+        data: Array(dados.length).fill(25),
+        colors: ['#FF0000']   
       }],
         chart: {
           height: 280,

@@ -118,6 +118,21 @@ function taxaDefeitosPorModelo(req,res){
     })
 }
 
+async function prctMeta(req, res) {
+
+    var empresaId = req.params.empresaId
+
+    try {
+       var funcao =  await dashNegocioModel.getPrctMeta(empresaId);
+       res.json(funcao)
+
+    } catch (error) {
+        res.status(500).json(error.sqlMessage)
+        console.log(error)
+    }
+
+}
+
 
 module.exports = {
     empresaMaisAfetada,
@@ -125,5 +140,6 @@ module.exports = {
     modeloMaisAfetado,
     taxaDefeitosMes,
     taxaDefeitosPorModelo,
-    modeloMaisVendido
+    modeloMaisVendido,
+    prctMeta
 }

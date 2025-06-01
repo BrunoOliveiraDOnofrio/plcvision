@@ -38,7 +38,6 @@ function getDefeitosPorModelo(empresaId) {
 
     console.log();
     return database.executar(sql);
-
 }
 
 function getModeloMaisVendido(empresaId) {
@@ -49,6 +48,24 @@ function getModeloMaisVendido(empresaId) {
     return database.executar(sql);
 }
 
+async function getPrctMeta(empresaId) {
+
+    const metaSql = `SELECT meta_de_vendas AS meta, mes FROM meta_vendas
+    WHERE MONTH(data_hora) = MONTH(NOW());`
+
+    const qtdAtual = `SELECT SUM(qtd) AS qtdTotal FROM painel_vendas
+    WHERE MONTH(dtHora) = MONTH(NOW());`
+
+    const meta = await database.executar(metaSql);
+    const atual = await database.executar(qtdAtual);
+    
+    return {
+        meta : meta[0].meta,
+        atual : atual[0].qtdTotal
+    }
+
+}
+
 
 module.exports = {
     getEmpresaMaisAfetada,
@@ -56,5 +73,6 @@ module.exports = {
     getModeloMaisAfetado,
     getPrctDefeitosMes,
     getDefeitosPorModelo,
-    getModeloMaisVendido
+    getModeloMaisVendido,
+    getPrctMeta
 }
