@@ -144,51 +144,69 @@
                 </div>
         </div>
         <div class="content-wrapper">
-            <div class="metade">
-                <div class="KPIs">
-                    <div class="kpi">
-                        <div class="titulo">Horario com maior uso RAM</div>
-                        <div class="valor" id="maiorRAM"></div>
-                    </div>
-                    <div class="kpi">
-                        <div class="titulo">Horario com maior uso CPU</div>
-                        <div class="valor" id="maiorUsoCPU"></div>
-                    </div>
-                    <div class="kpi">
-                        <div class="titulo">Maior aumento CPU</div>
-                        <div class="valor" id="maiorAumentoCPU"></div>
-                    </div>
-                    <div class="kpi">
-                        <div class="titulo">Maior aumento RAM</div>
-                        <div class="valor" id="maiorAumentoRAM"></div>
-                    </div>
+    <div class="metades-container">
+        <div class="metade">
+            <div class="KPIs">
+                <div class="kpi">
+                    <div class="titulo">Horario com maior uso RAM</div>
+                    <div class="valor" id="maiorRAM"></div>
                 </div>
-                <div class="graficoRede">
-                    <canvas id="graficoPorcentagem"></canvas>
+                <div class="kpi">
+                    <div class="titulo">Horario com maior uso CPU</div>
+                    <div class="valor" id="maiorUsoCPU"></div>
+                </div>
+                <div class="kpi">
+                    <div class="titulo">Maior aumento CPU</div>
+                    <div class="valor" id="maiorAumentoCPU"></div>
+                </div>
+                <div class="kpi">
+                    <div class="titulo">Maior aumento RAM</div>
+                    <div class="valor" id="maiorAumentoRAM"></div>
                 </div>
             </div>
-            <div class="metade">
-                <div class="KPIs">
-                    <div class="kpi">
-                        <div class="titulo">Horário alertas RAM
-                        </div>
-                        <div class="valor" id="KPIAlertasRam"></div>
-                    </div>
-                    <div class="kpi">
-                        <div class="titulo">Horário com mais alertas CPU</div>
-                        <div class="valor" id="KPIAlertasCpu"></div>
-                    </div>
-                    <div class="kpi">
-                        <div class="titulo">Quantida de alertas dentro do período</div>
-                        <div class="valor" id="quantidadeAlertas"></div>
-                    </div>
-                </div>
-                <div class="graficoRede">
-                    <canvas id="graficoBarra2"></canvas>
-                </div>
-
+            <div class="graficoRede">
+                <canvas id="graficoPorcentagem"></canvas>
             </div>
         </div>
+        <div class="metade">
+            <div class="KPIs">
+                <div class="kpi">
+                    <div class="titulo">Horário alertas RAM</div>
+                    <div class="valor" id="KPIAlertasRam"></div>
+                </div>
+                <div class="kpi">
+                    <div class="titulo">Horário com mais alertas CPU</div>
+                    <div class="valor" id="KPIAlertasCpu"></div>
+                </div>
+                <div class="kpi">
+                    <div class="titulo">Quantida de alertas dentro do período</div>
+                    <div class="valor" id="quantidadeAlertas"></div>
+                </div>
+            </div>
+            <div class="graficoRede">
+                <canvas id="graficoBarra2"></canvas>
+            </div>
+        </div>
+    </div>
+    <div id="listagem">
+        <div class="tituloTabel">Listagem de maiores problemas de Componentes</div>
+        <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Fabrica</th>
+                        <th>Setor</th>
+                        <th>Modelo</th>
+                        <th>Componente</th>
+                        <th>Problemas</th>                        
+                    </tr>
+                </thead>
+                <tbody id="dados_alertas_tbody">
+                    
+                </tbody>
+            </table>
+    </div>
+</div>
     </div>
 
     <script src="../../js/nav_sidebar.js"></script>

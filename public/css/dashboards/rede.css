@@ -11,6 +11,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .mainRede {
     padding-top: 70px;
     display: flex;
@@ -20,6 +21,9 @@
     padding-left: 0; 
 }
 
+.tabela{
+    background-color: #f3f4f6;
+}
 .filtro-area {
     width: 100%;
     padding: 10px;
@@ -50,6 +54,47 @@
 }
 
 
+.metades-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.tituloTabel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: #334155;
+  
+  text-align: center;
+  
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+  
+  border-bottom: 1px solid #e2e8f0;
+  
+  width: 90%;
+  margin-left: auto; 
+  margin-right: auto;
+  
+  letter-spacing: 0.5px;
+}
+
+#listagem {
+    width: 100%;
+    padding: 20px;
+    background-color: #FFFFFF;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
 @media only screen and (min-width: 768px) {
     .filtro-area {
         flex-direction: row;
@@ -70,15 +115,20 @@
         padding-left: 70px;
     }
     
-    .content-wrapper {
+    /* As metades ficam lado a lado em telas grandes */
+    .metades-container {
         flex-direction: row;
         padding-left: 7px;
     }
-
-    
     
     .metade {
         width: 50%;
+    }
+    
+    /* A listagem continua embaixo, ocupando toda a largura */
+    #listagem {
+        margin-left: 7px;
+        margin-right: 7px;
     }
 }
 
@@ -90,7 +140,7 @@
         flex-direction: row;
         flex-wrap: wrap;
     }
- .divFiltro {
+    .divFiltro {
         width: 45%;
     }
 }

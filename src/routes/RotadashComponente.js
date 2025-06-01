@@ -6,6 +6,10 @@ router.get('/obterAlertasPorHorarioRam/:data', function(req, res){
     controller.obterAlertasPorHorarioRam(req, res)
 })
 
+router.get('/obterAlertasEspecificos/:data', function(req, res){
+    controller.obterAlertasEspecificos(req, res)
+})
+
 router.get('/obterAlertasPorHorario/:data', function(req, res){
     controller.obterAlertasPorHorario(req, res)
 })

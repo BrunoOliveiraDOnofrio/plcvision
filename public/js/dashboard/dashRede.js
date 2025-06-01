@@ -1,16 +1,13 @@
-let graficoDeBarra; 
+let graficoDeBarra;
 let todosOsDadosDoServidor;
 
-let horasParaGraficoAlertas = []; 
-let contagemAlertasCpu = []; 
-let contagemAlertasRam = []; 
-let graficoDeBarrasAlertas; 
+let horasParaGraficoAlertas = [];
+let contagemAlertasCpu = [];
+let contagemAlertasRam = [];
+let graficoDeBarrasAlertas;
 
 function iniciarGraficoDeLinha() {
     const canvasDoGraficoDeLinha = document.getElementById('graficoPorcentagem');
-    if (!canvasDoGraficoDeLinha) {
-        return; 
-    }
 
     graficoDeBarra = new Chart(canvasDoGraficoDeLinha, {
         type: 'bar',
@@ -18,7 +15,7 @@ function iniciarGraficoDeLinha() {
             labels: [],
             datasets: [
                 {
-                    label: 'Uso de CPU %',
+                    label: 'Média Uso de CPU %',
                     data: [],
                     backgroundColor: 'rgba(0, 102, 255, 0.6)',
                     borderColor: 'rgb(0, 0, 0)',
@@ -27,7 +24,7 @@ function iniciarGraficoDeLinha() {
                     yAxisID: 'y'
                 },
                 {
-                    label: 'Uso de RAM %',
+                    label: 'Média Uso de RAM %',
                     data: [],
                     backgroundColor: 'rgba(84, 0, 112, 0.7)',
                     borderColor: 'rgb(0, 0, 0)',
@@ -63,7 +60,7 @@ function obterDataAnteriorFormatada(opcaoDePeriodo) {
     } else if (opcaoDePeriodo == "03") {
         dataCalculada.setDate(dataCalculada.getDate() - 180);
     } else {
-        dataCalculada.setDate(dataCalculada.getDate() - 7);
+        dataCalculada.setDate(dataCalculada.getDate() - 180);
     }
 
     const ano = dataCalculada.getFullYear();
@@ -80,35 +77,31 @@ function obterDataAnteriorFormatada(opcaoDePeriodo) {
 }
 
 function atualizarGraficoDeLinhaEKPIsDeUso(opcaoDePeriodo) {
-    if (!graficoDeBarra || !graficoDeBarra.data || !todosOsDadosDoServidor) {
-        return;
-    }
-
     let dadosParaExibir;
     let nomeCampoCpu, nomeCampoRam;
     let tituloLinhaCpu, tituloLinhaRam;
 
-    if (opcaoDePeriodo === "01") {
+    if (opcaoDePeriodo == "01") {
         dadosParaExibir = todosOsDadosDoServidor.media_cpu_ram_ultima_semana_por_hora;
         nomeCampoCpu = "media_cpu_ultima_semana_hora";
         nomeCampoRam = "media_ram_ultima_semana_hora";
         tituloLinhaCpu = "CPU % (Última Semana)";
         tituloLinhaRam = "RAM % (Última Semana)";
-    } else if (opcaoDePeriodo === "02") {
+    } else if (opcaoDePeriodo == "02") {
         dadosParaExibir = todosOsDadosDoServidor.media_cpu_ram_ultimo_mes_por_hora;
         nomeCampoCpu = "media_cpu_ultimo_mes_hora";
         nomeCampoRam = "media_ram_ultimo_mes_hora";
         tituloLinhaCpu = "CPU % (Último Mês)";
         tituloLinhaRam = "RAM % (Último Mês)";
-    } else { 
+    } else {
         dadosParaExibir = todosOsDadosDoServidor.media_cpu_ram_ultimos_seis_meses_por_hora;
         nomeCampoCpu = "media_cpu_ultimos_seis_meses_hora";
         nomeCampoRam = "media_ram_ultimos_seis_meses_hora";
         tituloLinhaCpu = "CPU % (Últimos 6 Meses)";
         tituloLinhaRam = "RAM % (Últimos 6 Meses)";
     }
-    
-    if (!dadosParaExibir) return; 
+
+    if (!dadosParaExibir) return;
 
     const novasHoras = [];
     const novosValoresCpu = [];
@@ -133,15 +126,15 @@ function atualizarGraficoDeLinhaEKPIsDeUso(opcaoDePeriodo) {
     let picoRam = -1;
     let horaPicoRam = "N/A";
 
-    let maiorSubidaCpu = -1; 
+    let maiorSubidaCpu = -1;
     let intervaloMaiorSubidaCpu = "N/A";
     let valorMaiorSubidaCpu = 0;
 
-    let maiorSubidaRam = -1; 
+    let maiorSubidaRam = -1;
     let intervaloMaiorSubidaRam = "N/A";
     let valorMaiorSubidaRam = 0;
-    
-    if (dadosParaExibir.length > 0) { 
+
+    if (dadosParaExibir.length > 0) {
         for (let i = 0; i < dadosParaExibir.length; i++) {
             const itemAtual = dadosParaExibir[i];
             const cpuAtual = itemAtual[nomeCampoCpu];
@@ -183,14 +176,14 @@ function atualizarGraficoDeLinhaEKPIsDeUso(opcaoDePeriodo) {
     document.getElementById('maiorRAM').innerHTML = horaPicoRam;
 
     const elementoMaiorAumentoCPU = document.getElementById('maiorAumentoCPU');
-    if (intervaloMaiorSubidaCpu !== "N/A" && maiorSubidaCpu > -1) { 
+    if (intervaloMaiorSubidaCpu !== "N/A" && maiorSubidaCpu > -1) {
         elementoMaiorAumentoCPU.innerHTML = `${intervaloMaiorSubidaCpu} (+${valorMaiorSubidaCpu.toFixed(2)}%)`;
     } else {
         elementoMaiorAumentoCPU.innerHTML = "N/A";
     }
 
     const elementoMaiorAumentoRAM = document.getElementById('maiorAumentoRAM');
-    if (intervaloMaiorSubidaRam !== "N/A" && maiorSubidaRam > -1) { 
+    if (intervaloMaiorSubidaRam !== "N/A" && maiorSubidaRam > -1) {
         elementoMaiorAumentoRAM.innerHTML = `${intervaloMaiorSubidaRam} (+${valorMaiorSubidaRam.toFixed(2)}%)`;
     } else {
         elementoMaiorAumentoRAM.innerHTML = "N/A";
@@ -199,30 +192,32 @@ function atualizarGraficoDeLinhaEKPIsDeUso(opcaoDePeriodo) {
 
 function buscarDadosIniciaisDoServidor() {
     fetch('http://127.0.0.1:3000/bucket/api/s3json')
-        .then(resposta => resposta.json())
-        .then(dadosRecebidos => {
+        .then(function(resposta) {
+            return resposta.json();
+        })
+        .then(function(dadosRecebidos) {
             todosOsDadosDoServidor = dadosRecebidos;
-            const seletorDePeriodo = document.getElementById('filtroMes');
-            let opcaoPeriodoInicial = "03";
-
+            var seletorDePeriodo = document.getElementById('filtroMes');
+            var opcaoPeriodoInicial = "03";
             if (seletorDePeriodo) {
                 opcaoPeriodoInicial = seletorDePeriodo.value;
             }
 
             atualizarGraficoDeLinhaEKPIsDeUso(opcaoPeriodoInicial);
 
-            const dataParaBuscarAlertas = obterDataAnteriorFormatada(opcaoPeriodoInicial);
+            var dataParaBuscarAlertas = obterDataAnteriorFormatada(opcaoPeriodoInicial);
+
+            obterAlertasEspecificos(dataParaBuscarAlertas);
             Promise.all([
                 buscarAlertasCpu(dataParaBuscarAlertas),
                 buscarAlertasRam(dataParaBuscarAlertas)
-            ]).then(() => {
+            ]).then(function() {
                 criarOuAtualizarGraficoDeBarras();
-                
+
                 let horaPicoAlertasRam = "N/A";
                 let maxAlertasRam = -1;
                 if (horasParaGraficoAlertas.length > 0 && contagemAlertasRam.length > 0) {
-                    const tamanhoLoopRAM = Math.min(horasParaGraficoAlertas.length, contagemAlertasRam.length);
-                    for (let i = 0; i < tamanhoLoopRAM; i++) {
+                    for (let i = 0; i < contagemAlertasRam.length; i++) {
                         if (contagemAlertasRam[i] > maxAlertasRam) {
                             maxAlertasRam = contagemAlertasRam[i];
                             horaPicoAlertasRam = horasParaGraficoAlertas[i];
@@ -234,7 +229,7 @@ function buscarDadosIniciaisDoServidor() {
                 let horaPicoAlertasCpu = "N/A";
                 let maxAlertasCpu = -1;
                 if (horasParaGraficoAlertas.length > 0 && contagemAlertasCpu.length > 0) {
-                     for (let i = 0; i < contagemAlertasCpu.length; i++) { 
+                    for (let i = 0; i < contagemAlertasCpu.length; i++) {
                         if (contagemAlertasCpu[i] > maxAlertasCpu) {
                             maxAlertasCpu = contagemAlertasCpu[i];
                             horaPicoAlertasCpu = horasParaGraficoAlertas[i];
@@ -252,6 +247,71 @@ function buscarDadosIniciaisDoServidor() {
                 }
                 document.getElementById('quantidadeAlertas').innerHTML = totalDeAlertas;
             });
+        })
+        .catch(function(erro) {
+            console.error("Erro ao buscar dados iniciais do servidor (s3json):", erro);
+        });
+}
+
+function obterAlertasEspecificos(dataDaBusca) {
+    var tbody = document.getElementById('dados_alertas_tbody');
+
+    if (!tbody) {
+        console.error('Elemento tbody da listagem com ID "dados_alertas_tbody" não encontrado!');
+        return;
+    }
+
+    tbody.innerHTML = '';
+    fetch('/dashComponente/obterAlertasEspecificos/' + dataDaBusca)
+        .then(function(resposta) {
+            if (!resposta.ok) {
+                throw new Error('Erro ao buscar dados da listagem: ' + resposta.status);
+            }
+            return resposta.json();
+        })
+        .then(function(alertas) {
+            if (!alertas || alertas.length === 0) {
+                var linhaMensagem = tbody.insertRow();
+                var celulaMensagem = linhaMensagem.insertCell();
+                celulaMensagem.colSpan = 6;
+                celulaMensagem.textContent = 'Nenhum alerta específico encontrado para este período.';
+                celulaMensagem.style.textAlign = 'center';
+                return;
+            }
+            for (var i = 0; i < alertas.length; i++) {
+                var alertaItem = alertas[i];
+                var linha = tbody.insertRow();
+
+                var celulaEmpresa = linha.insertCell();
+                celulaEmpresa.textContent = alertaItem.nome_empresa || 'N/A';
+
+                var celulaFabrica = linha.insertCell();
+                celulaFabrica.textContent = alertaItem.nome_fabrica || 'N/A';
+
+                var celulaSetor = linha.insertCell();
+                celulaSetor.textContent = alertaItem.nome_setor || 'N/A';
+
+                var celulaModelo = linha.insertCell();
+                celulaModelo.textContent = alertaItem.modelo_plc || 'N/A';
+
+                var celulaComponente = linha.insertCell();
+                celulaComponente.textContent = alertaItem.tipo_componente_alerta || 'N/A';
+
+                var celulaProblemas = linha.insertCell();
+                celulaProblemas.textContent = alertaItem.quantidade_problemas !== undefined ? alertaItem.quantidade_problemas : 'N/A';
+            }
+        })
+        .catch(function(erro) {
+            console.error('Falha ao obter ou processar alertas para listagem:', erro);
+            if (tbody) {
+                tbody.innerHTML = '';
+                var linhaErro = tbody.insertRow();
+                var celulaErro = linhaErro.insertCell();
+                celulaErro.colSpan = 6;
+                celulaErro.textContent = 'Erro ao carregar dados da listagem. Verifique o console.';
+                celulaErro.style.textAlign = 'center';
+                celulaErro.style.color = 'red';
+            }
         });
 }
 
@@ -319,29 +379,29 @@ function criarOuAtualizarGraficoDeBarras() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     iniciarGraficoDeLinha();
     buscarDadosIniciaisDoServidor();
 
-    const seletorDePeriodo = document.getElementById('filtroMes');
+    var seletorDePeriodo = document.getElementById('filtroMes');
     if (seletorDePeriodo) {
-        seletorDePeriodo.addEventListener('change', function () {
-            const opcaoSelecionada = this.value;
+        seletorDePeriodo.addEventListener('change', function() {
+            var opcaoSelecionada = this.value;
             atualizarGraficoDeLinhaEKPIsDeUso(opcaoSelecionada);
 
-            const dataParaBuscarAlertas = obterDataAnteriorFormatada(opcaoSelecionada);
+            var dataParaBuscarAlertas = obterDataAnteriorFormatada(opcaoSelecionada);
+
+            obterAlertasEspecificos(dataParaBuscarAlertas);
 
             Promise.all([
                 buscarAlertasCpu(dataParaBuscarAlertas),
                 buscarAlertasRam(dataParaBuscarAlertas)
-            ]).then(() => {
+            ]).then(function() {
                 criarOuAtualizarGraficoDeBarras();
-                
                 let horaPicoAlertasRam = "N/A";
                 let maxAlertasRam = -1;
-                 if (horasParaGraficoAlertas.length > 0 && contagemAlertasRam.length > 0) {
-                    const tamanhoLoopRAM = Math.min(horasParaGraficoAlertas.length, contagemAlertasRam.length);
-                    for (let i = 0; i < tamanhoLoopRAM; i++) {
+                if (horasParaGraficoAlertas.length > 0 && contagemAlertasRam.length > 0) {
+                    for (let i = 0; i < contagemAlertasRam.length; i++) {
                         if (contagemAlertasRam[i] > maxAlertasRam) {
                             maxAlertasRam = contagemAlertasRam[i];
                             horaPicoAlertasRam = horasParaGraficoAlertas[i];
@@ -353,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let horaPicoAlertasCpu = "N/A";
                 let maxAlertasCpu = -1;
                 if (horasParaGraficoAlertas.length > 0 && contagemAlertasCpu.length > 0) {
-                    for (let i = 0; i < contagemAlertasCpu.length; i++) { 
+                    for (let i = 0; i < contagemAlertasCpu.length; i++) {
                         if (contagemAlertasCpu[i] > maxAlertasCpu) {
                             maxAlertasCpu = contagemAlertasCpu[i];
                             horaPicoAlertasCpu = horasParaGraficoAlertas[i];
