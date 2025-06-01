@@ -5,17 +5,16 @@ import pymysql
 import boto3
 from dotenv import load_dotenv
 from datetime import datetime
+import time
 
 load_dotenv()
 
-# Configurações do banco de dados
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = int(os.getenv("DB_PORT"))
 DB_NAME = os.getenv("DB_DATABASE")
 
-# Configurações AWS
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_SESSION_TOKEN = os.getenv("AWS_SESSION_TOKEN")
@@ -142,7 +141,7 @@ def buscar_alertas():
                 JOIN fabrica_consumidor fc ON fc.id = cp.fabrica_consumidor_id;
                 """
             cursor.execute(sql_query)
-            linhas = cursor.fetchall() # Retorna uma lista de dicionários
+            linhas = cursor.fetchall()
             
             alertas_formatados = []
             for linha_dict in linhas:
@@ -170,7 +169,7 @@ def buscar_alertas():
         return []
     
     finally:
-        if conexao: # Não precisa checar conexao.open se usou 'with conexao.cursor()'
+        if conexao:
             conexao.close()
 
 def simular_processos(setor):
@@ -179,11 +178,11 @@ def simular_processos(setor):
         return []
     
     processos_do_setor = SETORES_E_PROCESSOS[setor]
-    if not processos_do_setor: # Checagem adicional se a lista de processos para o setor estiver vazia
+    if not processos_do_setor: 
         print(f"Aviso: Setor '{setor}' não possui processos definidos em SETORES_E_PROCESSOS.")
         return []
 
-    quantidade = random.randint(min(2, len(processos_do_setor)), min(6, len(processos_do_setor))) # Garante que não tenta pegar mais do que existe
+    quantidade = random.randint(min(2, len(processos_do_setor)), min(6, len(processos_do_setor))) 
     num_processos_a_selecionar = quantidade
     
     processos_selecionados = random.sample(
@@ -202,14 +201,11 @@ def simular_processos(setor):
     return simulados
 
 def registrar_processos(alertas):
-    """Registra processos para cada alerta"""
     simulacoes = []
     
-    for alerta_data in alertas: # Renomeado para 'alerta_data' para evitar conflito com módulo 'alerta'
-        # 'alerta_data' já vem filtrado e formatado de 'buscar_alertas'
+    for alerta_data in alertas:
         processos = simular_processos(alerta_data["setor"])
         
-        # Objeto 'simulacao' MODIFICADO para usar os campos corretos
         simulacao = {
             "id_alerta": alerta_data["id_alerta"],
             "dataHora": alerta_data["dataHora"],
@@ -226,13 +222,13 @@ def registrar_processos(alertas):
             
     return simulacoes
 
-def salvar_simulacoes(simulacoes, nome_arquivo="processos_simulados.json"):
-    try:
-        with open(nome_arquivo, "w", encoding='utf-8') as arquivo:
-            json.dump(simulacoes, arquivo, indent=4, ensure_ascii=False)
-        print(f"Simulações salvas em {nome_arquivo}")
-    except Exception as e:
-        print(f"Erro ao salvar simulações: {e}")
+# def salvar_simulacoes(simulacoes, nome_arquivo="processos_simulados.json"):
+#     try:
+#         with open(nome_arquivo, "w", encoding='utf-8') as arquivo:
+#             json.dump(simulacoes, arquivo, indent=4, ensure_ascii=False)
+#         print(f"Simulações salvas em {nome_arquivo}")
+#     except Exception as e:
+#         print(f"Erro ao salvar simulações: {e}")
 
 def enviar_para_s3(nome_arquivo, bucket=S3_BUCKET_NAME):
     if not all([AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, bucket]):
@@ -245,7 +241,7 @@ def enviar_para_s3(nome_arquivo, bucket=S3_BUCKET_NAME):
             'aws_access_key_id': AWS_ACCESS_KEY_ID,
             'aws_secret_access_key': AWS_SECRET_ACCESS_KEY,
         }
-        if AWS_SESSION_TOKEN: # Verifica se AWS_SESSION_TOKEN tem valor
+        if AWS_SESSION_TOKEN:
             s3_client_args['aws_session_token'] = AWS_SESSION_TOKEN
         
         s3 = boto3.client(**s3_client_args)
@@ -255,33 +251,40 @@ def enviar_para_s3(nome_arquivo, bucket=S3_BUCKET_NAME):
     except Exception as e:
         print(f"Erro ao enviar para S3: {e}")
 
-def main():
-    print("Iniciando simulação de processos...")
-    
-    print("Buscando alertas do banco de dados...")
-    alertas_do_banco = buscar_alertas() # Renomeado para clareza
-    
-    if not alertas_do_banco:
-        print("Nenhum alerta encontrado ou erro ao buscar alertas. Encerrando.")
-        return
+def main_loop():
+    print("Iniciando o monitoramento e simulação contínua de processos...")
+    intervalo_verificacao = 30
 
-    print(f"Encontrados {len(alertas_do_banco)} alertas válidos.")
-    
-    # 'len(alertas_do_banco) > 0' já é coberto pela checagem 'if not alertas_do_banco'
-    print("Simulando processos para os alertas encontrados...")
-    simulacoes_com_processos = registrar_processos(alertas_do_banco) # Renomeado para clareza
+    while True:
+        print(f"\n--- {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} --- Iniciando novo ciclo de verificação ---")
+        try:
+            print("Buscando alertas do banco de dados...")
+            alertas_do_banco = buscar_alertas()
+            
+            if not alertas_do_banco:
+                print("Nenhum alerta encontrado neste ciclo ou erro ao buscar alertas.")
+            else:
+                print(f"Encontrados {len(alertas_do_banco)} alertas válidos.")
+                
+                print("Simulando processos para os alertas encontrados...")
+                simulacoes_com_processos = registrar_processos(alertas_do_banco)
 
-    if simulacoes_com_processos:
-        print("Salvando simulações em arquivo local...")
-        nome_do_arquivo_json = "processos_simulados.json"
-        salvar_simulacoes(simulacoes_com_processos, nome_do_arquivo_json)
+                if simulacoes_com_processos:
+                    nome_do_arquivo_json = "processos_simulados.json"
+                    # salvar_simulacoes(simulacoes_com_processos, nome_do_arquivo_json)
 
-        print("Enviando arquivo de simulações para o S3...")
-        enviar_para_s3(nome_do_arquivo_json)
-    else:
-        print("Nenhuma simulação foi gerada (possivelmente nenhum processo definido para os setores encontrados ou nenhum alerta válido).")
+                    print("Enviando arquivo de simulações para o S3...")
+                    enviar_para_s3(nome_do_arquivo_json)
+                else:
+                    print("Nenhuma simulação foi gerada (possivelmente nenhum processo definido para os setores encontrados ou nenhum alerta válido).")
 
-    print("Processo de simulação concluído!")
+            print("--- Ciclo de verificação concluído ---")
+
+        except Exception as e:
+            print(f"Erro inesperado no ciclo principal: {e}")
+        
+        print(f"Aguardando {intervalo_verificacao} segundos para o próximo ciclo...")
+        time.sleep(intervalo_verificacao)
 
 if __name__ == "__main__":
-    main()
+    main_loop()

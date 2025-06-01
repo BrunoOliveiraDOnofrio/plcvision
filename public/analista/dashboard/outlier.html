@@ -86,7 +86,7 @@
 
     <div class="main">
         <div class="content">
-            <h1 class="dashboard-title">Processos</h1>
+            <h1 class="dashboard-title">Análise de Modelos Relacionados a Processos</h1>
 
             <div class="filters">
                 <div class="filter-group">
@@ -151,10 +151,10 @@
 
     // API para buscar os dados do S3
     async function buscarDadosS3() {
-        // const resposta = await fetch('/api/s3json'); // descomenta para usar API e pegar do bucket S3
-        const resposta = await fetch('processos_simulados.json');
+        const resposta = await fetch('/api/s3json'); // descomenta para usar API e pegar do bucket S3
+        // const resposta = await fetch('processos_simulados.json'); // cosumir json local para teste
         const dados = await resposta.json();
-        console.log(dados);
+        console.log("TA VINDO DO BUCKET: ", dados);
         return dados;
     }
 
@@ -181,11 +181,11 @@
     function configurarFiltros() {
         document.getElementById('empresa').onchange = carregarFabricas; // quando muda a empresa, carrega as fábricas
         document.getElementById('btn-aplicar-filtros').onclick = aplicarFiltros; // add onclick em "Aplicar Filtros"
-        const hoje = new Date();
-        const trintaDiasAtras = new Date();
-        trintaDiasAtras.setDate(hoje.getDate() - 30); // Ele pega a data atual e joga 30 dias antes
-        document.getElementById('dataInicial').value = trintaDiasAtras.toISOString().split('T')[0];
-        document.getElementById('dataFinal').value = hoje.toISOString().split('T')[0];
+        // const hoje = new Date();
+        // const trintaDiasAtras = new Date();
+        // trintaDiasAtras.setDate(hoje.getDate() - 30); // Ele pega a data atual e joga 30 dias antes
+        // document.getElementById('dataInicial').value = trintaDiasAtras.toISOString().split('T')[0];
+        // document.getElementById('dataFinal').value = hoje.toISOString().split('T')[0];
     }
 
     function obterFiltrosDatas() {
@@ -381,10 +381,10 @@
             let status = 'Normal';
             let corFundo = '#28a745';
             let corLetra = 'white';
-            if (empresa.quantidade_alertas > 10) {
+            if (empresa.quantidade_alertas > 40) {
                 status = 'Crítico';
                 corFundo = '#dc3545';
-            } else if (empresa.quantidade_alertas > 5) {
+            } else if (empresa.quantidade_alertas > 25) {
                 status = 'Atenção';
                 corFundo = '#ffc107';
             }
@@ -418,10 +418,10 @@
             let status = 'Normal';
             let corFundo = '#28a745';
             let corLetra = 'white';
-            if (modelo.quantidade_alertas > 6) {
+            if (modelo.quantidade_alertas > 40) {
                 status = 'Crítico';
                 corFundo = '#dc3545';
-            } else if (modelo.quantidade_alertas > 3) {
+            } else if (modelo.quantidade_alertas > 25) {
                 status = 'Atenção';
                 corFundo = '#ffc107';
             }
@@ -578,8 +578,12 @@
         }
 
         linha.querySelector('td').innerHTML = html;
+        console.log('graficos: ', graficosIds)
 
-        criarGraficoProcessos(graficosIds[0]);
+        for (let i = 0; i < graficosIds.length; i++) {
+            criarGraficoProcessos(graficosIds[i]);
+        }
+
     }
 
     function criarGraficoProcessos(grafico) {
@@ -711,7 +715,7 @@
     function criarGraficoFabricas(graficoId, fabricas, modelo) {
         const canvas = document.getElementById(graficoId);
         if (!canvas) {
-            return; // Se não tiver canvas, não faz nada
+            return;
         }
 
         const ctx = canvas.getContext('2d');
@@ -814,13 +818,25 @@
         for (let processo of processos) {
             const mediaCpu = processo.totalCpu / processo.ocorrencias;
             const mediaRam = processo.totalRam / processo.ocorrencias;
-            let pontuacao = processo.ocorrencias * 10;
-            if (mediaCpu > 40) {
-                pontuacao += 30;
-            }
-            if (mediaRam > 30) {
+
+            let pontuacao = processo.ocorrencias * 2; // dar um peso por ocorrencia. Quanto maior a frequencia mais a probabilidade desse processo ser a causa raiz
+
+            if (mediaCpu > 60) {
                 pontuacao += 20;
+            } else if (mediaCpu > 50) {
+                pontuacao += 10;
+            } else if (mediaCpu > 20) {
+                pontuacao += 5;
             }
+
+            if (mediaRam > 50) {
+                pontuacao += 20;
+            } else if (mediaRam > 40) {
+                pontuacao += 10;
+            } else if (mediaRam > 15) {
+                pontuacao += 5;
+            }
+
             processo.porcentagem = Math.min(pontuacao, 100);
         }
         return processos.sort((a, b) => b.porcentagem - a.porcentagem);

@@ -16,7 +16,7 @@ async function buscarJsonS3(req, res) {
         
         const command = new GetObjectCommand({
             Bucket: process.env.S3_BUCKET_NAME,
-            Key: process.env.S3_JSON_FILE_KEY
+            Key: process.env.S3_JSON_FILE_KEY_2
         });
 
         const response = await s3Client.send(command);
