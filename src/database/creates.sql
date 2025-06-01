@@ -184,8 +184,6 @@ WHERE ef.id = 1 AND dataHora >= '2025-01-01'
 GROUP BY dataHoraMod
 ORDER BY qtd DESC LIMIT 1;
 
-
-
 -- mes com mais defeitos dinamico 
 CREATE OR REPLACE VIEW vw_mes_com_mais_alertas_din AS
 SELECT count(*) as qtd, date_format(dataHora, '%m') AS dataHoraMod, pa.empresa_consumidor_id as empresaId
@@ -207,8 +205,6 @@ JOIN config_plc cp ON cp.id = a.config_plc_id
 JOIN plc ON plc.id = cp.plc_id
 GROUP BY plc.modelo
 ORDER BY numero DESC LIMIT 1;
-
-
 
 -- modelo com maior taxa de defeitos dinamico
 CREATE OR REPLACE VIEW vw_modelo_com_mais_alertas_din AS
@@ -232,8 +228,6 @@ JOIN  empresa_fabricante AS ef ON pa.empresa_fabricante_id = ef.id
 WHERE ef.id = 1 AND dataHora >= '2025-01-01' AND dataHora <= now()
 GROUP BY mes;
 
-
-
 -- grafico de taxa de defeito por mes dinamico
 CREATE OR REPLACE VIEW vw_prct_defeito_mes_din AS
 SELECT count(*) AS qtd, date_format(dataHora, '%m') AS mes, pa.empresa_consumidor_id as empresaId
@@ -255,8 +249,6 @@ JOIN plc AS p ON conf.plc_id = p.id
 WHERE date_format(a.dataHora, '%m') = DATE_FORMAT(NOW(), '%m')
 GROUP BY modelo, date_format(a.dataHora, '%m');
 
-
-
 -- Taxa de defeitos por modelo no mes dinamico
 CREATE OR REPLACE VIEW vw_taxa_defeito_por_modelo_din AS
 SELECT date_format(dataHora, '%m') AS mes, COUNT(p.id) AS qtd, p.modelo AS modelo, pa.empresa_consumidor_id as empresaId FROM alerta AS a
@@ -266,6 +258,60 @@ JOIN parceria pa
 ON pa.id = p.parceria_id
 WHERE date_format(a.dataHora, '%m') = DATE_FORMAT(NOW(), '%m')
 GROUP BY modelo, date_format(a.dataHora, '%m'), empresaId;
+
+
+
+-- modelo mais vendido no mês
+CREATE OR REPLACE VIEW vw_modelo_mais_vendido AS
+SELECT COUNT(id), modelo FROM painel_vendas
+WHERE dtHora <= NOW()
+GROUP BY modelo
+ORDER BY modelo DESC
+LIMIT 1;
+
+-- modelo mais vendido no mês dinamico
+CREATE OR REPLACE VIEW vw_modelo_mais_vendido_din AS
+SELECT COUNT(id), modelo, empresa FROM painel_vendas
+WHERE dtHora <= NOW()
+GROUP BY modelo, empresa
+ORDER BY modelo DESC;
+
+
+
+-- meta de vendas
+SELECT meta_de_vendas AS meta, mes FROM meta_vendas
+WHERE MONTH(data_hora) = MONTH(NOW());
+
+
+-- qtd atual de vendas
+CREATE OR REPLACE VIEW vw_qtd_vendas_atual AS
+SELECT SUM(qtd) AS qtdTotal FROM painel_vendas
+WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Pedido';
+
+-- qtd atual de vendas dinamico
+CREATE OR REPLACE VIEW vw_qtd_vendas_atual_din AS
+SELECT SUM(qtd) AS qtdTotal, empresa FROM painel_vendas
+WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Pedido'
+GROUP BY empresa;
+
+
+
+-- media de cancelamentos
+SELECT media_de_cancelamentos AS mediaCancel, mes FROM meta_vendas
+WHERE MONTH(data_hora) = MONTH(NOW());
+
+
+-- qtd cancelamentos atual
+CREATE OR REPLACE VIEW vw_qtd_cancel_atual AS
+SELECT COUNT(id) AS cancelAtual, SUM(qtd) AS qtd, tipo FROM painel_vendas
+WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Cancelamento';
+
+-- qtd cancelamentos atual dinamico
+CREATE OR REPLACE VIEW vw_qtd_cancel_atual_din AS
+SELECT COUNT(id) AS cancelAtual, SUM(qtd) AS qtd, tipo, empresa  FROM painel_vendas
+WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Cancelamento' 
+GROUP BY empresa;
+
 
 CREATE USER 'plc_manager'@'%' IDENTIFIED BY 'plc_password';
 GRANT ALL PRIVILEGES ON plcvision.* TO 'plc_manager'@'%';
