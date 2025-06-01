@@ -137,30 +137,9 @@
         <div class="filtro-area">
             <div class="divFiltro">
                 <select id="filtroMes" name="mes">
-                    <option value="" disabled selected>Selecione o Mês</option>
-                    <option value="01">Janeiro</option>
-                    <option value="02">Fevereiro</option>
-                    <option value="03">Março</option>
-                    <option value="04">Abril</option>
-                    <option value="05">Maio</option>
-                    <option value="06">Junho</option>
-                    <option value="07">Julho</option>
-                    <option value="08">Agosto</option>
-                    <option value="09">Setembro</option>
-                    <option value="10">Outubro</option>
-                    <option value="11">Novembro</option>
-                    <option value="12">Dezembro</option>
-                </select>
-                </div>
-                <div class="divFiltro">
-                <select id="filtroMes" name="mes">
-                    <option value="" disabled selected>Selecione o modelo</option>
-                    
-                </select>
-                </div>
-                <div class="divFiltro">
-                <select name="fabrica" id="filtroFabrica">
-                    <option value="" disabled selected>selecione a fabrica</option>
+                    <option value="03" selected>Última semestre</option>
+                    <option value="02">Último mês</option>
+                    <option value="01">Último semana</option>
                 </select>
                 </div>
         </div>
@@ -168,49 +147,44 @@
             <div class="metade">
                 <div class="KPIs">
                     <div class="kpi">
-                        <div class="titulo">Horario com maior uso</div>
-                        <div class="valor" id="maiorUso">Valor 1</div>
+                        <div class="titulo">Horario com maior uso RAM</div>
+                        <div class="valor" id="maiorRAM"></div>
                     </div>
                     <div class="kpi">
-                        <div class="titulo">Maior aumento</div>
-                        <div class="valor">Valor 2</div>
+                        <div class="titulo">Horario com maior uso CPU</div>
+                        <div class="valor" id="maiorUsoCPU"></div>
                     </div>
                     <div class="kpi">
-                        <div class="titulo">KPI 3</div>
-                        <div class="valor">Valor 3</div>
+                        <div class="titulo">Maior aumento CPU</div>
+                        <div class="valor" id="maiorAumentoCPU"></div>
+                    </div>
+                    <div class="kpi">
+                        <div class="titulo">Maior aumento RAM</div>
+                        <div class="valor" id="maiorAumentoRAM"></div>
                     </div>
                 </div>
                 <div class="graficoRede">
-                    <canvas id="graficoLinha"></canvas>
-                </div>
-                <div class="graficoRede">
-                    <canvas id="graficoBarra2"></canvas>
+                    <canvas id="graficoPorcentagem"></canvas>
                 </div>
             </div>
             <div class="metade">
                 <div class="KPIs">
                     <div class="kpi">
-                        <div class="titulo">Pontos de perda</div>
-                        <div class="valor" id="KPIPontosDePerda">10</div>
+                        <div class="titulo">Horário alertas RAM
+                        </div>
+                        <div class="valor" id="KPIAlertasRam"></div>
                     </div>
                     <div class="kpi">
-                        <div class="titulo">Correlação</div>
-                        <div class="valor" id="valorCor">80%</div>
+                        <div class="titulo">Horário com mais alertas CPU</div>
+                        <div class="valor" id="KPIAlertasCpu"></div>
                     </div>
                     <div class="kpi">
-                        <div class="titulo">Plc's com perda</div>
-                        <div class="valor">6</div>
+                        <div class="titulo">Quantida de alertas dentro do período</div>
+                        <div class="valor" id="quantidadeAlertas"></div>
                     </div>
                 </div>
-
                 <div class="graficoRede">
-                    <canvas id="graficoBarra">
-
-                    </canvas>
-                </div>
-                <div class="graficoRede">
-                    <canvas id="graficoBarra3">
-                    </canvas>
+                    <canvas id="graficoBarra2"></canvas>
                 </div>
 
             </div>

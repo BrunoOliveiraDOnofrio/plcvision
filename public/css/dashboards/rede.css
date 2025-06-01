@@ -127,7 +127,7 @@
 }
 
 .kpi .valor {
-    font-size: 18px;
+    font-size: 12px;
     font-weight: bold;
 }
 
@@ -177,6 +177,8 @@
     }
     
     .kpi .valor {
-        font-size: 24px;
+        display: flex;
+        font-size: 17px;
+        text-align: center;
     }
 }

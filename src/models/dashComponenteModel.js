@@ -1,6 +1,6 @@
 const database = require('../database/config')
 
-function obterAlertasPorHorario(data, modelo){
+function obterAlertasPorHorario(data){
     const sql = `
     SELECT
     HOUR(a.datahora) AS Hora,
@@ -10,22 +10,47 @@ FROM
 LEFT JOIN
     config_plc cp ON a.config_plc_id = cp.id
 LEFT JOIN
+    componente c ON cp.componente_id = c.id  -- Adicionado JOIN com a tabela componente
+LEFT JOIN
     plc p ON cp.plc_id = p.id
 WHERE
-    HOUR(a.datahora) BETWEEN 7 AND 19
-    AND a.tipo_valor = 'Uso em Bytes'
+     c.hardware = 'CPU'
     AND DATE(a.datahora) BETWEEN '${data}' AND CURDATE()
-    AND p.modelo = '${modelo}'
 GROUP BY
     HOUR(a.datahora)
 ORDER BY
-    Hora; 
+    Hora;
     `
     console.log(sql)
     return database.executar(sql)
 }
 
-function obterMaiorHorario(data, modelo){
+function obterAlertasPorHorarioRam(data){
+    const sql = `
+    SELECT
+    HOUR(a.datahora) AS Hora,
+    COUNT(a.id) AS Quantidade_Alertas
+FROM
+    alerta a
+LEFT JOIN
+    config_plc cp ON a.config_plc_id = cp.id
+LEFT JOIN
+    componente c ON cp.componente_id = c.id  -- Adicionado JOIN com a tabela componente
+LEFT JOIN
+    plc p ON cp.plc_id = p.id
+WHERE
+    c.hardware = 'RAM'
+    AND DATE(a.datahora) BETWEEN '${data}' AND CURDATE()
+GROUP BY
+    HOUR(a.datahora)
+ORDER BY
+    Hora;
+    `
+    console.log(sql)
+    return database.executar(sql)
+}
+
+function obterMaiorHorario(data){
     const sql = `
     SELECT
     HOUR(a.datahora) AS Hora -- Seleciona apenas a hora
@@ -36,10 +61,8 @@ LEFT JOIN
 LEFT JOIN
     plc p ON cp.plc_id = p.id
 WHERE
-    HOUR(a.datahora) BETWEEN 7 AND 19
-    AND a.tipo_valor = 'Uso em Bytes'
+    a.tipo_valor = 'Uso em Bytes'
     AND DATE(a.datahora) BETWEEN '${data}' AND CURDATE()
-    AND p.modelo = '${modelo}'
 GROUP BY
     Hora
 ORDER BY
@@ -51,5 +74,6 @@ LIMIT 1;
 
 module.exports = {
     obterAlertasPorHorario,
-    obterMaiorHorario
+    obterMaiorHorario,
+    obterAlertasPorHorarioRam
 }

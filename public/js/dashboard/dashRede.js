@@ -1,147 +1,41 @@
-var datayC = [];
-var dataxC = [];
-var pontosDePerda = 0;
-var myChartBarra2 = null; // Para o gráfico que será atualizado dinamicamente
+let graficoDeBarra; 
+let todosOsDadosDoServidor;
 
-function calcularRegressaoLinear(pontosDeDados) {
-    const n = pontosDeDados.length;
+let horasParaGraficoAlertas = []; 
+let contagemAlertasCpu = []; 
+let contagemAlertasRam = []; 
+let graficoDeBarrasAlertas; 
 
-    if (n < 2) {
-        console.warn("São necessários pelo menos 2 pontos para calcular regressão/correlação.");
-        return { m: 0, b: 0, r: NaN };
+function iniciarGraficoDeLinha() {
+    const canvasDoGraficoDeLinha = document.getElementById('graficoPorcentagem');
+    if (!canvasDoGraficoDeLinha) {
+        return; 
     }
 
-    var somaX = 0;
-    var somaY = 0;
-    var somaXY = 0;
-    var somaXQuadrado = 0;
-    var somaYQuadrado = 0;
-
-    for (var i = 0; i < n; i++) {
-        const pontoAtual = pontosDeDados[i];
-        const x = pontoAtual[0];
-        const y = pontoAtual[1];
-        somaX += x;
-        somaY += y;
-        somaXY += x * y;
-        somaXQuadrado += x * x;
-        somaYQuadrado += y * y;
-    }
-
-    // Numerador é o mesmo para 'm' e 'r'
-    const numerador = n * somaXY - somaX * somaY;
-    // Denominador para 'm'
-    const denominadorM = n * somaXQuadrado - somaX * somaX;
-
-    var m;
-    if (denominadorM == 0) {
-        m = 0;
-    } else {
-        m = numerador / denominadorM;
-    }
-
-    const b = (somaY - m * somaX) / n;
-
-    var r;
-    const denominadorParteY = n * somaYQuadrado - somaY * somaY;
-    const produtoDenominadoresR = denominadorM * denominadorParteY;
-
-    if (produtoDenominadoresR <= 0) {
-        if (denominadorM == 0 || denominadorParteY == 0) {
-            r = 0;
-        } else if (numerador == 0) {
-            r = 0;
-        } else {
-            r = 0;
-        }
-    } else {
-        const denominadorR = Math.sqrt(produtoDenominadoresR);
-
-        if (denominadorR == 0) {
-            if (numerador == 0) {
-                r = 0;
-            } else if (numerador > 0) {
-                r = 1;
-            } else { 
-                r = -1;
-            }
-        } else {
-            r = numerador / denominadorR;
-        }
-    }
-
-    if (isNaN(r)) {
-        r = 0;
-    }
-
-    if (r > 1) {
-        r = 1;
-    } else if (r < -1) {
-        r = -1;
-    }
-
-    return { m: m, b: b, r: r };
-}
-
-function criarGraficosEstaticos() {
-    const GraficoBarra = document.getElementById('graficoBarra')
-    const GraficoLinha = document.getElementById('graficoLinha')
-    const GraficoBarra3 = document.getElementById('graficoBarra3')
-    const kpiCorrelacao = document.getElementById('valorCor')
-    const KPIPontosDePerda = document.getElementById('KPIPontosDePerda')
-    const labels = ['1-50', '51-100', '101-150', '151-200', '201-250', '251-300', '301-350', '351-400', '401-450', '451-500', '501-550', '551-600', '601-650']
-    const valoresYReais = [1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.83, 1.84, 2, 3.2, 4.3, 5.4]
-    const valoresX = [24.5, 75.5, 125.5, 175.5, 225.5, 275.5, 325.5, 375.5, 425.5, 475.5, 525.5, 575.5, 625.5]
-
-    for(var i = 0; i < valoresYReais.length; i++){
-        if (valoresYReais[i] >= 2.0){
-            pontosDePerda++
-        }
-    }
-
-    KPIPontosDePerda.innerHTML = pontosDePerda
-
-    const pontosDeDados = [];
-    for (var i = 0; i < valoresX.length; i++) {
-        pontosDeDados[i] = [valoresX[i], valoresYReais[i]]
-    }
-
-    const resultadoDaRegressao = calcularRegressaoLinear(pontosDeDados)
-    const r = resultadoDaRegressao.r
-    const m = resultadoDaRegressao.m
-    const b = resultadoDaRegressao.b;
-
-    kpiCorrelacao.innerHTML = r.toFixed([3]) * 100 + "%"
-
-    const valoresYRegressao = [];
-    for (var i = 0; i < valoresX.length; i++) {
-        const x = valoresX[i];
-        //
-        // if (valoresX >= 2) {
-        //     registroPerdas++
-        // }
-        const yEsperado = (m * x) + b;
-        valoresYRegressao[i] = yEsperado;
-    }
-
-    console.log("Criando gráfico de barras...");
-    new Chart(GraficoBarra, {
+    graficoDeBarra = new Chart(canvasDoGraficoDeLinha, {
         type: 'bar',
         data: {
-            labels: labels,
-            datasets: [{
-                label: 'Perda de Pacotes % (Real)',
-                data: valoresYReais,
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }, {
-                label: 'Perda de Pacotes % (Esperado)',
-                data: valoresYRegressao,
-                backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                borderColor: 'rgba(255, 159, 64, 1)',
-                borderWidth: 1
-            }]
+            labels: [],
+            datasets: [
+                {
+                    label: 'Uso de CPU %',
+                    data: [],
+                    backgroundColor: 'rgba(0, 102, 255, 0.6)',
+                    borderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1,
+                    fill: true,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Uso de RAM %',
+                    data: [],
+                    backgroundColor: 'rgba(84, 0, 112, 0.7)',
+                    borderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1,
+                    fill: true,
+                    yAxisID: 'y'
+                }
+            ]
         },
         options: {
             responsive: true,
@@ -149,173 +43,334 @@ function criarGraficosEstaticos() {
             scales: {
                 y: {
                     beginAtZero: true,
-                    suggestedMax: 3,
-                    title: { display: true, text: 'média de perda de pacotes', color: '#000', font: { size: 10 } }
+                    title: { display: true, text: 'Uso (%)', color: '#000', font: { size: 14 } }
                 },
                 x: {
-                    title: { display: true, text: 'Taxa de conexões abertas', color: '#000', font: { size: 14 } }
+                    title: { display: true, text: 'Horário', color: '#000', font: { size: 14 } }
                 }
-            },
-            plugins: {
-                annotation: {
-                    annotations: {
-                        linhaLimite: {
-                            type: 'line',
-                            yMin: 2.0,
-                            yMax: 2.0,
-                            borderColor: 'rgb(250, 0, 0)',
-                            borderWidth: 2,
-                            label: {
-                                enabled: true,
-                                content: 'Limite aceitável',
-                                position: 'end',
-                                backgroundColor: 'rgba(250, 0, 0)',
-                                color: 'white',
-                                font: {
-                                    size: 10,
-                                    weight: 'bold'
-                                },
-                                yAdjust: -10
-                            }
+            }
+        }
+    });
+}
+
+function obterDataAnteriorFormatada(opcaoDePeriodo) {
+    const dataCalculada = new Date();
+
+    if (opcaoDePeriodo == "01") {
+        dataCalculada.setDate(dataCalculada.getDate() - 7);
+    } else if (opcaoDePeriodo == "02") {
+        dataCalculada.setDate(dataCalculada.getDate() - 30);
+    } else if (opcaoDePeriodo == "03") {
+        dataCalculada.setDate(dataCalculada.getDate() - 180);
+    } else {
+        dataCalculada.setDate(dataCalculada.getDate() - 7);
+    }
+
+    const ano = dataCalculada.getFullYear();
+    let mes = dataCalculada.getMonth() + 1;
+    let dia = dataCalculada.getDate();
+
+    if (mes < 10) {
+        mes = '0' + mes;
+    }
+    if (dia < 10) {
+        dia = '0' + dia;
+    }
+    return `${ano}-${mes}-${dia}`;
+}
+
+function atualizarGraficoDeLinhaEKPIsDeUso(opcaoDePeriodo) {
+    if (!graficoDeBarra || !graficoDeBarra.data || !todosOsDadosDoServidor) {
+        return;
+    }
+
+    let dadosParaExibir;
+    let nomeCampoCpu, nomeCampoRam;
+    let tituloLinhaCpu, tituloLinhaRam;
+
+    if (opcaoDePeriodo === "01") {
+        dadosParaExibir = todosOsDadosDoServidor.media_cpu_ram_ultima_semana_por_hora;
+        nomeCampoCpu = "media_cpu_ultima_semana_hora";
+        nomeCampoRam = "media_ram_ultima_semana_hora";
+        tituloLinhaCpu = "CPU % (Última Semana)";
+        tituloLinhaRam = "RAM % (Última Semana)";
+    } else if (opcaoDePeriodo === "02") {
+        dadosParaExibir = todosOsDadosDoServidor.media_cpu_ram_ultimo_mes_por_hora;
+        nomeCampoCpu = "media_cpu_ultimo_mes_hora";
+        nomeCampoRam = "media_ram_ultimo_mes_hora";
+        tituloLinhaCpu = "CPU % (Último Mês)";
+        tituloLinhaRam = "RAM % (Último Mês)";
+    } else { 
+        dadosParaExibir = todosOsDadosDoServidor.media_cpu_ram_ultimos_seis_meses_por_hora;
+        nomeCampoCpu = "media_cpu_ultimos_seis_meses_hora";
+        nomeCampoRam = "media_ram_ultimos_seis_meses_hora";
+        tituloLinhaCpu = "CPU % (Últimos 6 Meses)";
+        tituloLinhaRam = "RAM % (Últimos 6 Meses)";
+    }
+    
+    if (!dadosParaExibir) return; 
+
+    const novasHoras = [];
+    const novosValoresCpu = [];
+    const novosValoresRam = [];
+
+    for (let i = 0; i < dadosParaExibir.length; i++) {
+        const item = dadosParaExibir[i];
+        novasHoras.push(`${item.hora}:00`);
+        novosValoresCpu.push(item[nomeCampoCpu]);
+        novosValoresRam.push(item[nomeCampoRam]);
+    }
+
+    graficoDeBarra.data.labels = novasHoras;
+    graficoDeBarra.data.datasets[0].data = novosValoresCpu;
+    graficoDeBarra.data.datasets[0].label = tituloLinhaCpu;
+    graficoDeBarra.data.datasets[1].data = novosValoresRam;
+    graficoDeBarra.data.datasets[1].label = tituloLinhaRam;
+    graficoDeBarra.update();
+
+    let picoCpu = -1;
+    let horaPicoCpu = "N/A";
+    let picoRam = -1;
+    let horaPicoRam = "N/A";
+
+    let maiorSubidaCpu = -1; 
+    let intervaloMaiorSubidaCpu = "N/A";
+    let valorMaiorSubidaCpu = 0;
+
+    let maiorSubidaRam = -1; 
+    let intervaloMaiorSubidaRam = "N/A";
+    let valorMaiorSubidaRam = 0;
+    
+    if (dadosParaExibir.length > 0) { 
+        for (let i = 0; i < dadosParaExibir.length; i++) {
+            const itemAtual = dadosParaExibir[i];
+            const cpuAtual = itemAtual[nomeCampoCpu];
+            const ramAtual = itemAtual[nomeCampoRam];
+
+            if (cpuAtual > picoCpu) {
+                picoCpu = cpuAtual;
+                horaPicoCpu = `${itemAtual.hora}:00`;
+            }
+            if (ramAtual > picoRam) {
+                picoRam = ramAtual;
+                horaPicoRam = `${itemAtual.hora}:00`;
+            }
+
+            if (i > 0) {
+                const itemAnterior = dadosParaExibir[i - 1];
+                const cpuAnterior = itemAnterior[nomeCampoCpu];
+                const ramAnterior = itemAnterior[nomeCampoRam];
+
+                const aumentoCpuAtual = cpuAtual - cpuAnterior;
+                const aumentoRamAtual = ramAtual - ramAnterior;
+
+                if (aumentoCpuAtual > maiorSubidaCpu) {
+                    maiorSubidaCpu = aumentoCpuAtual;
+                    valorMaiorSubidaCpu = aumentoCpuAtual;
+                    intervaloMaiorSubidaCpu = `${itemAnterior.hora}:00 - ${itemAtual.hora}:00`;
+                }
+
+                if (aumentoRamAtual > maiorSubidaRam) {
+                    maiorSubidaRam = aumentoRamAtual;
+                    valorMaiorSubidaRam = aumentoRamAtual;
+                    intervaloMaiorSubidaRam = `${itemAnterior.hora}:00 - ${itemAtual.hora}:00`;
+                }
+            }
+        }
+    }
+
+    document.getElementById('maiorUsoCPU').innerHTML = horaPicoCpu;
+    document.getElementById('maiorRAM').innerHTML = horaPicoRam;
+
+    const elementoMaiorAumentoCPU = document.getElementById('maiorAumentoCPU');
+    if (intervaloMaiorSubidaCpu !== "N/A" && maiorSubidaCpu > -1) { 
+        elementoMaiorAumentoCPU.innerHTML = `${intervaloMaiorSubidaCpu} (+${valorMaiorSubidaCpu.toFixed(2)}%)`;
+    } else {
+        elementoMaiorAumentoCPU.innerHTML = "N/A";
+    }
+
+    const elementoMaiorAumentoRAM = document.getElementById('maiorAumentoRAM');
+    if (intervaloMaiorSubidaRam !== "N/A" && maiorSubidaRam > -1) { 
+        elementoMaiorAumentoRAM.innerHTML = `${intervaloMaiorSubidaRam} (+${valorMaiorSubidaRam.toFixed(2)}%)`;
+    } else {
+        elementoMaiorAumentoRAM.innerHTML = "N/A";
+    }
+}
+
+function buscarDadosIniciaisDoServidor() {
+    fetch('http://127.0.0.1:3000/bucket/api/s3json')
+        .then(resposta => resposta.json())
+        .then(dadosRecebidos => {
+            todosOsDadosDoServidor = dadosRecebidos;
+            const seletorDePeriodo = document.getElementById('filtroMes');
+            let opcaoPeriodoInicial = "03";
+
+            if (seletorDePeriodo) {
+                opcaoPeriodoInicial = seletorDePeriodo.value;
+            }
+
+            atualizarGraficoDeLinhaEKPIsDeUso(opcaoPeriodoInicial);
+
+            const dataParaBuscarAlertas = obterDataAnteriorFormatada(opcaoPeriodoInicial);
+            Promise.all([
+                buscarAlertasCpu(dataParaBuscarAlertas),
+                buscarAlertasRam(dataParaBuscarAlertas)
+            ]).then(() => {
+                criarOuAtualizarGraficoDeBarras();
+                
+                let horaPicoAlertasRam = "N/A";
+                let maxAlertasRam = -1;
+                if (horasParaGraficoAlertas.length > 0 && contagemAlertasRam.length > 0) {
+                    const tamanhoLoopRAM = Math.min(horasParaGraficoAlertas.length, contagemAlertasRam.length);
+                    for (let i = 0; i < tamanhoLoopRAM; i++) {
+                        if (contagemAlertasRam[i] > maxAlertasRam) {
+                            maxAlertasRam = contagemAlertasRam[i];
+                            horaPicoAlertasRam = horasParaGraficoAlertas[i];
                         }
                     }
                 }
-            }
-        }
-    });
-    console.log("Gráfico de barras criado.");
-    console.log("Criando gráfico de linha...");
-    new Chart(GraficoLinha, {
-        type: 'line',
-        data: {
-            labels: ['7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
-            datasets: [{
-                label: 'Uso de CPU %',
-                data: [],
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: { display: true, text: 'Uso da CPU (%)', color: '#000', font: { size: 14 } }
-                },
-                x: {
-                    title: { display: true, text: 'Horário', color: '#000', font: { size: 14 } }
-                }
-            }
-        }
-    });
+                document.getElementById('KPIAlertasRam').innerHTML = horaPicoAlertasRam;
 
-    console.log("Criando GraficoBarra3 com dados estáticos...");
-    new Chart(GraficoBarra3, {
-        type: 'bar',
-        data: {
-            labels: ['7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
-            datasets: [{
-                label: 'Alertas por horário (Estático)',
-                data: [1, 2, 3, 4, 5, 18, 26, 20, 21, 12, 11, 10, 9],
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: { display: true, text: 'Quantidade de alertas', color: '#000', font: { size: 12 } }
-                },
-                x: {
-                    title: { display: true, text: 'Horário', color: '#000', font: { size: 14 } }
+                let horaPicoAlertasCpu = "N/A";
+                let maxAlertasCpu = -1;
+                if (horasParaGraficoAlertas.length > 0 && contagemAlertasCpu.length > 0) {
+                     for (let i = 0; i < contagemAlertasCpu.length; i++) { 
+                        if (contagemAlertasCpu[i] > maxAlertasCpu) {
+                            maxAlertasCpu = contagemAlertasCpu[i];
+                            horaPicoAlertasCpu = horasParaGraficoAlertas[i];
+                        }
+                    }
                 }
-            }
-        }
-    });
-    console.log("GraficoBarra3 criado com dados estáticos.");
-}
+                document.getElementById('KPIAlertasCpu').innerHTML = horaPicoAlertasCpu;
 
-function obterAlertasPorHorario(data, modelo) {
-    fetch(`/dashComponente/obterAlertasPorHorario/${data}/${modelo}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(res => res.json())
-        .then(a => {
-            datayC = [];
-            dataxC = [];
-            for (let i = 0; i < a.length; i++) {
-                datayC.push(a[i].Quantidade_Alertas);
-                dataxC.push(`${a[i].Hora}:00`);
-            }
-            criarOuAtualizarGraficoBarra2Dinamico();
-        })
-        .catch(error => {
-            console.error("Erro ao obter alertas por horário:", error);
+                let totalDeAlertas = 0;
+                for (let i = 0; i < contagemAlertasCpu.length; i++) {
+                    totalDeAlertas += contagemAlertasCpu[i];
+                }
+                for (let i = 0; i < contagemAlertasRam.length; i++) {
+                    totalDeAlertas += contagemAlertasRam[i];
+                }
+                document.getElementById('quantidadeAlertas').innerHTML = totalDeAlertas;
+            });
         });
 }
 
-function obterMaiorHorario(data, modelo) {
-    fetch(`/dashComponente/obterMaiorHorario/${data}/${modelo}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(res => res.json())
-        .then(a => {
-            const maiorUso = document.getElementById('maiorUso')
-            maiorUso.innerHTML = a[0].Hora
-        })
-        .catch(error => {
-            console.error("MAIOR HORARIO ERRO:", error);
+function buscarAlertasCpu(dataDaBusca) {
+    return fetch(`/dashComponente/obterAlertasPorHorario/${dataDaBusca}`)
+        .then(resposta => resposta.json())
+        .then(dadosAlertas => {
+            contagemAlertasCpu = [];
+            horasParaGraficoAlertas = [];
+
+            for (let i = 0; i < dadosAlertas.length; i++) {
+                contagemAlertasCpu.push(dadosAlertas[i].Quantidade_Alertas);
+                horasParaGraficoAlertas.push(`${dadosAlertas[i].Hora}:00`);
+            }
         });
 }
 
-function criarOuAtualizarGraficoBarra2Dinamico() {
-    const GraficoBarra2Canvas = document.getElementById('graficoBarra2');
-    myChartBarra2 = new Chart(GraficoBarra2Canvas, {
+function buscarAlertasRam(dataDaBusca) {
+    return fetch(`/dashComponente/obterAlertasPorHorarioRam/${dataDaBusca}`)
+        .then(resposta => resposta.json())
+        .then(dadosAlertas => {
+            contagemAlertasRam = [];
+            for (let i = 0; i < dadosAlertas.length; i++) {
+                contagemAlertasRam.push(dadosAlertas[i].Quantidade_Alertas);
+            }
+        });
+}
+
+function criarOuAtualizarGraficoDeBarras() {
+    const canvasDoGraficoDeBarras = document.getElementById('graficoBarra2');
+    if (!canvasDoGraficoDeBarras) return;
+
+    if (graficoDeBarrasAlertas) {
+        graficoDeBarrasAlertas.destroy();
+    }
+    graficoDeBarrasAlertas = new Chart(canvasDoGraficoDeBarras, {
         type: 'bar',
         data: {
-            labels: dataxC,
-            datasets: [{
-                label: 'Alertas por horário',
-                data: datayC,
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1,
-                fill: true
-            }]
+            labels: horasParaGraficoAlertas,
+            datasets: [
+                {
+                    label: 'Alertas CPU por Horário',
+                    data: contagemAlertasCpu,
+                    backgroundColor: 'rgba(0, 26, 172, 0.6)',
+                    borderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Alertas RAM por Horário',
+                    data: contagemAlertasRam,
+                    backgroundColor: 'rgba(91, 0, 75, 0.6)',
+                    borderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1
+                }
+            ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    title: { display: true, text: 'Quantidade de alertas', color: '#000', font: { size: 12 } }
-                },
-                x: {
-                    title: { display: true, text: 'Horário', color: '#000', font: { size: 14 } }
-                }
+                y: { beginAtZero: true, title: { display: true, text: 'Quantidade de alertas', color: '#000', font: { size: 12 } } },
+                x: { title: { display: true, text: 'Horário', color: '#000', font: { size: 14 } } }
             }
         }
     });
 }
 
-window.onload = function () {
-    criarGraficosEstaticos();
-    obterAlertasPorHorario('2025-05-27', '001');
-    obterMaiorHorario('2025-05-27','001');
-};
+document.addEventListener('DOMContentLoaded', () => {
+    iniciarGraficoDeLinha();
+    buscarDadosIniciaisDoServidor();
+
+    const seletorDePeriodo = document.getElementById('filtroMes');
+    if (seletorDePeriodo) {
+        seletorDePeriodo.addEventListener('change', function () {
+            const opcaoSelecionada = this.value;
+            atualizarGraficoDeLinhaEKPIsDeUso(opcaoSelecionada);
+
+            const dataParaBuscarAlertas = obterDataAnteriorFormatada(opcaoSelecionada);
+
+            Promise.all([
+                buscarAlertasCpu(dataParaBuscarAlertas),
+                buscarAlertasRam(dataParaBuscarAlertas)
+            ]).then(() => {
+                criarOuAtualizarGraficoDeBarras();
+                
+                let horaPicoAlertasRam = "N/A";
+                let maxAlertasRam = -1;
+                 if (horasParaGraficoAlertas.length > 0 && contagemAlertasRam.length > 0) {
+                    const tamanhoLoopRAM = Math.min(horasParaGraficoAlertas.length, contagemAlertasRam.length);
+                    for (let i = 0; i < tamanhoLoopRAM; i++) {
+                        if (contagemAlertasRam[i] > maxAlertasRam) {
+                            maxAlertasRam = contagemAlertasRam[i];
+                            horaPicoAlertasRam = horasParaGraficoAlertas[i];
+                        }
+                    }
+                }
+                document.getElementById('KPIAlertasRam').innerHTML = horaPicoAlertasRam;
+
+                let horaPicoAlertasCpu = "N/A";
+                let maxAlertasCpu = -1;
+                if (horasParaGraficoAlertas.length > 0 && contagemAlertasCpu.length > 0) {
+                    for (let i = 0; i < contagemAlertasCpu.length; i++) { 
+                        if (contagemAlertasCpu[i] > maxAlertasCpu) {
+                            maxAlertasCpu = contagemAlertasCpu[i];
+                            horaPicoAlertasCpu = horasParaGraficoAlertas[i];
+                        }
+                    }
+                }
+                document.getElementById('KPIAlertasCpu').innerHTML = horaPicoAlertasCpu;
+
+                let totalDeAlertas = 0;
+                for (let i = 0; i < contagemAlertasCpu.length; i++) {
+                    totalDeAlertas += contagemAlertasCpu[i];
+                }
+                for (let i = 0; i < contagemAlertasRam.length; i++) {
+                    totalDeAlertas += contagemAlertasRam[i];
+                }
+                document.getElementById('quantidadeAlertas').innerHTML = totalDeAlertas;
+            });
+        });
+    }
+});

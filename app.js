@@ -30,6 +30,7 @@ const jiraRouter = require('./src/routes/jira')
 const admRouter = require("./src/routes/adm");
 const analistaRouter = require("./src/routes/analista");
 const tempoReal = require("./src/routes/tempoReal");
+const bucket = require("./src/routes/bucket")
 
 const setorRegister = require("./src/routes/setor_register");
 const s3Router = require('./src/routes/s3');
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/", indexRouter);
+app.use("/bucket", bucket)
 app.use("/dashComponente", dashComponenteRouter);
 app.use("/usuario", usuarioRouter);
 app.use("/fabricante", fabricanteRouter);
