@@ -63,8 +63,8 @@ INSERT INTO componente (hardware, tipo_dado, unidade_dado, coluna_captura,  func
 ('REDE', 'Conexões', 'Unidade', 'rede_conexoes','len(psutil.net_connections(kind="all"))');
 
 INSERT INTO painel_vendas (tipo, empresa, modelo, qtd, dtHora) VALUES 
-('Pedido',	'VOLKSWAGEN BRASIL LTDA', 'S7-1200 F',	24,	'2025-06-02 15:36:21'),
-('Pedido',	'LENOVO TECNOLOGIA BRASIL LTDA', 'S7-400H',	60,	'2025-06-02 11:12:45');
+('Pedido',	'VOLKSWAGEN BRASIL LTDA', 'S7-1200 F',	32,	'2025-06-02 15:36:21'),
+('Pedido',	'LENOVO TECNOLOGIA BRASIL LTDA', 'S7-400H',	26,	'2025-06-02 11:12:45');
 
 INSERT INTO meta_vendas (mes, data_hora, meta_de_vendas, media_de_cancelamentos) VALUES
 ('Janeiro/2025', '2025-01-01 00:00:00', 2100, 18),

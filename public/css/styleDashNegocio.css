@@ -156,7 +156,7 @@
 @media only screen and (min-width:702px) {
 
 .div-select {
-    width: 20vw;
+    width: 40vw;
     /* border: solid; */
     margin-bottom: 10px;
     display: flex; 
@@ -167,7 +167,7 @@
         color: rgb(62, 62, 62);
         border: none;
         border-radius: 5px;
-        width: 19.5vw;
+        width: 40vw;
         height: 5vh;
         text-align: center;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
