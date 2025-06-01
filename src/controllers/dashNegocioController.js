@@ -61,12 +61,12 @@ function modeloMaisAfetado(req,res){
 
 function modeloMaisVendido(req,res){
     
-    var empresaId = req.params.empresaId
+    var empresaNome = req.params.empresaNome
 
     dashNegocioModel
-    .getModeloMaisVendido(empresaId).
+    .getModeloMaisVendido(empresaNome).
     then(function(nomeModelo){
-        console.log(nomeModelo)
+        console.log(nomeModelo, "RETORNO DA FUNCAO ")
         if(nomeModelo.length > 0){
             res.status(200).json(nomeModelo)
         }else{
@@ -120,10 +120,10 @@ function taxaDefeitosPorModelo(req,res){
 
 async function prctMeta(req, res) {
 
-    var empresaId = req.params.empresaId
+    var empresaNome = req.params.empresaNome
 
     try {
-       var funcao =  await dashNegocioModel.getPrctMeta(empresaId);
+       var funcao =  await dashNegocioModel.getPrctMeta(empresaNome);
        res.json(funcao)
 
     } catch (error) {
@@ -135,10 +135,10 @@ async function prctMeta(req, res) {
  
 async function painelCancelamento(req, res) {
 
-    var empresaId = req.params.empresaId
+    var empresaNome = req.params.empresaNome
 
     try {
-       var funcao =  await dashNegocioModel.getPainelCancelamento(empresaId);
+       var funcao =  await dashNegocioModel.getPainelCancelamento(empresaNome);
        res.json(funcao)
 
     } catch (error) {

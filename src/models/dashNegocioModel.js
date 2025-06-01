@@ -43,21 +43,21 @@ function getDefeitosPorModelo(empresaId) {
     return database.executar(sql);
 }
 
-function getModeloMaisVendido(empresaId) {
+function getModeloMaisVendido(empresaNome) {
 
-    sql = `SELECT * FROM vw_modelo_mais_vendido;`
+    let sql = empresaNome == 'undefined' ? `SELECT * FROM vw_modelo_mais_vendido;` :
+    `SELECT * FROM vw_modelo_mais_vendido_din WHERE empresa LIKE '%${empresaNome}%';`
 
-    console.log();
+    console.log(sql, 'AQUI ESTA O SQL COMPLETO');
     return database.executar(sql);
 }
 
-async function getPrctMeta(empresaId) {
+async function getPrctMeta(empresaNome) {
 
     const metaSql = `SELECT meta_de_vendas AS meta, mes FROM meta_vendas
     WHERE MONTH(data_hora) = MONTH(NOW());`
 
-    const qtdAtual = `SELECT SUM(qtd) AS qtdTotal FROM painel_vendas
-    WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Pedido';`
+    let qtdAtual = empresaNome !== 'undefined' ? `SELECT * FROM vw_qtd_vendas_atual_din WHERE empresa LIKE '%${empresaNome}%'` : `SELECT * FROM vw_qtd_vendas_atual;`
 
     const meta = await database.executar(metaSql);
     const atual = await database.executar(qtdAtual);
@@ -70,20 +70,20 @@ async function getPrctMeta(empresaId) {
 }
 
 
-async function getPainelCancelamento(empresaId) {
+async function getPainelCancelamento(empresaNome) {
 
     const mediaCancel = `SELECT media_de_cancelamentos AS mediaCancel, mes FROM meta_vendas
     WHERE MONTH(data_hora) = MONTH(NOW());`
-
-    const cancelAtual = `SELECT COUNT(id) AS cancelAtual, SUM(qtd) AS qtd, tipo FROM painel_vendas
-    WHERE MONTH(dtHora) = MONTH(NOW()) AND tipo = 'Cancelamento'`
+    console.log(empresaNome, 'ESTA PASSANDO O NOME DA EMPRESA')
+    const cancelAtual = empresaNome == 'undefined' ? `SELECT * FROM vw_qtd_cancel_atual;` :
+    `SELECT * FROM vw_qtd_cancel_atual_din WHERE empresa LIKE '%${empresaNome}%';`
 
     const media = await database.executar(mediaCancel);
     const atual = await database.executar(cancelAtual);
-    
-    return {
-        media : media[0].mediaCancel,
-        atual : atual[0].qtd
+
+    return {    
+        media : media[0].mediaCancel ?media[0].mediaCancel: 0,
+        atual : atual[0] ? atual[0].qtd : 0
     }
 
 }

@@ -101,10 +101,10 @@ function carregarKPI3(empresaId){
 }
 
 // Modelo mais vendido
-function carregarKPI4(empresaId){
+function carregarKPI4(nomeEmpresa){
     const kpi4 = document.getElementById("modelo-vendido");
     console.log(kpi4)
-    fetch(`/adm/dashNegocio/modeloMaisVendido/${empresaId}`)
+    fetch(`/adm/dashNegocio/modeloMaisVendido/${nomeEmpresa}`)
         .then((response) => {
             return response.json();
         })
@@ -568,11 +568,16 @@ async function recarregar (empresaId) {
     carregarKPI1(empresaId);
     carregarKPI2(empresaId);
     carregarKPI3(empresaId);
-    carregarKPI4(empresaId);
-    gerarMetaVendas(empresaId);
-    gerarPainelCancel(empresaId);
     gerarGraficoTaxaDefeitos(empresaId);
     gerarGraficoDefeitosPorModelo(empresaId);
+}
+
+async function recarregarPainel(nomeEmpresa) {
+
+    carregarKPI4(nomeEmpresa);
+    gerarMetaVendas(nomeEmpresa);
+    gerarPainelCancel(nomeEmpresa);
+
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -580,11 +585,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const selectEmpresa = document.getElementById("slt_empresa");
     selectEmpresa.addEventListener('change',(e)=>{
     let id = e.target.value != '#' ? e.target.value : undefined
-
+    let nomeEmpresa = e.target.selectedOptions[0].text
+    nomeEmpresa = e.target.value != "#" ? nomeEmpresa : undefined
     const kpi1 = document.getElementById("empresa-afetada");
-    kpi1.innerHTML = e.target.selectedOptions[0].text;
-      recarregar(id);
-
+    kpi1.innerHTML = nomeEmpresa
+    recarregar(id)
+    recarregarPainel(nomeEmpresa)
     })
 
     carregarKPI1();
@@ -595,7 +601,6 @@ document.addEventListener("DOMContentLoaded", function() {
     gerarPainelCancel();
     gerarGraficoTaxaDefeitos();
     gerarGraficoDefeitosPorModelo();
-   
     buscarEmpConsumidoras();
 
 });

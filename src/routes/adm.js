@@ -102,7 +102,7 @@ router.get('/dashNegocio/modeloMaisAfetado/:empresaId', (req, res) => {
     dashNegocioController.modeloMaisAfetado(req,res);
 })
 
-router.get('/dashNegocio/modeloMaisVendido/:empresaId', (req, res) => {
+router.get('/dashNegocio/modeloMaisVendido/:empresaNome', (req, res) => {
     dashNegocioController.modeloMaisVendido(req,res);
 })
 
@@ -114,11 +114,11 @@ router.get('/dashNegocio/taxaDefeitosPorModelo/:empresaId', (req, res) => {
     dashNegocioController.taxaDefeitosPorModelo(req,res);
 })
 
-router.get('/dashNegocio/prctMeta/:empresaId', (req, res) => {
+router.get('/dashNegocio/prctMeta/:empresaNome', (req, res) => {
     dashNegocioController.prctMeta(req,res);
 })
 
-router.get('/dashNegocio/painelCancelamento/:empresaId', (req, res) => {
+router.get('/dashNegocio/painelCancelamento/:empresaNome', (req, res) => {
     dashNegocioController.painelCancelamento(req,res);
 })
 
