@@ -282,7 +282,7 @@ function calcularHorasAtraso(dataString) {
          diffHoras = diffHoras - (diffDias * 24);
         return `${diffDias} dias e ${diffHoras.toFixed(2)} horas`;
     }  
-    return diffHoras.toFixed(2);
+    return `${diffHoras.toFixed(2)} hora(s)`;
 }
 
 const tratarIssuesEmpresaRazaoPlcId = async (issues) => {

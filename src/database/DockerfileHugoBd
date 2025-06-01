@@ -1,7 +1,7 @@
 FROM mysql:latest
 WORKDIR /
 ENV MYSQL_ROOT_PASSWORD=plcvision
-COPY ./createsDocker.sql /docker-entrypoint-initdb.d/
+COPY ./backup_plcvision.sql /docker-entrypoint-initdb.d/
 
 EXPOSE 3306
 

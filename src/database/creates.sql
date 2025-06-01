@@ -266,3 +266,7 @@ JOIN parceria pa
 ON pa.id = p.parceria_id
 WHERE date_format(a.dataHora, '%m') = DATE_FORMAT(NOW(), '%m')
 GROUP BY modelo, date_format(a.dataHora, '%m'), empresaId;
+
+CREATE USER 'plc_manager'@'%' IDENTIFIED BY 'plc_password';
+GRANT ALL PRIVILEGES ON plcvision.* TO 'plc_manager'@'%';
+FLUSH PRIVILEGES;

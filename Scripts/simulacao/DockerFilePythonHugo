@@ -1,0 +1,26 @@
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim-buster
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Install MySQL client dependencies
+# These are necessary for mysql-connector-python to work correctly
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends default-libmysqlclient-dev gcc && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create a requirements.txt file on the fly and install dependencies
+# We're adding the libraries your script imports directly
+RUN echo "mysql-connector-python" > requirements.txt && \
+    echo "requests" >> requirements.txt && \
+    echo "pytz" >> requirements.txt && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code into the container
+# This assumes your main script and 'selectsInfos.py' are in the same directory as the Dockerfile
+COPY . .
+
+# Command to run the application
+# Please replace 'your_main_script_name.py' with the actual name of your Python file
+CMD ["python", "enviarDadosSimulados.py"]

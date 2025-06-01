@@ -6,9 +6,9 @@ import os
 
 
 DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'laysa',
-    'password': 'Urubu@100',
+    'host': 'db',
+    'user': 'plc_manager',
+    'password': 'plc_password',
     'database': 'plcvision'
 }
 

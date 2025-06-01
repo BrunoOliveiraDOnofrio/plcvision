@@ -1,4 +1,10 @@
 services:
+    python:
+        image: hugocarval/python-plcvision:1.0  
+        networks:
+              - rede-compose
+        depends_on:
+              - site
     site: 
         image: hugocarval/plcvision-site:1.2
         ports:
@@ -8,7 +14,7 @@ services:
         depends_on: 
               - db
     db: 
-        image: hugocarval/mysql-plcvision:1.1
+        image: hugocarval/mysql-plcvision:1.3
         ports:
               - "3307:3306"
         networks: 

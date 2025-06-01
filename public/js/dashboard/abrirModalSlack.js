@@ -68,7 +68,7 @@ const enviarMensagem = () => {
     let mensagem = p_mensagem.innerText;
     let obs = document.querySelector('#text_message').value;
     console.log(mensagem);
-    const url = 'https://hooks.slack.com/services/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';
+    const url = 'https://hooks.slack.com/services/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';
     const data = {
         color: '#FF0000',
         
