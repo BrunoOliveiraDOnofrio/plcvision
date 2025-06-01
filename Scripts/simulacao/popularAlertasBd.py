@@ -107,10 +107,10 @@ def gerar_datetimes_atrasados(qtd=100, atraso_min_horas=8):
 
 def conexao_select():
     conexao_db = db.connect(
-        host='44.201.137.250',
+        host='127.0.0.1',
         port=3306,
-        user='plc_manager',
-        password='plc_password',
+        user='laysa',
+        password='Urubu@100',
         database='plcvision'
     )
     return conexao_db
@@ -221,8 +221,8 @@ def simular_monitoramento():
     global horariosComAlertasEConfig_for_plc_csv
 
     end_date = datetime.now() + timedelta(days = 5)
-    # start_date = end_date - timedelta(days=6 * 30) # Approx 6 months
-    start_date = end_date - timedelta(days=37)
+    start_date = end_date - timedelta(days=6 * 30) # Approx 6 months
+    # start_date = end_date - timedelta(days=37)
 
     current_date = start_date
     while current_date <= end_date:
