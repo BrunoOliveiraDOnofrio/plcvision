@@ -19,6 +19,10 @@ router.get("/kpi1", (req,res) => {
     alertaController.jiraAberto(req,res);
 })
 
+router.get("/kpi1_1", (req,res) => {
+    alertaController.jiraFazendo(req,res);
+})
+
 router.get("/kpi2", (req,res) => {
     alertaController.jiraAbertoValidade(req,res);
 })

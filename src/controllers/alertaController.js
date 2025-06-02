@@ -356,7 +356,36 @@ const jiraAberto = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Time de Suporte Siemens" AND statusCategory!=Done`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=SPOP3 AND statusCategory!=Done AND status !="Work in progress"`;
+
+    try {
+        const response = await fetch(urlApiJira, {
+            method: "GET",
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro do Jira: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        res.json({ total: data.total });
+
+    } catch (error) {
+        console.error("Erro ao buscar dados no Jira:", error.message);
+        res.status(500).json({ erro: "Erro ao buscar chamados do Jira" });
+    }
+};
+
+const jiraFazendo = async (req, res) => {
+    const email = "carvalhohugo425@gmail.com";
+    const key = process.env.JIRA_KEY;
+
+    const auth = Buffer.from(`${email}:${key}`).toString("base64");
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project=SPOP3 AND status="Work in progress"`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -635,6 +664,7 @@ module.exports = {
     getUltimoAlerta,
     qtdAlertaHardware,
     jiraAberto,
+    jiraFazendo,
     jiraAbertoValidade,
     jiraFechadoNow,
     tempoFechamento,
