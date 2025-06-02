@@ -356,7 +356,7 @@ const jiraAberto = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory!=Done`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Time de Suporte Siemens" AND statusCategory!=Done`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -385,7 +385,7 @@ const jiraAbertoValidade = async (req, res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project= "Suporte Populacao 3" AND cf[10092] <= -24h AND statusCategory = new&fields=customfield_10092`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project= "Time de Suporte Siemens" AND cf[10092] <= -24h AND statusCategory = new&fields=customfield_10092`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -414,7 +414,7 @@ const jiraFechadoNow = async (req,res) => {
     const key = process.env.JIRA_KEY;
 
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project = "Suporte Populacao 3" AND statusCategory = Done AND (statusCategoryChangedDate >= startOfDay() AND statusCategoryChangedDate <= endOfDay() OR (cf[10092] >= startOfDay() AND cf[10092] <= endOfDay()))`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project = "Time de Suporte Siemens" AND statusCategory = Done AND cf[10124] >= startOfDay() AND cf[10124]<= endOfDay()`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -439,69 +439,72 @@ const jiraFechadoNow = async (req,res) => {
 };
 
 const tempoFechamento = async (req, res) => {
-  
     const email = "carvalhohugo425@gmail.com";
     const key = process.env.JIRA_KEY;
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
 
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND statusCategory=Done&fields=customfield_10092,created,resolutiondate&expand=changelog&maxResults=1000`;
+    // ATUALIZAÇÃO AQUI: Adicionado customfield_10124 aos fields
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Time de Suporte Siemens" AND statusCategory=Done&fields=customfield_10092,customfield_10124,created,customfield_10124&expand=changelog&maxResults=1000`;
 
-        const response = await fetch(urlApiJira, {
-            method: "GET",
-            headers: {
-                'Authorization': `Basic ${auth}`,
-                'Accept': 'application/json'
-            }
-        });
-
-        const data = await response.json();
-
-        // Filtra os issues que possuem a data de criação (customfield_10092) e histórico de alterações (changelog)
-        const issuesComDatas = data.issues.filter(issue => issue.fields.customfield_10092 && issue.changelog && issue.changelog.histories);
-
-        if (issuesComDatas.length === 0) {
-            return res.json({ mediaHoras: 0, totalChamados: 0 });
+    const response = await fetch(urlApiJira, {
+        method: "GET",
+        headers: {
+            'Authorization': `Basic ${auth}`,
+            'Accept': 'application/json'
         }
+    });
 
-        const temposEmMs = [];
+    const data = await response.json();
 
-        for (const issue of issuesComDatas) {
-            // Usamos customfield_10092 como a data de criação, conforme solicitado.
-            const criado = new Date(issue.fields.customfield_10092); 
+    // Filtra os issues que possuem a data de criação (customfield_10092)
+    // E agora, também é bom verificar se tem o campo de resolução customizado se ele for obrigatório para o cálculo
+    const issuesComDatas = data.issues.filter(issue => issue.fields.customfield_10092);
 
-            let dataDone = null;
+    if (issuesComDatas.length === 0) {
+        return res.json({ mediaHoras: 0, totalChamados: 0 });
+    }
 
-            for (const history of issue.changelog.histories) {
-                for (const item of history.items) {
-                    
-                    if (item.field === "status" && item.toString === "Done") {
-                        
-                        dataDone = new Date(history.created); 
-                        break;
+    const temposEmMs = [];
+
+    for (const issue of issuesComDatas) {
+        const criado = new Date(issue.fields.customfield_10092);
+
+        let dataDone = null;
+
+        // PRIORIZANDO O customfield_10124 PARA A DATA DE RESOLUÇÃO/DONE
+        if (issue.fields.customfield_10124) {
+            dataDone = new Date(issue.fields.customfield_10124);
+        } else {
+            // Se customfield_10124 não estiver preenchido, então usa a lógica existente do changelog como fallback
+            if (issue.changelog && issue.changelog.histories) {
+                for (const history of issue.changelog.histories) {
+                    for (const item of history.items) {
+                        if (item.field === "status" && item.toString === "Done") {
+                            dataDone = new Date(history.created);
+                            break;
+                        }
                     }
+                    if (dataDone) break;
                 }
-                if (dataDone) break;
-            }
-
-            if (dataDone && dataDone > criado) {
-                temposEmMs.push(dataDone - criado);
             }
         }
 
-        if (temposEmMs.length === 0) {
-            return res.json({ mediaHoras: 0, totalChamados: 0 });
+        if (dataDone && dataDone > criado) {
+            temposEmMs.push(dataDone - criado);
         }
+    }
 
-        const totalMs = temposEmMs.reduce((acc, cur) => acc + cur, 0);
+    if (temposEmMs.length === 0) {
+        return res.json({ mediaHoras: 0, totalChamados: 0 });
+    }
 
-        const mediaHoras = (totalMs / temposEmMs.length / 1000 / 60 / 60).toFixed(2);
+    const totalMs = temposEmMs.reduce((acc, cur) => acc + cur, 0);
+    const mediaHoras = (totalMs / temposEmMs.length / 1000 / 60 / 60).toFixed(2);
 
-
-        res.json({
-            mediaHoras,
-            totalChamados: temposEmMs.length
-        });
-
+    res.json({
+        mediaHoras,
+        totalChamados: temposEmMs.length
+    });
 };
 
 const alertaTraceroute = async (req, res) => {
@@ -511,7 +514,7 @@ const alertaTraceroute = async (req, res) => {
     const auth = Buffer.from(`${email}:${key}`).toString("base64");
 
     // O 'expand=changelog' é crucial para podermos verificar a data da transição de status.
-    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Suporte Populacao 3" AND (cf[10092] >= "-7d" OR resolutiondate >= "-7d")&fields=created,status,customfield_10092,resolutiondate&expand=changelog&maxResults=1000`;
+    const urlApiJira = `https://carvalhohugo425.atlassian.net/rest/api/3/search?jql=project="Time de Suporte Siemens" AND (cf[10092] >= "-7d" OR cf[10124] >= "-7d")&fields=created,status,customfield_10092,customfield_10124&expand=changelog&maxResults=1000`;
 
     try {
         const response = await fetch(urlApiJira, {
@@ -560,8 +563,8 @@ const alertaTraceroute = async (req, res) => {
                 let dataResolucaoParaContagem = null;
 
                 // 1. pegar os alertas que foram resolvidos manualmente
-                if (alerta.fields.resolutiondate) {
-                    const jiraResolutionMoment = moment(alerta.fields.resolutiondate).utcOffset('-03:00').startOf('day');
+                if (alerta.fields.customfield_10124) {
+                    const jiraResolutionMoment = moment(alerta.fields.customfield_10124).utcOffset('-03:00').startOf('day');
                     if (jiraResolutionMoment.isSameOrAfter(moment().subtract(7, 'days').startOf('day'))) {
                         dataResolucaoParaContagem = jiraResolutionMoment;
                     }
